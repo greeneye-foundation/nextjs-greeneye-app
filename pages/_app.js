@@ -3,9 +3,9 @@ import '@/styles/globals.css';
 import '@/styles/auth-styles.css';
 import '@/styles/admin.css';
 
-import {useEffect, useMemo, useState} from 'react';
-import {useRouter} from 'next/router';
-import {IntlProvider} from 'next-intl';
+import { useEffect, useMemo, useState } from 'react';
+import { useRouter } from 'next/router';
+import { IntlProvider } from 'next-intl';
 import Layout from '@/components/Layout';
 import Notification from '@/components/Notification';
 import BackToTop from '@/components/BackToTop';
@@ -20,7 +20,7 @@ function getPathLocale(asPath) {
   return SUPPORTED.includes(first) ? first : null;
 }
 
-export default function App({Component, pageProps}) {
+export default function App({ Component, pageProps }) {
   const router = useRouter();
   const isAdminRoute = router.pathname?.startsWith('/admin');
 
@@ -38,15 +38,12 @@ export default function App({Component, pageProps}) {
   const [messages, setMessages] = useState(initialMessages);
   const [locale, setLocale] = useState(initialLocale);
 
-  // 2) Route/locale change detect karke messages ko reload trigger karo
+  // 2) Route/locale change detect then load messages reload trigger
   useEffect(() => {
-    // Prefer router.locale; warna URL prefix
-    const nextLocale =
-      router.locale || getPathLocale(router.asPath) || 'en';
-
+    const nextLocale = router.locale || getPathLocale(router.asPath) || 'en';
     if (nextLocale !== locale) {
       setLocale(nextLocale);
-      setMessages(null); // force re-load below
+      setMessages(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.asPath, router.locale]);
@@ -77,7 +74,6 @@ export default function App({Component, pageProps}) {
     return () => { cancelled = true; };
   }, [messages, locale]);
 
-  // Jab tak messages load nahi ho jate
   if (messages == null) return null; 
 
   return (
@@ -91,18 +87,16 @@ export default function App({Component, pageProps}) {
         messages={messages}
         locale={locale}
         defaultLocale="en"
-        // yeh *function* hi hona chahiye (boolean nahi)
+        // This should be a  *function*  (not boolean)
         getMessageFallback={({key/*, namespace*/}) => key}
         onError={(err) => {
-          // Dev me noisy errors ko mute kar do
+          // In Dev noisy errors mute
           if (
             err.code === 'MISSING_MESSAGE' ||
             err.code === 'ENVIRONMENT_FALLBACK'
           ) {
             if (process.env.NODE_ENV === 'development') return;
           }
-          // Production me bhi ignore karna ho to yahan silent kar do
-          // console.error(err);
         }}
       >
         {isAdminRoute ? (

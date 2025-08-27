@@ -3,6 +3,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { showNotification } from "@/components/Notification";
 import { useTranslations } from "next-intl";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 const Login = ({ onSwitch, onLogin }) => {
   const t = useTranslations("login");
@@ -14,6 +15,7 @@ const Login = ({ onSwitch, onLogin }) => {
 
   const [loading, setLoading] = useState(false);
   const [showPwd, setShowPwd] = useState(false);
+  const { executeRecaptcha } = useGoogleReCaptcha();
   const router = useRouter();
 
   const isEmailValid = (email) =>
@@ -39,15 +41,23 @@ const Login = ({ onSwitch, onLogin }) => {
       showNotification(t("enterPassword"), "error");
       return;
     }
+    if (!executeRecaptcha) {
+      showNotification("Please verify that you are not a robot.", "error");
+      return;
+    }
 
     setLoading(true);
 
     try {
+      // 🔹 recaptcha token generate
+      const recaptchaToken = await executeRecaptcha("login_action");
+
       const { data } = await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/login`,
         {
           email: form.email,
           password: form.password,
+          recaptchaToken,
         }
       );
 
@@ -71,8 +81,14 @@ const Login = ({ onSwitch, onLogin }) => {
   };
 
   return (
-    <form className="auth-form" id="loginForm" onSubmit={handleSubmit} autoComplete="off">
+    <form
+      className="auth-form"
+      id="loginForm"
+      onSubmit={handleSubmit}
+      autoComplete="off"
+    >
       <h3>{t("signInTitle")}</h3>
+      {/* Email */}
       <div className="form-group">
         <input
           type="email"
@@ -86,6 +102,8 @@ const Login = ({ onSwitch, onLogin }) => {
         />
         <i className="fas fa-envelope"></i>
       </div>
+
+      {/* Password */}
       <div className="form-group">
         <input
           type={showPwd ? "text" : "password"}
@@ -107,6 +125,8 @@ const Login = ({ onSwitch, onLogin }) => {
           <i className={`fas ${showPwd ? "fa-eye-slash" : "fa-eye"}`}></i>
         </button>
       </div>
+
+      {/* Remember me */}
       <div className="form-options">
         <label className="checkbox-label">
           <input
@@ -118,15 +138,10 @@ const Login = ({ onSwitch, onLogin }) => {
           <span className="checkmark"></span>
           {t("rememberMe")}
         </label>
-        {/* <a href="#" className="link" tabIndex={-1}>
-          {t("forgotPassword")}
-        </a> */}
       </div>
-      <button
-        type="submit"
-        className="btn btn-primary btn-full"
-        disabled={loading}
-      >
+
+      {/* Submit */}
+      <button type="submit" className="btn btn-primary btn-full" disabled={loading}>
         {loading ? (
           <>
             <i className="fas fa-spinner fa-spin"></i> {t("signingIn")}
@@ -137,9 +152,12 @@ const Login = ({ onSwitch, onLogin }) => {
           </>
         )}
       </button>
+
       <div className="divider" style={{ margin: "2rem 0" }}>
         <span>{t("or")}</span>
       </div>
+
+      {/* OTP login */}
       <div style={{ textAlign: "center", margin: "1rem 0" }}>
         <button
           type="button"

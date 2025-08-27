@@ -5,6 +5,7 @@ import Login from '@/components/Auth/Login';
 import Register from '@/components/Auth/Register';
 import { useTranslations } from 'next-intl';
 import { IntlProvider } from 'next-intl';
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 // ✅ This receives messages and locale
 export default function RegisterPage({ messages, locale }) {
@@ -20,34 +21,39 @@ export default function RegisterPage({ messages, locale }) {
   const t = useTranslations('auth'); // Optional: For switching text
 
   return (
-    <IntlProvider locale={locale} messages={messages}>
-      <div className="auth-container">
-        <div className="auth-wrapper">
-          <div
-            className="auth-section"
-            id="registerSection"
-            style={{ display: showLogin ? 'none' : 'block' }}
-          >
-            <Register onSwitch={() => setShowLogin(true)} />
-          </div>
-          <div
-            className="auth-section"
-            id="loginSection"
-            style={{ display: showLogin ? 'block' : 'none' }}
-          >
-            <Login />
-            <div className="auth-switch">
-              <p>
-                {t('noAccount')}{" "}
-                <button className="link-btn" onClick={() => setShowLogin(false)}>
-                  {t('signUp')}
-                </button>
-              </p>
+    <GoogleReCaptchaProvider
+      reCaptchaKey={process.env.NEXT_PUBLIC_CAPTCHA_KEY}
+      scriptProps={{ async: true, defer: true, appendTo: "head" }}
+    >
+      <IntlProvider locale={locale} messages={messages}>
+        <div className="auth-container">
+          <div className="auth-wrapper">
+            <div
+              className="auth-section"
+              id="registerSection"
+              style={{ display: showLogin ? 'none' : 'block' }}
+            >
+              <Register onSwitch={() => setShowLogin(true)} />
+            </div>
+            <div
+              className="auth-section"
+              id="loginSection"
+              style={{ display: showLogin ? 'block' : 'none' }}
+            >
+              <Login />
+              <div className="auth-switch">
+                <p>
+                  {t('noAccount')}{" "}
+                  <button className="link-btn" onClick={() => setShowLogin(false)}>
+                    {t('signUp')}
+                  </button>
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </IntlProvider>
+      </IntlProvider>
+    </GoogleReCaptchaProvider>
   );
 }
 

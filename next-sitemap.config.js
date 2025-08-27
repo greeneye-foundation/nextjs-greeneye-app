@@ -9,7 +9,6 @@ module.exports = {
 
   additionalPaths: async (config) => {
     return [
-      // agar manually add karna hai
       await config.transform(config, '/blog'),
       await config.transform(config, '/about'),
       await config.transform(config, '/volunteer'),

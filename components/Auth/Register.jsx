@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { showNotification } from "@/components/Notification";
 import { useTranslations } from "next-intl";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 const Register = ({ onSwitch }) => {
   const t = useTranslations("register");
@@ -25,6 +26,7 @@ const Register = ({ onSwitch }) => {
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState("");
   const router = useRouter();
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const isEmailValid = (email) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -55,14 +57,19 @@ const Register = ({ onSwitch }) => {
     if (!form.agreeTerms) return showNotification(t("agreeTermsMsg"), "error");
     if (!isEmailValid(form.email)) return showNotification(t("invalidEmail"), "error");
     if (!isPhoneValid(form.phone)) return showNotification(t("invalidPhone"), "error");
-
+    if (!executeRecaptcha) {
+      showNotification("Please verify that you are not a robot.", "error");
+      return;
+    }
     setLoading(true);
     try {
       const phone = form.phone.startsWith("+") ? form.phone : `+91${form.phone}`;
-
+      // 🔹 recaptcha token generate
+      const recaptchaToken = await executeRecaptcha("login_action");
       await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/otp/send`, {
         phone,
         email: form.email,
+        recaptchaToken
       });
 
       showNotification("OTP sent to your SMS", "success");
