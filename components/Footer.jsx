@@ -69,6 +69,8 @@ const Footer = () => {
               <Link href="/legal/privacy-policy">{t('privacy')}</Link>
               <Link href="/legal/terms-of-service">{t('terms')}</Link>
               <Link href="/legal/cookies-policy">{t('cookies')}</Link>
+              <Link href="/legal/shipping-policy">{t('shipping')}</Link>
+              <Link href="/legal/cancellations-refunds">{t('cancellation&refund')}</Link>
             </div>
           </div>
         </div>

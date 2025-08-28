@@ -30,7 +30,9 @@
     "communityDrives": "Campañas comunitarias",
     "schoolPrograms": "Programas escolares",
     "corporatePartnerships": "Alianzas corporativas",
-    "rightsReserved": "Todos los derechos reservados."
+    "rightsReserved": "Todos los derechos reservados.",
+    "shipping": "Política de Envío",
+    "cancellation&refund": "Cancelación y Reembolso"
   },
   "notification": {
     "close": "Cerrar",
@@ -486,6 +488,35 @@
   "addedToCart": "Agregado al carrito",
   "pleaseLogin": "Por favor inicie sesión primero.",
   "addFailed": "Error al agregar al carrito."
-}
-
+},
+  "shippingPolicy": {
+    "title": "Política de Envío",
+    "intro": "Estamos comprometidos a entregar sus productos de manera rápida y segura.",
+    "processingTitle": "Procesamiento de pedidos",
+    "processingText": "Los pedidos se procesan dentro de 1-2 días hábiles después de la confirmación.",
+    "shippingPartnersTitle": "Socios de envío",
+    "shippingPartnersText": "Trabajamos con compañías de mensajería líderes para una entrega confiable.",
+    "deliveryTimeTitle": "Tiempo de entrega",
+    "deliveryTimeText": "Los pedidos nacionales se entregan normalmente en 5-7 días hábiles. Las áreas remotas pueden tardar más.",
+    "trackingTitle": "Seguimiento de pedidos",
+    "trackingText": "Una vez enviado, recibirá un ID de seguimiento por correo electrónico/SMS.",
+    "internationalTitle": "Envío internacional",
+    "internationalText": "Actualmente no ofrecemos envíos internacionales.",
+    "contactTitle": "Contáctenos",
+    "contactText": "Para consultas sobre envíos: support@greeneye.foundation",
+    "rightsReserved": "Todos los derechos reservados."
+  },
+  "cancellationsRefunds": {
+    "title": "Política de Cancelaciones y Reembolsos",
+    "intro": "Queremos que tenga una experiencia de compra sin inconvenientes.",
+    "cancellationTitle": "Cancelación de pedidos",
+    "cancellationText": "Los pedidos pueden cancelarse antes de ser enviados. Una vez enviados, no se pueden cancelar.",
+    "refundTitle": "Política de reembolsos",
+    "refundText": "Los reembolsos se procesan en 7-10 días hábiles al método de pago original, después de verificar el producto devuelto.",
+    "exceptionsTitle": "Artículos no reembolsables",
+    "exceptionsText": "Los productos personalizados, perecederos y artículos marcados como 'Venta final' no son reembolsables.",
+    "contactTitle": "Contáctenos",
+    "contactText": "Para consultas sobre cancelaciones y reembolsos: support@greeneye.foundation",
+    "rightsReserved": "Todos los derechos reservados."
+  }
 }

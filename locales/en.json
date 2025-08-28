@@ -30,7 +30,9 @@
     "communityDrives": "Community Drives",
     "schoolPrograms": "School Programs",
     "corporatePartnerships": "Corporate Partnerships",
-    "rightsReserved": "All rights reserved."
+    "rightsReserved": "All rights reserved.",
+    "shipping":"Shipping Policy",
+    "cancellation&refund":"Cancellation & Refund"
   },
   "notification": {
     "close": "Close",
@@ -491,5 +493,35 @@
   "addedToCart": "Added to cart",
   "pleaseLogin": "Please login first.",
   "addFailed": "Failed to add to cart."
-}
+},
+"shippingPolicy": {
+    "title": "Shipping Policy",
+    "intro": "We are committed to delivering your products quickly and safely.",
+    "processingTitle": "Order Processing",
+    "processingText": "Orders are processed within 1-2 business days after confirmation.",
+    "shippingPartnersTitle": "Shipping Partners",
+    "shippingPartnersText": "We partner with leading courier companies for reliable delivery.",
+    "deliveryTimeTitle": "Delivery Time",
+    "deliveryTimeText": "Domestic orders are usually delivered within 5-7 business days. Remote areas may take longer.",
+    "trackingTitle": "Order Tracking",
+    "trackingText": "Once shipped, you will receive a tracking ID via email/SMS.",
+    "internationalTitle": "International Shipping",
+    "internationalText": "Currently, we do not support international shipping.",
+    "contactTitle": "Contact Us",
+    "contactText": "For shipping queries, please contact us at: support@greeneye.foundation",
+    "rightsReserved": "All rights reserved."
+  },
+  "cancellationsRefunds": {
+    "title": "Cancellations & Refunds Policy",
+    "intro": "We want you to have a smooth shopping experience with us.",
+    "cancellationTitle": "Order Cancellations",
+    "cancellationText": "Orders can be cancelled before they are shipped. Once shipped, cancellations are not possible.",
+    "refundTitle": "Refund Policy",
+    "refundText": "Refunds are processed within 7-10 business days to your original payment method, after product return verification.",
+    "exceptionsTitle": "Non-Refundable Items",
+    "exceptionsText": "Customized products, perishable goods, and items marked 'Final Sale' cannot be refunded.",
+    "contactTitle": "Contact Us",
+    "contactText": "For refund and cancellation queries, please contact us at: support@greeneye.foundation",
+    "rightsReserved": "All rights reserved."
+  }
 }

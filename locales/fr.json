@@ -30,7 +30,9 @@
     "communityDrives": "Actions communautaires",
     "schoolPrograms": "Programmes scolaires",
     "corporatePartnerships": "Partenariats d'entreprise",
-    "rightsReserved": "Tous droits réservés."
+    "rightsReserved": "Tous droits réservés.",
+    "shipping": "Politique d'Expédition",
+    "cancellation&refund": "Annulation et Remboursement"
   },
   "notification": {
     "close": "Fermer",
@@ -486,6 +488,35 @@
   "addedToCart": "Ajouté au panier",
   "pleaseLogin": "Veuillez vous connecter d'abord.",
   "addFailed": "Échec de l'ajout au panier."
-}
-
+},
+  "shippingPolicy": {
+    "title": "Politique d'Expédition",
+    "intro": "Nous nous engageons à livrer vos produits rapidement et en toute sécurité.",
+    "processingTitle": "Traitement des commandes",
+    "processingText": "Les commandes sont traitées sous 1 à 2 jours ouvrables après confirmation.",
+    "shippingPartnersTitle": "Partenaires de livraison",
+    "shippingPartnersText": "Nous collaborons avec des transporteurs fiables pour une livraison sûre.",
+    "deliveryTimeTitle": "Délais de livraison",
+    "deliveryTimeText": "Les commandes nationales sont généralement livrées sous 5 à 7 jours ouvrables. Les zones éloignées peuvent prendre plus de temps.",
+    "trackingTitle": "Suivi de commande",
+    "trackingText": "Une fois expédiée, vous recevrez un numéro de suivi par email/SMS.",
+    "internationalTitle": "Expédition internationale",
+    "internationalText": "Actuellement, nous ne proposons pas d'expédition internationale.",
+    "contactTitle": "Contactez-nous",
+    "contactText": "Pour toute question relative à la livraison : support@greeneye.foundation",
+    "rightsReserved": "Tous droits réservés."
+  },
+  "cancellationsRefunds": {
+    "title": "Politique d'Annulations et de Remboursements",
+    "intro": "Nous souhaitons que votre expérience d'achat soit fluide.",
+    "cancellationTitle": "Annulation de commande",
+    "cancellationText": "Les commandes peuvent être annulées avant expédition. Une fois expédiées, elles ne peuvent pas être annulées.",
+    "refundTitle": "Politique de remboursement",
+    "refundText": "Les remboursements sont effectués sous 7 à 10 jours ouvrables sur le mode de paiement initial, après vérification du produit retourné.",
+    "exceptionsTitle": "Articles non remboursables",
+    "exceptionsText": "Les produits personnalisés, périssables et ceux marqués 'Vente finale' ne sont pas remboursables.",
+    "contactTitle": "Contactez-nous",
+    "contactText": "Pour toute question relative aux annulations et remboursements : support@greeneye.foundation",
+    "rightsReserved": "Tous droits réservés."
+  }
 }

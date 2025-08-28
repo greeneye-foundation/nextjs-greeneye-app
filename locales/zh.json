@@ -30,7 +30,9 @@
     "communityDrives": "社区活动",
     "schoolPrograms": "学校项目",
     "corporatePartnerships": "企业合作",
-    "rightsReserved": "版权所有。"
+    "rightsReserved": "版权所有。",
+    "shipping": "运输政策",
+    "cancellation&refund": "取消与退款"
   },
   "notification": {
     "close": "关闭",
@@ -486,6 +488,35 @@
   "addedToCart": "已加入购物车",
   "pleaseLogin": "请先登录。",
   "addFailed": "添加到购物车失败。"
-}
-
+},
+  "shippingPolicy": {
+    "title": "运输政策",
+    "intro": "我们承诺快速、安全地交付您的产品。",
+    "processingTitle": "订单处理",
+    "processingText": "订单将在确认后1-2个工作日内处理。",
+    "shippingPartnersTitle": "运输合作伙伴",
+    "shippingPartnersText": "我们与可靠的快递公司合作，确保交付。",
+    "deliveryTimeTitle": "交付时间",
+    "deliveryTimeText": "国内订单通常在5-7个工作日内送达，偏远地区可能需要更长时间。",
+    "trackingTitle": "订单追踪",
+    "trackingText": "发货后，您将通过电子邮件/SMS收到追踪编号。",
+    "internationalTitle": "国际运输",
+    "internationalText": "目前我们不支持国际运输。",
+    "contactTitle": "联系我们",
+    "contactText": "有关运输问题，请联系：support@greeneye.foundation",
+    "rightsReserved": "版权所有."
+  },
+  "cancellationsRefunds": {
+    "title": "取消与退款政策",
+    "intro": "我们希望您有一个顺畅的购物体验。",
+    "cancellationTitle": "订单取消",
+    "cancellationText": "订单可在发货前取消。一旦发货，将无法取消。",
+    "refundTitle": "退款政策",
+    "refundText": "退款将在退回商品验证后7-10个工作日内退回至原支付方式。",
+    "exceptionsTitle": "不可退款的商品",
+    "exceptionsText": "定制产品、易腐商品以及标记为“最终销售”的商品不予退款。",
+    "contactTitle": "联系我们",
+    "contactText": "关于取消和退款的问题，请联系：support@greeneye.foundation",
+    "rightsReserved": "版权所有."
+  }
 }

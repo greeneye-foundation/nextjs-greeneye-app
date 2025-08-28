@@ -42,7 +42,7 @@ const Login = ({ onSwitch, onLogin }) => {
       return;
     }
     if (!executeRecaptcha) {
-      showNotification("Please verify that you are not a robot.", "error");
+      showNotification("Recaptcha not ready, please try again.", "error");
       return;
     }
 
@@ -51,7 +51,6 @@ const Login = ({ onSwitch, onLogin }) => {
     try {
       // 🔹 recaptcha token generate
       const recaptchaToken = await executeRecaptcha("login_action");
-
       const { data } = await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/login`,
         {

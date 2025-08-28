@@ -58,14 +58,14 @@ const Register = ({ onSwitch }) => {
     if (!isEmailValid(form.email)) return showNotification(t("invalidEmail"), "error");
     if (!isPhoneValid(form.phone)) return showNotification(t("invalidPhone"), "error");
     if (!executeRecaptcha) {
-      showNotification("Please verify that you are not a robot.", "error");
+      showNotification("Recaptcha not ready, please try again.", "error");
       return;
     }
     setLoading(true);
     try {
       const phone = form.phone.startsWith("+") ? form.phone : `+91${form.phone}`;
       // 🔹 recaptcha token generate
-      const recaptchaToken = await executeRecaptcha("login_action");
+      const recaptchaToken = await executeRecaptcha("register_action");
       await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/otp/send`, {
         phone,
         email: form.email,

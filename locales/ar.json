@@ -30,7 +30,9 @@
     "communityDrives": "حملات المجتمع",
     "schoolPrograms": "برامج المدارس",
     "corporatePartnerships": "شراكات الشركات",
-    "rightsReserved": "جميع الحقوق محفوظة."
+    "rightsReserved": "جميع الحقوق محفوظة.",
+    "shipping": "سياسة الشحن",
+    "cancellation&refund": "الإلغاء والاسترداد"
   },
   "notification": {
     "close": "إغلاق",
@@ -486,6 +488,35 @@
   "addedToCart": "تمت الإضافة إلى السلة",
   "pleaseLogin": "يرجى تسجيل الدخول أولاً.",
   "addFailed": "فشل في الإضافة إلى السلة."
-}
-
+},
+"shippingPolicy": {
+    "title": "سياسة الشحن",
+    "intro": "نحن ملتزمون بتسليم منتجاتك بسرعة وأمان.",
+    "processingTitle": "معالجة الطلب",
+    "processingText": "يتم معالجة الطلبات خلال 1-2 يوم عمل بعد التأكيد.",
+    "shippingPartnersTitle": "شركاء الشحن",
+    "shippingPartnersText": "نتعاون مع شركات بريد موثوقة لضمان التسليم.",
+    "deliveryTimeTitle": "وقت التسليم",
+    "deliveryTimeText": "عادةً ما يتم تسليم الطلبات المحلية خلال 5-7 أيام عمل. قد تستغرق المناطق النائية وقتاً أطول.",
+    "trackingTitle": "تتبع الطلب",
+    "trackingText": "بمجرد الشحن، ستتلقى رمز التتبع عبر البريد الإلكتروني/الرسائل القصيرة.",
+    "internationalTitle": "الشحن الدولي",
+    "internationalText": "حالياً، لا ندعم الشحن الدولي.",
+    "contactTitle": "اتصل بنا",
+    "contactText": "للاستفسارات المتعلقة بالشحن: support@greeneye.foundation",
+    "rightsReserved": "جميع الحقوق محفوظة."
+  },
+  "cancellationsRefunds": {
+    "title": "سياسة الإلغاء والاسترداد",
+    "intro": "نريدك أن تحصل على تجربة تسوق سلسة معنا.",
+    "cancellationTitle": "إلغاء الطلبات",
+    "cancellationText": "يمكن إلغاء الطلبات قبل شحنها فقط. بعد الشحن، لا يمكن الإلغاء.",
+    "refundTitle": "سياسة الاسترداد",
+    "refundText": "تتم معالجة المبالغ المستردة خلال 7-10 أيام عمل إلى طريقة الدفع الأصلية بعد التحقق من المنتج المرتجع.",
+    "exceptionsTitle": "العناصر غير القابلة للاسترداد",
+    "exceptionsText": "المنتجات المخصصة، السلع القابلة للتلف، والعناصر المعلّمة 'بيع نهائي' غير قابلة للاسترداد.",
+    "contactTitle": "اتصل بنا",
+    "contactText": "للاستفسارات حول الإلغاء والاسترداد: support@greeneye.foundation",
+    "rightsReserved": "جميع الحقوق محفوظة."
+  }
 }

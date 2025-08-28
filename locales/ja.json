@@ -30,7 +30,9 @@
     "communityDrives": "コミュニティ活動",
     "schoolPrograms": "学校プログラム",
     "corporatePartnerships": "企業パートナーシップ",
-    "rightsReserved": "全著作権所有。"
+    "rightsReserved": "全著作権所有。",
+    "shipping": "配送ポリシー",
+    "cancellation&refund": "キャンセルと返金"
   },
   "notification": {
     "close": "閉じる",
@@ -486,6 +488,36 @@
   "addedToCart": "カートに追加されました",
   "pleaseLogin": "まずログインしてください。",
   "addFailed": "カートへの追加に失敗しました。"
-}
+},
+  "shippingPolicy": {
+    "title": "配送ポリシー",
+    "intro": "私たちは製品を迅速かつ安全にお届けすることを約束します。",
+    "processingTitle": "注文処理",
+    "processingText": "注文は確認後1～2営業日以内に処理されます。",
+    "shippingPartnersTitle": "配送パートナー",
+    "shippingPartnersText": "信頼できる配送業者と提携しています。",
+    "deliveryTimeTitle": "配送時間",
+    "deliveryTimeText": "国内注文は通常5〜7営業日で配達されます。遠隔地ではさらに時間がかかる場合があります。",
+    "trackingTitle": "注文追跡",
+    "trackingText": "発送後、メールまたはSMSで追跡IDをお送りします。",
+    "internationalTitle": "海外配送",
+    "internationalText": "現在、国際配送には対応しておりません。",
+    "contactTitle": "お問い合わせ",
+    "contactText": "配送に関するお問い合わせ: support@greeneye.foundation",
+    "rightsReserved": "全著作権所有."
+  },
+  "cancellationsRefunds": {
+    "title": "キャンセルおよび返金ポリシー",
+    "intro": "快適にショッピングを楽しんでいただきたいと考えています。",
+    "cancellationTitle": "注文キャンセル",
+    "cancellationText": "注文は発送前であればキャンセル可能です。発送後はキャンセルできません。",
+    "refundTitle": "返金ポリシー",
+    "refundText": "返金は返品商品の確認後、7〜10営業日以内に元のお支払い方法に処理されます。",
+    "exceptionsTitle": "返金不可商品",
+    "exceptionsText": "カスタマイズ製品、生鮮品、'最終販売' と表示された商品は返金できません。",
+    "contactTitle": "お問い合わせ",
+    "contactText": "返金・キャンセルに関するお問い合わせ: support@greeneye.foundation",
+    "rightsReserved": "全著作権所有."
+  }
 
 }
