@@ -25,28 +25,31 @@ const ShippingPolicy = () => {
         color: "#1b4332"
       }}>
         <p>{t("intro")}</p>
+
+        <h2 style={{ color: "#2d6a4f" }}>{t("domesticTitle")}</h2>
+        <p>{t("domesticText")}</p>
+
         <h2 style={{ color: "#2d6a4f" }}>{t("processingTitle")}</h2>
         <p>{t("processingText")}</p>
-        <h2 style={{ color: "#2d6a4f" }}>{t("shippingPartnersTitle")}</h2>
-        <p>{t("shippingPartnersText")}</p>
-        <h2 style={{ color: "#2d6a4f" }}>{t("deliveryTimeTitle")}</h2>
-        <p>{t("deliveryTimeText")}</p>
-        <h2 style={{ color: "#2d6a4f" }}>{t("trackingTitle")}</h2>
-        <p>{t("trackingText")}</p>
-        <h2 style={{ color: "#2d6a4f" }}>{t("internationalTitle")}</h2>
-        <p>{t("internationalText")}</p>
+
+        <h2 style={{ color: "#2d6a4f" }}>{t("liabilityTitle")}</h2>
+        <p>{t("liabilityText")}</p>
+
+        <h2 style={{ color: "#2d6a4f" }}>{t("paymentsTitle")}</h2>
+        <p>{t("paymentsText")}</p>
+
+        <h2 style={{ color: "#2d6a4f" }}>{t("servicesTitle")}</h2>
+        <p>{t("servicesText")}</p>
+
+        <h2 style={{ color: "#2d6a4f" }}>{t("chargesTitle")}</h2>
+        <p>{t("chargesText")}</p>
+
+        <h2 style={{ color: "#2d6a4f" }}>{t("disclaimerTitle")}</h2>
+        <p>{t("disclaimerText")}</p>
+
         <h2 style={{ color: "#2d6a4f" }}>{t("contactTitle")}</h2>
         <p>{t("contactText")}</p>
       </div>
-      <footer style={{
-        background: "#2d6a4f",
-        color: "#fff",
-        textAlign: "center",
-        padding: "1rem",
-        marginTop: "2rem"
-      }}>
-        &copy; 2025 GreenEye. {t("rightsReserved")}
-      </footer>
     </main>
   );
 };

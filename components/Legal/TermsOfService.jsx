@@ -39,20 +39,11 @@ const TermsOfService = () => {
         <h2 style={{ color: "#2d6a4f" }}>{t("contactTitle")}</h2>
         <p>{t("contactText")}</p>
         <p>
-          📞 Phone: 7023277322<br />
+          📞 Phone: +91 92264-92263<br />
           📧 Email: contact@greeneye.foundation<br />
           🏠 Address: Prime, C11, Kanak Vrindavan, Jaipur, Rajasthan, Bajiri Mandi-302034
         </p>
       </div>
-      <footer style={{
-        background: "#2d6a4f",
-        color: "#fff",
-        textAlign: "center",
-        padding: "1rem",
-        marginTop: "2rem"
-      }}>
-        &copy; 2025 GreenEye. {t("rightsReserved")}
-      </footer>
     </main>
   );
 };
