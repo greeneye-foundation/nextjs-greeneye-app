@@ -151,22 +151,9 @@ const Checkout = () => {
           description: t("razorpayDesc"),
           order_id: createdOrder.paymentResult.id,
           handler: async function (response) {
-            const verifyRes = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/payment/verify`, {
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-              orderId: createdOrder._id,
-            }, {
-              headers: { Authorization: `Bearer ${token}` }
-            });
-
-            if (verifyRes.data.success) {
-              setSuccess(t("paymentSuccess"));
-              setCart(null);
-              router.push("/myorders");
-            } else {
-              setError(t("paymentVerifyFail"));
-            }
+            setSuccess(t("paymentProcessing"));
+            setCart(null);
+            router.push("/myorders"); 
           },
           prefill: {
             name: userInfo.name,

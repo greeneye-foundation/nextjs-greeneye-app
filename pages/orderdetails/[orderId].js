@@ -62,7 +62,15 @@ const OrderDetails = () => {
   return (
     <div className="container" style={{ maxWidth: 600, marginTop: 40 }}>
       <Link href="/myorders" passHref legacyBehavior>
-        <a style={{ color: "#388e3c", textDecoration: "none", marginTop: 20, marginBottom: 18, display: "inline-block" }}>
+        <a
+          style={{
+            color: "#388e3c",
+            textDecoration: "none",
+            marginTop: 20,
+            marginBottom: 18,
+            display: "inline-block",
+          }}
+        >
           <i className="fas fa-arrow-left"></i> {t("backToOrders")}
         </a>
       </Link>
@@ -71,9 +79,11 @@ const OrderDetails = () => {
         <h2 style={{ marginBottom: 10 }}>
           {t("order")} #{order._id.slice(-6).toUpperCase()}
         </h2>
+
         <div style={{ color: "#888", fontSize: 14, marginBottom: 16 }}>
           {t("placed")}: {new Date(order.createdAt).toLocaleString()}
         </div>
+
         <div>
           <b>{t("status")}: </b>
           <span
@@ -86,6 +96,24 @@ const OrderDetails = () => {
           </span>
         </div>
 
+        {/* ✅ Payment Status */}
+        <div style={{ marginTop: 8 }}>
+          <b>{t("paymentStatus")}: </b>
+          <span
+            style={{
+              color: order.isPaid ? "#388e3c" : "#b62222",
+              fontWeight: 600,
+            }}
+          >
+            {order.isPaid ? t("paid") : t("notPaid")}
+          </span>
+        </div>
+
+        {/* ✅ Payment Method */}
+        <div style={{ marginTop: 8 }}>
+          <b>{t("paymentMethod")}: </b> {order.paymentMethod}
+        </div>
+
         <div style={{ margin: "18px 0" }}>
           <b>{t("shippingAddress")}:</b>
           <div>{order.shippingAddress?.name}</div>
@@ -94,7 +122,9 @@ const OrderDetails = () => {
             {order.shippingAddress?.city}, {order.shippingAddress?.state}{" "}
             {order.shippingAddress?.pincode}
           </div>
-          <div>{t("phone")}: {order.shippingAddress?.phone}</div>
+          <div>
+            {t("phone")}: {order.shippingAddress?.phone}
+          </div>
         </div>
 
         <div>
@@ -117,9 +147,6 @@ const OrderDetails = () => {
             (sum, item) => sum + item.price * item.quantity,
             0
           )}
-        </div>
-        <div style={{ marginTop: 8 }}>
-          {t("payment")}: <b>{order.paymentMethod}</b>
         </div>
       </div>
     </div>

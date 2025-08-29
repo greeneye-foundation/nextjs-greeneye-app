@@ -309,7 +309,7 @@
     "backToOrders": "Back to Orders",
     "order": "Order",
     "placed": "Placed",
-    "status": "Status",
+    "status": "Delivery Status",
     "delivered": "Delivered",
     "pending": "Pending",
     "shippingAddress": "Shipping Address",
@@ -317,7 +317,11 @@
     "items": "Items",
     "product": "Product",
     "total": "Total",
-    "payment": "Payment"
+    "payment": "Payment",
+    "paymentMethod": "Payment Method",
+    "paymentStatus": "Payment Status",
+    "paid": "Paid",
+    "notPaid": "Not Paid"
   },
   "donationDetails": {
     "loading": "Loading donation...",
@@ -351,9 +355,14 @@
     "order": "Order",
     "placed": "Placed",
     "items": "Items",
-    "status": "Status",
+    "status": "Delivery Status",
     "delivered": "Delivered",
-    "pending": "Pending"
+    "pending": "Pending",
+    "payment": "Payment",
+    "paymentMethod": "Payment Method",
+    "paymentStatus": "Payment Status",
+    "paid": "Paid",
+    "notPaid": "Not Paid"
   },
   "profilePage": {
     "loading": "Loading profile...",
@@ -416,7 +425,8 @@
     "paymentSuccess": "Payment successful! 🌱",
     "paymentVerifyFail": "Payment verification failed.",
     "orderPlacedCOD": "Order placed successfully with COD!",
-    "placeOrderFail": "Failed to place order."
+    "placeOrderFail": "Failed to place order.",
+    "paymentProcessing": "Payment Processing"
   },
   "login": {
     "signInTitle": "Sign in to Your Account",

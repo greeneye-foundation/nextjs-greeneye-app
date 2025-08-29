@@ -77,12 +77,35 @@ export default function MyOrders() {
             <div style={{ fontWeight: 600, fontSize: 16 }}>
               {t('order')} #{order._id.slice(-6).toUpperCase()}
             </div>
+
             <div style={{ fontSize: 13, color: '#666' }}>
               {t('placed')}: {new Date(order.createdAt).toLocaleString()}
             </div>
+
             <div style={{ fontSize: 13, color: '#888', margin: '6px 0' }}>
               {t('items')}: {order.orderItems.length}
             </div>
+
+            {/* ✅ Payment Method */}
+            <div style={{ fontSize: 13, color: '#444', margin: '6px 0' }}>
+              <span style={{ fontWeight: 500 }}>{t('paymentMethod')}:</span>{' '}
+              {order.paymentMethod}
+            </div>
+
+            {/* ✅ Payment Status */}
+            <div>
+              <span style={{ fontWeight: 500 }}>{t('payment')}:</span>{' '}
+              <span
+                style={{
+                  color: order.isPaid ? '#388e3c' : '#b62222',
+                  fontWeight: 600,
+                }}
+              >
+                {order.isPaid ? t('paid') : t('notPaid')}
+              </span>
+            </div>  
+
+            {/* ✅ Delivery Status */}
             <div>
               <span style={{ fontWeight: 500 }}>{t('status')}:</span>{' '}
               <span
