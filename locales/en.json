@@ -179,7 +179,8 @@
     "donationFail": "Donation failed. Please try again later.",
     "processing": "Processing...",
     "donateNow": "Donate Now",
-    "note": "All donations are secure and tax-deductible under 80G"
+    "note": "All donations are secure and tax-deductible under 80G",
+    "paymentProcessing": "Payment Processing"
   },
   "plantshop": {
     "storeTitle": "Plant Store",

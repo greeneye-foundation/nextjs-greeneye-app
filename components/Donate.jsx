@@ -16,6 +16,7 @@ const Donate = () => {
   });
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [success, setSuccess] = useState("");
   const t = useTranslations("donate");
 
   // Auto-fill profile info if logged in (safe for SSR)
@@ -66,21 +67,26 @@ const Donate = () => {
     e.preventDefault();
 
     if (!amount || parseInt(amount, 10) < 50) {
-      showNotification(t("minAmountError", { defaultMessage: "Please enter a minimum donation amount of ₹50." }), "error");
+      showNotification(
+        t("minAmountError", { defaultMessage: "Please enter a minimum donation amount of ₹50." }),
+        "error"
+      );
       return;
     }
 
     setLoading(true);
 
     try {
-      const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/donations/create`, {
-        donorName: form.donorName,
-        donorEmail: form.donorEmail,
-        donorPhone: form.donorPhone,
-        amount: parseInt(amount, 10),
-      });
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/donations/create`,
+        {
+          donorName: form.donorName,
+          donorEmail: form.donorEmail,
+          donorPhone: form.donorPhone,
+          amount: parseInt(amount, 10),
+        }
+      );
 
-      // Only open Razorpay if we're on the client
       if (typeof window !== "undefined" && window.Razorpay) {
         const options = {
           key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
@@ -90,29 +96,11 @@ const Donate = () => {
           description: t("razorpayDesc", { defaultMessage: "Thank you for your support!" }),
           order_id: data.orderId,
           handler: async function (response) {
-            try {
-              const verifyRes = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/donations/verify`, {
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature,
-                donationId: data.donationId,
-              });
-
-              if (verifyRes.data.success) {
-                showNotification(
-                  t("successMessage", { amount }),
-                  "success"
-                );
-                setAmount("");
-                setForm({ donorName: "", donorEmail: "", donorPhone: "" });
-                setActiveBtn(null);
-                router.push("/mydonation");
-              } else {
-                showNotification(t("verifyFail", { defaultMessage: "Payment verification failed. Please try again." }), "error");
-              }
-            } catch {
-              showNotification(t("verifyFail", { defaultMessage: "Payment verification failed. Please try again." }), "error");
-            }
+            setSuccess(t("paymentProcessing"));
+            setAmount("");
+            setForm({ donorName: "", donorEmail: "", donorPhone: "" });
+            setActiveBtn(null);
+            router.push("/mydonation");
           },
           prefill: {
             name: form.donorName,
@@ -125,10 +113,16 @@ const Donate = () => {
         const razor = new window.Razorpay(options);
         razor.open();
       } else {
-        showNotification(t("donationFail", { defaultMessage: "Donation failed. Please try again later." }), "error");
+        showNotification(
+          t("donationFail", { defaultMessage: "Donation failed. Please try again later." }),
+          "error"
+        );
       }
     } catch (err) {
-      showNotification(t("donationFail", { defaultMessage: "Donation failed. Please try again later." }), "error");
+      showNotification(
+        t("donationFail", { defaultMessage: "Donation failed. Please try again later." }),
+        "error"
+      );
     } finally {
       setLoading(false);
     }

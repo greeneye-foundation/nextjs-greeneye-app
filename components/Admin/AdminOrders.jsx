@@ -82,7 +82,8 @@ function AdminOrders() {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/payment/check-status`,
         {
           razorpay_order_id: selectedOrder.paymentResult?.id,
-          orderId: selectedOrder._id,
+          entityId: selectedOrder._id,
+          entityType: "order"
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -142,16 +143,18 @@ function AdminOrders() {
             >
               &times;
             </button>
-            
+
             {/* ✅ Top Right Sync Payment Button */}
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <h3 style={{ fontWeight: 600, marginBottom: 14 }}>Order Details</h3>
-              <button
-                onClick={handleSyncPayment}
-                className="px-3 py-1 bg-green-600 text-white rounded-md"
-              >
-                Sync Payment
-              </button>
+              {!selectedOrder.isPaid && (
+                <button
+                  onClick={handleSyncPayment}
+                  className="px-3 py-1 bg-green-600 text-white rounded-md"
+                >
+                  Sync Payment
+                </button>
+              )}
             </div>
 
             <div style={{ marginBottom: 18, fontSize: "1.05rem" }}>

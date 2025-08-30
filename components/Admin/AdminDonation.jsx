@@ -5,6 +5,7 @@ const AdminDonation = () => {
   const [donations, setDonations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [expandedRow, setExpandedRow] = useState(null);
 
   // Filters
   const [donor, setDonor] = useState("");
@@ -19,7 +20,6 @@ const AdminDonation = () => {
     try {
       const token = localStorage.getItem("authToken");
 
-      // Create query params string
       const params = new URLSearchParams();
       if (donor) params.append("donor", donor);
       if (phone) params.append("phone", phone);
@@ -48,6 +48,31 @@ const AdminDonation = () => {
   const handleFilter = (e) => {
     e.preventDefault();
     fetchDonations();
+  };
+
+  // ✅ Sync Payment Function
+  const handleSyncPayment = async (donation) => {
+    try {
+      const token = localStorage.getItem("authToken");
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/payment/check-status`,
+        {
+          razorpay_order_id: donation.paymentInfo?.razorpay_order_id,
+          entityId: donation._id,
+          entityType: "donation",
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      if (res.data.success) {
+        alert("✅ Donation payment synced successfully!");
+        fetchDonations();
+      } else {
+        alert("⚠️ " + res.data.message);
+      }
+    } catch (err) {
+      alert("❌ Sync failed: " + (err.response?.data?.message || err.message));
+    }
   };
 
   return (
@@ -111,18 +136,55 @@ const AdminDonation = () => {
             </thead>
             <tbody>
               {donations.map((donation, index) => (
-                <tr key={donation._id}>
-                  <td>{index + 1}</td>
-                  <td>{donation.donorName}</td>
-                  <td>{donation.donorEmail}</td>
-                  <td>{donation.donorPhone}</td>
-                  <td>₹{donation.amount}</td>
-                  <td style={{ color: donation.isPaid ? "green" : "red" }}>
-                    {donation.isPaid ? "Yes" : "No"}
-                  </td>
-                  <td>{new Date(donation.createdAt).toLocaleString()}</td>
-                  <td>{donation.paymentInfo?.razorpay_payment_id || "-"}</td>
-                </tr>
+                <React.Fragment key={donation._id}>
+                  <tr
+                    onClick={() =>
+                      setExpandedRow(expandedRow === donation._id ? null : donation._id)
+                    }
+                    style={{ cursor: "pointer" }}
+                  >
+                    <td>{index + 1}</td>
+                    <td>{donation.donorName}</td>
+                    <td>{donation.donorEmail}</td>
+                    <td>{donation.donorPhone}</td>
+                    <td>₹{donation.amount}</td>
+                    <td style={{ color: donation.isPaid ? "green" : "red" }}>
+                      {donation.isPaid ? "Yes" : "No"}
+                    </td>
+                    <td>{new Date(donation.createdAt).toLocaleString()}</td>
+                    <td>{donation.paymentInfo?.razorpay_payment_id || "-"}</td>
+                  </tr>
+
+                  {/* Expandable Row */}
+                  {expandedRow === donation._id && (
+                    <tr>
+                      <td colSpan="8">
+                        <div
+                          style={{
+                            background: "#f9f9f9",
+                            padding: "10px",
+                            marginTop: "5px",
+                            border: "1px solid #ddd",
+                            borderRadius: "6px",
+                          }}
+                        >
+                          <strong>Donation Details</strong>
+                          <p>Order ID: {donation.paymentInfo?.razorpay_order_id || "-"}</p>
+                          <p>Status: {donation.isPaid ? "✅ Paid" : "❌ Not Paid"}</p>
+
+                          {!donation.isPaid && (
+                            <button
+                              onClick={() => handleSyncPayment(donation)}
+                              className="px-3 py-1 bg-green-600 text-white rounded-md"
+                            >
+                              Sync Payment
+                            </button>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </React.Fragment>
               ))}
             </tbody>
           </table>
