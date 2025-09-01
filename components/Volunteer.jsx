@@ -211,7 +211,7 @@ const Volunteer = () => {
         <div className="volunteer-content">
           <div className="volunteer-image">
             <img
-              src="https://scontent.fjai6-1.fna.fbcdn.net/v/t1.6435-9/41851338_10216974293654823_3818402281796141056_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=127cfc&_nc_ohc=NIxd0_BJSY4Q7kNvwHukHj1&_nc_oc=AdkowrgTEEFcoVA6VPOtboTdFK8hkpEAY4WmGfLJjcQBRTSfDTIQr0ZjF8ertzgd6BiieuGMTOZSwtzopByUdv2M&_nc_zt=23&_nc_ht=scontent.fjai6-1.fna&_nc_gid=9M0gAQZGlXDM2bwaQrSWkw&oh=00_AfR7TEgQejd0NDz_u_dUr3Ko_WtjB4re01Fw3AJEg2eCvg&oe=68A04852"
+              src="/assets/Community_Volunteer.png"
               alt={t("volunteerImgAlt")}
             />
           </div>
