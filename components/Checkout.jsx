@@ -197,7 +197,7 @@ const Checkout = () => {
       if (paymentMethod === "Razorpay") {
         const razorpayOptions = {
           key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-          amount: createdOrder.totalPrice * 100,
+          amount: createdOrder.finalPrice * 100,
           currency: "INR",
           name: "GreenEye Store",
           description: t("razorpayDesc"),
