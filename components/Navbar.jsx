@@ -7,11 +7,11 @@ import { useTranslations } from "next-intl";
 
 const NAV_LINKS = [
   { href: "/", labelKey: "home" },
-  { href: "/programs", labelKey: "programs" },
-  { href: "/impact", labelKey: "impact" },
+  { href: "/programs", labelKey: "projects" },
+  { href: "/blog", labelKey: "blog" },
+  // { href: "/impact", labelKey: "impact" },
   { href: "/volunteer", labelKey: "volunteer" },
   { href: "/donate", labelKey: "donate" },
-  { href: "/blog", labelKey: "blog" },
   { href: "/contact", labelKey: "contact" },
 ];
 

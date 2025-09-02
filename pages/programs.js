@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl';
 import Seo from '@/components/common/Seo';
 import Programs from '@/components/Programs';
+import Impact from '@/components/Impact';
 
 export function getStaticProps({ locale }) {
   return {
@@ -28,6 +29,7 @@ export default function ProgramsPage() {
           <p>{t('pageSubtitle', { defaultMessage: 'Explore our reforestation, education, and community initiatives.' })}</p>
         </div>
       </section>
+      <Impact />
       <Programs />
     </>
   );

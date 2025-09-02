@@ -21,6 +21,13 @@ const Checkout = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  // ✅ Coupon States
+  const [couponBoxOpen, setCouponBoxOpen] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
+  const [availableCoupons, setAvailableCoupons] = useState([]);
+  const [discount, setDiscount] = useState(0);
+  const [finalAmount, setFinalAmount] = useState(0);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -70,13 +77,32 @@ const Checkout = () => {
       }
     };
 
+    // ✅ Fetch available coupons
+    const fetchCoupons = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+        if (!token) return;
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/coupons`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setAvailableCoupons(res.data);
+      } catch (err) {
+        console.error("Failed to fetch coupons:", err);
+      }
+    };
+
     fetchCart();
     fetchUserInfo();
+    fetchCoupons();
     // eslint-disable-next-line
   }, []);
 
   const total =
     cart?.items.reduce((sum, item) => sum + item.plant.price * item.quantity, 0) || 0;
+
+  useEffect(() => {
+    setFinalAmount(total - discount);
+  }, [total, discount]);
 
   const handleChange = (e) => {
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
@@ -91,6 +117,31 @@ const Checkout = () => {
     if (!/^\d{6}$/.test(pincode)) return t("invalidPincode");
     if (!cart || !cart.items || cart.items.length === 0) return t("cartEmpty");
     return "";
+  };
+
+  // ✅ Apply Coupon
+  const handleApplyCoupon = async () => {
+    setError("");
+    setSuccess("");
+    try {
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        setError(t("loginRequired"));
+        return;
+      }
+
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/coupons/apply`,
+        { code: couponCode, orderAmount: total },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setDiscount(res.data.discount);
+      setFinalAmount(res.data.finalAmount);
+      setSuccess(`Coupon applied! You saved ₹${res.data.discount}`);
+    } catch (err) {
+      setError(err.response?.data?.message || "Invalid coupon");
+    }
   };
 
   const handlePlaceOrder = async (e) => {
@@ -131,6 +182,7 @@ const Checkout = () => {
         orderItems,
         shippingAddress,
         paymentMethod,
+        couponCode: couponCode || null, // ✅ send couponCode
       };
 
       const res = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/orders`, orderData, {
@@ -150,10 +202,10 @@ const Checkout = () => {
           name: "GreenEye Store",
           description: t("razorpayDesc"),
           order_id: createdOrder.paymentResult.id,
-          handler: async function (response) {
+          handler: async function () {
             setSuccess(t("paymentProcessing"));
             setCart(null);
-            router.push("/myorders"); 
+            router.push("/myorders");
           },
           prefill: {
             name: userInfo.name,
@@ -186,13 +238,14 @@ const Checkout = () => {
       borderRadius: 12,
       boxShadow: "0 2px 16px #e0e0e0"
     }}>
-    <Link
+      <Link
         href="/plantshop"
         style={{ color: "#388e3c", textDecoration: "none", fontWeight: 600 }}
       >
         ← Back to Plant Shop
       </Link>
-      <h2 style={{ marginBottom: 22 }}>{t("checkoutTitle")}</h2>
+        {/* Address Fields */}
+        <h2 style={{ marginBottom: 22 }}>{t("checkoutTitle")}</h2>
       <form onSubmit={handlePlaceOrder} autoComplete="off">
         {[
           { label: t("name"), name: "name" },
@@ -230,6 +283,77 @@ const Checkout = () => {
           </div>
         ))}
 
+        {/* ✅ Coupon Section */}
+        <div style={{ marginBottom: 20 }}>
+          <button
+            type="button"
+            onClick={() => setCouponBoxOpen(!couponBoxOpen)}
+            style={{
+              background: "transparent",
+              border: "1px solid #388e3c",
+              padding: "6px 14px",
+              borderRadius: 6,
+              cursor: "pointer",
+              color: "#388e3c",
+              fontWeight: 600,
+            }}
+          >
+            {couponBoxOpen ? "Hide Coupon" : "Apply Coupon"}
+          </button>
+
+          {couponBoxOpen && (
+            <div style={{ marginTop: 10 }}>
+              <input
+                type="text"
+                value={couponCode}
+                onChange={(e) => setCouponCode(e.target.value)}
+                placeholder="Enter coupon code"
+                style={{ width: "100%", padding: 8, marginBottom: 10 }}
+              />
+              <button
+                type="button"
+                onClick={handleApplyCoupon}
+                style={{
+                  padding: "8px 18px",
+                  background: "#388e3c",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: 6,
+                  cursor: "pointer",
+                }}
+              >
+                Apply
+              </button>
+
+              {availableCoupons.length > 0 && (
+                <div style={{ marginTop: 14 }}>
+                  <strong>Available Coupons:</strong>
+                  <ul style={{ padding: 0, listStyle: "none" }}>
+                    {availableCoupons.map((c) => (
+                      <li
+                        key={c._id}
+                        style={{
+                          cursor: "pointer",
+                          padding: "6px 8px",
+                          border: "1px dashed #ccc",
+                          marginTop: 6,
+                          borderRadius: 6,
+                        }}
+                        onClick={() => setCouponCode(c.code)}
+                      >
+                        {c.code} - {c.discountType === "percentage"
+                          ? `${c.discountValue}%`
+                          : `₹${c.discountValue}`}{" "}
+                        off
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
         <div style={{ marginBottom: 20 }}>
           <label>{t("paymentMethod")}*</label>
           <div>
@@ -264,8 +388,16 @@ const Checkout = () => {
         ) : (
           <div style={{ color: "#b62222", marginBottom: 8 }}>{t("cartNoItems")}</div>
         )}
+
+        {/* ✅ Show Discount */}
+        {discount > 0 && (
+          <div style={{ textAlign: "right", fontSize: 16, color: "#388e3c" }}>
+            Discount: -₹{discount}
+          </div>
+        )}
+
         <div style={{ textAlign: "right", fontWeight: 600, fontSize: 18, color: "#388e3c" }}>
-          {t("total")}: ₹{total}
+          {t("total")}: ₹{finalAmount || total}
         </div>
 
         {error && <div style={{ color: "#b62222", marginTop: 12 }}>{error}</div>}

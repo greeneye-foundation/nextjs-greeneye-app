@@ -9,7 +9,7 @@ export async function getServerSideProps({ locale }) {
     props: {
       messages: require(`../../locales/${locale}.json`),
       locale,
-    }
+    },
   };
 }
 
@@ -58,6 +58,16 @@ const OrderDetails = () => {
       </div>
     );
   }
+
+  // ✅ Calculate subtotal
+  const subtotal = order.orderItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+
+  // ✅ Coupon & Discount
+  const discount = order.discount || 0; // backend me save hona chahiye
+  const finalTotal = order.finalPrice || subtotal - discount;
 
   return (
     <div className="container" style={{ maxWidth: 600, marginTop: 40 }}>
@@ -141,12 +151,25 @@ const OrderDetails = () => {
           </ul>
         </div>
 
-        <div style={{ marginTop: 18, fontWeight: 600 }}>
-          {t("total")}: ₹
-          {order.orderItems.reduce(
-            (sum, item) => sum + item.price * item.quantity,
-            0
+        {/* ✅ Price Summary */}
+        <div style={{ marginTop: 18, fontWeight: 500 }}>
+          <div>Subtotal: ₹{subtotal}</div>
+
+          {order.coupon && (
+            <div style={{ color: "#1976d2", marginTop: 4 }}>
+              Coupon Applied: <b>{order.coupon.code}</b>
+            </div>
           )}
+
+          {discount > 0 && (
+            <div style={{ color: "#b62222", marginTop: 4 }}>
+              Discount: -₹{discount}
+            </div>
+          )}
+
+          <div style={{ marginTop: 8, fontWeight: 700 }}>
+            Final Total: ₹{finalTotal}
+          </div>
         </div>
       </div>
     </div>

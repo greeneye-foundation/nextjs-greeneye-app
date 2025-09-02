@@ -17,16 +17,16 @@ const Footer = () => {
             </div>
             <p>{t('mission')}</p>
             <div className="footer-social">
-              <a href="https://www.facebook.com/piyush.gig" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <a href="https://www.facebook.com/greeneye.foundation" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                 <i className="fab fa-facebook"></i>
               </a>
-              <a href="https://twitter.com/" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+              <a href="https://x.com/greeneye_india/" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
                 <i className="fab fa-twitter"></i>
               </a>
-              <a href="https://instagram.com/" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <a href="https://www.instagram.com/greeneye.foundation/" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                 <i className="fab fa-instagram"></i>
               </a>
-              <a href="https://www.linkedin.com/in/piyugig/" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <a href="https://www.linkedin.com/company/greeneye-foundation/" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                 <i className="fab fa-linkedin"></i>
               </a>
             </div>

@@ -41,15 +41,15 @@ const Hero = () => {
 
       <div className="hero-stats">
         <div className="stat-item">
-          <span className="stat-number" data-target="50000">0</span>
+          <span className="stat-number" data-target="50000">50000+</span>
           <span className="stat-label">{t("statTrees")}</span>
         </div>
         <div className="stat-item">
-          <span className="stat-number" data-target="1200">0</span>
+          <span className="stat-number" data-target="1200">1200+</span>
           <span className="stat-label">{t("statVolunteers")}</span>
         </div>
         <div className="stat-item">
-          <span className="stat-number" data-target="25">0</span>
+          <span className="stat-number" data-target="25">25+</span>
           <span className="stat-label">{t("statCities")}</span>
         </div>
       </div>
