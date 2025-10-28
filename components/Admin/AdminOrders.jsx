@@ -109,7 +109,7 @@ function AdminOrders() {
           <thead>
             <tr>
               <th>Order ID</th>
-              <th>User Name</th>
+              <th>User ID</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -122,7 +122,7 @@ function AdminOrders() {
               >
                 <td style={{ color: "#388e3c", fontWeight: 600 }}>{order._id}</td>
                 <td style={{ color: "#1a2332" }}>
-                  {order.user?.name || ""}
+                  {order.user?.name || order.user}
                 </td>
                 <td style={{ color: "#388e3c", fontWeight: 500 }}>
                   {order.orderStatus || (order.isDelivered ? "Delivered" : "Pending")}
@@ -159,32 +159,60 @@ function AdminOrders() {
 
             <div style={{ marginBottom: 18, fontSize: "1.05rem" }}>
               <div><b>Order ID:</b> {selectedOrder._id}</div>
-              <div><b>User Name:</b> {selectedOrder.user?.name}</div>
+              <div><b>User:</b> {selectedOrder.user?.name || selectedOrder.user}</div>
               <div><b>Created:</b> {new Date(selectedOrder.createdAt).toLocaleString()}</div>
-              <div><b>Payment:</b> {selectedOrder.paymentMethod}</div>
-              <div><b>Total Amount:</b> ₹{selectedOrder.totalPrice}</div>
+              <div><b>Payment Method:</b> {selectedOrder.paymentMethod}</div>
+
+              {/* ✅ Coupon & Discount Info */}
+              {selectedOrder.coupon && (
+                <div style={{ marginTop: 6 }}>
+                  <b>Coupon Code:</b> {selectedOrder.couponCode} <br />
+                </div>
+              )}
+
+              {/* ✅ Price Calculation */}
+              <div style={{ marginTop: 8 }}>
+                <b>Items Total:</b> ₹{selectedOrder.totalPrice}
+              </div>
+              {selectedOrder.discount > 0 && (
+                <div>
+                  <b>Discount:</b> -₹{selectedOrder.discount}
+                </div>
+              )}
               <div>
+                <b>Final Amount:</b>{" "}
+                <span style={{ color: "#388e3c", fontWeight: 600 }}>
+                  ₹{selectedOrder.finalPrice}
+                </span>
+              </div>
+
+              {/* ✅ Shipping */}
+              <div style={{ marginTop: 10 }}>
                 <b>Shipping:</b>{" "}
                 {selectedOrder.shippingAddress?.name},{" "}
-                {selectedOrder.shippingAddress?.address},{" "}
+                {selectedOrder.shippingAddress?.street},{" "}
                 {selectedOrder.shippingAddress?.city},{" "}
                 {selectedOrder.shippingAddress?.state},{" "}
                 {selectedOrder.shippingAddress?.pincode}
                 <br />
                 <b>Phone:</b> {selectedOrder.shippingAddress?.phone}
               </div>
+
+              {/* ✅ Items */}
               <div style={{ marginTop: 8 }}>
                 <b>Items:</b>
                 <ul style={{ margin: 0, paddingLeft: 18 }}>
                   {selectedOrder.orderItems.map((item) => (
                     <li key={item._id}>
-                      {item.name} x {item.quantity} (₹{item.price})
+                      {item.name} x {item.quantity} (₹{item.price}) = ₹
+                      {item.price * item.quantity}
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
 
+            {/* ✅ Order Status */}
             <div style={{ marginBottom: 14 }}>
               <label style={{ fontWeight: 500, marginRight: 8 }}>Order Status: </label>
               <select

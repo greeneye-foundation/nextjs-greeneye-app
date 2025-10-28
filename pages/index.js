@@ -9,6 +9,7 @@ import Volunteer from "@/components/Volunteer";
 import Programs from "@/components/Programs";
 import BlogIndex from "@/components/BlogIndex";
 import Seo from "@/components/common/Seo";
+import InstagramFeed from "@/components/InstagramFeed";
 
 export function getStaticProps({ locale }) {
   return {
@@ -32,6 +33,7 @@ export default function HomePage() {
         ogImage='assets/GreeneyeLandscape.png'
       />
       <Hero />
+      <InstagramFeed />
       <About />
       <BlogIndex />
       <Donate />

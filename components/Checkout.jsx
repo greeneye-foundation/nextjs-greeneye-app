@@ -82,7 +82,7 @@ const Checkout = () => {
       try {
         const token = localStorage.getItem("authToken");
         if (!token) return;
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/coupons`, {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/coupons/available`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setAvailableCoupons(res.data);
