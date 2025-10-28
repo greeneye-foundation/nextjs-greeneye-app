@@ -11,7 +11,7 @@ import Notification from '@/components/Notification';
 import BackToTop from '@/components/BackToTop';
 import Script from 'next/script';
 
-//  supported locales:
+// Supported locales:
 const SUPPORTED = ['en', 'fr', 'es', 'ar', 'zh', 'ja'];
 
 function getPathLocale(asPath) {
@@ -31,8 +31,8 @@ export default function App({ Component, pageProps }) {
   );
   const initialLocale =
     pageProps.locale ||
-    router.locale ||                  // Next i18n locale (if use)
-    getPathLocale(router.asPath) ||   // URL prefix se
+    router.locale || // Next i18n locale (if use)
+    getPathLocale(router.asPath) || // URL prefix
     'en';
 
   const [messages, setMessages] = useState(initialMessages);
@@ -71,26 +71,43 @@ export default function App({ Component, pageProps }) {
       }
     }
     load();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [messages, locale]);
 
-  if (messages == null) return null; 
+  if (messages == null) return null;
 
   return (
     <>
+      {/* ✅ Razorpay checkout script */}
       <Script
         src="https://checkout.razorpay.com/v1/checkout.js"
         strategy="afterInteractive"
       />
 
+      {/* ✅ Google Analytics (gtag.js) */}
+      <Script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-DSTRV6E411"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-DSTRV6E411');
+        `}
+      </Script>
+
+      {/* ✅ Internationalization + Layout */}
       <IntlProvider
         messages={messages}
         locale={locale}
         defaultLocale="en"
-        // This should be a  *function*  (not boolean)
-        getMessageFallback={({key/*, namespace*/}) => key}
+        getMessageFallback={({ key /*, namespace*/ }) => key}
         onError={(err) => {
-          // In Dev noisy errors mute
           if (
             err.code === 'MISSING_MESSAGE' ||
             err.code === 'ENVIRONMENT_FALLBACK'
