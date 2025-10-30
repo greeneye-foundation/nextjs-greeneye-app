@@ -255,10 +255,11 @@ main {
 /* Hero Section */
 .hero {
     padding-top: 20px;
-    padding-bottom: 120px;
-    /* Space for stats */
+    padding-bottom: 80px;
+    /* Reduced space for stats to fit in viewport */
     position: relative;
-    min-height: 100vh;
+    min-height: calc(100vh - 70px);
+    /* Account for navbar height */
     height: auto;
     display: flex;
     align-items: center;
@@ -314,7 +315,8 @@ main {
 .hero-description {
     font-size: clamp(1rem, 2vw, 1.2rem);
     /* Responsive font size */
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    /* Reduced from 2rem */
     color: #333;
     line-height: 1.8;
 }
@@ -324,12 +326,14 @@ main {
     gap: 1rem;
     justify-content: center;
     flex-wrap: wrap;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
+    /* Reduced from 3rem */
 }
 
 .hero-stats {
     position: absolute;
-    bottom: 50px;
+    bottom: 20px;
+    /* Reduced from 50px to fit better */
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
@@ -367,7 +371,8 @@ main {
 .plant-image-wrapper {
     position: absolute;
     right: 10px;
-    bottom: 50px;
+    bottom: 20px;
+    /* Match hero-stats bottom position */
     background-color: #e8f5e8;
     /* Light green background */
     padding: 8px;
@@ -1361,8 +1366,10 @@ section {
 @media (max-width: 480px) {
     .hero {
         padding-top: 0;
-        padding-bottom: 180px;
-        /* More space for stacked stats */
+        padding-bottom: 120px;
+        /* Reduced space for stacked stats to fit in viewport */
+        min-height: calc(100vh - 70px);
+        /* Maintain viewport fit on mobile */
     }
 
     .stat-item {
@@ -1445,11 +1452,20 @@ section {
 /* For tall/narrow phones like iPhone 12 Pro Max */
 @media (max-height: 850px) and (max-width: 480px) {
     .hero {
-        padding-bottom: 200px;
+        padding-bottom: 120px;
+        /* Reduced to fit in viewport without scrolling */
     }
 
     .hero-content {
-        padding-top: 1rem;
+        padding-top: 0.5rem;
+        /* Reduced to save vertical space */
+    }
+
+    .hero-stats {
+        bottom: 15px;
+        /* Closer to bottom for better fit */
+        padding: 0.6rem;
+        /* Reduced padding */
     }
 }
 
