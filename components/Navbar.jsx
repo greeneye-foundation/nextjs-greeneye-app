@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { useTranslations } from "next-intl";
+import LanguageSwitcher from "@/components/common/LanguageSwitcher";
 
 const NAV_LINKS = [
   { href: "/", labelKey: "home" },
@@ -125,7 +126,7 @@ const Navbar = () => {
               <button
                 className="nav-link btn-link"
                 onClick={handleLogout}
-                style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
+                style={{ background: "none", border: "none", padding: 0, cursor: "pointer", font: "inherit" }}
               >
                 <i className="fas fa-sign-out-alt" style={{ marginRight: 5 }}></i>
                 {t("logout")}
@@ -148,6 +149,11 @@ const Navbar = () => {
               </Link>
             </li>
           )}
+
+          {/* Language Switcher integrated into nav menu */}
+          <li className="nav-language-item">
+            <LanguageSwitcher />
+          </li>
         </ul>
 
         <div
