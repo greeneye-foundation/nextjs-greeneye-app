@@ -40,7 +40,7 @@ export default function DonationDetails() {
         setLoading(false)
       })
       .catch((err) => {
-        console.error("Error loading donation:", err)
+        // Error loading donation - show not found state
         setLoading(false)
       })
   }, [id, router])
@@ -55,10 +55,11 @@ export default function DonationDetails() {
 
   return (
     <div className="container" style={{ maxWidth: 600, marginTop: 40 }}>
-      <Link href="/mydonation" passHref legacyBehavior>
-        <a style={{ color: "#388e3c", textDecoration: "none",marginTop:10, marginBottom: 18, display: "inline-block" }}>
-          <i className="fas fa-arrow-left"></i> {t("backToDonations")}
-        </a>
+      <Link
+        href="/mydonation"
+        style={{ color: "#388e3c", textDecoration: "none", marginTop: 10, marginBottom: 18, display: "inline-block" }}
+      >
+        <i className="fas fa-arrow-left"></i> {t("backToDonations")}
       </Link>
 
       <div className="auth-card" style={{ padding: 32 }}>

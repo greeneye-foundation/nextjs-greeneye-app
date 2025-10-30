@@ -37,7 +37,7 @@ export default function MyDonations() {
                 setLoading(false)
             })
             .catch((err) => {
-                console.error('Error fetching donations:', err)
+                // Error fetching donations - show empty state
                 setLoading(false)
             })
     }, [router])

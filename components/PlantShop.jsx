@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTranslations } from "next-intl";
 import useCart from "@/components/cart/useCart";
 import CartDrawer from "@/components/cart/CartDrawer";
+import { showNotification } from "@/components/Notification";
 
 const formatPrice = (price = 0) => `₹${Number(price).toLocaleString()}`;
 
@@ -87,8 +88,14 @@ const PlantShop = () => {
     );
   }, [search, priceRange, countryFiltered]);
 
-  const minPrice = Math.min(...plants.map((p) => Number(p.price || 0)), 0);
-  const maxPrice = Math.max(...plants.map((p) => Number(p.price || 0)), 10000);
+  const minPrice = useMemo(
+    () => (plants.length ? Math.min(...plants.map((p) => Number(p.price || 0))) : 0),
+    [plants]
+  );
+  const maxPrice = useMemo(
+    () => (plants.length ? Math.max(...plants.map((p) => Number(p.price || 0))) : 10000),
+    [plants]
+  );
 
   return (
     <div className="container" style={{ padding: "40px 10px", maxWidth: 1200 }}>
@@ -211,11 +218,6 @@ const PlantShop = () => {
               {t("noPlantsFound")}
             </p>
           )}
-        {filteredPlants.length === 0 && (
-          <p style={{ fontStyle: "italic", opacity: 0.6 }}>
-            {t("noPlantsFound")}
-          </p>
-        )}
 
         {filteredPlants.map((plant) => (
           <div
@@ -301,10 +303,13 @@ const PlantShop = () => {
               onClick={async () => {
                 try {
                   await addToCart(plant);
-                  alert(t("addedToCart"));
+                  showNotification(t("addedToCart"), "success");
                 } catch (e) {
-                  if (e?.message === "LOGIN_REQUIRED") alert(t("loginFirst"));
-                  else alert(e?.response?.data?.message || t("addCartFail"));
+                  if (e?.message === "LOGIN_REQUIRED") {
+                    showNotification(t("loginFirst"), "error");
+                  } else {
+                    showNotification(e?.response?.data?.message || t("addCartFail"), "error");
+                  }
                 }
               }}
               style={{

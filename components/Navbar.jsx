@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState, useMemo  } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -24,14 +24,12 @@ const Navbar = () => {
   const [userInfo, setUserInfo] = useState("");
 
 
-  const t = useTranslations("navbar"); 
+  const t = useTranslations("navbar");
 
-  useEffect(() => {
-    setIsLoggedIn(!!localStorage.getItem("authToken"));
-  }, []);
-
+  // Close menu on route change
   useEffect(() => setMenuActive(false), [router.pathname]);
 
+  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       const navbar = document.getElementById("navbar");
@@ -44,30 +42,40 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Consolidated authentication and user profile check
   useEffect(() => {
-    const checkAuth = () => setIsLoggedIn(!!localStorage.getItem("authToken"));
-    window.addEventListener("storage", checkAuth);
-    checkAuth();
-    return () => window.removeEventListener("storage", checkAuth);
-  }, [router.pathname]);
+    const checkAuthAndFetchUser = async () => {
+      const token = localStorage.getItem("authToken");
+      const hasToken = !!token;
+      setIsLoggedIn(hasToken);
 
-  // Fetch user name
-  useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (isLoggedIn && token) {
-      axios
-        .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/profile`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((res) => {
+      if (hasToken && token) {
+        try {
+          const res = await axios.get(
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/profile`,
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
           setUserName(res.data.name || t("profile"));
           setUserInfo(res.data || {});
-        })
-        .catch(() => setUserName(t("profile")));
-    } else {
-      setUserName("");
-    }
-  }, [isLoggedIn]);
+        } catch (error) {
+          // Token might be invalid, clear auth state
+          setUserName("");
+          setUserInfo({});
+        }
+      } else {
+        setUserName("");
+        setUserInfo({});
+      }
+    };
+
+    checkAuthAndFetchUser();
+
+    // Listen for storage changes (e.g., login/logout in another tab)
+    const handleStorageChange = () => checkAuthAndFetchUser();
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, [router.pathname, t]);
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");

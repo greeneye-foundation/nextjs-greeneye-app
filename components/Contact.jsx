@@ -24,11 +24,18 @@ const Contact = () => {
   };
 
   // Handle submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+
+    try {
+      // TODO: Replace this with actual API endpoint when backend is ready
+      // For now, we'll simulate the API call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // In production, this should send data to your contact API:
+      // const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contact`, form);
+
       setForm({
         firstName: "",
         lastName: "",
@@ -37,8 +44,22 @@ const Contact = () => {
         subject: "",
         message: "",
       });
-      showNotification(t("successMessage", { defaultMessage: "Your message has been sent successfully! We will get back to you soon." }), "success");
-    }, 2000);
+      showNotification(
+        t("successMessage", {
+          defaultMessage: "Your message has been received! We will get back to you soon."
+        }),
+        "success"
+      );
+    } catch (error) {
+      showNotification(
+        t("errorMessage", {
+          defaultMessage: "Failed to send message. Please try again or contact us directly."
+        }),
+        "error"
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
