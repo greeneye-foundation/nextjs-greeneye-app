@@ -21,7 +21,7 @@ const BlogIndex = () => {
         setLoading(false);
       })
       .catch((err) => {
-        console.error("❌ Error fetching blogs:", err.message);
+        // Error fetching blogs - show empty state
         setLoading(false);
       });
   }, []);

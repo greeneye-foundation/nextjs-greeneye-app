@@ -27,14 +27,17 @@ const Checkout = () => {
   const [availableCoupons, setAvailableCoupons] = useState([]);
   const [discount, setDiscount] = useState(0);
   const [finalAmount, setFinalAmount] = useState(0);
+  const [appliedCouponCode, setAppliedCouponCode] = useState(null);
 
   const router = useRouter();
 
   useEffect(() => {
+    // Read token once and reuse across all fetch functions
+    const token = localStorage.getItem("authToken");
+
     const fetchCart = async () => {
       setError("");
       try {
-        const token = localStorage.getItem("authToken");
         if (!token) {
           setError(t("loginRequired"));
           return;
@@ -52,7 +55,6 @@ const Checkout = () => {
 
     const fetchUserInfo = async () => {
       try {
-        const token = localStorage.getItem("authToken");
         if (!token) return;
 
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/profile`, {
@@ -73,29 +75,27 @@ const Checkout = () => {
           pincode: address?.pincode || "",
         }));
       } catch (error) {
-        console.error("Failed to fetch user info:", error);
+        // Failed to fetch user info - user can still fill form manually
       }
     };
 
     // ✅ Fetch available coupons
     const fetchCoupons = async () => {
       try {
-        const token = localStorage.getItem("authToken");
         if (!token) return;
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/coupons/available`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setAvailableCoupons(res.data);
       } catch (err) {
-        console.error("Failed to fetch coupons:", err);
+        // Failed to fetch coupons - user can still checkout without coupon
       }
     };
 
     fetchCart();
     fetchUserInfo();
     fetchCoupons();
-    // eslint-disable-next-line
-  }, []);
+  }, [t]);
 
   const total =
     cart?.items.reduce((sum, item) => sum + item.plant.price * item.quantity, 0) || 0;
@@ -123,6 +123,17 @@ const Checkout = () => {
   const handleApplyCoupon = async () => {
     setError("");
     setSuccess("");
+
+    if (!couponCode.trim()) {
+      setError(t("enterCouponCode") || "Please enter a coupon code");
+      return;
+    }
+
+    if (appliedCouponCode) {
+      setError(t("couponAlreadyApplied") || "A coupon is already applied. Remove it to apply a different one.");
+      return;
+    }
+
     try {
       const token = localStorage.getItem("authToken");
       if (!token) {
@@ -138,10 +149,20 @@ const Checkout = () => {
 
       setDiscount(res.data.discount);
       setFinalAmount(res.data.finalAmount);
+      setAppliedCouponCode(couponCode);
       setSuccess(`Coupon applied! You saved ₹${res.data.discount}`);
     } catch (err) {
       setError(err.response?.data?.message || "Invalid coupon");
     }
+  };
+
+  // ✅ Remove Coupon
+  const handleRemoveCoupon = () => {
+    setDiscount(0);
+    setFinalAmount(0);
+    setCouponCode("");
+    setAppliedCouponCode(null);
+    setSuccess(t("couponRemoved") || "Coupon removed");
   };
 
   const handlePlaceOrder = async (e) => {
@@ -202,10 +223,28 @@ const Checkout = () => {
           name: "GreenEye Store",
           description: t("razorpayDesc"),
           order_id: createdOrder.paymentResult.id,
-          handler: async function () {
-            setSuccess(t("paymentProcessing"));
-            setCart(null);
-            router.push("/myorders");
+          handler: async function (response) {
+            try {
+              // Verify payment on backend before redirecting
+              await axios.post(
+                `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/orders/${createdOrder._id}/verify-payment`,
+                {
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_signature: response.razorpay_signature,
+                },
+                {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                }
+              );
+              setSuccess(t("paymentSuccess"));
+              setCart(null);
+              router.push("/myorders");
+            } catch (error) {
+              setError(t("paymentVerificationFailed"));
+            }
           },
           prefill: {
             name: userInfo.name,
@@ -213,6 +252,12 @@ const Checkout = () => {
             contact: userInfo.phone,
           },
           theme: { color: "#388e3c" },
+          modal: {
+            ondismiss: function () {
+              setPlacing(false);
+              setError(t("paymentCancelled"));
+            },
+          },
         };
 
         const rzp = new window.Razorpay(razorpayOptions);
@@ -310,20 +355,39 @@ const Checkout = () => {
                 placeholder="Enter coupon code"
                 style={{ width: "100%", padding: 8, marginBottom: 10 }}
               />
-              <button
-                type="button"
-                onClick={handleApplyCoupon}
-                style={{
-                  padding: "8px 18px",
-                  background: "#388e3c",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: 6,
-                  cursor: "pointer",
-                }}
-              >
-                Apply
-              </button>
+              <div style={{ display: "flex", gap: 10 }}>
+                <button
+                  type="button"
+                  onClick={handleApplyCoupon}
+                  disabled={!!appliedCouponCode}
+                  style={{
+                    padding: "8px 18px",
+                    background: appliedCouponCode ? "#ccc" : "#388e3c",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: 6,
+                    cursor: appliedCouponCode ? "not-allowed" : "pointer",
+                  }}
+                >
+                  {appliedCouponCode ? "Applied" : "Apply"}
+                </button>
+                {appliedCouponCode && (
+                  <button
+                    type="button"
+                    onClick={handleRemoveCoupon}
+                    style={{
+                      padding: "8px 18px",
+                      background: "#d32f2f",
+                      color: "#fff",
+                      border: "none",
+                      borderRadius: 6,
+                      cursor: "pointer",
+                    }}
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
 
               {availableCoupons.length > 0 && (
                 <div style={{ marginTop: 14 }}>
@@ -409,13 +473,15 @@ const Checkout = () => {
           style={{
             marginTop: 22,
             padding: "12px 36px",
-            background: "#388e3c",
+            background: (placing || !cart?.items?.length) ? "#a5a5a5" : "#388e3c",
             color: "#fff",
             border: "none",
             borderRadius: 6,
             fontWeight: 700,
             fontSize: 17,
-            cursor: placing ? "not-allowed" : "pointer",
+            cursor: (placing || !cart?.items?.length) ? "not-allowed" : "pointer",
+            opacity: (placing || !cart?.items?.length) ? 0.6 : 1,
+            transition: "all 0.3s ease",
           }}
         >
           {placing ? t("placingOrder") : t("placeOrder")}

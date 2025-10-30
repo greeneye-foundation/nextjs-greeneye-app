@@ -154,8 +154,7 @@ export default function AdminBlogs() {
       setOldImage(null);
       fetchBlogs();
     } catch (e) {
-      console.error(e);
-      alert("Failed to save blog");
+      alert("Failed to save blog. Please try again.");
     }
     setSaving(false);
   };
@@ -187,8 +186,7 @@ export default function AdminBlogs() {
       setOldImage(null);
       fetchBlogs();
     } catch (e) {
-      console.error(e);
-      alert("Failed to delete blog");
+      alert("Failed to delete blog. Please try again.");
     }
   };
 

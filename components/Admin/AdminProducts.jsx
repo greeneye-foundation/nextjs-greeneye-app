@@ -28,7 +28,8 @@ export default function AdminProduct() {
           setEdit({ ...edit, image: data.imageUrl }); // Save the URL
         }
       } catch (err) {
-        console.error("Image upload failed:", err);
+        // Image upload failed - user can try again
+        alert("Image upload failed. Please try again.");
       }
     };
 
@@ -100,14 +101,42 @@ export default function AdminProduct() {
   const handleSave = async () => {
     setSaving(true);
     setSaveMsg("");
+
+    // Validate required fields
+    if (!edit.name || !edit.name.trim()) {
+      setSaveMsg("Product name is required");
+      setSaving(false);
+      return;
+    }
+    if (!edit.price || isNaN(edit.price) || Number(edit.price) <= 0) {
+      setSaveMsg("Valid price is required");
+      setSaving(false);
+      return;
+    }
+    if (!edit.country || !edit.country.trim()) {
+      setSaveMsg("At least one country code is required");
+      setSaving(false);
+      return;
+    }
+
     try {
       const token = localStorage.getItem("authToken");
+      const countryArray = edit.country
+        .split(",")
+        .map((c) => c.trim().toUpperCase())
+        .filter(Boolean);
+
+      // Validate country codes (should be 2-letter codes)
+      const invalidCountries = countryArray.filter(c => c.length !== 2);
+      if (invalidCountries.length > 0) {
+        setSaveMsg(`Invalid country codes: ${invalidCountries.join(", ")}. Use 2-letter codes (e.g., US, IN)`);
+        setSaving(false);
+        return;
+      }
+
       const payload = {
         ...edit,
-        country: edit.country
-          .split(",")
-          .map((c) => c.trim().toUpperCase())
-          .filter(Boolean)
+        country: countryArray
       };
       if (isNew) {
         const { data } = await axios.post(

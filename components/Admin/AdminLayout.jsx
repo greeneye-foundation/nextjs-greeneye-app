@@ -12,20 +12,15 @@ const AdminLayout = ({ children }) => {
       <aside className="admin-sidebar w-64 bg-gray-100 border-r p-4 overflow-y-auto">
         <Link
           href="/profile"
-          passHref
-          legacyBehavior
+          style={{
+            color: "#388e3c",
+            textDecoration: "none",
+            marginTop: 0,
+            marginBottom: 10,
+            display: "inline-block",
+          }}
         >
-          <a
-            style={{
-              color: "#388e3c",
-              textDecoration: "none",
-              marginTop: 0,
-              marginBottom: 10,
-              display: "inline-block",
-            }}
-          >
-            <i className="fas fa-arrow-left"></i> MyProfile
-          </a>
+          <i className="fas fa-arrow-left"></i> MyProfile
         </Link>
 
         <nav className="flex flex-col space-y-2 mt-4">

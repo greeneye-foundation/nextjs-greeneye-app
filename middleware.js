@@ -64,7 +64,7 @@ export async function middleware(request) {
 
       return response;
     } catch (err) {
-      console.error('❌ Geo redirect error:', err);
+      // Geo redirect failed - fallback to English
       return NextResponse.redirect(new URL('/en', request.url));
     }
   }
