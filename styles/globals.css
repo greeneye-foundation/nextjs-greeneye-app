@@ -16,6 +16,12 @@ body {
     overflow-x: hidden;
 }
 
+/* Add padding to account for fixed navbar */
+main {
+    padding-top: 70px;
+    min-height: 100vh;
+}
+
 .notification-content {
     display: flex;
     align-items: center;
@@ -78,7 +84,7 @@ body {
 /* Page Header for separate pages */
 .page-header {
     background: linear-gradient(135deg, #FFD700 0%, #FFA500 25%, #32CD32 75%, #228B22 100%);
-    padding: 120px 0 80px;
+    padding: 50px 0 80px;
     text-align: center;
     color: #333;
 }
@@ -248,7 +254,7 @@ body {
 
 /* Hero Section */
 .hero {
-    padding-top: 90px;
+    padding-top: 20px;
     padding-bottom: 120px;
     /* Space for stats */
     position: relative;
@@ -1354,7 +1360,7 @@ section {
 
 @media (max-width: 480px) {
     .hero {
-        padding-top: 70px;
+        padding-top: 0;
         padding-bottom: 180px;
         /* More space for stacked stats */
     }
