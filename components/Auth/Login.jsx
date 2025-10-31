@@ -7,11 +7,17 @@ import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 const Login = ({ onSwitch, onLogin }) => {
   const t = useTranslations("login");
+  const [activeTab, setActiveTab] = useState("email");
   const [form, setForm] = useState({
     email: "",
     password: "",
     remember: false,
   });
+
+  // OTP states
+  const [mobile, setMobile] = useState("");
+  const [otp, setOtp] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [showPwd, setShowPwd] = useState(false);
@@ -30,6 +36,43 @@ const Login = ({ onSwitch, onLogin }) => {
   };
 
   const togglePassword = () => setShowPwd((v) => !v);
+
+  // OTP handlers
+  const handleSendOtp = async () => {
+    if (!mobile.match(/^\d{10}$/)) {
+      showNotification(t("validMobile") || "Please enter a valid 10-digit mobile number", "error");
+      return;
+    }
+    setLoading(true);
+    try {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/otp/send`, { phone: mobile });
+      showNotification(t("otpSent") || "OTP sent successfully", "success");
+      setOtpSent(true);
+    } catch (error) {
+      showNotification(error.response?.data?.message || t("otpFailed") || "Failed to send OTP", "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleVerifyOtp = async () => {
+    if (!otp.match(/^\d{4,6}$/)) {
+      showNotification(t("validOtp") || "Please enter a valid OTP", "error");
+      return;
+    }
+    setLoading(true);
+    try {
+      const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/otp/login`, { phone: mobile, otp });
+      localStorage.setItem("authToken", data.token);
+      showNotification(t("loginSuccess"), "success");
+      router.push("/profile");
+      if (onLogin) onLogin(data);
+    } catch (error) {
+      showNotification(error.response?.data?.message || t("invalidOtp") || "Invalid OTP", "error");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -80,93 +123,184 @@ const Login = ({ onSwitch, onLogin }) => {
   };
 
   return (
-    <form
-      className="auth-form"
-      id="loginForm"
-      onSubmit={handleSubmit}
-      autoComplete="off"
-    >
-      <h3>{t("signInTitle")}</h3>
-      {/* Email */}
-      <div className="form-group">
-        <input
-          type="email"
-          id="loginEmail"
-          name="email"
-          placeholder={t("emailPlaceholder")}
-          value={form.email}
-          onChange={handleChange}
-          className={form.email && !isEmailValid(form.email) ? "invalid" : ""}
-          required
-        />
-        <i className="fas fa-envelope"></i>
+    <div className="auth-form-container">
+      <div className="auth-form-header">
+        <h3>
+          <i className="fas fa-sign-in-alt"></i> {t("signInTitle")}
+        </h3>
+        <p style={{ color: "#6c757d", fontSize: "0.95rem", marginTop: "0.5rem" }}>
+          {t("welcomeBack") || "Welcome back! Please sign in to continue"}
+        </p>
       </div>
 
-      {/* Password */}
-      <div className="form-group">
-        <input
-          type={showPwd ? "text" : "password"}
-          id="loginPassword"
-          name="password"
-          placeholder={t("passwordPlaceholder")}
-          value={form.password}
-          onChange={handleChange}
-          required
-        />
-        <i className="fas fa-lock"></i>
+      {/* Tab Switcher */}
+      <div className="login-tabs">
         <button
           type="button"
-          className="password-toggle"
-          onClick={togglePassword}
-          tabIndex={-1}
-          aria-label={showPwd ? t("hidePassword") : t("showPassword")}
+          className={`tab-btn ${activeTab === "email" ? "active" : ""}`}
+          onClick={() => setActiveTab("email")}
         >
-          <i className={`fas ${showPwd ? "fa-eye-slash" : "fa-eye"}`}></i>
+          <i className="fas fa-envelope"></i> {t("emailPassword") || "Email / Password"}
+        </button>
+        <button
+          type="button"
+          className={`tab-btn ${activeTab === "otp" ? "active" : ""}`}
+          onClick={() => setActiveTab("otp")}
+        >
+          <i className="fas fa-mobile-alt"></i> {t("otpLogin") || "OTP Login"}
         </button>
       </div>
 
-      {/* Remember me */}
-      <div className="form-options">
-        <label className="checkbox-label">
-          <input
-            type="checkbox"
-            name="remember"
-            checked={form.remember}
-            onChange={handleChange}
-          />
-          <span className="checkmark"></span>
-          {t("rememberMe")}
-        </label>
-      </div>
-
-      {/* Submit */}
-      <button type="submit" className="btn btn-primary btn-full" disabled={loading}>
-        {loading ? (
-          <>
-            <i className="fas fa-spinner fa-spin"></i> {t("signingIn")}
-          </>
-        ) : (
-          <>
-            <i className="fas fa-sign-in-alt"></i> {t("signInBtn")}
-          </>
-        )}
-      </button>
-
-      <div className="divider" style={{ margin: "2rem 0" }}>
-        <span>{t("or")}</span>
-      </div>
-
-      {/* OTP login */}
-      <div style={{ textAlign: "center", margin: "1rem 0" }}>
-        <button
-          type="button"
-          className="btn btn-secondary btn-full"
-          onClick={() => router.push("/otp-login")}
+      {/* Email/Password Tab */}
+      {activeTab === "email" && (
+        <form
+          className="auth-form"
+          id="loginForm"
+          onSubmit={handleSubmit}
+          autoComplete="off"
         >
-          <i className="fas fa-mobile-alt"></i> {t("signInWithOTP")}
-        </button>
-      </div>
+          {/* Email */}
+          <div className="form-group">
+            <input
+              type="email"
+              id="loginEmail"
+              name="email"
+              placeholder={t("emailPlaceholder")}
+              value={form.email}
+              onChange={handleChange}
+              className={form.email && !isEmailValid(form.email) ? "invalid" : ""}
+              required
+            />
+            <i className="fas fa-envelope"></i>
+          </div>
 
+          {/* Password */}
+          <div className="form-group">
+            <input
+              type={showPwd ? "text" : "password"}
+              id="loginPassword"
+              name="password"
+              placeholder={t("passwordPlaceholder")}
+              value={form.password}
+              onChange={handleChange}
+              required
+            />
+            <i className="fas fa-lock"></i>
+            <button
+              type="button"
+              className="password-toggle"
+              onClick={togglePassword}
+              tabIndex={-1}
+              aria-label={showPwd ? t("hidePassword") : t("showPassword")}
+            >
+              <i className={`fas ${showPwd ? "fa-eye-slash" : "fa-eye"}`}></i>
+            </button>
+          </div>
+
+          {/* Remember me */}
+          <div className="form-options">
+            <label className="checkbox-label">
+              <input
+                type="checkbox"
+                name="remember"
+                checked={form.remember}
+                onChange={handleChange}
+              />
+              <span className="checkmark"></span>
+              {t("rememberMe")}
+            </label>
+          </div>
+
+          {/* Submit */}
+          <button type="submit" className="btn btn-primary btn-full" disabled={loading}>
+            {loading ? (
+              <>
+                <i className="fas fa-spinner fa-spin"></i> {t("signingIn")}
+              </>
+            ) : (
+              <>
+                <i className="fas fa-sign-in-alt"></i> {t("signInBtn")}
+              </>
+            )}
+          </button>
+        </form>
+      )}
+
+      {/* OTP Tab */}
+      {activeTab === "otp" && (
+        <form
+          className="auth-form"
+          id="otpLoginForm"
+          onSubmit={(e) => e.preventDefault()}
+          autoComplete="off"
+        >
+          <div className="form-group">
+            <input
+              type="tel"
+              name="mobile"
+              placeholder={t("mobilePlaceholder") || "Enter Mobile Number"}
+              value={mobile}
+              onChange={(e) => setMobile(e.target.value)}
+              required
+            />
+            <i className="fas fa-phone"></i>
+          </div>
+
+          {otpSent && (
+            <div className="form-group">
+              <input
+                type="text"
+                name="otp"
+                placeholder={t("otpPlaceholder") || "Enter OTP"}
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                required
+              />
+              <i className="fas fa-key"></i>
+            </div>
+          )}
+
+          {!otpSent ? (
+            <button className="btn btn-primary btn-full" onClick={handleSendOtp} disabled={loading}>
+              {loading ? (
+                <>
+                  <i className="fas fa-spinner fa-spin"></i> {t("sendingOtp") || "Sending OTP..."}
+                </>
+              ) : (
+                <>
+                  <i className="fas fa-paper-plane"></i> {t("sendOtp") || "Send OTP"}
+                </>
+              )}
+            </button>
+          ) : (
+            <>
+              <button className="btn btn-primary btn-full" onClick={handleVerifyOtp} disabled={loading}>
+                {loading ? (
+                  <>
+                    <i className="fas fa-spinner fa-spin"></i> {t("verifying") || "Verifying..."}
+                  </>
+                ) : (
+                  <>
+                    <i className="fas fa-unlock-alt"></i> {t("verifyOtp") || "Verify OTP"}
+                  </>
+                )}
+              </button>
+
+              <button
+                type="button"
+                className="btn btn-link"
+                onClick={handleSendOtp}
+                disabled={loading}
+                style={{ marginTop: "1rem" }}
+              >
+                {t("resendOtp") || "Resend OTP"}
+              </button>
+            </>
+          )}
+        </form>
+      )}
+
+      {/* Switch to Register */}
       <div className="auth-switch">
         <p>
           {t("newToGreenEye")}{" "}
@@ -179,7 +313,7 @@ const Login = ({ onSwitch, onLogin }) => {
           </button>
         </p>
       </div>
-    </form>
+    </div>
   );
 };
 
