@@ -971,6 +971,19 @@ section {
     line-height: 1.6;
 }
 
+/* Style tel and mailto links in contact section for better visibility */
+.contact-details a {
+    color: var(--primary-green);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.contact-details a:hover {
+    color: var(--secondary-green);
+    text-decoration: underline;
+}
+
 .social-links {
     margin-top: 2rem;
 }
@@ -1094,6 +1107,20 @@ section {
     margin-right: 1rem;
     color: var(--light-green);
     width: 20px;
+}
+
+/* Style tel and mailto links in footer for better visibility */
+.footer-contact a {
+    color: var(--white);
+    text-decoration: none;
+    opacity: 0.9;
+    transition: var(--transition);
+}
+
+.footer-contact a:hover {
+    color: var(--light-green);
+    opacity: 1;
+    text-decoration: underline;
 }
 
 .footer-bottom {
