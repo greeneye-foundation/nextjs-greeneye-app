@@ -1,8 +1,29 @@
+/* Import Noto Serif and Noto Sans from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@600;700&family=Noto+Sans:wght@400;500&display=swap');
+
 .admin-panel {
   display: flex;
   min-height: 100vh;
   background: #f8fafc;
   margin-top: 70px;
+}
+
+/* Admin Headings Typography */
+.admin-layout h1,
+.admin-layout h2,
+.admin-layout h3,
+.admin-layout h4,
+.admin-layout h5,
+.admin-layout h6 {
+  font-family: 'Noto Serif', serif;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.admin-layout h1,
+.admin-layout h2 {
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .admin-sidebar {
@@ -22,7 +43,7 @@
   text-decoration: none;
   padding: 16px 32px;
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 500;
   margin: 0 0 8px 0;
   border-left: 4px solid transparent;
   transition: background 0.2s, color 0.2s, border-color 0.2s;
@@ -47,7 +68,8 @@
   display: flex;
   min-height: 100vh;
   background: #f7f7f9;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Noto Sans', sans-serif;
+  line-height: 1.5;
 }
 .admin-sidebar {
   width: 220px;
@@ -88,7 +110,7 @@
   border: none;
   padding: 12px;
   border-radius: 6px;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
   transition: background 0.18s;
 }
@@ -176,7 +198,7 @@
   color: #fff;
   padding: 10px 32px;
   border-radius: 6px;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.1rem;
   cursor: pointer;
   margin-top: 8px;
@@ -275,7 +297,7 @@
   color: #fff;
   padding: 11px 32px;
   border-radius: 8px;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.08rem;
   cursor: pointer;
   margin-top: 8px;

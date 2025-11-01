@@ -1,3 +1,6 @@
+/* Import Noto Serif and Noto Sans from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@600;700&family=Noto+Sans:wght@400;500&display=swap');
+
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -10,11 +13,24 @@ html {
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    line-height: 1.6;
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
     color: #333;
     background: linear-gradient(135deg, #FFD700 0%, #FFA500 25%, #32CD32 75%, #228B22 100%);
     min-height: 100vh;
+}
+
+/* Headings Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Noto Serif', serif;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+h1, h2 {
+    font-weight: 700;
+    line-height: 1.2;
 }
 
 /* CSS Variables */
@@ -63,6 +79,7 @@ body {
     display: flex;
     align-items: center;
     color: #333;
+    font-family: 'Noto Serif', serif;
     font-size: 1.5rem;
     font-weight: 700;
 }
@@ -324,7 +341,7 @@ body {
 .tab-btn.active {
     background: var(--white);
     color: var(--primary-green);
-    font-weight: 600;
+    font-weight: 500;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
@@ -476,7 +493,7 @@ body {
     border: none;
     border-radius: 10px;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 0.95rem;
     cursor: pointer;
     transition: var(--transition);
@@ -544,7 +561,7 @@ body {
     padding: 1rem;
     border: 2px solid;
     border-radius: var(--border-radius);
-    font-weight: 600;
+    font-weight: 500;
     font-size: 1rem;
     cursor: pointer;
     transition: var(--transition);
@@ -590,7 +607,7 @@ body {
     background: none;
     border: none;
     color: var(--primary-green);
-    font-weight: 600;
+    font-weight: 500;
     cursor: pointer;
     text-decoration: underline;
     transition: var(--transition);
