@@ -93,6 +93,13 @@ const Contact = () => {
                 <p><a href="mailto:contact@greeneye.foundation">contact@greeneye.foundation</a></p>
               </div>
             </div>
+            <div className="contact-item">
+              <div className="contact-icon"><i className="fab fa-whatsapp"></i></div>
+              <div className="contact-details">
+                <h4>{t("whatsappTitle")}</h4>
+                <p><a href="https://wa.me/919226492263" target="_blank" rel="noopener noreferrer">+91 92264 92263</a></p>
+              </div>
+            </div>
             <div className="social-links">
               <h4>{t("followUs")}</h4>
               <div className="social-icons">
