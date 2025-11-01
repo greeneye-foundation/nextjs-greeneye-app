@@ -69,14 +69,10 @@ const Contact = () => {
           {/* Contact Info */}
           <div className="contact-info">
             <div className="contact-item">
-              <div className="contact-icon"><i className="fas fa-map-marker-alt"></i></div>
+              <div className="contact-icon"><i className="fab fa-whatsapp"></i></div>
               <div className="contact-details">
-                <h4>{t("locationTitle")}</h4>
-                <p>
-                  Prime, C11, Kanak Vrindavan<br />
-                  Jaipur, Rajasthan, Bajiri Mandi-302034<br />
-                  {t("country", { defaultMessage: "India" })}
-                </p>
+                <h4>{t("whatsappTitle")}</h4>
+                <p><a href="https://wa.me/919226492263" target="_blank" rel="noopener noreferrer">+91 92264 92263</a></p>
               </div>
             </div>
             <div className="contact-item">
@@ -94,10 +90,14 @@ const Contact = () => {
               </div>
             </div>
             <div className="contact-item">
-              <div className="contact-icon"><i className="fab fa-whatsapp"></i></div>
+              <div className="contact-icon"><i className="fas fa-map-marker-alt"></i></div>
               <div className="contact-details">
-                <h4>{t("whatsappTitle")}</h4>
-                <p><a href="https://wa.me/919226492263" target="_blank" rel="noopener noreferrer">+91 92264 92263</a></p>
+                <h4>{t("locationTitle")}</h4>
+                <p>
+                  Prime, C11, Kanak Vrindavan<br />
+                  Jaipur, Rajasthan, Bajiri Mandi-302034<br />
+                  {t("country", { defaultMessage: "India" })}
+                </p>
               </div>
             </div>
             <div className="social-links">
