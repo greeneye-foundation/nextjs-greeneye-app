@@ -90,7 +90,7 @@ const Contact = () => {
               <div className="contact-icon"><i className="fas fa-envelope"></i></div>
               <div className="contact-details">
                 <h4>{t("emailTitle")}</h4>
-                <p>contact@greeneye.foundation</p>
+                <p><a href="mailto:contact@greeneye.foundation">contact@greeneye.foundation</a></p>
               </div>
             </div>
             <div className="social-links">
