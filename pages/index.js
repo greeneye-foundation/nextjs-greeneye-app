@@ -4,7 +4,6 @@ import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Donate from "@/components/Donate";
 import Impact from "@/components/Impact";
-import Contact from "@/components/Contact";
 import Volunteer from "@/components/Volunteer";
 import Programs from "@/components/Programs";
 import BlogIndex from "@/components/BlogIndex";
@@ -40,7 +39,6 @@ export default function HomePage() {
       <Volunteer />
       <Programs />
       <Impact />
-      <Contact />
     </>
   );
 }
