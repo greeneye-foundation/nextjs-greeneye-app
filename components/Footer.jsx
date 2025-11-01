@@ -57,7 +57,8 @@ const Footer = () => {
             <div className="footer-contact">
               <p><i className="fas fa-map-marker-alt"></i> {t('address')}</p>
               <p><i className="fas fa-phone"></i> <a href="tel:+919226492263">+91 92264 92263</a></p>
-              <p><i className="fas fa-envelope"></i> contact@greeneye.foundation</p>
+              <p><i className="fas fa-envelope"></i> <a href="mailto:contact@greeneye.foundation">contact@greeneye.foundation</a></p>
+              <p style={{ marginTop: '0.75rem' }}><Link href="/contact" style={{ color: 'inherit', textDecoration: 'none', fontWeight: '500' }}><i className="fas fa-paper-plane"></i> {t('contactUs') || 'Contact Us'}</Link></p>
             </div>
           </div>
         </div>

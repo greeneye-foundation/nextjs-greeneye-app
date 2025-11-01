@@ -13,7 +13,6 @@ const NAV_LINKS = [
   // { href: "/impact", labelKey: "impact" },
   { href: "/volunteer", labelKey: "volunteer" },
   { href: "/donate", labelKey: "donate" },
-  { href: "/contact", labelKey: "contact" },
 ];
 
 const Navbar = () => {
