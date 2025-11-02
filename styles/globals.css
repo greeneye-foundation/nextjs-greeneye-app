@@ -13,7 +13,7 @@ body {
     font-family: 'Noto Sans', sans-serif;
     font-weight: 400;
     line-height: 1.5;
-    color: var(--charcoal);
+    color: var(--charcoal-bark);
     overflow-x: hidden;
 }
 
@@ -55,42 +55,47 @@ main {
 
 /* CSS Variables for consistent theming */
 :root {
-    /* Modern Environmental Color Palette */
-    --forest-deep: #1a5d3a;
-    --primary-green: #2d7a4f;
-    --secondary-green: #4a9e6d;
-    --sage-green: #8eb69b;
-    --mint-green: #d4e9da;
-    --cream: #f8faf9;
-
-    /* Earth Tones */
-    --clay: #a0826d;
-    --warm-beige: #e8e3db;
-
-    /* Accent Colors */
-    --ocean-blue: #5a9fb8;
-    --sky-blue: #a8d5e2;
+    /* Fresh GreenEye Foundation Color Palette */
+    /* Primary Brand Colors */
+    --evergreen: #1F6F43;
+    --lime-spark: #9FD356;
+    --sky-breath: #5DA7B1;
+    --sunrise-amber: #F3A712;
 
     /* Neutrals */
-    --charcoal: #2d3436;
-    --soft-gray: #636e72;
-    --light-gray: #f5f6f7;
+    --stone-mist: #F2F5F3;
+    --charcoal-bark: #2F3C3B;
     --white: #ffffff;
 
-    /* Legacy Support (gradual migration) */
-    --accent-green: #6b9b7a;
-    --light-green: #8eb69b;
-    --very-light-green: #d4e9da;
-    --dark-green: #1a5d3a;
-    --earth-brown: #a0826d;
-    --warm-orange: #5a9fb8;
-    --gray: #636e72;
-    --dark-gray: #2d3436;
+    /* Semantic Aliases for Common Uses */
+    --primary-green: #1F6F43;      /* Evergreen */
+    --secondary-green: #9FD356;    /* Lime Spark */
+    --accent-blue: #5DA7B1;        /* Sky Breath */
+    --accent-amber: #F3A712;       /* Sunrise Amber */
+    --background-light: #F2F5F3;   /* Stone Mist */
+    --text-dark: #2F3C3B;          /* Charcoal Bark */
+
+    /* Legacy Support (mapped to new palette) */
+    --forest-deep: #1F6F43;
+    --sage-green: #9FD356;
+    --mint-green: #F2F5F3;
+    --cream: #F2F5F3;
+    --ocean-blue: #5DA7B1;
+    --charcoal: #2F3C3B;
+    --soft-gray: #5a6361;
+    --light-gray: #F2F5F3;
+    --dark-green: #1F6F43;
+    --accent-green: #9FD356;
+    --light-green: #9FD356;
+    --very-light-green: #F2F5F3;
+    --warm-orange: #F3A712;
+    --gray: #5a6361;
+    --dark-gray: #2F3C3B;
 
     /* Effects */
-    --shadow: rgba(0, 0, 0, 0.08);
-    --shadow-dark: rgba(0, 0, 0, 0.15);
-    --shadow-subtle: rgba(0, 0, 0, 0.04);
+    --shadow: rgba(47, 60, 59, 0.08);
+    --shadow-dark: rgba(47, 60, 59, 0.15);
+    --shadow-subtle: rgba(47, 60, 59, 0.04);
     --transition: all 0.3s ease;
     --border-radius: 8px;
     --max-width: 1200px;
@@ -121,21 +126,21 @@ main {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(255, 255, 255, 0.98) !important;
+    background: var(--evergreen) !important;
     backdrop-filter: blur(10px);
     z-index: 1000;
     transition: var(--transition);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px var(--shadow);
 }
 
 .navbar.scrolled {
-    background: rgba(255, 255, 255, 1) !important;
-    box-shadow: 0 2px 12px var(--shadow);
+    background: var(--evergreen) !important;
+    box-shadow: 0 2px 12px var(--shadow-dark);
 }
 
 /* Page Header for separate pages */
 .page-header {
-    background: linear-gradient(135deg, var(--sage-green) 0%, var(--secondary-green) 50%, var(--primary-green) 100%);
+    background: linear-gradient(135deg, var(--evergreen) 0%, var(--lime-spark) 100%);
     padding: 50px 0 80px;
     text-align: center;
     color: var(--white);
@@ -145,7 +150,8 @@ main {
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    color: var(--white);
 }
 
 .page-header p {
@@ -168,7 +174,7 @@ main {
 }
 
 .nav-link.active {
-    color: var(--forest-deep) !important;
+    color: var(--lime-spark) !important;
     font-weight: 700;
 }
 
@@ -180,7 +186,7 @@ main {
 
 .nav-link.active::after {
     width: 100%;
-    background: var(--forest-deep);
+    background: var(--lime-spark);
 }
 
 /* Blog section*/
@@ -217,7 +223,7 @@ main {
 .nav-logo {
     display: flex;
     align-items: center;
-    color: var(--forest-deep) !important;
+    color: var(--stone-mist) !important;
     font-family: var(--font-heading);
     font-size: 1.5rem;
     font-weight: 700;
@@ -226,7 +232,7 @@ main {
 .nav-logo i {
     font-size: 2rem;
     margin-right: 10px;
-    color: var(--primary-green) !important;
+    color: var(--lime-spark) !important;
 }
 
 .nav-menu {
@@ -245,7 +251,7 @@ main {
 }
 
 .nav-link {
-    color: var(--charcoal) !important;
+    color: var(--stone-mist) !important;
     text-decoration: none;
     font-weight: 500;
     transition: var(--transition);
@@ -253,7 +259,7 @@ main {
 }
 
 .nav-link:hover {
-    color: var(--primary-green) !important;
+    color: var(--lime-spark) !important;
 }
 
 .nav-link::after {
@@ -263,7 +269,7 @@ main {
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--primary-green);
+    background: var(--lime-spark);
     transition: var(--transition);
 }
 
@@ -283,13 +289,13 @@ main {
 }
 
 .language-selector:hover {
-    border-color: var(--primary-green);
+    border-color: var(--lime-spark);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .language-selector:focus {
-    border-color: var(--primary-green);
-    box-shadow: 0 0 0 2px rgba(45, 122, 79, 0.1);
+    border-color: var(--lime-spark);
+    box-shadow: 0 0 0 2px rgba(159, 211, 86, 0.2);
 }
 
 .hamburger {
@@ -301,7 +307,7 @@ main {
 .bar {
     width: 25px;
     height: 3px;
-    background: var(--charcoal);
+    background: var(--stone-mist);
     margin: 3px 0;
     transition: var(--transition);
 }
@@ -319,9 +325,9 @@ main {
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: var(--white);
+    color: var(--charcoal-bark);
     overflow: hidden;
-    background: linear-gradient(135deg, var(--sage-green) 0%, var(--secondary-green) 40%, var(--primary-green) 100%);
+    background: var(--stone-mist);
 }
 
 .hero-background {
@@ -343,7 +349,7 @@ main {
     margin: 0 auto;
     z-index: 1;
     animation: fadeInUp 1s ease-out;
-    color: var(--white);
+    color: var(--charcoal-bark);
 }
 
 .hero-title-main {
@@ -352,18 +358,18 @@ main {
     display: block;
     font-weight: 800;
     margin-bottom: 0rem;
-    color: var(--white);
-    text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2);
+    color: var(--charcoal-bark);
+    text-shadow: none;
 }
 
 .hero-title-sub {
     display: block;
     font-weight: 600;
-    color: var(--cream);
+    color: var(--lime-spark);
     margin-bottom: 0rem;
     font-size: clamp(1.5rem, 4vw, 3rem);
     /* Responsive font size */
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+    text-shadow: none;
 }
 
 .hero-description {
@@ -371,7 +377,7 @@ main {
     /* Responsive font size */
     margin-bottom: 1.5rem;
     /* Reduced from 2rem */
-    color: rgba(255, 255, 255, 0.95);
+    color: var(--charcoal-bark);
     line-height: 1.8;
 }
 
@@ -396,11 +402,11 @@ main {
     justify-content: space-around;
     flex-wrap: wrap;
     gap: 1.5rem;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--white);
     backdrop-filter: blur(10px);
-    padding: 1rem;
+    padding: 1.5rem;
     border-radius: var(--border-radius);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 2px solid var(--lime-spark);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
 }
 
@@ -413,13 +419,14 @@ main {
     display: block;
     font-size: clamp(1.5rem, 3vw, 2rem);
     font-weight: 700;
-    color: var(--primary-green);
+    color: var(--charcoal-bark);
 }
 
 .stat-label {
     font-size: clamp(0.8rem, 1.5vw, 0.9rem);
-    color: var(--soft-gray);
+    color: var(--evergreen);
     margin-top: 0.5rem;
+    font-weight: 600;
 }
 
 /* Plant CSS */
@@ -428,11 +435,11 @@ main {
     right: 10px;
     bottom: 20px;
     /* Match hero-stats bottom position */
-    background-color: var(--mint-green);
-    /* Light green background */
+    background-color: rgba(159, 211, 86, 0.2);
+    /* Lime Spark transparent background */
     padding: 8px;
     border-radius: 50%;
-    box-shadow: 0 4px 8px rgba(26, 93, 58, 0.2);
+    box-shadow: 0 4px 8px rgba(31, 111, 67, 0.2);
     cursor: pointer;
     transition: transform 0.3s ease;
     z-index: 2;
@@ -447,7 +454,7 @@ main {
     transform: translateY(-50%);
     pointer-events: none;
     /* arrow click block na kare */
-    color: var(--ocean-blue);
+    color: var(--lime-spark);
     /* thoda eye-catching color */
 }
 
@@ -480,25 +487,29 @@ main {
 }
 
 .btn-primary {
-    background: var(--ocean-blue);
-    color: var(--white);
+    background: var(--lime-spark);
+    color: var(--charcoal-bark);
+    font-weight: 600;
 }
 
 .btn-primary:hover {
-    background: var(--primary-green);
+    background: var(--evergreen);
+    color: var(--white);
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(45, 122, 79, 0.3);
+    box-shadow: 0 10px 20px rgba(31, 111, 67, 0.3);
 }
 
 .btn-secondary {
-    background: transparent;
+    background: var(--sky-breath);
     color: var(--white);
-    border: 2px solid var(--white);
+    border: 2px solid var(--sky-breath);
+    font-weight: 600;
 }
 
 .btn-secondary:hover {
-    background: var(--white);
-    color: var(--primary-green);
+    background: var(--evergreen);
+    border-color: var(--evergreen);
+    color: var(--white);
     transform: translateY(-2px);
 }
 
@@ -546,7 +557,7 @@ section {
 
 /* About Section */
 .about {
-    background: var(--cream);
+    background: linear-gradient(to bottom, var(--stone-mist) 0%, var(--sky-breath) 100%);
 }
 
 .about-content {
@@ -680,7 +691,7 @@ section {
 
 /* Impact Section */
 .impact {
-    background: var(--mint-green);
+    background: linear-gradient(to bottom, var(--stone-mist) 0%, rgba(93, 167, 177, 0.15) 100%);
 }
 
 .impact-grid {
@@ -779,7 +790,7 @@ section {
 
 /* Volunteer Section */
 .volunteer {
-    background: var(--warm-beige);
+    background: var(--stone-mist);
 }
 
 .volunteer-content {
@@ -837,8 +848,8 @@ section {
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: var(--primary-green);
-    box-shadow: 0 0 0 3px rgba(45, 90, 39, 0.1);
+    border-color: var(--evergreen);
+    box-shadow: 0 0 0 3px rgba(159, 211, 86, 0.2);
 }
 
 .form-group i {
@@ -869,7 +880,7 @@ section {
 
 /* Donation Section */
 .donate {
-    background: var(--forest-deep);
+    background: var(--evergreen);
     color: var(--white);
 }
 
@@ -888,7 +899,7 @@ section {
 .donation-info h3 {
     font-size: 2rem;
     margin-bottom: 2rem;
-    color: var(--mint-green);
+    color: var(--lime-spark);
 }
 
 .donation-breakdown {
@@ -915,7 +926,7 @@ section {
 .amount {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--ocean-blue);
+    color: var(--sunrise-amber);
     margin-right: 1.5rem;
     min-width: 80px;
 }
@@ -948,9 +959,9 @@ section {
 
 .amount-btn {
     padding: 1rem;
-    border: 2px solid var(--primary-green);
-    background: transparent;
-    color: var(--primary-green);
+    border: 2px solid var(--lime-spark);
+    background: var(--stone-mist);
+    color: var(--charcoal-bark);
     border-radius: var(--border-radius);
     font-weight: 600;
     cursor: pointer;
@@ -959,8 +970,9 @@ section {
 
 .amount-btn:hover,
 .amount-btn.active {
-    background: var(--primary-green);
-    color: var(--white);
+    background: var(--sunrise-amber);
+    border-color: var(--sunrise-amber);
+    color: var(--charcoal-bark);
 }
 
 .donation-note {
@@ -977,7 +989,7 @@ section {
 
 /* Contact Section */
 .contact {
-    background: var(--cream);
+    background: var(--stone-mist);
 }
 
 .contact-content {
@@ -1071,7 +1083,7 @@ section {
 }
 
 .social-icon:hover {
-    background: var(--ocean-blue);
+    background: var(--lime-spark);
     transform: translateY(-3px);
 }
 
@@ -1092,8 +1104,8 @@ section {
 
 /* Footer */
 .footer {
-    background: var(--forest-deep);
-    color: var(--white);
+    background: var(--charcoal-bark);
+    color: var(--stone-mist);
     padding: 3rem 0 0;
 }
 
@@ -1105,7 +1117,7 @@ section {
 }
 
 .footer-section h4 {
-    color: var(--sage-green);
+    color: var(--lime-spark);
     margin-bottom: 1rem;
     font-size: 1.2rem;
 }
@@ -1121,7 +1133,7 @@ section {
 .footer-logo i {
     font-size: 2rem;
     margin-right: 10px;
-    color: var(--sage-green);
+    color: var(--lime-spark);
 }
 
 .footer-section p {
@@ -1144,15 +1156,16 @@ section {
 }
 
 .footer-links a {
-    color: var(--white);
+    color: var(--stone-mist);
     text-decoration: none;
-    opacity: 0.8;
+    opacity: 0.9;
     transition: var(--transition);
 }
 
 .footer-links a:hover {
     opacity: 1;
-    color: var(--sage-green);
+    color: var(--lime-spark);
+    text-decoration: underline;
 }
 
 .footer-contact p {
@@ -1164,20 +1177,20 @@ section {
 
 .footer-contact i {
     margin-right: 1rem;
-    color: var(--sage-green);
+    color: var(--lime-spark);
     width: 20px;
 }
 
 /* Style tel and mailto links in footer for better visibility */
 .footer-contact a {
-    color: var(--white);
+    color: var(--stone-mist);
     text-decoration: none;
     opacity: 0.9;
     transition: var(--transition);
 }
 
 .footer-contact a:hover {
-    color: var(--sage-green);
+    color: var(--lime-spark);
     opacity: 1;
     text-decoration: underline;
 }
@@ -1200,7 +1213,7 @@ section {
 }
 
 .footer-bottom-links a {
-    color: var(--white);
+    color: var(--stone-mist);
     text-decoration: none;
     opacity: 0.8;
     transition: var(--transition);
@@ -1208,7 +1221,8 @@ section {
 
 .footer-bottom-links a:hover {
     opacity: 1;
-    color: var(--sage-green);
+    color: var(--lime-spark);
+    text-decoration: underline;
 }
 
 /* Back to Top Button */
@@ -1235,7 +1249,7 @@ section {
 }
 
 .back-to-top:hover {
-    background: var(--ocean-blue);
+    background: var(--lime-spark);
     transform: translateY(-3px);
 }
 
@@ -1307,10 +1321,10 @@ section {
     /* Plant CSS */
     .plant-image-wrapper {
         position: absolute;
-        background-color: var(--mint-green);
-        /* Light green background */
+        background-color: rgba(159, 211, 86, 0.2);
+        /* Lime Spark transparent background */
         border-radius: 50%;
-        box-shadow: 0 4px 8px rgba(26, 93, 58, 0.2);
+        box-shadow: 0 4px 8px rgba(31, 111, 67, 0.2);
         cursor: pointer;
         transition: transform 0.3s ease;
         z-index: 2;
@@ -1326,7 +1340,7 @@ section {
         transform: translateY(-50%);
         pointer-events: none;
         /* arrow click block na kare */
-        color: var(--ocean-blue);
+        color: var(--lime-spark);
         /* thoda eye-catching color */
     }
 }
@@ -1342,12 +1356,12 @@ section {
         left: -100%;
         top: 70px;
         flex-direction: column;
-        background-color: rgba(255, 255, 255, 0.98);
+        background-color: var(--evergreen);
         /* Match navbar color */
         width: 100%;
         text-align: center;
         transition: 0.3s;
-        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.2);
         padding: 1rem 0;
         z-index: 999;
         height: auto;
@@ -1613,7 +1627,7 @@ input:focus,
 select:focus,
 textarea:focus,
 a:focus {
-    outline: 3px solid var(--ocean-blue);
+    outline: 3px solid var(--lime-spark);
     outline-offset: 2px;
 }
 
