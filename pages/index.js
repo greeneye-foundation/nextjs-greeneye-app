@@ -36,7 +36,6 @@ export default function HomePage() {
       <About />
       <BlogIndex />
       <Donate />
-      <Volunteer />
       <Impact />
     </>
   );
