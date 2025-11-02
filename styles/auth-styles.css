@@ -148,8 +148,16 @@ h1, h2 {
 
 /* Auth Sections */
 .auth-section {
-    display: flex;
-    justify-content: center;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.98);
+    padding: 3.5rem;
+    border-radius: 24px;
+    box-shadow:
+        0 4px 24px rgba(47, 60, 59, 0.08),
+        0 12px 48px rgba(47, 60, 59, 0.06),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
     margin-bottom: 3rem;
 }
 
@@ -167,14 +175,9 @@ h1, h2 {
     border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
-/* Registration Content Container for Side-by-Side Layout */
-.auth-card > * {
-    /* This targets direct children of auth-card */
-}
-
 /* Desktop: Side-by-Side Layout */
 @media (min-width: 1024px) {
-    .auth-card {
+    .auth-section {
         display: grid;
         grid-template-columns: 1fr auto 1fr;
         gap: 3rem;
@@ -883,8 +886,13 @@ h1, h2 {
 
 /* Responsive Design */
 @media (max-width: 1023px) {
-    .auth-card {
+    .auth-section {
         display: block;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .auth-card {
         max-width: 600px;
         margin: 0 auto;
     }
@@ -922,6 +930,13 @@ h1, h2 {
 @media (max-width: 768px) {
     .auth-container {
         padding-top: 100px;
+    }
+
+    .auth-section {
+        padding: 2.75rem 2rem;
+        margin: 0 12px 3rem 12px;
+        max-width: 100%;
+        border-radius: 20px;
     }
 
     .auth-card {
@@ -1008,6 +1023,12 @@ h1, h2 {
 
     .auth-wrapper {
         padding: 0 16px;
+    }
+
+    .auth-section {
+        padding: 2.25rem 1.75rem;
+        border-radius: 18px;
+        margin: 0 0 3rem 0;
     }
 
     .auth-card {
