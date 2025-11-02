@@ -434,7 +434,22 @@
     "loginSuccess": "تم تسجيل الدخول بنجاح!",
     "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
     "hidePassword": "إخفاء كلمة المرور",
-    "showPassword": "إظهار كلمة المرور"
+    "showPassword": "إظهار كلمة المرور",
+    "welcomeBack": "مرحبًا بعودتك! يرجى تسجيل الدخول للمتابعة",
+    "emailPassword": "البريد الإلكتروني / كلمة المرور",
+    "otpLogin": "تسجيل الدخول عبر OTP",
+    "validMobile": "يرجى إدخال رقم جوال صحيح مكون من 10 أرقام",
+    "otpSent": "تم إرسال OTP بنجاح",
+    "otpFailed": "فشل إرسال OTP",
+    "validOtp": "يرجى إدخال OTP صالح",
+    "invalidOtp": "OTP غير صحيح",
+    "mobilePlaceholder": "أدخل رقم الجوال",
+    "otpPlaceholder": "أدخل OTP",
+    "sendingOtp": "جارٍ إرسال OTP...",
+    "sendOtp": "إرسال OTP",
+    "verifying": "جارٍ التحقق...",
+    "verifyOtp": "تحقق من OTP",
+    "resendOtp": "إعادة إرسال OTP"
   },
   "register": {
     "whatsappQRAlt": "رمز واتساب QR",

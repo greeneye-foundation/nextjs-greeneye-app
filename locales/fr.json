@@ -434,7 +434,22 @@
     "loginSuccess": "Connexion réussie !",
     "invalidCredentials": "Email ou mot de passe invalide.",
     "hidePassword": "Masquer le mot de passe",
-    "showPassword": "Afficher le mot de passe"
+    "showPassword": "Afficher le mot de passe",
+    "welcomeBack": "Bienvenue ! Veuillez vous connecter pour continuer",
+    "emailPassword": "Email / Mot de passe",
+    "otpLogin": "Connexion OTP",
+    "validMobile": "Veuillez entrer un numéro de mobile valide à 10 chiffres",
+    "otpSent": "OTP envoyé avec succès",
+    "otpFailed": "Échec de l'envoi de l'OTP",
+    "validOtp": "Veuillez entrer un OTP valide",
+    "invalidOtp": "OTP invalide",
+    "mobilePlaceholder": "Entrez le numéro de mobile",
+    "otpPlaceholder": "Entrez l'OTP",
+    "sendingOtp": "Envoi de l'OTP...",
+    "sendOtp": "Envoyer OTP",
+    "verifying": "Vérification...",
+    "verifyOtp": "Vérifier OTP",
+    "resendOtp": "Renvoyer OTP"
   },
   "register": {
     "whatsappQRAlt": "QR Code WhatsApp",

@@ -434,7 +434,22 @@
     "loginSuccess": "ログイン成功！",
     "invalidCredentials": "メールアドレスまたはパスワードが間違っています。",
     "hidePassword": "パスワードを隠す",
-    "showPassword": "パスワードを表示"
+    "showPassword": "パスワードを表示",
+    "welcomeBack": "おかえりなさい！続行するにはサインインしてください",
+    "emailPassword": "メール / パスワード",
+    "otpLogin": "OTPログイン",
+    "validMobile": "10桁の有効な携帯電話番号を入力してください",
+    "otpSent": "OTPが正常に送信されました",
+    "otpFailed": "OTPの送信に失敗しました",
+    "validOtp": "有効なOTPを入力してください",
+    "invalidOtp": "無効なOTP",
+    "mobilePlaceholder": "携帯電話番号を入力",
+    "otpPlaceholder": "OTPを入力",
+    "sendingOtp": "OTP送信中...",
+    "sendOtp": "OTPを送信",
+    "verifying": "確認中...",
+    "verifyOtp": "OTPを確認",
+    "resendOtp": "OTPを再送信"
   },
   "register": {
     "whatsappQRAlt": "WhatsApp QRコード",
