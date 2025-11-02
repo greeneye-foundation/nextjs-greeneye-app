@@ -434,7 +434,22 @@
     "loginSuccess": "登录成功！",
     "invalidCredentials": "邮箱或密码不正确。",
     "hidePassword": "隐藏密码",
-    "showPassword": "显示密码"
+    "showPassword": "显示密码",
+    "welcomeBack": "欢迎回来！请登录以继续",
+    "emailPassword": "邮箱 / 密码",
+    "otpLogin": "OTP登录",
+    "validMobile": "请输入有效的10位手机号码",
+    "otpSent": "OTP已成功发送",
+    "otpFailed": "发送OTP失败",
+    "validOtp": "请输入有效的OTP",
+    "invalidOtp": "OTP无效",
+    "mobilePlaceholder": "输入手机号码",
+    "otpPlaceholder": "输入OTP",
+    "sendingOtp": "正在发送OTP...",
+    "sendOtp": "发送OTP",
+    "verifying": "验证中...",
+    "verifyOtp": "验证OTP",
+    "resendOtp": "重新发送OTP"
   },
   "register": {
     "whatsappQRAlt": "WhatsApp二维码",
