@@ -38,27 +38,28 @@
 
 /* Header Section */
 .legal-header {
-    background: linear-gradient(135deg, var(--evergreen) 0%, var(--sky-breath) 100%);
-    color: var(--white);
-    padding: 5rem 2rem 4rem;
+    background: transparent;
+    color: var(--charcoal-bark);
+    padding: 3rem 2rem 2rem;
     text-align: center;
     margin-top: 80px;
     position: relative;
-    box-shadow: 0 4px 24px var(--shadow-dark);
 }
 
 .legal-header::before {
     content: '';
     position: absolute;
     bottom: 0;
-    left: 0;
-    right: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
     height: 4px;
     background: linear-gradient(90deg,
-        transparent 0%,
+        var(--evergreen) 0%,
         var(--lime-spark) 50%,
-        transparent 100%
+        var(--evergreen) 100%
     );
+    border-radius: 2px;
 }
 
 .legal-header-content {
@@ -70,22 +71,23 @@
     font-family: 'Noto Serif', serif;
     font-size: 2.75rem;
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     letter-spacing: -0.02em;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    color: var(--evergreen);
+    line-height: 1.2;
 }
 
 .legal-header-icon {
     font-size: 3rem;
     margin-bottom: 1rem;
-    opacity: 0.9;
+    color: var(--lime-spark);
 }
 
 .legal-header p {
-    font-size: 1.1rem;
-    opacity: 0.95;
+    font-size: 1.05rem;
     margin: 0;
-    font-weight: 400;
+    font-weight: 500;
+    color: var(--gray);
 }
 
 /* Content Container */
@@ -307,7 +309,7 @@
 /* Responsive Design */
 @media (max-width: 768px) {
     .legal-header {
-        padding: 4rem 1.5rem 3rem;
+        padding: 2.5rem 1.5rem 2rem;
         margin-top: 70px;
     }
 
@@ -320,7 +322,7 @@
     }
 
     .legal-header p {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 
     .legal-content {
@@ -353,7 +355,7 @@
 
 @media (max-width: 480px) {
     .legal-header {
-        padding: 3.5rem 1rem 2.5rem;
+        padding: 2rem 1rem 1.5rem;
     }
 
     .legal-header h1 {
@@ -401,7 +403,7 @@
 
     .legal-header {
         margin-top: 0;
-        background: var(--evergreen);
+        background: transparent;
     }
 
     .legal-card {
