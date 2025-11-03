@@ -2,7 +2,6 @@
 
 import React from "react";
 import { useTranslations } from "next-intl";
-import "../../styles/legal-styles.css";
 
 const CookiesPolicy = () => {
   const t = useTranslations("cookiesPolicy");
