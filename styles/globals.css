@@ -142,18 +142,35 @@ main {
 
 /* Page Header for separate pages */
 .page-header {
-    background: linear-gradient(135deg, var(--evergreen) 0%, var(--lime-spark) 100%);
-    padding: 50px 0 80px;
+    background: linear-gradient(135deg, var(--stone-mist) 0%, rgba(93, 167, 177, 0.08) 50%, var(--stone-mist) 100%);
+    padding: 3rem 0 4rem;
     text-align: center;
-    color: var(--white);
+    color: var(--charcoal-bark);
+    position: relative;
+    margin-top: 80px;
+}
+
+.page-header::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 4px;
+    background: linear-gradient(90deg,
+        var(--evergreen) 0%,
+        var(--lime-spark) 50%,
+        var(--evergreen) 100%
+    );
+    border-radius: 2px;
 }
 
 .page-header h1 {
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
-    color: var(--white);
+    color: var(--evergreen);
 }
 
 .page-header p {
@@ -161,7 +178,7 @@ main {
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.95);
+    color: var(--gray);
 }
 
 /* Active nav link */
@@ -882,13 +899,28 @@ section {
 
 /* Donation Section */
 .donate {
-    background: var(--evergreen);
-    color: var(--white);
+    background: linear-gradient(135deg, var(--stone-mist) 0%, rgba(93, 167, 177, 0.08) 50%, var(--stone-mist) 100%);
+    color: var(--charcoal-bark);
+    position: relative;
+}
+
+.donate::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        radial-gradient(circle at 20% 30%, rgba(159, 211, 86, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(93, 167, 177, 0.06) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
 }
 
 .donate .section-title,
 .donate .section-subtitle {
-    color: var(--white);
+    color: var(--charcoal-bark);
 }
 
 .donation-content {
@@ -896,19 +928,23 @@ section {
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: start;
+    position: relative;
+    z-index: 1;
 }
 
 .donation-info h3 {
     font-size: 2rem;
     margin-bottom: 2rem;
-    color: var(--lime-spark);
+    color: var(--evergreen);
+    font-family: 'Noto Serif', serif;
 }
 
 .donation-breakdown {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 2rem;
-    border-radius: var(--border-radius);
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.98);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(47, 60, 59, 0.08), 0 12px 48px rgba(47, 60, 59, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 .breakdown-item {
@@ -916,7 +952,7 @@ section {
     align-items: center;
     margin-bottom: 1.5rem;
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 2px solid rgba(159, 211, 86, 0.2);
 }
 
 .breakdown-item:last-child {
@@ -934,22 +970,26 @@ section {
 }
 
 .description {
-    color: var(--white);
-    line-height: 1.5;
+    color: var(--charcoal-bark);
+    line-height: 1.6;
 }
 
 .donation-form-container {
-    background: var(--white);
+    background: rgba(255, 255, 255, 0.98);
     padding: 3rem;
-    border-radius: var(--border-radius);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(47, 60, 59, 0.08), 0 12px 48px rgba(47, 60, 59, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(16px);
 }
 
 .donation-form-container h3 {
     font-size: 2rem;
-    color: var(--primary-green);
+    color: var(--evergreen);
     margin-bottom: 2rem;
     text-align: center;
+    font-family: 'Noto Serif', serif;
+    font-weight: 700;
 }
 
 .donation-amounts {
