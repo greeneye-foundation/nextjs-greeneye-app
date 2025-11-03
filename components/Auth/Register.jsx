@@ -139,7 +139,7 @@ const Register = ({ onSwitch }) => {
   };
 
   return (
-    <>
+    <div className="register-container">
       {/* WhatsApp QR Section */}
       <div className="whatsapp-section">
         <div className="qr-container">
@@ -179,7 +179,8 @@ const Register = ({ onSwitch }) => {
       <div className="divider"><span>{t("or")}</span></div>
 
       {/* Email/Phone Registration Form */}
-      <form className="auth-form" onSubmit={otpSent ? handleOTPVerification : handleSubmit}>
+      <div className="email-form-section">
+        <form className="auth-form" onSubmit={otpSent ? handleOTPVerification : handleSubmit}>
         <h3>{t("registerWithEmail")}</h3>
 
         {/* Name */}
@@ -326,7 +327,8 @@ const Register = ({ onSwitch }) => {
             </>
           )}
         </button>
-      </form>
+        </form>
+      </div>
 
       <div className="auth-switch">
         <p>
@@ -336,7 +338,7 @@ const Register = ({ onSwitch }) => {
           </button>
         </p>
       </div>
-    </>
+    </div>
   );
 };
 
