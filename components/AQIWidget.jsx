@@ -1,14 +1,16 @@
 // components/AQIWidget.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 
 const AQIWidget = () => {
+  const [isActivated, setIsActivated] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [aqiData, setAqiData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [city, setCity] = useState('');
   const router = useRouter();
+  const widgetRef = useRef(null);
 
   // AQI Color and Category based on standard ranges
   const getAQIInfo = (aqi) => {
@@ -27,103 +29,152 @@ const AQIWidget = () => {
     }
   };
 
-  // Fetch AQI data
+  // Click outside to close expanded view
   useEffect(() => {
-    const fetchAQI = async () => {
-      setLoading(true);
-      setError(null);
+    const handleClickOutside = (event) => {
+      if (widgetRef.current && !widgetRef.current.contains(event.target) && isExpanded) {
+        setIsExpanded(false);
+      }
+    };
 
-      try {
-        // Try to get user's location
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            async (position) => {
-              const { latitude, longitude } = position.coords;
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
 
-              // Using WAQI (World Air Quality Index) API
-              // You'll need to get a free API key from https://aqicn.org/api/
-              const WAQI_TOKEN = process.env.NEXT_PUBLIC_WAQI_TOKEN || 'demo';
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [isExpanded]);
 
-              try {
-                const response = await fetch(
-                  `https://api.waqi.info/feed/geo:${latitude};${longitude}/?token=${WAQI_TOKEN}`
-                );
-                const data = await response.json();
+  // Fetch AQI data
+  const fetchAQI = async () => {
+    setLoading(true);
+    setError(null);
 
-                if (data.status === 'ok') {
-                  setAqiData({
-                    aqi: data.data.aqi,
-                    city: data.data.city.name,
-                    dominentpol: data.data.dominentpol,
-                    time: data.data.time.s,
-                    iaqi: data.data.iaqi || {},
-                    attributions: data.data.attributions || []
-                  });
-                  setCity(data.data.city.name);
-                } else {
-                  throw new Error('Unable to fetch AQI data');
-                }
-              } catch (err) {
-                // Fallback to a default city if geolocation fails
-                await fetchDefaultCity();
+    try {
+      // Try to get user's location
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const { latitude, longitude } = position.coords;
+
+            // Using WAQI (World Air Quality Index) API
+            const WAQI_TOKEN = process.env.NEXT_PUBLIC_WAQI_TOKEN || 'demo';
+
+            try {
+              const response = await fetch(
+                `https://api.waqi.info/feed/geo:${latitude};${longitude}/?token=${WAQI_TOKEN}`
+              );
+              const data = await response.json();
+
+              if (data.status === 'ok') {
+                setAqiData({
+                  aqi: data.data.aqi,
+                  city: data.data.city.name,
+                  dominentpol: data.data.dominentpol,
+                  time: data.data.time.s,
+                  iaqi: data.data.iaqi || {},
+                  attributions: data.data.attributions || []
+                });
+                setCity(data.data.city.name);
+              } else {
+                throw new Error('Unable to fetch AQI data');
               }
-              setLoading(false);
-            },
-            async (err) => {
-              // If geolocation is denied, use default city
+            } catch (err) {
+              // Fallback to a default city if API fails
               await fetchDefaultCity();
-              setLoading(false);
             }
-          );
-        } else {
-          await fetchDefaultCity();
-          setLoading(false);
-        }
-      } catch (err) {
-        setError('Unable to load air quality data');
+            setLoading(false);
+          },
+          async (err) => {
+            // If geolocation is denied, use default city
+            await fetchDefaultCity();
+            setLoading(false);
+          }
+        );
+      } else {
+        await fetchDefaultCity();
         setLoading(false);
       }
-    };
+    } catch (err) {
+      setError('Unable to load air quality data');
+      setLoading(false);
+    }
+  };
 
-    const fetchDefaultCity = async () => {
-      try {
-        const WAQI_TOKEN = process.env.NEXT_PUBLIC_WAQI_TOKEN || 'demo';
-        const response = await fetch(
-          `https://api.waqi.info/feed/jaipur/?token=${WAQI_TOKEN}`
-        );
-        const data = await response.json();
+  const fetchDefaultCity = async () => {
+    try {
+      const WAQI_TOKEN = process.env.NEXT_PUBLIC_WAQI_TOKEN || 'demo';
+      const response = await fetch(
+        `https://api.waqi.info/feed/jaipur/?token=${WAQI_TOKEN}`
+      );
+      const data = await response.json();
 
-        if (data.status === 'ok') {
-          setAqiData({
-            aqi: data.data.aqi,
-            city: data.data.city.name,
-            dominentpol: data.data.dominentpol,
-            time: data.data.time.s,
-            iaqi: data.data.iaqi || {},
-            attributions: data.data.attributions || []
-          });
-          setCity(data.data.city.name);
-        }
-      } catch (err) {
-        setError('Unable to load air quality data');
+      if (data.status === 'ok') {
+        setAqiData({
+          aqi: data.data.aqi,
+          city: data.data.city.name,
+          dominentpol: data.data.dominentpol,
+          time: data.data.time.s,
+          iaqi: data.data.iaqi || {},
+          attributions: data.data.attributions || []
+        });
+        setCity(data.data.city.name);
       }
-    };
+    } catch (err) {
+      setError('Unable to load air quality data');
+    }
+  };
 
+  // Handle initial activation
+  const handleActivate = () => {
+    setIsActivated(true);
     fetchAQI();
+  };
 
-    // Refresh data every 30 minutes
-    const interval = setInterval(fetchAQI, 30 * 60 * 1000);
-    return () => clearInterval(interval);
-  }, []);
+  // Auto-refresh data every 30 minutes after activation
+  useEffect(() => {
+    if (isActivated && aqiData) {
+      const interval = setInterval(fetchAQI, 30 * 60 * 1000);
+      return () => clearInterval(interval);
+    }
+  }, [isActivated, aqiData]);
 
-  if (loading || error || !aqiData) {
-    return null; // Don't show widget if loading or error
+  // Show initial button if not activated
+  if (!isActivated) {
+    return (
+      <div className="aqi-widget" ref={widgetRef}>
+        <button className="aqi-activate-btn" onClick={handleActivate}>
+          <i className="fas fa-wind"></i>
+          <span>Check AQI in Your Area</span>
+        </button>
+      </div>
+    );
+  }
+
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="aqi-widget" ref={widgetRef}>
+        <div className="aqi-widget-compact">
+          <div className="aqi-loading">
+            <i className="fas fa-spinner fa-spin"></i>
+            <span>Loading AQI...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Don't show widget if error or no data
+  if (error || !aqiData) {
+    return null;
   }
 
   const aqiInfo = getAQIInfo(aqiData.aqi);
 
   return (
-    <div className={`aqi-widget ${isExpanded ? 'expanded' : ''}`}>
+    <div className={`aqi-widget ${isExpanded ? 'expanded' : ''}`} ref={widgetRef}>
       <div className="aqi-widget-compact" onClick={() => setIsExpanded(!isExpanded)}>
         <div className="aqi-badge" style={{ backgroundColor: aqiInfo.color }}>
           <div className="aqi-value">{aqiData.aqi}</div>
@@ -135,17 +186,32 @@ const AQIWidget = () => {
             {aqiInfo.category}
           </div>
         </div>
-        <button className="aqi-toggle" onClick={(e) => { e.stopPropagation(); setIsExpanded(!isExpanded); }}>
+        <button
+          className="aqi-toggle"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsExpanded(!isExpanded);
+          }}
+        >
           <i className={`fas fa-chevron-${isExpanded ? 'down' : 'up'}`}></i>
         </button>
       </div>
 
       {isExpanded && (
-        <div className="aqi-widget-expanded">
+        <div className="aqi-widget-expanded" onClick={(e) => e.stopPropagation()}>
           <div className="aqi-details">
-            <h4>
-              <i className="fas fa-wind"></i> Air Quality Details
-            </h4>
+            <div className="aqi-header">
+              <h4>
+                <i className="fas fa-wind"></i> Air Quality Details
+              </h4>
+              <button
+                className="aqi-close-btn"
+                onClick={() => setIsExpanded(false)}
+                aria-label="Close"
+              >
+                <i className="fas fa-times"></i>
+              </button>
+            </div>
 
             <div className="pollutants-grid">
               {aqiData.iaqi.pm25 && (
