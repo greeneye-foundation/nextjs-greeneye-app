@@ -210,7 +210,7 @@ h1, h2 {
     }
 
     .register-container .divider span {
-        transform: rotate(90deg);
+        writing-mode: horizontal-tb;
         white-space: nowrap;
     }
 
