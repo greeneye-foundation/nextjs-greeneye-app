@@ -566,5 +566,15 @@
   "contactTitle": "Contact Us",
   "contactText": "For cancellation and refund-related queries, please reach out to us at: contact@greeneye.foundation. Our support team will be happy to assist you.",
   "rightsReserved": " All rights reserved."
-}
+},
+  "aqiWidget": {
+    "activateButton": "Check Air Quality in Your Area",
+    "loading": "Loading AQI...",
+    "airQualityDetails": "Air Quality Details",
+    "dominantPollutant": "Dominant Pollutant",
+    "helpText": "Help us improve air quality in your area",
+    "supportButton": "Support Clean Air",
+    "updated": "Updated",
+    "dataSource": "Data"
+  }
 }

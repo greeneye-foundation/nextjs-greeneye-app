@@ -1,6 +1,7 @@
 // components/AQIWidget.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
+import { useTranslations } from 'next-intl';
 
 const AQIWidget = () => {
   const [isActivated, setIsActivated] = useState(false);
@@ -11,6 +12,7 @@ const AQIWidget = () => {
   const [city, setCity] = useState('');
   const router = useRouter();
   const widgetRef = useRef(null);
+  const t = useTranslations('aqiWidget');
 
   // AQI Color and Category based on standard ranges
   const getAQIInfo = (aqi) => {
@@ -146,7 +148,7 @@ const AQIWidget = () => {
       <div className="aqi-widget" ref={widgetRef}>
         <button className="aqi-activate-btn" onClick={handleActivate}>
           <i className="fas fa-wind"></i>
-          <span>Check AQI in Your Area</span>
+          <span>{t('activateButton')}</span>
         </button>
       </div>
     );
@@ -159,7 +161,7 @@ const AQIWidget = () => {
         <div className="aqi-widget-compact">
           <div className="aqi-loading">
             <i className="fas fa-spinner fa-spin"></i>
-            <span>Loading AQI...</span>
+            <span>{t('loading')}</span>
           </div>
         </div>
       </div>
@@ -202,7 +204,7 @@ const AQIWidget = () => {
           <div className="aqi-details">
             <div className="aqi-header">
               <h4>
-                <i className="fas fa-wind"></i> Air Quality Details
+                <i className="fas fa-wind"></i> {t('airQualityDetails')}
               </h4>
               <button
                 className="aqi-close-btn"
@@ -255,32 +257,32 @@ const AQIWidget = () => {
             {aqiData.dominentpol && (
               <div className="dominant-pollutant">
                 <i className="fas fa-exclamation-circle"></i>
-                Dominant Pollutant: <strong>{aqiData.dominentpol.toUpperCase()}</strong>
+                {t('dominantPollutant')}: <strong>{aqiData.dominentpol.toUpperCase()}</strong>
               </div>
             )}
 
             <div className="aqi-help-section">
               <p className="aqi-help-text">
                 <i className="fas fa-leaf"></i>
-                Help us improve air quality in your area
+                {t('helpText')}
               </p>
               <button
                 className="btn-improve-aqi"
                 onClick={() => router.push('/donate')}
               >
                 <i className="fas fa-seedling"></i>
-                Support Clean Air
+                {t('supportButton')}
               </button>
             </div>
 
             <div className="aqi-updated">
-              <i className="fas fa-clock"></i> Updated: {new Date(aqiData.time).toLocaleString()}
+              <i className="fas fa-clock"></i> {t('updated')}: {new Date(aqiData.time).toLocaleString()}
             </div>
 
             {aqiData.attributions && aqiData.attributions.length > 0 && (
               <div className="aqi-attribution">
                 <small>
-                  Data: {aqiData.attributions[0]?.name || 'WAQI'}
+                  {t('dataSource')}: {aqiData.attributions[0]?.name || 'WAQI'}
                 </small>
               </div>
             )}
