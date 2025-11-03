@@ -3,6 +3,7 @@ import '@/styles/globals.css';
 import '@/styles/auth-styles.css';
 import '@/styles/admin.css';
 import '@/styles/legal-styles.css';
+import '@/styles/aqi-widget.css';
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';

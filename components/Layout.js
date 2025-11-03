@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import Navbar from './Navbar';
 import Footer from './Footer';
+import AQIWidget from './AQIWidget';
 
 const Layout = ({ children, title = "GreenEye" }) => {
   const [showLayout, setShowLayout] = useState(true);
@@ -17,6 +18,7 @@ const Layout = ({ children, title = "GreenEye" }) => {
       {showLayout && <Navbar />}
       <main>{children}</main>
       {showLayout && <Footer />}
+      {showLayout && <AQIWidget />}
     </>
   );
 };
