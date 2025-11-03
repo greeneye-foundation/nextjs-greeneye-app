@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl';
 import Seo from '@/components/common/Seo';
-import BlogIndex from '@/components/BlogIndex';
+import BlogGrid from '@/components/BlogGrid';
 
 export function getStaticProps({ locale }) {
   return {
@@ -28,7 +28,7 @@ export default function BlogPage() {
           <p>{t('pageSubtitle', { defaultMessage: 'Read the latest news and stories from GreenEye.' })}</p>
         </div>
       </section>
-      <BlogIndex />
+      <BlogGrid />
     </>
   );
 }
