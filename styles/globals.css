@@ -300,6 +300,26 @@ main {
     box-shadow: none;
 }
 
+/* Nav link with tagline */
+.nav-link-with-tagline {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.2;
+}
+
+.nav-link-main {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.nav-link-tagline {
+    font-size: 0.7rem;
+    font-weight: 400;
+    opacity: 0.85;
+    margin-top: 2px;
+}
+
 /* Language Switcher in Navbar */
 .nav-language-item {
     display: flex;

@@ -54,30 +54,6 @@ const Hero = () => {
         </div>
       </div>
 
-      <div
-        className="plant-image-wrapper"
-        onClick={() => router.push("/plantshop")}
-        role="button"
-        aria-label={t("plantBtnAria")}
-      >
-        {/* Plant Image Animated */}
-        <motion.img
-          src="/assets/plant.png"
-          alt={t("plantImgAlt")}
-          className="plant-image"
-          animate={{ scale: [1, 1.05, 1], rotate: [0, -3, 3, 0] }}
-          transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
-        />
-
-        {/* Arrow Animation */}
-        <motion.div
-          className="click-arrow"
-          animate={{ x: [0, -15, 0], y: [0, -5, 0] }}
-          transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
-        >
-          👉
-        </motion.div>
-      </div>
     </section>
   );
 };

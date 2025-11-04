@@ -13,6 +13,7 @@ const NAV_LINKS = [
   // { href: "/impact", labelKey: "impact" },
   { href: "/volunteer", labelKey: "volunteer" },
   { href: "/donate", labelKey: "donate" },
+  { href: "/plantshop", labelKey: "nursery", tagline: "buyPlants" },
 ];
 
 const Navbar = () => {
@@ -98,7 +99,14 @@ const Navbar = () => {
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
               <Link href={link.href} className={`nav-link${isActive(link.href) ? " active" : ""}`}>
-                {t(link.labelKey)}
+                {link.tagline ? (
+                  <span className="nav-link-with-tagline">
+                    <span className="nav-link-main">{t(link.labelKey)}</span>
+                    <span className="nav-link-tagline">{t(link.tagline)}</span>
+                  </span>
+                ) : (
+                  t(link.labelKey)
+                )}
               </Link>
             </li>
           ))}
