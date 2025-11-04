@@ -503,6 +503,14 @@ main {
     transition: var(--transition);
     text-align: center;
     gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn i,
+.btn span {
+    position: relative;
+    z-index: 1;
 }
 
 .btn-primary {
@@ -513,9 +521,13 @@ main {
 
 .btn-primary:hover {
     background: var(--evergreen);
-    color: var(--white);
     transform: translateY(-2px);
     box-shadow: 0 10px 20px rgba(31, 111, 67, 0.3);
+}
+
+.btn-primary:hover i,
+.btn-primary:hover span {
+    color: var(--white);
 }
 
 .btn-secondary {
@@ -528,8 +540,12 @@ main {
 .btn-secondary:hover {
     background: var(--evergreen);
     border-color: var(--evergreen);
-    color: var(--white);
     transform: translateY(-2px);
+}
+
+.btn-secondary:hover i,
+.btn-secondary:hover span {
+    color: var(--white);
 }
 
 .btn-outline {

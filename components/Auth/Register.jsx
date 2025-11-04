@@ -319,11 +319,11 @@ const Register = ({ onSwitch }) => {
         <button type="submit" className="btn btn-primary btn-full" disabled={loading}>
           {loading ? (
             <>
-              <i className="fas fa-spinner fa-spin"></i> {otpSent ? "Verifying..." : "Sending OTP..."}
+              <i className="fas fa-spinner fa-spin"></i> <span>{otpSent ? "Verifying..." : "Sending OTP..."}</span>
             </>
           ) : (
             <>
-              <i className="fas fa-user-plus"></i> {otpSent ? "Verify OTP & Register" : t("createAccount")}
+              <i className="fas fa-user-plus"></i> <span>{otpSent ? "Verify OTP & Register" : t("createAccount")}</span>
             </>
           )}
         </button>

@@ -206,11 +206,11 @@ const Contact = () => {
               <button type="submit" className="btn btn-primary btn-full" disabled={loading}>
                 {loading ? (
                   <>
-                    <i className="fas fa-spinner fa-spin"></i> {t("sending")}
+                    <i className="fas fa-spinner fa-spin"></i> <span>{t("sending")}</span>
                   </>
                 ) : (
                   <>
-                    <i className="fas fa-paper-plane"></i> {t("sendMessage")}
+                    <i className="fas fa-paper-plane"></i> <span>{t("sendMessage")}</span>
                   </>
                 )}
               </button>

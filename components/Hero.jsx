@@ -30,11 +30,11 @@ const Hero = () => {
         <div className="hero-buttons">
           <button className="btn btn-primary" onClick={() => router.push("/volunteer")}>
             <i className="fas fa-hands-helping"></i>
-            {t("joinMission")}
+            <span>{t("joinMission")}</span>
           </button>
           <button className="btn btn-secondary" onClick={() => router.push("/donate")}>
             <i className="fas fa-heart"></i>
-            {t("contribute")}
+            <span>{t("contribute")}</span>
           </button>
         </div>
       </div>

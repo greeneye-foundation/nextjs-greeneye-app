@@ -215,11 +215,11 @@ const Login = ({ onSwitch, onLogin }) => {
           <button type="submit" className="btn btn-primary btn-full" disabled={loading}>
             {loading ? (
               <>
-                <i className="fas fa-spinner fa-spin"></i> {t("signingIn")}
+                <i className="fas fa-spinner fa-spin"></i> <span>{t("signingIn")}</span>
               </>
             ) : (
               <>
-                <i className="fas fa-sign-in-alt"></i> {t("signInBtn")}
+                <i className="fas fa-sign-in-alt"></i> <span>{t("signInBtn")}</span>
               </>
             )}
           </button>
@@ -264,11 +264,11 @@ const Login = ({ onSwitch, onLogin }) => {
             <button className="btn btn-primary btn-full" onClick={handleSendOtp} disabled={loading}>
               {loading ? (
                 <>
-                  <i className="fas fa-spinner fa-spin"></i> {t("sendingOtp") || "Sending OTP..."}
+                  <i className="fas fa-spinner fa-spin"></i> <span>{t("sendingOtp") || "Sending OTP..."}</span>
                 </>
               ) : (
                 <>
-                  <i className="fas fa-paper-plane"></i> {t("sendOtp") || "Send OTP"}
+                  <i className="fas fa-paper-plane"></i> <span>{t("sendOtp") || "Send OTP"}</span>
                 </>
               )}
             </button>
@@ -277,11 +277,11 @@ const Login = ({ onSwitch, onLogin }) => {
               <button className="btn btn-primary btn-full" onClick={handleVerifyOtp} disabled={loading}>
                 {loading ? (
                   <>
-                    <i className="fas fa-spinner fa-spin"></i> {t("verifying") || "Verifying..."}
+                    <i className="fas fa-spinner fa-spin"></i> <span>{t("verifying") || "Verifying..."}</span>
                   </>
                 ) : (
                   <>
-                    <i className="fas fa-unlock-alt"></i> {t("verifyOtp") || "Verify OTP"}
+                    <i className="fas fa-unlock-alt"></i> <span>{t("verifyOtp") || "Verify OTP"}</span>
                   </>
                 )}
               </button>

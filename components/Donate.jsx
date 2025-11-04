@@ -220,11 +220,11 @@ const Donate = () => {
               <button type="submit" className="btn btn-primary btn-full" disabled={loading}>
                 {loading ? (
                   <>
-                    <i className="fas fa-spinner fa-spin"></i> {t("processing")}
+                    <i className="fas fa-spinner fa-spin"></i> <span>{t("processing")}</span>
                   </>
                 ) : (
                   <>
-                    <i className="fas fa-heart"></i> {t("donateNow")}
+                    <i className="fas fa-heart"></i> <span>{t("donateNow")}</span>
                   </>
                 )}
               </button>

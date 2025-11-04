@@ -375,11 +375,11 @@ const Volunteer = () => {
                 >
                   {loading ? (
                     <>
-                      <i className="fas fa-spinner fa-spin"></i> {t("registering")}
+                      <i className="fas fa-spinner fa-spin"></i> <span>{t("registering")}</span>
                     </>
                   ) : (
                     <>
-                      <i className="fas fa-hands-helping"></i> {t("registerBtn")}
+                      <i className="fas fa-hands-helping"></i> <span>{t("registerBtn")}</span>
                     </>
                   )}
                 </button>
