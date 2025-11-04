@@ -14,9 +14,9 @@ export default function Document({ __NEXT_DATA__ }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
-        {/* Google Fonts - Noto Serif and Noto Sans */}
+        {/* Google Fonts - Montserrat and Open Sans */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@600;700&family=Noto+Sans:wght@400;500&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
         />
 
