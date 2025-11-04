@@ -310,12 +310,17 @@
 .btn-improve-aqi:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(159, 211, 86, 0.4);
-    color: var(--white);
 }
 
-.btn-improve-aqi i {
+.btn-improve-aqi i,
+.btn-improve-aqi span {
     position: relative;
     z-index: 1;
+}
+
+.btn-improve-aqi:hover i,
+.btn-improve-aqi:hover span {
+    color: var(--white);
 }
 
 .aqi-updated {

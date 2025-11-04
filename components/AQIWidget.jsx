@@ -271,7 +271,7 @@ const AQIWidget = () => {
                 onClick={() => router.push('/donate')}
               >
                 <i className="fas fa-seedling"></i>
-                {t('supportButton')}
+                <span>{t('supportButton')}</span>
               </button>
             </div>
 
