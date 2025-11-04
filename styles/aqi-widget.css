@@ -3,7 +3,7 @@
 .aqi-widget {
     position: fixed;
     bottom: 20px;
-    left: 20px;
+    right: 20px;
     z-index: 999;
     font-family: 'Noto Sans', sans-serif;
     max-width: 320px;
@@ -347,7 +347,7 @@
 /* Responsive Design */
 @media (max-width: 768px) {
     .aqi-widget {
-        left: 10px;
+        right: 10px;
         bottom: 10px;
         max-width: calc(100vw - 20px);
     }
@@ -415,7 +415,7 @@
 
 @media (max-width: 480px) {
     .aqi-widget {
-        left: 5px;
+        right: 5px;
         bottom: 5px;
         max-width: calc(100vw - 10px);
     }
