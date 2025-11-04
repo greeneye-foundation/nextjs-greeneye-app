@@ -302,9 +302,7 @@ main {
 
 /* Nav link with tagline */
 .nav-link-with-tagline {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    display: inline-block;
     position: relative;
 }
 
@@ -314,15 +312,19 @@ main {
 }
 
 .nav-link-tagline {
-    font-size: 0.65rem;
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    font-size: 0.6rem;
     font-weight: 600;
     background: var(--lime-spark);
     color: var(--charcoal-bark);
-    padding: 0.15rem 0.5rem;
-    border-radius: 12px;
+    padding: 0.15rem 0.45rem;
+    border-radius: 10px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    line-height: 1.2;
+    letter-spacing: 0.3px;
+    line-height: 1;
+    white-space: nowrap;
 }
 
 /* Language Switcher in Navbar */
