@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { showNotification } from "./Notification";
 import { useTranslations } from "next-intl";
 
@@ -16,6 +16,26 @@ const Contact = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+
+  // Load dark mode preference from localStorage
+  useEffect(() => {
+    const savedMode = localStorage.getItem("contactPageDarkMode");
+    if (savedMode === "true") {
+      setDarkMode(true);
+      document.querySelector(".contact")?.classList.add("dark-mode");
+      document.querySelector(".page-header")?.classList.add("dark-mode");
+    }
+  }, []);
+
+  // Toggle dark mode
+  const toggleDarkMode = () => {
+    const newMode = !darkMode;
+    setDarkMode(newMode);
+    localStorage.setItem("contactPageDarkMode", newMode.toString());
+    document.querySelector(".contact")?.classList.toggle("dark-mode");
+    document.querySelector(".page-header")?.classList.toggle("dark-mode");
+  };
 
   // Handle form field changes
   const handleChange = (e) => {
@@ -65,6 +85,18 @@ const Contact = () => {
   return (
     <section id="contact" className="contact">
       <div className="container">
+        {/* Dark Mode Toggle */}
+        <button
+          className="dark-mode-toggle"
+          onClick={toggleDarkMode}
+          aria-label="Toggle dark mode"
+        >
+          {darkMode ? (
+            <i className="fas fa-sun"></i>
+          ) : (
+            <i className="fas fa-moon"></i>
+          )}
+        </button>
         <div className="contact-content">
           {/* Contact Info */}
           <div className="contact-info">
