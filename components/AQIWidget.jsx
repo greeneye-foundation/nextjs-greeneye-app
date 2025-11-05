@@ -14,6 +14,7 @@ const AQIWidget = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
+  const [hasBeenDragged, setHasBeenDragged] = useState(false);
   const router = useRouter();
   const widgetRef = useRef(null);
   const t = useTranslations('aqiWidget');
@@ -56,6 +57,7 @@ const AQIWidget = () => {
     const maxX = window.innerWidth - (widgetRef.current?.offsetWidth || 0);
     const maxY = window.innerHeight - (widgetRef.current?.offsetHeight || 0);
 
+    setHasBeenDragged(true);
     setPosition({
       x: Math.max(0, Math.min(newX, maxX)),
       y: Math.max(0, Math.min(newY, maxY))
@@ -216,12 +218,12 @@ const AQIWidget = () => {
       <div
         className="aqi-widget"
         ref={widgetRef}
-        style={isMobile ? {
+        style={isMobile && hasBeenDragged ? {
           transform: `translate(${position.x}px, ${position.y}px)`,
           bottom: 'auto',
           right: 'auto',
-          left: position.x === 0 ? 'auto' : '0',
-          top: position.y === 0 ? 'auto' : '0'
+          left: '0',
+          top: '0'
         } : {}}
       >
         <button className="aqi-activate-btn" onClick={handleActivate}>
@@ -238,12 +240,12 @@ const AQIWidget = () => {
       <div
         className="aqi-widget"
         ref={widgetRef}
-        style={isMobile ? {
+        style={isMobile && hasBeenDragged ? {
           transform: `translate(${position.x}px, ${position.y}px)`,
           bottom: 'auto',
           right: 'auto',
-          left: position.x === 0 ? 'auto' : '0',
-          top: position.y === 0 ? 'auto' : '0'
+          left: '0',
+          top: '0'
         } : {}}
       >
         <div className="aqi-widget-compact">
@@ -267,12 +269,12 @@ const AQIWidget = () => {
     <div
       className={`aqi-widget ${isExpanded ? 'expanded' : ''} ${isDragging ? 'dragging' : ''}`}
       ref={widgetRef}
-      style={isMobile && !isExpanded ? {
+      style={isMobile && hasBeenDragged && !isExpanded ? {
         transform: `translate(${position.x}px, ${position.y}px)`,
         bottom: 'auto',
         right: 'auto',
-        left: position.x === 0 ? 'auto' : '0',
-        top: position.y === 0 ? 'auto' : '0'
+        left: '0',
+        top: '0'
       } : {}}
     >
       <div
