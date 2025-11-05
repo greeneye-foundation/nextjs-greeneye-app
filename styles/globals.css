@@ -1120,6 +1120,7 @@ section {
 /* Contact Section */
 .contact {
     background: var(--stone-mist);
+    position: relative;
 }
 
 .contact-content {
@@ -1250,7 +1251,7 @@ section {
     font-size: 1.2rem;
     box-shadow: 0 5px 15px var(--shadow);
     transition: var(--transition);
-    z-index: 10;
+    z-index: 100;
 }
 
 .dark-mode-toggle:hover {
@@ -1748,11 +1749,12 @@ section {
     }
 
     .dark-mode-toggle {
-        top: 10px;
-        right: 10px;
-        width: 45px;
-        height: 45px;
-        font-size: 1rem;
+        top: 15px;
+        right: 15px;
+        width: 48px;
+        height: 48px;
+        font-size: 1.1rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 }
 
