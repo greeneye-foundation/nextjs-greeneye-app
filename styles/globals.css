@@ -1232,6 +1232,157 @@ section {
     text-align: center;
 }
 
+/* Dark Mode Toggle Button */
+.dark-mode-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--primary-green);
+    color: var(--white);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 5px 15px var(--shadow);
+    transition: var(--transition);
+    z-index: 10;
+}
+
+.dark-mode-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px var(--shadow-dark);
+}
+
+.dark-mode-toggle i {
+    color: var(--white);
+}
+
+/* Dark Mode Styles for Contact Page */
+.page-header.dark-mode {
+    background: linear-gradient(135deg, #1a1a1a 0%, rgba(76, 175, 80, 0.1) 50%, #1a1a1a 100%);
+    color: #e0e0e0;
+}
+
+.page-header.dark-mode h1 {
+    color: #4CAF50;
+}
+
+.page-header.dark-mode p {
+    color: #b0b0b0;
+}
+
+.contact.dark-mode {
+    background: #1a1a1a;
+    color: #e0e0e0;
+    position: relative;
+}
+
+.contact.dark-mode .dark-mode-toggle {
+    background: #ffd700;
+    color: #1a1a1a;
+}
+
+.contact.dark-mode .dark-mode-toggle i {
+    color: #1a1a1a;
+}
+
+.contact.dark-mode .contact-item {
+    background: #2a2a2a;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.contact.dark-mode .contact-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+}
+
+.contact.dark-mode .contact-icon {
+    background: #4CAF50;
+    color: #fff;
+}
+
+.contact.dark-mode .contact-details h4 {
+    color: #4CAF50;
+}
+
+.contact.dark-mode .contact-details p {
+    color: #b0b0b0;
+}
+
+.contact.dark-mode .contact-details a {
+    color: #66BB6A;
+}
+
+.contact.dark-mode .contact-details a:hover {
+    color: #81C784;
+}
+
+.contact.dark-mode .social-links h4 {
+    color: #4CAF50;
+}
+
+.contact.dark-mode .social-icon {
+    background: #2a2a2a;
+    color: #4CAF50;
+    border: 2px solid #4CAF50;
+}
+
+.contact.dark-mode .social-icon:hover {
+    background: #4CAF50;
+    color: #1a1a1a;
+    transform: translateY(-3px);
+}
+
+.contact.dark-mode .contact-form-container {
+    background: #2a2a2a;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.contact.dark-mode .contact-form-container h3 {
+    color: #4CAF50;
+}
+
+.contact.dark-mode .form-group input,
+.contact.dark-mode .form-group select,
+.contact.dark-mode .form-group textarea {
+    background: #1a1a1a;
+    color: #e0e0e0;
+    border: 1px solid #3a3a3a;
+}
+
+.contact.dark-mode .form-group input::placeholder,
+.contact.dark-mode .form-group select::placeholder,
+.contact.dark-mode .form-group textarea::placeholder {
+    color: #888;
+}
+
+.contact.dark-mode .form-group input:focus,
+.contact.dark-mode .form-group select:focus,
+.contact.dark-mode .form-group textarea:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+.contact.dark-mode .form-group i {
+    color: #4CAF50;
+}
+
+.contact.dark-mode .btn-primary {
+    background: #4CAF50;
+    color: #1a1a1a;
+}
+
+.contact.dark-mode .btn-primary:hover {
+    background: #66BB6A;
+    transform: translateY(-2px);
+}
+
 /* Footer */
 .footer {
     background: var(--charcoal-bark);
@@ -1594,6 +1745,14 @@ section {
 
     .back-to-top {
         bottom: 110px;
+    }
+
+    .dark-mode-toggle {
+        top: 10px;
+        right: 10px;
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
     }
 }
 
