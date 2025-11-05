@@ -10,9 +10,77 @@ const AQIWidget = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [city, setCity] = useState('');
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
   const router = useRouter();
   const widgetRef = useRef(null);
   const t = useTranslations('aqiWidget');
+
+  // Detect if mobile screen
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Handle drag functionality for mobile only
+  const handleDragStart = (e) => {
+    if (!isMobile || isExpanded) return;
+
+    setIsDragging(true);
+    const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+    const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+
+    setDragStart({
+      x: clientX - position.x,
+      y: clientY - position.y
+    });
+  };
+
+  const handleDragMove = (e) => {
+    if (!isDragging || !isMobile) return;
+
+    e.preventDefault();
+    const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+    const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+
+    const newX = clientX - dragStart.x;
+    const newY = clientY - dragStart.y;
+
+    // Keep widget within viewport bounds
+    const maxX = window.innerWidth - (widgetRef.current?.offsetWidth || 0);
+    const maxY = window.innerHeight - (widgetRef.current?.offsetHeight || 0);
+
+    setPosition({
+      x: Math.max(0, Math.min(newX, maxX)),
+      y: Math.max(0, Math.min(newY, maxY))
+    });
+  };
+
+  const handleDragEnd = () => {
+    setIsDragging(false);
+  };
+
+  useEffect(() => {
+    if (isMobile && isDragging) {
+      document.addEventListener('mousemove', handleDragMove);
+      document.addEventListener('mouseup', handleDragEnd);
+      document.addEventListener('touchmove', handleDragMove, { passive: false });
+      document.addEventListener('touchend', handleDragEnd);
+
+      return () => {
+        document.removeEventListener('mousemove', handleDragMove);
+        document.removeEventListener('mouseup', handleDragEnd);
+        document.removeEventListener('touchmove', handleDragMove);
+        document.removeEventListener('touchend', handleDragEnd);
+      };
+    }
+  }, [isDragging, isMobile, dragStart, position]);
 
   // AQI Color and Category based on standard ranges
   const getAQIInfo = (aqi) => {
@@ -145,7 +213,17 @@ const AQIWidget = () => {
   // Show initial button if not activated
   if (!isActivated) {
     return (
-      <div className="aqi-widget" ref={widgetRef}>
+      <div
+        className="aqi-widget"
+        ref={widgetRef}
+        style={isMobile ? {
+          transform: `translate(${position.x}px, ${position.y}px)`,
+          bottom: 'auto',
+          right: 'auto',
+          left: position.x === 0 ? 'auto' : '0',
+          top: position.y === 0 ? 'auto' : '0'
+        } : {}}
+      >
         <button className="aqi-activate-btn" onClick={handleActivate}>
           <i className="fas fa-wind"></i>
           <span>{t('activateButton')}</span>
@@ -157,7 +235,17 @@ const AQIWidget = () => {
   // Show loading state
   if (loading) {
     return (
-      <div className="aqi-widget" ref={widgetRef}>
+      <div
+        className="aqi-widget"
+        ref={widgetRef}
+        style={isMobile ? {
+          transform: `translate(${position.x}px, ${position.y}px)`,
+          bottom: 'auto',
+          right: 'auto',
+          left: position.x === 0 ? 'auto' : '0',
+          top: position.y === 0 ? 'auto' : '0'
+        } : {}}
+      >
         <div className="aqi-widget-compact">
           <div className="aqi-loading">
             <i className="fas fa-spinner fa-spin"></i>
@@ -176,8 +264,23 @@ const AQIWidget = () => {
   const aqiInfo = getAQIInfo(aqiData.aqi);
 
   return (
-    <div className={`aqi-widget ${isExpanded ? 'expanded' : ''}`} ref={widgetRef}>
-      <div className="aqi-widget-compact" onClick={() => setIsExpanded(!isExpanded)}>
+    <div
+      className={`aqi-widget ${isExpanded ? 'expanded' : ''} ${isDragging ? 'dragging' : ''}`}
+      ref={widgetRef}
+      style={isMobile && !isExpanded ? {
+        transform: `translate(${position.x}px, ${position.y}px)`,
+        bottom: 'auto',
+        right: 'auto',
+        left: position.x === 0 ? 'auto' : '0',
+        top: position.y === 0 ? 'auto' : '0'
+      } : {}}
+    >
+      <div
+        className="aqi-widget-compact"
+        onClick={() => !isDragging && setIsExpanded(!isExpanded)}
+        onMouseDown={handleDragStart}
+        onTouchStart={handleDragStart}
+      >
         <div className="aqi-badge" style={{ backgroundColor: aqiInfo.color }}>
           <div className="aqi-value">{aqiData.aqi}</div>
           <div className="aqi-label">AQI</div>

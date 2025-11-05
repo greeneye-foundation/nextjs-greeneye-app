@@ -10,6 +10,15 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.aqi-widget.dragging {
+    transition: none;
+}
+
+.aqi-widget.dragging .aqi-widget-compact {
+    cursor: grabbing !important;
+    user-select: none;
+}
+
 /* Activation Button */
 .aqi-activate-btn {
     background: linear-gradient(135deg, var(--evergreen) 0%, var(--lime-spark) 100%);
@@ -373,6 +382,12 @@
         right: 10px;
         bottom: 10px;
         max-width: calc(100vw - 20px);
+    }
+
+    /* Add grab cursor for draggable widget on mobile */
+    .aqi-widget:not(.expanded) .aqi-widget-compact {
+        cursor: grab;
+        touch-action: none;
     }
 
     .aqi-activate-btn {
