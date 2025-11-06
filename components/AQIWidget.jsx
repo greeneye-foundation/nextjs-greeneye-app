@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 const AQIWidget = () => {
   const [isActivated, setIsActivated] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   const [aqiData, setAqiData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -116,6 +117,25 @@ const AQIWidget = () => {
       };
     }
   }, [isDragging, isMobile, dragStart, position, dragStartPos]);
+
+  // Handle minimize widget
+  const handleMinimize = (e) => {
+    e.stopPropagation();
+    setIsMinimized(true);
+    setIsExpanded(false);
+    // Reset position to default on mobile
+    if (isMobile) {
+      setPosition({ x: 0, y: 0 });
+      setHasBeenDragged(false);
+    }
+  };
+
+  // Handle restore from minimized state
+  const handleRestore = () => {
+    if (!shouldPreventClick && !isDragging) {
+      setIsMinimized(false);
+    }
+  };
 
   // AQI Color and Category based on standard ranges
   const getAQIInfo = (aqi) => {
@@ -259,10 +279,19 @@ const AQIWidget = () => {
           top: '0'
         } : {}}
       >
-        <button className="aqi-activate-btn" onClick={handleActivate}>
-          <i className="fas fa-wind"></i>
-          <span>{t('activateButton')}</span>
-        </button>
+        <div className="aqi-activate-btn-container">
+          <button className="aqi-activate-btn" onClick={handleActivate}>
+            <i className="fas fa-wind"></i>
+            <span>{t('activateButton')}</span>
+          </button>
+          <button
+            className="aqi-minimize-btn"
+            onClick={handleMinimize}
+            aria-label="Minimize"
+          >
+            <i className="fas fa-times"></i>
+          </button>
+        </div>
       </div>
     );
   }
@@ -298,6 +327,25 @@ const AQIWidget = () => {
 
   const aqiInfo = getAQIInfo(aqiData.aqi);
 
+  // Show minimized circular button
+  if (isMinimized) {
+    return (
+      <div className="aqi-widget" ref={widgetRef}>
+        <button
+          className="aqi-minimized-circle"
+          onClick={handleRestore}
+          onMouseDown={handleDragStart}
+          onTouchStart={handleDragStart}
+          aria-label="Open AQI Widget"
+          style={{ backgroundColor: aqiInfo.color }}
+        >
+          <span className="aqi-minimized-text">AQI</span>
+          <span className="aqi-minimized-value">{aqiData.aqi}</span>
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div
       className={`aqi-widget ${isExpanded ? 'expanded' : ''} ${isDragging ? 'dragging' : ''}`}
@@ -330,15 +378,24 @@ const AQIWidget = () => {
             {aqiInfo.category}
           </div>
         </div>
-        <button
-          className="aqi-toggle"
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsExpanded(!isExpanded);
-          }}
-        >
-          <i className={`fas fa-chevron-${isExpanded ? 'down' : 'up'}`}></i>
-        </button>
+        <div className="aqi-actions">
+          <button
+            className="aqi-toggle"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsExpanded(!isExpanded);
+            }}
+          >
+            <i className={`fas fa-chevron-${isExpanded ? 'down' : 'up'}`}></i>
+          </button>
+          <button
+            className="aqi-minimize-btn"
+            onClick={handleMinimize}
+            aria-label="Minimize"
+          >
+            <i className="fas fa-times"></i>
+          </button>
+        </div>
       </div>
 
       {isExpanded && (
