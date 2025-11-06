@@ -265,6 +265,26 @@ const AQIWidget = () => {
     }
   }, [isActivated, aqiData]);
 
+  // Show minimized circular button (check this first!)
+  if (isMinimized) {
+    const aqiInfo = aqiData ? getAQIInfo(aqiData.aqi) : { color: 'var(--primary-green)' };
+    return (
+      <div className="aqi-widget" ref={widgetRef}>
+        <button
+          className="aqi-minimized-circle"
+          onClick={handleRestore}
+          onMouseDown={handleDragStart}
+          onTouchStart={handleDragStart}
+          aria-label="Open AQI Widget"
+          style={{ backgroundColor: aqiInfo.color }}
+        >
+          <span className="aqi-minimized-text">AQI</span>
+          {aqiData && <span className="aqi-minimized-value">{aqiData.aqi}</span>}
+        </button>
+      </div>
+    );
+  }
+
   // Show initial button if not activated
   if (!isActivated) {
     return (
@@ -326,25 +346,6 @@ const AQIWidget = () => {
   }
 
   const aqiInfo = getAQIInfo(aqiData.aqi);
-
-  // Show minimized circular button
-  if (isMinimized) {
-    return (
-      <div className="aqi-widget" ref={widgetRef}>
-        <button
-          className="aqi-minimized-circle"
-          onClick={handleRestore}
-          onMouseDown={handleDragStart}
-          onTouchStart={handleDragStart}
-          aria-label="Open AQI Widget"
-          style={{ backgroundColor: aqiInfo.color }}
-        >
-          <span className="aqi-minimized-text">AQI</span>
-          <span className="aqi-minimized-value">{aqiData.aqi}</span>
-        </button>
-      </div>
-    );
-  }
 
   return (
     <div
