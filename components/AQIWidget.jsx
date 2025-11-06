@@ -13,8 +13,10 @@ const AQIWidget = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [dragStartPos, setDragStartPos] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
   const [hasBeenDragged, setHasBeenDragged] = useState(false);
+  const [shouldPreventClick, setShouldPreventClick] = useState(false);
   const router = useRouter();
   const widgetRef = useRef(null);
   const t = useTranslations('aqiWidget');
@@ -41,6 +43,10 @@ const AQIWidget = () => {
       x: clientX - position.x,
       y: clientY - position.y
     });
+
+    // Store the starting position to detect if we actually dragged
+    setDragStartPos({ x: clientX, y: clientY });
+    setShouldPreventClick(false);
   };
 
   const handleDragMove = (e) => {
@@ -64,7 +70,24 @@ const AQIWidget = () => {
     });
   };
 
-  const handleDragEnd = () => {
+  const handleDragEnd = (e) => {
+    if (!isDragging) return;
+
+    const clientX = e.type === 'touchend' ? (e.changedTouches?.[0]?.clientX || dragStartPos.x) : e.clientX;
+    const clientY = e.type === 'touchend' ? (e.changedTouches?.[0]?.clientY || dragStartPos.y) : e.clientY;
+
+    // Calculate distance moved
+    const distanceMoved = Math.sqrt(
+      Math.pow(clientX - dragStartPos.x, 2) + Math.pow(clientY - dragStartPos.y, 2)
+    );
+
+    // If moved more than 10 pixels, it's a drag, not a click
+    if (distanceMoved > 10) {
+      setShouldPreventClick(true);
+      // Reset the flag after a short delay
+      setTimeout(() => setShouldPreventClick(false), 300);
+    }
+
     setIsDragging(false);
   };
 
@@ -82,7 +105,7 @@ const AQIWidget = () => {
         document.removeEventListener('touchend', handleDragEnd);
       };
     }
-  }, [isDragging, isMobile, dragStart, position]);
+  }, [isDragging, isMobile, dragStart, position, dragStartPos]);
 
   // AQI Color and Category based on standard ranges
   const getAQIInfo = (aqi) => {
@@ -279,7 +302,11 @@ const AQIWidget = () => {
     >
       <div
         className="aqi-widget-compact"
-        onClick={() => !isDragging && setIsExpanded(!isExpanded)}
+        onClick={() => {
+          if (!shouldPreventClick && !isDragging) {
+            setIsExpanded(!isExpanded);
+          }
+        }}
         onMouseDown={handleDragStart}
         onTouchStart={handleDragStart}
       >
