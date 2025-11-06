@@ -35,15 +35,25 @@ const AQIWidget = () => {
   const handleDragStart = (e) => {
     if (!isMobile || isExpanded) return;
 
-    setIsDragging(true);
     const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
     const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
 
-    setDragStart({
-      x: clientX - position.x,
-      y: clientY - position.y
-    });
+    // If this is the first drag, get the widget's actual position from the DOM
+    if (!hasBeenDragged && widgetRef.current) {
+      const rect = widgetRef.current.getBoundingClientRect();
+      setPosition({ x: rect.left, y: rect.top });
+      setDragStart({
+        x: clientX - rect.left,
+        y: clientY - rect.top
+      });
+    } else {
+      setDragStart({
+        x: clientX - position.x,
+        y: clientY - position.y
+      });
+    }
 
+    setIsDragging(true);
     // Store the starting position to detect if we actually dragged
     setDragStartPos({ x: clientX, y: clientY });
     setShouldPreventClick(false);
