@@ -134,6 +134,11 @@ const AQIWidget = () => {
   const handleRestore = () => {
     if (!shouldPreventClick && !isDragging) {
       setIsMinimized(false);
+      // Reset position on mobile when restoring
+      if (isMobile) {
+        setPosition({ x: 0, y: 0 });
+        setHasBeenDragged(false);
+      }
     }
   };
 
@@ -265,6 +270,35 @@ const AQIWidget = () => {
     }
   }, [isActivated, aqiData]);
 
+  // Show minimized state first (before checking activation)
+  if (isMinimized) {
+    return (
+      <div
+        className="aqi-widget"
+        ref={widgetRef}
+        style={{
+          transform: 'none',
+          bottom: '20px',
+          right: '20px',
+          left: 'auto',
+          top: 'auto'
+        }}
+      >
+        <button
+          className="aqi-minimized-circle"
+          onClick={handleRestore}
+          onMouseDown={handleDragStart}
+          onTouchStart={handleDragStart}
+          aria-label="Open AQI Widget"
+          style={{ backgroundColor: aqiData ? getAQIInfo(aqiData.aqi).color : '#7FAD4B' }}
+        >
+          <span className="aqi-minimized-text">AQI</span>
+          <span className="aqi-minimized-value">{aqiData ? aqiData.aqi : '--'}</span>
+        </button>
+      </div>
+    );
+  }
+
   // Show initial button if not activated
   if (!isActivated) {
     return (
@@ -326,25 +360,6 @@ const AQIWidget = () => {
   }
 
   const aqiInfo = getAQIInfo(aqiData.aqi);
-
-  // Show minimized circular button
-  if (isMinimized) {
-    return (
-      <div className="aqi-widget" ref={widgetRef}>
-        <button
-          className="aqi-minimized-circle"
-          onClick={handleRestore}
-          onMouseDown={handleDragStart}
-          onTouchStart={handleDragStart}
-          aria-label="Open AQI Widget"
-          style={{ backgroundColor: aqiInfo.color }}
-        >
-          <span className="aqi-minimized-text">AQI</span>
-          <span className="aqi-minimized-value">{aqiData.aqi}</span>
-        </button>
-      </div>
-    );
-  }
 
   return (
     <div
