@@ -482,7 +482,15 @@ const AQIWidget = () => {
               </p>
               <button
                 className="btn-improve-aqi"
-                onClick={() => router.push('/donate')}
+                onClick={() => {
+                  setIsExpanded(false);
+                  // Reset position to default on mobile
+                  if (isMobile) {
+                    setPosition({ x: 0, y: 0 });
+                    setHasBeenDragged(false);
+                  }
+                  router.push('/donate');
+                }}
               >
                 <i className="fas fa-seedling"></i>
                 <span>{t('supportButton')}</span>
