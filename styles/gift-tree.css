@@ -1,0 +1,441 @@
+/* Gift a Tree Page */
+.gift-tree-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f4f6f5 0%, #e8f5e9 100%);
+  padding: 6rem 0 3rem;
+}
+
+.gift-tree-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.back-button {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: var(--white);
+  border: 2px solid var(--lime-spark);
+  color: var(--evergreen);
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+}
+
+.back-button:hover {
+  background: var(--lime-spark);
+  color: var(--white);
+  transform: scale(1.1);
+}
+
+.gift-tree-header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--evergreen);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.gift-tree-header h1 i {
+  color: var(--lime-spark);
+}
+
+.gift-tree-header p {
+  font-size: 1.2rem;
+  color: var(--charcoal-bark);
+  opacity: 0.85;
+}
+
+/* Gift Tree Content */
+.gift-tree-content {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* Summary Card */
+.gift-summary-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(159, 211, 86, 0.3);
+  position: sticky;
+  top: 100px;
+}
+
+.gift-summary-card h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--evergreen);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.gift-summary-card h3 i {
+  color: var(--lime-spark);
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(244, 246, 245, 0.5);
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.summary-label {
+  font-weight: 600;
+  color: var(--charcoal-bark);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.summary-label i {
+  color: var(--evergreen);
+  font-size: 0.9rem;
+}
+
+.summary-value {
+  font-weight: 700;
+  color: var(--evergreen);
+  font-size: 1rem;
+}
+
+.summary-features {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid rgba(159, 211, 86, 0.2);
+}
+
+.summary-features h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--evergreen);
+  margin-bottom: 1rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.summary-features ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.summary-features li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  color: var(--charcoal-bark);
+  font-size: 0.95rem;
+}
+
+.summary-features li i {
+  color: var(--lime-spark);
+  font-size: 1rem;
+  width: 20px;
+}
+
+/* Gift Form Card */
+.gift-form-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(159, 211, 86, 0.3);
+}
+
+.form-section {
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid rgba(159, 211, 86, 0.2);
+}
+
+.form-section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 2rem;
+}
+
+.form-section h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--evergreen);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.form-section h3 i {
+  color: var(--lime-spark);
+  font-size: 1.2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--charcoal-bark);
+  margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.875rem 1rem 0.875rem 3rem;
+  border: 2px solid rgba(159, 211, 86, 0.3);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: 'Open Sans', sans-serif;
+  transition: all 0.3s ease;
+  background: rgba(244, 246, 245, 0.5);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--lime-spark);
+  background: var(--white);
+  box-shadow: 0 4px 12px rgba(127, 173, 75, 0.15);
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--evergreen);
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+.form-group:has(label) .input-icon {
+  top: calc(50% + 12px);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+.form-actions .btn {
+  min-width: 150px;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  background: var(--white);
+  border: 2px solid var(--lime-spark);
+  color: var(--evergreen);
+}
+
+.btn-secondary:hover {
+  background: rgba(159, 211, 86, 0.1);
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: var(--lime-spark);
+  border: 2px solid var(--lime-spark);
+  color: var(--white);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--evergreen);
+  border-color: var(--evergreen);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(42, 122, 78, 0.3);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .gift-tree-content {
+    grid-template-columns: 320px 1fr;
+    gap: 1.5rem;
+  }
+
+  .gift-summary-card {
+    padding: 1.75rem;
+  }
+}
+
+@media (max-width: 968px) {
+  .gift-tree-page {
+    padding: 5rem 0 2rem;
+  }
+
+  .gift-tree-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .gift-summary-card {
+    position: static;
+    order: 2;
+  }
+
+  .gift-form-card {
+    order: 1;
+  }
+
+  .gift-tree-header h1 {
+    font-size: 2rem;
+  }
+
+  .gift-tree-header p {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .gift-tree-page {
+    padding: 4rem 0 2rem;
+  }
+
+  .gift-tree-header {
+    margin-bottom: 2rem;
+  }
+
+  .gift-tree-header h1 {
+    font-size: 1.75rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .gift-tree-header p {
+    font-size: 1rem;
+  }
+
+  .back-button {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .gift-form-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .gift-summary-card {
+    padding: 1.5rem;
+  }
+
+  .form-section h3 {
+    font-size: 1.2rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+    min-width: unset;
+  }
+}
+
+@media (max-width: 480px) {
+  .gift-tree-page {
+    padding: 3.5rem 0 1.5rem;
+  }
+
+  .gift-tree-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .gift-tree-header p {
+    font-size: 0.95rem;
+  }
+
+  .gift-form-card {
+    padding: 1.5rem 1rem;
+    border-radius: 16px;
+  }
+
+  .gift-summary-card {
+    padding: 1.25rem;
+    border-radius: 16px;
+  }
+
+  .form-section {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .form-section h3 {
+    font-size: 1.1rem;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 0.75rem 0.875rem 0.75rem 2.75rem;
+    font-size: 0.95rem;
+  }
+
+  .summary-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .summary-value {
+    font-size: 0.95rem;
+  }
+}
+
+/* Print styles */
+@media print {
+  .gift-tree-page {
+    display: none;
+  }
+}

@@ -578,5 +578,15 @@
     "supportButton": "Support Clean Air",
     "updated": "Updated",
     "dataSource": "Data"
+  },
+  "plantGifting": {
+    "title": "Gift a Tree, Gift Life",
+    "subtitle": "Celebrate every occasion with nature"
+  },
+  "giftTree": {
+    "seoTitle": "Gift a Tree | GreenEye Foundation",
+    "seoDescription": "Send a meaningful gift by planting trees in someone's name. Perfect for birthdays, anniversaries, and special occasions.",
+    "pageTitle": "Complete Your Tree Gift",
+    "pageSubtitle": "Fill in the details below to send a beautiful tree gift"
   }
 }

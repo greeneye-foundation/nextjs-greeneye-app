@@ -4,6 +4,9 @@ import '@/styles/auth-styles.css';
 import '@/styles/admin.css';
 import '@/styles/legal-styles.css';
 import '@/styles/aqi-widget.css';
+import '@/styles/plant-gifting-hero.css';
+import '@/styles/hero-carousel.css';
+import '@/styles/gift-tree.css';
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';

@@ -1,6 +1,6 @@
 // pages/index.js
 import { useTranslations } from 'next-intl';
-import Hero from "@/components/Hero";
+import HeroCarousel from "@/components/HeroCarousel";
 import About from "@/components/About";
 import Donate from "@/components/Donate";
 import Impact from "@/components/Impact";
@@ -31,7 +31,7 @@ export default function HomePage() {
         ogType="website"
         ogImage='assets/GreeneyeLandscape.png'
       />
-      <Hero />
+      <HeroCarousel />
       <InstagramFeed />
       <About />
       <BlogIndex />
