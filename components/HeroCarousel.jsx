@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
 import { useTranslations } from "next-intl";
 import { showNotification } from "./Notification";
+import OccasionSelector from "./OccasionSelector";
 
 const HeroCarousel = () => {
   const router = useRouter();
@@ -126,25 +127,13 @@ const HeroCarousel = () => {
                   Gift Trees Today
                 </h3>
 
-                <div className="form-group">
+                <div className="form-group occasion-selector-group">
                   <label htmlFor="occasion">Select Occasion</label>
-                  <select
-                    id="occasion"
-                    name="occasion"
+                  <OccasionSelector
                     value={form.occasion}
                     onChange={handleChange}
                     required
-                  >
-                    <option value="">Choose an occasion</option>
-                    <option value="birthday">Birthday</option>
-                    <option value="anniversary">Anniversary</option>
-                    <option value="wedding">Wedding</option>
-                    <option value="memorial">Memorial</option>
-                    <option value="corporate">Corporate Gift</option>
-                    <option value="holiday">Holiday</option>
-                    <option value="just-because">Just Because</option>
-                  </select>
-                  <i className="fas fa-calendar-alt input-icon"></i>
+                  />
                 </div>
 
                 <div className="form-group">

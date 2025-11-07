@@ -7,6 +7,7 @@ import '@/styles/aqi-widget.css';
 import '@/styles/plant-gifting-hero.css';
 import '@/styles/hero-carousel.css';
 import '@/styles/gift-tree.css';
+import '@/styles/occasion-selector.css';
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';

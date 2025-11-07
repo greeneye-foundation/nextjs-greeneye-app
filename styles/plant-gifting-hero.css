@@ -433,6 +433,16 @@
     }
 }
 
+/* Occasion Selector in Hero */
+.gifting-form .form-group.occasion-selector-group {
+    margin-bottom: 1.25rem;
+}
+
+.gifting-form .form-group.occasion-selector-group label {
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+}
+
 /* Print styles */
 @media print {
     .plant-gifting-hero {
