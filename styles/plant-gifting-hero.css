@@ -125,7 +125,7 @@
     flex-direction: column;
     align-items: center;
     gap: 1.25rem;
-    max-width: 625px;
+    max-width: 688px;
     margin: 0 auto;
 }
 
@@ -260,7 +260,7 @@
 /* Responsive Design */
 @media (max-width: 1200px) {
     .gifting-grid {
-        max-width: 600px;
+        max-width: 660px;
     }
 
     .gifting-title {
@@ -279,7 +279,7 @@
     }
 
     .gifting-grid {
-        max-width: 560px;
+        max-width: 616px;
         gap: 1rem;
     }
 
