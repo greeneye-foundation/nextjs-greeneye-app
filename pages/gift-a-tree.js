@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import Seo from '@/components/common/Seo';
 import { showNotification } from '@/components/Notification';
+import OccasionSelector from '@/components/OccasionSelector';
 
 export function getStaticProps({ locale }) {
   return {
@@ -195,25 +196,13 @@ export default function GiftATreePage() {
                     Gift Details
                   </h3>
 
-                  <div className="form-group">
-                    <label htmlFor="occasion">Occasion</label>
-                    <select
-                      id="occasion"
-                      name="occasion"
+                  <div className="form-group occasion-selector-group">
+                    <label htmlFor="occasion">Select an Occasion</label>
+                    <OccasionSelector
                       value={form.occasion}
                       onChange={handleChange}
                       required
-                    >
-                      <option value="">Select an occasion</option>
-                      <option value="birthday">Birthday</option>
-                      <option value="anniversary">Anniversary</option>
-                      <option value="wedding">Wedding</option>
-                      <option value="memorial">Memorial</option>
-                      <option value="corporate">Corporate Gift</option>
-                      <option value="holiday">Holiday</option>
-                      <option value="just-because">Just Because</option>
-                    </select>
-                    <i className="fas fa-calendar-alt input-icon"></i>
+                    />
                   </div>
 
                   <div className="form-group">

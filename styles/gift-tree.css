@@ -433,6 +433,16 @@
   }
 }
 
+/* Occasion Selector Group */
+.form-group.occasion-selector-group {
+  margin-bottom: 2rem;
+}
+
+.form-group.occasion-selector-group label {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
 /* Print styles */
 @media print {
   .gift-tree-page {
