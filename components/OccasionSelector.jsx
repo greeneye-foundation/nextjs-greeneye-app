@@ -88,7 +88,7 @@ const OccasionSelector = ({ value, onChange, required = false }) => {
                 animate={{ scale: 1 }}
                 transition={{ type: "spring", stiffness: 500, damping: 30 }}
               >
-                <i className="fas fa-check-circle"></i>
+                <i className="fas fa-check"></i>
               </motion.div>
             )}
           </motion.button>
