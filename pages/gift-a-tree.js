@@ -159,7 +159,7 @@ export default function GiftATreePage() {
                 </span>
               </div>
               <div className="summary-features">
-                <h4>What's Included:</h4>
+                <h4>What&apos;s Included:</h4>
                 <ul>
                   <li>
                     <i className="fas fa-certificate"></i>

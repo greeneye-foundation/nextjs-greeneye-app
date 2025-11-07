@@ -44,7 +44,7 @@ export default function PlantDetails() {
     };
 
     fetchPlant();
-  }, [id]);
+  }, [id, baseUrl]);
 
   if (loading) return <p style={{ textAlign: "center" }}>{t("loading")}</p>;
   if (error || !plant?._id) return <p style={{ textAlign: "center" }}>{t("notFound")}</p>;
