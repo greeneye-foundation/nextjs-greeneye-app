@@ -7,9 +7,6 @@ const nextConfig = {
   // Remove X-Powered-By header for security
   poweredByHeader: false,
 
-  // Enable SWC minification for faster builds
-  swcMinify: true,
-
   i18n: {
     locales: ['en', 'fr', 'es', 'ar', 'zh', 'ja'],
     defaultLocale: 'en',
