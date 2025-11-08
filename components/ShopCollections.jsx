@@ -60,6 +60,14 @@ const ShopCollections = () => {
       image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=400&fit=crop',
       href: '/plantshop?category=fertilizers',
       color: '#16A085'
+    },
+    {
+      id: 'planters',
+      label: 'Planters & Pots',
+      icon: 'fas fa-vase',
+      image: 'https://images.unsplash.com/photo-1485199433301-e2a1c1b32b7e?w=400&h=400&fit=crop',
+      href: '/plantshop?category=planters',
+      color: '#E67E22'
     }
   ];
 
