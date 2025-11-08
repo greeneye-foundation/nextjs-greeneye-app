@@ -8,6 +8,8 @@ import '@/styles/plant-gifting-hero.css';
 import '@/styles/hero-carousel.css';
 import '@/styles/gift-tree.css';
 import '@/styles/occasion-selector.css';
+import '@/styles/shop-submenu.css';
+import '@/styles/shop-collections.css';
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';

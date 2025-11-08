@@ -1,0 +1,231 @@
+/* Shop Submenu & Mega Menu Styles */
+
+.shop-submenu {
+  background: var(--white);
+  border-bottom: 1px solid rgba(159, 211, 86, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 70px;
+  z-index: 1001;
+  overflow: visible;
+}
+
+.shop-submenu .container {
+  overflow: visible;
+}
+
+.submenu-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0;
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.submenu-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.submenu-item {
+  position: relative;
+  z-index: 1;
+}
+
+.submenu-item.active {
+  z-index: 9999;
+}
+
+.submenu-button {
+  background: transparent;
+  border: none;
+  padding: 1rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--charcoal-bark);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.submenu-button i {
+  font-size: 0.75rem;
+  transition: transform 0.3s ease;
+}
+
+.submenu-button:hover {
+  color: var(--lime-spark);
+  background: rgba(159, 211, 86, 0.1);
+}
+
+.submenu-item:hover .submenu-button i {
+  transform: rotate(180deg);
+}
+
+/* Mega Menu */
+.mega-menu {
+  position: fixed;
+  top: 130px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffffff !important;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3) !important;
+  border: 2px solid var(--lime-spark) !important;
+  padding: 2rem;
+  min-width: 700px;
+  max-width: 900px;
+  width: max-content;
+  z-index: 10000 !important;
+  /* animation: megaMenuFadeIn 0.3s ease; */
+  pointer-events: auto;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  transition: opacity 0.15s ease;
+}
+
+/* Bridge the gap between button and mega menu */
+.mega-menu::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background: transparent;
+  pointer-events: none; /* Changed to none so it doesn't block submenu buttons */
+}
+
+@keyframes megaMenuFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.mega-menu-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 2rem;
+}
+
+.mega-menu-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.mega-menu-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--evergreen);
+  margin-bottom: 1rem;
+  font-family: 'Montserrat', sans-serif;
+  border-bottom: 2px solid var(--lime-spark);
+  padding-bottom: 0.5rem;
+}
+
+.mega-menu-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.mega-menu-links li a {
+  color: var(--charcoal-bark);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  display: block;
+  padding: 0.4rem 0;
+}
+
+.mega-menu-links li a:hover {
+  color: var(--lime-spark);
+  padding-left: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .mega-menu {
+    min-width: 600px;
+    padding: 1.5rem;
+  }
+
+  .mega-menu-content {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .shop-submenu {
+    position: static;
+  }
+
+  .submenu-nav {
+    justify-content: flex-start;
+    padding: 0 1rem;
+  }
+
+  .submenu-button {
+    padding: 0.875rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .mega-menu {
+    position: fixed;
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: none;
+    min-width: unset;
+    max-width: unset;
+    border-radius: 16px 16px 0 0;
+    max-height: 80vh;
+    overflow-y: auto;
+    margin-top: 0;
+  }
+
+  .mega-menu-content {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .submenu-button {
+    padding: 0.75rem 0.875rem;
+    font-size: 0.85rem;
+  }
+
+  .mega-menu {
+    padding: 1.25rem;
+  }
+
+  .mega-menu-content {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .mega-menu-title {
+    font-size: 0.95rem;
+  }
+
+  .mega-menu-links li a {
+    font-size: 0.85rem;
+  }
+}

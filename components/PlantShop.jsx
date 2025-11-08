@@ -6,6 +6,9 @@ import { useTranslations } from "next-intl";
 import useCart from "@/components/cart/useCart";
 import CartDrawer from "@/components/cart/CartDrawer";
 import { showNotification } from "@/components/Notification";
+import ShopSubmenu from "@/components/ShopSubmenu";
+import ShopCollections from "@/components/ShopCollections";
+import Seo from "@/components/common/Seo";
 
 const formatPrice = (price = 0) => `₹${Number(price).toLocaleString()}`;
 
@@ -98,14 +101,29 @@ const PlantShop = () => {
   );
 
   return (
-    <div className="container" style={{ padding: "40px 10px", maxWidth: 1200 }}>
-      <h1 style={{ textAlign: "center" }}>🪴 {t("storeTitle")}</h1>
+    <>
+      <Seo
+        title="Plant Shop | GreenEye Foundation"
+        description="Shop for indoor plants, outdoor plants, succulents, seeds, planters, and plant care products. Quality plants delivered to your doorstep."
+        ogTitle="Plant Shop | GreenEye Foundation"
+        ogDescription="Shop for indoor plants, outdoor plants, succulents, seeds, planters, and plant care products."
+        canonical="https://greeneye.foundation/plantshop"
+      />
 
-      <div style={{ textAlign: "center", margin: "10px 0", color: "#388e3c" }}>
-        {userCountry
-          ? t("showingCountry", { country: userCountry })
-          : t("detectingLocation")}
-      </div>
+      {/* Submenu with Mega Menu */}
+      <ShopSubmenu />
+
+      {/* Horizontal Collections */}
+      <ShopCollections />
+
+      <div className="container" style={{ padding: "40px 10px", maxWidth: 1200 }}>
+        <h1 style={{ textAlign: "center" }}>🪴 {t("storeTitle")}</h1>
+
+        <div style={{ textAlign: "center", margin: "10px 0", color: "#388e3c" }}>
+          {userCountry
+            ? t("showingCountry", { country: userCountry })
+            : t("detectingLocation")}
+        </div>
 
       {/* Search and Filters */}
       <div
@@ -329,17 +347,18 @@ const PlantShop = () => {
         ))}
       </div>
 
-      {/* Reusable Cart Drawer */}
-      <CartDrawer
-        open={open}
-        onClose={() => setOpen(false)}
-        cart={cart}
-        changeQty={changeQty}
-        removeFromCart={removeFromCart}
-        total={total}
-        t={t}
-      />
-    </div>
+        {/* Reusable Cart Drawer */}
+        <CartDrawer
+          open={open}
+          onClose={() => setOpen(false)}
+          cart={cart}
+          changeQty={changeQty}
+          removeFromCart={removeFromCart}
+          total={total}
+          t={t}
+        />
+      </div>
+    </>
   );
 };
 
