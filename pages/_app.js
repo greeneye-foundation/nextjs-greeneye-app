@@ -10,6 +10,8 @@ import '@/styles/gift-tree.css';
 import '@/styles/occasion-selector.css';
 import '@/styles/shop-submenu.css';
 import '@/styles/shop-collections.css';
+import '@/styles/modal.css';
+import '@/styles/loading-bar.css';
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -17,6 +19,7 @@ import { IntlProvider } from 'next-intl';
 import Layout from '@/components/Layout';
 import Notification from '@/components/Notification';
 import BackToTop from '@/components/BackToTop';
+import LoadingBar from '@/components/LoadingBar';
 import Script from 'next/script';
 
 // Supported locales:
@@ -88,6 +91,9 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
+      {/* Loading Bar for route transitions */}
+      <LoadingBar />
+
       {/* ✅ Razorpay checkout script */}
       <Script
         src="https://checkout.razorpay.com/v1/checkout.js"

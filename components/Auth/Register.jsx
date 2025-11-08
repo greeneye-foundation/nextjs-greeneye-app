@@ -6,6 +6,7 @@ import Link from "next/link";
 import { showNotification } from "@/components/Notification";
 import { useTranslations } from "next-intl";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import Modal from "@/components/Modal";
 
 const Register = ({ onSwitch }) => {
   const t = useTranslations("register");
@@ -25,6 +26,8 @@ const Register = ({ onSwitch }) => {
   const [loading, setLoading] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState("");
+  const [termsModalOpen, setTermsModalOpen] = useState(false);
+  const [privacyModalOpen, setPrivacyModalOpen] = useState(false);
   const router = useRouter();
   const { executeRecaptcha } = useGoogleReCaptcha();
 
@@ -297,8 +300,28 @@ const Register = ({ onSwitch }) => {
               required
             />
             <span className="checkmark"></span>
-            {t("agreeMsg1")} <Link href="/legal/terms-of-service" className="link">{t("termsLink")}</Link>{" "}
-            {t("agreeMsg2")} <Link href="/legal/privacy-policy" className="link">{t("privacyLink")}</Link>
+            {t("agreeMsg1")}{" "}
+            <a
+              href="#"
+              className="link"
+              onClick={(e) => {
+                e.preventDefault();
+                setTermsModalOpen(true);
+              }}
+            >
+              {t("termsLink")}
+            </a>{" "}
+            {t("agreeMsg2")}{" "}
+            <a
+              href="#"
+              className="link"
+              onClick={(e) => {
+                e.preventDefault();
+                setPrivacyModalOpen(true);
+              }}
+            >
+              {t("privacyLink")}
+            </a>
           </label>
         </div>
 
@@ -338,6 +361,22 @@ const Register = ({ onSwitch }) => {
           </button>
         </p>
       </div>
+
+      {/* Terms and Conditions Modal */}
+      <Modal
+        isOpen={termsModalOpen}
+        onClose={() => setTermsModalOpen(false)}
+        title="Terms and Conditions"
+        contentUrl="/content/terms-and-conditions.md"
+      />
+
+      {/* Privacy Policy Modal */}
+      <Modal
+        isOpen={privacyModalOpen}
+        onClose={() => setPrivacyModalOpen(false)}
+        title="Privacy Policy"
+        contentUrl="/content/privacy-policy.md"
+      />
     </div>
   );
 };
