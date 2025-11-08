@@ -10,7 +10,7 @@ export default function InstagramFeed() {
   const scrollRef = useRef(null);
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/instagram`)
+    fetch("/api/instagram")
       .then((r) => r.json())
       .then((d) => {
         setItems(Array.isArray(d.items) ? d.items : []);
