@@ -117,53 +117,55 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .shop-collections {
-    padding: 1.5rem 0;
+    padding: 1.5rem 1rem;
   }
 
   .collections-grid {
-    gap: 1.25rem;
-    padding: 0.75rem 0.5rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding: 0.75rem 0;
+    overflow-x: visible;
   }
 
   .collection-card {
-    min-width: 100px;
+    min-width: unset;
     gap: 0.6rem;
   }
 
   .collection-image-wrapper {
-    width: 85px;
-    height: 85px;
+    width: 70px;
+    height: 70px;
   }
 
   .collection-label {
-    font-size: 0.8rem;
-    max-width: 95px;
+    font-size: 0.75rem;
+    max-width: 100%;
   }
 }
 
 @media (max-width: 480px) {
   .shop-collections {
-    padding: 1.25rem 0;
+    padding: 1.25rem 0.75rem;
   }
 
   .collections-grid {
-    gap: 1rem;
-    padding: 0.5rem 0.25rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    padding: 0.5rem 0;
   }
 
   .collection-card {
-    min-width: 85px;
     gap: 0.5rem;
   }
 
   .collection-image-wrapper {
-    width: 75px;
-    height: 75px;
+    width: 65px;
+    height: 65px;
     padding: 3px;
   }
 
   .collection-label {
-    font-size: 0.75rem;
-    max-width: 80px;
+    font-size: 0.7rem;
   }
 }
