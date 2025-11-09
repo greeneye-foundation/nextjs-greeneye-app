@@ -9,11 +9,9 @@ import LanguageSwitcher from "@/components/common/LanguageSwitcher";
 const NAV_LINKS = [
   { href: "/", labelKey: "home" },
   { href: "/programs", labelKey: "projects" },
-  { href: "/blog", labelKey: "blog" },
-  // { href: "/impact", labelKey: "impact" },
-  { href: "/volunteer", labelKey: "volunteer" },
-  { href: "/donate", labelKey: "donate" },
+  { href: "/gift-a-tree", labelKey: "giftTree" },
   { href: "/plantshop", labelKey: "nursery", tagline: "buyPlants" },
+  { href: "/blog", labelKey: "blog" },
 ];
 
 const Navbar = () => {
