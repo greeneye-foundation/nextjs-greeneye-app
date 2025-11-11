@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useTranslations } from "next-intl";
 import { showNotification } from "./Notification";
 import OccasionSelector from "./OccasionSelector";
+import RelocateTreeHero from "./RelocateTreeHero";
 
 const HeroCarousel = () => {
   const router = useRouter();
@@ -36,11 +37,11 @@ const HeroCarousel = () => {
   };
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % 2);
+    setCurrentSlide((prev) => (prev + 1) % 3);
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + 2) % 2);
+    setCurrentSlide((prev) => (prev - 1 + 3) % 3);
   };
 
   const goToSlide = (index) => {
@@ -183,7 +184,7 @@ const HeroCarousel = () => {
           transition={{ duration: 0.6 }}
           className="hero-slide"
         >
-          {currentSlide === 0 ? renderMainHero() : renderGiftingHero()}
+          {currentSlide === 0 ? renderMainHero() : currentSlide === 1 ? renderGiftingHero() : <RelocateTreeHero />}
         </motion.div>
       </AnimatePresence>
 
@@ -218,6 +219,13 @@ const HeroCarousel = () => {
           aria-label="Go to Gift Trees slide"
         >
           <span className="indicator-label">Gift Trees</span>
+        </button>
+        <button
+          className={`hero-indicator ${currentSlide === 2 ? "active" : ""}`}
+          onClick={() => goToSlide(2)}
+          aria-label="Go to Relocate Tree slide"
+        >
+          <span className="indicator-label">Relocate Tree</span>
         </button>
       </div>
     </div>

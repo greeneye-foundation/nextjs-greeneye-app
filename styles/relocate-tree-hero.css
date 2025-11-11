@@ -1,0 +1,359 @@
+/* Relocate Tree Hero Banner Styles */
+
+.relocate-tree-hero {
+  background: linear-gradient(135deg, #2c5f2d 0%, #97bc62 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.relocate-tree-hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: backgroundMove 60s linear infinite;
+}
+
+@keyframes backgroundMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50px, 50px); }
+}
+
+.relocate-hero-content {
+  max-width: 1200px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Left Side - Text Content */
+.relocate-hero-text {
+  color: var(--white);
+}
+
+.relocate-hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.2;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.relocate-hero-title i {
+  color: #ffd700;
+  margin-right: 1rem;
+}
+
+.relocate-hero-subtitle {
+  font-size: 1.25rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  opacity: 0.95;
+}
+
+.relocate-hero-features {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(10px);
+}
+
+.feature-item i {
+  font-size: 1.5rem;
+  color: #ffd700;
+}
+
+/* Right Side - Form */
+.relocate-hero-form {
+  background: var(--white);
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.relocate-form-container h3 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--evergreen);
+  margin-bottom: 0.5rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.form-description {
+  color: var(--charcoal-bark);
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+  opacity: 0.8;
+}
+
+.form-group {
+  margin-bottom: 1.75rem;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  color: var(--evergreen);
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+.form-group label i {
+  display: none;
+}
+
+.form-group input[type="text"] {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid rgba(159, 211, 86, 0.3);
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.form-group input[type="text"]::placeholder {
+  padding-left: 0;
+}
+
+.form-group input[type="text"]:focus {
+  outline: none;
+  border-color: var(--lime-spark);
+  box-shadow: 0 0 0 4px rgba(159, 211, 86, 0.1);
+}
+
+.form-hint {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--charcoal-bark);
+  opacity: 0.7;
+}
+
+/* Photo Upload Area */
+.photo-upload-area {
+  border: 2px dashed rgba(159, 211, 86, 0.4);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background: rgba(159, 211, 86, 0.05);
+}
+
+.photo-upload-area:hover {
+  border-color: var(--lime-spark);
+  background: rgba(159, 211, 86, 0.1);
+}
+
+.upload-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  color: var(--charcoal-bark);
+}
+
+.upload-label i {
+  font-size: 3rem;
+  color: var(--lime-spark);
+}
+
+.upload-label span {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.upload-label small {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+/* Photo Preview */
+.photo-preview {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid var(--lime-spark);
+}
+
+.photo-preview img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.remove-photo-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: rgba(231, 76, 60, 0.9);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.remove-photo-btn:hover {
+  background: rgba(231, 76, 60, 1);
+  transform: scale(1.05);
+}
+
+/* Continue Button */
+.btn-continue {
+  width: 100%;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, var(--lime-spark), var(--evergreen));
+  color: var(--white);
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-family: 'Montserrat', sans-serif;
+  box-shadow: 0 4px 15px rgba(159, 211, 86, 0.3);
+}
+
+.btn-continue:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(159, 211, 86, 0.4);
+}
+
+.btn-continue:active {
+  transform: translateY(0);
+}
+
+/* Form Note */
+.form-note {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: rgba(52, 152, 219, 0.1);
+  border-left: 4px solid #3498db;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--charcoal-bark);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.form-note i {
+  color: #3498db;
+  margin-top: 0.2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+  .relocate-hero-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .relocate-hero-title {
+    font-size: 2.5rem;
+  }
+
+  .relocate-hero-subtitle {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .relocate-tree-hero {
+    padding: 3rem 1.5rem;
+    min-height: auto;
+  }
+
+  .relocate-hero-title {
+    font-size: 2rem;
+  }
+
+  .relocate-hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .feature-item {
+    font-size: 1rem;
+    padding: 0.875rem 1.25rem;
+  }
+
+  .relocate-hero-form {
+    padding: 2rem;
+  }
+
+  .relocate-form-container h3 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .relocate-tree-hero {
+    padding: 2rem 1rem;
+  }
+
+  .relocate-hero-title {
+    font-size: 1.75rem;
+  }
+
+  .relocate-hero-features {
+    gap: 1rem;
+  }
+
+  .feature-item {
+    font-size: 0.95rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .relocate-hero-form {
+    padding: 1.5rem;
+  }
+
+  .btn-continue {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+}
