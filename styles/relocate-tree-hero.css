@@ -124,7 +124,9 @@
 }
 
 .form-group label {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-weight: 600;
   color: var(--evergreen);
   margin-bottom: 0.75rem;
@@ -132,12 +134,18 @@
 }
 
 .form-group label i {
-  display: none;
+  color: var(--lime-spark);
+  font-size: 1rem;
+  flex-shrink: 0;
+  width: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .form-group input[type="text"] {
   width: 100%;
-  padding: 1rem;
+  padding: 1rem 1rem 1rem 1rem;
   border: 2px solid rgba(159, 211, 86, 0.3);
   border-radius: 12px;
   font-size: 1rem;
@@ -146,7 +154,7 @@
 }
 
 .form-group input[type="text"]::placeholder {
-  padding-left: 0;
+  text-indent: 0;
 }
 
 .form-group input[type="text"]:focus {
