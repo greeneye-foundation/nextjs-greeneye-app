@@ -5,6 +5,20 @@
     box-sizing: border-box;
 }
 
+/* Remove focus outline globally */
+*:focus,
+*:focus-visible {
+    outline: none !important;
+    border-color: inherit;
+}
+
+button:focus,
+button:focus-visible,
+a:focus,
+a:focus-visible {
+    outline: none !important;
+}
+
 html {
     scroll-behavior: smooth;
 }

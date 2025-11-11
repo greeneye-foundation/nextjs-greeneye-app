@@ -115,7 +115,7 @@ const RelocateTreeHero = () => {
             {/* Location Input */}
             <div className="form-group">
               <label htmlFor="location">
-                <i className="fas fa-map-marker-alt"></i> Tree Location *
+                Tree Location *
               </label>
               <input
                 type="text"
@@ -126,6 +126,7 @@ const RelocateTreeHero = () => {
                 onChange={handleLocationChange}
                 required
               />
+              <i className="fas fa-map-marker-alt"></i>
               <small className="form-hint">
                 Current location of the tree that needs relocation
               </small>

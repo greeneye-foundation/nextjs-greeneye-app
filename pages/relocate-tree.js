@@ -173,7 +173,7 @@ const RelocateTreePage = () => {
                   {/* Location (Pre-filled) */}
                   <div className="form-group">
                     <label htmlFor="location">
-                      Tree Location * <i className="fas fa-map-marker-alt"></i>
+                      Tree Location *
                     </label>
                     <input
                       type="text"
@@ -184,6 +184,7 @@ const RelocateTreePage = () => {
                       placeholder="Address or coordinates"
                       required
                     />
+                    <i className="fas fa-map-marker-alt"></i>
                   </div>
 
                   {/* Photo Preview */}
@@ -202,7 +203,7 @@ const RelocateTreePage = () => {
                   {/* Reason for Relocation */}
                   <div className="form-group">
                     <label htmlFor="reason">
-                      Reason for Relocation * <i className="fas fa-question-circle"></i>
+                      Reason for Relocation *
                     </label>
                     <select
                       id="reason"
@@ -218,12 +219,13 @@ const RelocateTreePage = () => {
                       <option value="disease">Tree Health/Disease</option>
                       <option value="other">Other</option>
                     </select>
+                    <i className="fas fa-question-circle"></i>
                   </div>
 
                   {/* Urgency */}
                   <div className="form-group">
                     <label htmlFor="urgency">
-                      Urgency Level <i className="fas fa-exclamation-triangle"></i>
+                      Urgency Level
                     </label>
                     <select
                       id="urgency"
@@ -236,12 +238,13 @@ const RelocateTreePage = () => {
                       <option value="high">High - Within a few days</option>
                       <option value="critical">Critical - Immediate action needed</option>
                     </select>
+                    <i className="fas fa-exclamation-triangle"></i>
                   </div>
 
                   {/* Additional Notes */}
                   <div className="form-group">
                     <label htmlFor="additionalNotes">
-                      Additional Information <i className="fas fa-sticky-note"></i>
+                      Additional Information
                     </label>
                     <textarea
                       id="additionalNotes"
@@ -251,6 +254,7 @@ const RelocateTreePage = () => {
                       onChange={handleChange}
                       placeholder="Any additional details about the tree, situation, or timeline..."
                     ></textarea>
+                    <i className="fas fa-sticky-note"></i>
                   </div>
 
                   <div className="form-section-header">
@@ -273,6 +277,7 @@ const RelocateTreePage = () => {
                         placeholder="John"
                         required
                       />
+                      <i className="fas fa-user"></i>
                     </div>
                     <div className="form-group">
                       <label htmlFor="lastName">Last Name *</label>
@@ -285,13 +290,14 @@ const RelocateTreePage = () => {
                         placeholder="Doe"
                         required
                       />
+                      <i className="fas fa-user"></i>
                     </div>
                   </div>
 
                   {/* Email */}
                   <div className="form-group">
                     <label htmlFor="email">
-                      Email Address * <i className="fas fa-envelope"></i>
+                      Email Address *
                     </label>
                     <input
                       type="email"
@@ -302,12 +308,13 @@ const RelocateTreePage = () => {
                       placeholder="john.doe@example.com"
                       required
                     />
+                    <i className="fas fa-envelope"></i>
                   </div>
 
                   {/* Phone */}
                   <div className="form-group">
                     <label htmlFor="phone">
-                      Phone Number * <i className="fas fa-phone"></i>
+                      Phone Number *
                     </label>
                     <input
                       type="tel"
@@ -318,6 +325,7 @@ const RelocateTreePage = () => {
                       placeholder="+1 234 567 8900"
                       required
                     />
+                    <i className="fas fa-phone"></i>
                   </div>
 
                   {/* Terms Agreement */}
