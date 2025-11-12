@@ -36,16 +36,36 @@ const HeroCarousel = () => {
     router.push(`/gift-a-tree?${params.toString()}`);
   };
 
+  const [direction, setDirection] = useState(0);
+
   const nextSlide = () => {
+    setDirection(1);
     setCurrentSlide((prev) => (prev + 1) % 3);
   };
 
   const prevSlide = () => {
+    setDirection(-1);
     setCurrentSlide((prev) => (prev - 1 + 3) % 3);
   };
 
   const goToSlide = (index) => {
+    setDirection(index > currentSlide ? 1 : -1);
     setCurrentSlide(index);
+  };
+
+  const slideVariants = {
+    enter: (direction) => ({
+      x: direction > 0 ? '100%' : '-100%',
+      opacity: 1
+    }),
+    center: {
+      x: 0,
+      opacity: 1
+    },
+    exit: (direction) => ({
+      x: direction > 0 ? '-100%' : '100%',
+      opacity: 1
+    })
   };
 
   // Slide 1: Plant Today, Breathe Tomorrow
@@ -166,13 +186,19 @@ const HeroCarousel = () => {
   return (
     <div className="hero-carousel-wrapper">
       {/* Carousel Slides */}
-      <AnimatePresence mode="wait">
+      <AnimatePresence initial={false} custom={direction} mode="popLayout">
         <motion.div
           key={currentSlide}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.6 }}
+          custom={direction}
+          variants={slideVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{
+            x: { type: "tween", ease: "easeInOut", duration: 0.5 },
+            opacity: { duration: 0.2 }
+          }}
+          style={{ position: 'absolute', width: '100%', height: '100%' }}
           className="hero-slide"
         >
           {currentSlide === 0 ? renderMainHero() : currentSlide === 1 ? renderGiftingHero() : <RelocateTreeHero />}

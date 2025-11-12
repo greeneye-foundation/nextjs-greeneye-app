@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { motion } from 'framer-motion';
 
 const RelocateTreeHero = () => {
   const router = useRouter();
@@ -63,19 +62,10 @@ const RelocateTreeHero = () => {
   };
 
   return (
-    <motion.div
-      className="relocate-tree-hero"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-    >
+    <div className="relocate-tree-hero">
       <div className="relocate-hero-content">
         <div className="relocate-hero-text">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
+          <div>
             <h2 className="relocate-hero-title">
               <i className="fas fa-truck-moving"></i> Relocate a Tree
             </h2>
@@ -97,15 +87,10 @@ const RelocateTreeHero = () => {
                 <span>Crowd Funded</span>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
-        <motion.div
-          className="relocate-hero-form"
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
+        <div className="relocate-hero-form">
           <form onSubmit={handleContinue} className="relocate-form-container">
             <h3>Report a Tree for Relocation</h3>
             <p className="form-description">
@@ -181,9 +166,9 @@ const RelocateTreeHero = () => {
               Our team will contact you within 24 hours to discuss the relocation plan
             </p>
           </form>
-        </motion.div>
+        </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
