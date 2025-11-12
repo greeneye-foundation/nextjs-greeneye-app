@@ -85,7 +85,7 @@
 }
 
 .hero-indicator.active {
-    color: var(--sunrise-amber);
+    color: var(--yellow-sun);
 }
 
 .hero-indicator.active::after {
@@ -95,7 +95,7 @@
     left: 0;
     right: 0;
     height: 2px;
-    background: var(--sunrise-amber);
+    background: var(--yellow-sun);
 }
 
 .indicator-label {

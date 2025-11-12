@@ -416,121 +416,200 @@ main {
     transition: var(--transition);
 }
 
-/* Hero Section */
+/* Hero Section - Modern Redesign */
 .hero {
-    padding-top: 20px;
-    padding-bottom: 80px;
-    /* Reduced space for stats to fit in viewport */
     position: relative;
-    min-height: calc(100vh - 70px);
-    /* Account for navbar height */
-    height: auto;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: var(--charcoal-bark);
+    color: var(--white);
     overflow: hidden;
-    background: var(--stone-mist);
+    background: linear-gradient(135deg, #1a4d2e 0%, #2d5f3f 50%, #3d7f52 100%);
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(circle at 20% 50%, rgba(159, 211, 86, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+    pointer-events: none;
 }
 
 .hero-background {
-    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
 }
 
 .hero-img {
-    display: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.3;
+    filter: grayscale(20%);
 }
 
 .hero-overlay {
-    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(26, 77, 46, 0.85) 0%, rgba(45, 95, 63, 0.75) 50%, rgba(61, 127, 82, 0.85) 100%);
+    z-index: 1;
 }
 
 .hero-content {
     width: 90%;
-    max-width: 800px;
-    padding: 0 15px;
+    max-width: 900px;
+    padding: 2rem;
     margin: 0 auto;
-    z-index: 1;
+    z-index: 2;
+    position: relative;
     animation: fadeInUp 1s ease-out;
-    color: var(--charcoal-bark);
 }
 
 .hero-title-main {
-    font-size: clamp(2rem, 5vw, 4rem);
-    /* Responsive font size */
+    font-size: clamp(2.5rem, 6vw, 5rem);
     display: block;
     font-weight: 800;
-    margin-bottom: 0rem;
-    color: var(--charcoal-bark);
-    text-shadow: none;
+    margin-bottom: 0.5rem;
+    color: var(--white);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
 }
 
 .hero-title-sub {
     display: block;
-    font-weight: 600;
-    color: var(--lime-spark);
-    margin-bottom: 0rem;
-    font-size: clamp(1.5rem, 4vw, 3rem);
-    /* Responsive font size */
-    text-shadow: none;
+    font-weight: 700;
+    color: var(--yellow-sun);
+    margin-bottom: 1.5rem;
+    font-size: clamp(1.75rem, 4.5vw, 3.5rem);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .hero-description {
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    /* Responsive font size */
-    margin-bottom: 1.5rem;
-    /* Reduced from 2rem */
-    color: var(--charcoal-bark);
-    line-height: 1.8;
+    font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+    margin-bottom: 2.5rem;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.7;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 400;
 }
 
 .hero-buttons {
     display: flex;
-    gap: 1rem;
+    gap: 1.25rem;
     justify-content: center;
     flex-wrap: wrap;
-    margin-bottom: 2rem;
-    /* Reduced from 3rem */
+    margin-bottom: 4rem;
+}
+
+.hero-buttons .btn {
+    padding: 1rem 2rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.hero-buttons .btn-primary {
+    background: linear-gradient(135deg, var(--lime-spark) 0%, #7fb83e 100%);
+    color: var(--charcoal-bark);
+    box-shadow: 0 4px 20px rgba(159, 211, 86, 0.4);
+}
+
+.hero-buttons .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 30px rgba(159, 211, 86, 0.5);
+}
+
+.hero-buttons .btn-secondary {
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--white);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.hero-buttons .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-3px);
 }
 
 .hero-stats {
     position: absolute;
-    bottom: 20px;
-    /* Reduced from 50px to fit better */
+    bottom: 3rem;
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
-    max-width: 500px;
+    max-width: 700px;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    gap: 1.5rem;
-    background: var(--white);
-    backdrop-filter: blur(10px);
-    padding: 1.5rem;
-    border-radius: var(--border-radius);
-    border: 2px solid var(--lime-spark);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    gap: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    padding: 2rem 2.5rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    z-index: 2;
 }
 
 .stat-item {
     text-align: center;
-    min-width: 80px;
+    min-width: 100px;
+    position: relative;
+}
+
+.stat-item::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--yellow-sun), transparent);
+    border-radius: 2px;
 }
 
 .stat-number {
     display: block;
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    font-weight: 700;
-    color: var(--charcoal-bark);
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 0.5rem;
 }
 
 .stat-label {
-    font-size: clamp(0.8rem, 1.5vw, 0.9rem);
-    color: var(--evergreen);
-    margin-top: 0.5rem;
-    font-weight: 600;
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
 }
 
 /* Plant CSS */
