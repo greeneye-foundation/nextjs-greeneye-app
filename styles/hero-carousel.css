@@ -119,7 +119,7 @@
     }
 
     .hero-carousel-indicators {
-        top: 5rem;
+        top: 1rem;
         gap: 1.5rem;
         padding: 0.65rem 1.25rem;
     }
@@ -146,9 +146,8 @@
     }
 
     .hero-carousel-indicators {
-        top: 4.5rem;
+        top: 1rem;
         gap: 1.25rem;
-        flex-wrap: wrap;
         justify-content: center;
         max-width: calc(100% - 2rem);
         padding: 0.6rem 1.2rem;
@@ -176,7 +175,7 @@
     }
 
     .hero-carousel-indicators {
-        top: 4rem;
+        top: 1rem;
         gap: 1rem;
         padding: 0.55rem 1rem;
     }

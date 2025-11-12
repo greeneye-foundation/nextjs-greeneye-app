@@ -10,15 +10,6 @@ const Hero = () => {
 
   return (
     <section id="home" className="hero">
-      <div className="hero-background">
-        <img
-          src="https://pixabay.com/get/g6160ab0932297547c6b89d675a1550ee2a684f87e0ad077d548cfeadf5784fa7524acbfb904790f1583fa42f56dd16e535f57b65913deb5d063e709b86fd1ba2_1280.jpg"
-          alt={t("heroImgAlt")}
-          className="hero-img"
-        />
-        <div className="hero-overlay"></div>
-      </div>
-
       <div className="hero-content">
         <h1 className="hero-title">
           <span className="hero-title-main">{t("titleMain")}</span>
