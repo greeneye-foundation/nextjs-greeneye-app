@@ -8,7 +8,6 @@ const BasicInfoSection = ({ formData, updateFormData, handleTitleChange, generat
   const [selectedLanguage, setSelectedLanguage] = useState('en');
   const [articleTypes, setArticleTypes] = useState([]);
   const [loading, setLoading] = useState(true);
-
   // Fetch article types from API
   useEffect(() => {
     const fetchArticleTypes = async () => {
@@ -48,18 +47,18 @@ const BasicInfoSection = ({ formData, updateFormData, handleTitleChange, generat
           Article Type
         </label>
         <select
-          value={formData.articleTypeId}
-          onChange={(e) => updateFormData('articleTypeId', e.target.value)}
-          className={errors.articleTypeId ? 'error' : ''}
+          value={formData.articleType || ""}
+          onChange={(e) => updateFormData('articleType', e.target.value)}
+          className={errors.articleType ? 'error' : ''}
         >
           <option value="">Select article type...</option>
           {articleTypes.map(type => (
-            <option key={type._id} value={type.slug}>
-              {type.name.en}
+            <option key={type._id} value={type._id}>
+             {type.name?.en || type.slug}
             </option>
           ))}
         </select>
-        {errors.articleTypeId && <span className="error-message">{errors.articleTypeId}</span>}
+        {errors.articleType && <span className="error-message">{errors.articleType}</span>}
         <small className="field-hint">
           Choose the type of content you're creating. This determines what additional fields you'll need to fill.
         </small>

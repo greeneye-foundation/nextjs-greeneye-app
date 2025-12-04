@@ -11,7 +11,7 @@ const TaxonomySection = ({ formData, updateFormData }) => {
   const [categories, setCategories] = useState([]);
   const [tags, setTags] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  
   // Fetch categories and tags from API
   useEffect(() => {
     const fetchData = async () => {
@@ -23,6 +23,7 @@ const TaxonomySection = ({ formData, updateFormData }) => {
 
         setCategories(categoriesResponse.data || []);
         setTags(tagsResponse.data || []);
+        
       } catch (error) {
         console.error('Error fetching taxonomy data:', error);
         // Fallback to empty arrays
@@ -41,68 +42,69 @@ const TaxonomySection = ({ formData, updateFormData }) => {
 
   // Filter categories
   const filteredCategories = mockCategories.filter(cat =>
-    cat.name.en.toLowerCase().includes(categorySearch.toLowerCase())
-  );
+  (cat?.name?.en || "").toLowerCase().includes(categorySearch.toLowerCase())
+);
 
   // Filter tags
   const filteredTags = mockTags.filter(tag =>
-    tag.name.toLowerCase().includes(tagSearch.toLowerCase())
-  );
+  (tag?.name?.en || "").toLowerCase().includes(tagSearch.toLowerCase())
+);
+
 
   // Toggle category
   const toggleCategory = (categoryId) => {
-    const currentCategories = formData.categoryIds || [];
+    const currentCategories = formData.categories || [];
     if (currentCategories.includes(categoryId)) {
-      updateFormData('categoryIds', currentCategories.filter(id => id !== categoryId));
+      updateFormData('categories', currentCategories.filter(id => id !== categoryId));
     } else {
-      updateFormData('categoryIds', [...currentCategories, categoryId]);
+      updateFormData('categories', [...currentCategories, categoryId]);
     }
   };
 
   // Toggle tag
   const toggleTag = (tagId) => {
-    const currentTags = formData.tagIds || [];
+    const currentTags = formData.tags || [];
     if (currentTags.includes(tagId)) {
-      updateFormData('tagIds', currentTags.filter(id => id !== tagId));
+      updateFormData('tags', currentTags.filter(id => id !== tagId));
     } else {
-      updateFormData('tagIds', [...currentTags, tagId]);
+      updateFormData('tags', [...currentTags, tagId]);
     }
   };
 
   // Add new tag
   const addNewTag = async () => {
-    if (!newTag.trim()) return;
+  if (!newTag.trim()) return;
 
-    try {
-      const tagData = {
-        name: newTag.trim(),
-        slug: newTag.toLowerCase().replace(/\s+/g, '-')
-      };
+  try {
+    const tagData = {
+      name: { en: newTag.trim() },  // <-- Expected format
+      slug: newTag.toLowerCase().replace(/\s+/g, '-')
+    };
 
-      const response = await tagsAPI.create(tagData);
-      const createdTag = response.data;
+    const res = await tagsAPI.create(tagData);
 
-      // Add to local tags list
-      setTags([...tags, createdTag]);
+    const createdTag = res.data; // -> because backend returns {success,message,data}
 
-      // Add to selected tags
-      updateFormData('tagIds', [...(formData.tagIds || []), createdTag._id]);
+    setTags([...tags, createdTag]);
 
-      setNewTag('');
-      alert(`Tag "${newTag}" created and added!`);
-    } catch (error) {
-      console.error('Error creating tag:', error);
-      alert(`Error: ${error.message}`);
-    }
-  };
+    updateFormData('tags', [...(formData.tags || []), createdTag._id]);
+
+    setNewTag('');
+    alert(`Tag "${tagData.name.en}" created successfully!`);
+  } catch (err) {
+    console.error(err);
+    alert(err.response?.data?.message || "Error creating tag");
+  }
+};
+
 
   // Toggle country
   const toggleCountry = (countryCode) => {
-    const currentCountries = formData.relatedCountries || [];
+    const currentCountries = formData.publishedCountries || [];
     if (currentCountries.includes(countryCode)) {
-      updateFormData('relatedCountries', currentCountries.filter(c => c !== countryCode));
+      updateFormData('publishedCountries', currentCountries.filter(c => c !== countryCode));
     } else {
-      updateFormData('relatedCountries', [...currentCountries, countryCode]);
+      updateFormData('publishedCountries', [...currentCountries, countryCode]);
     }
   };
 
@@ -110,7 +112,7 @@ const TaxonomySection = ({ formData, updateFormData }) => {
   const getCategoryHierarchy = (cat) => {
     if (!cat.parent) return cat.name.en;
     const parent = mockCategories.find(c => c._id === cat.parent);
-    return parent ? `${parent.name.en} > ${cat.name.en}` : cat.name.en;
+    return parent ? `${parent?.name?.en || ""} > ${cat?.name?.en || ""}` : (cat?.name?.en || "");
   };
 
   return (
@@ -128,8 +130,8 @@ const TaxonomySection = ({ formData, updateFormData }) => {
         <h4 className="group-title">
           <i className="fas fa-folder"></i>
           Categories
-          {formData.categoryIds?.length > 0 && (
-            <span className="count-badge">{formData.categoryIds.length} selected</span>
+          {formData.categories?.length > 0 && (
+            <span className="count-badge">{formData.categories.length} selected</span>
           )}
         </h4>
 
@@ -148,12 +150,12 @@ const TaxonomySection = ({ formData, updateFormData }) => {
             <label key={category._id} className="checkbox-item">
               <input
                 type="checkbox"
-                checked={(formData.categoryIds || []).includes(category._id)}
+                checked={(formData.categories || []).includes(category._id)}
                 onChange={() => toggleCategory(category._id)}
               />
               <div className="checkbox-content">
                 <span className="checkbox-label">{getCategoryHierarchy(category)}</span>
-                <span className="checkbox-description">{category.description}</span>
+                <span className="checkbox-description">{category?.description?.en || ""}</span>
               </div>
             </label>
           ))}
@@ -172,8 +174,8 @@ const TaxonomySection = ({ formData, updateFormData }) => {
         <h4 className="group-title">
           <i className="fas fa-tags"></i>
           Tags
-          {formData.tagIds?.length > 0 && (
-            <span className="count-badge">{formData.tagIds.length} selected</span>
+          {formData.tags?.length > 0 && (
+            <span className="count-badge">{formData.tags.length} selected</span>
           )}
         </h4>
 
@@ -192,10 +194,10 @@ const TaxonomySection = ({ formData, updateFormData }) => {
             <button
               key={tag._id}
               type="button"
-              className={`tag-chip ${(formData.tagIds || []).includes(tag._id) ? 'selected' : ''}`}
+              className={`tag-chip ${(formData.tags || []).includes(tag._id) ? 'selected' : ''}`}
               onClick={() => toggleTag(tag._id)}
             >
-              {tag.name}
+              {tag.name?.en || tag.name}
               <span className="tag-count">{tag.usageCount}</span>
             </button>
           ))}
@@ -243,8 +245,8 @@ const TaxonomySection = ({ formData, updateFormData }) => {
         <h4 className="group-title">
           <i className="fas fa-globe"></i>
           Related Countries
-          {formData.relatedCountries?.length > 0 && (
-            <span className="count-badge">{formData.relatedCountries.length} selected</span>
+          {formData.publishedCountries?.length > 0 && (
+            <span className="count-badge">{formData.publishedCountries.length} selected</span>
           )}
         </h4>
         <p className="group-description">
@@ -256,7 +258,7 @@ const TaxonomySection = ({ formData, updateFormData }) => {
             <label key={country.code} className="country-item">
               <input
                 type="checkbox"
-                checked={(formData.relatedCountries || []).includes(country.code)}
+                checked={(formData.publishedCountries || []).includes(country.code)}
                 onChange={() => toggleCountry(country.code)}
               />
               <div className="country-content">
@@ -277,13 +279,13 @@ const TaxonomySection = ({ formData, updateFormData }) => {
         <div className="summary-content">
           <div className="summary-item">
             <strong>Categories:</strong>
-            {formData.categoryIds?.length > 0 ? (
+            {formData.categories?.length > 0 ? (
               <div className="summary-tags">
-                {formData.categoryIds.map(catId => {
+                {formData.categories.map(catId => {
                   const cat = mockCategories.find(c => c._id === catId);
                   return cat ? (
                     <span key={catId} className="summary-tag">
-                      {cat.name.en}
+                      {cat?.name?.en}
                       <button
                         type="button"
                         onClick={() => toggleCategory(catId)}
@@ -302,13 +304,13 @@ const TaxonomySection = ({ formData, updateFormData }) => {
 
           <div className="summary-item">
             <strong>Tags:</strong>
-            {formData.tagIds?.length > 0 ? (
+            {formData.tags?.length > 0 ? (
               <div className="summary-tags">
-                {formData.tagIds.map(tagId => {
+                {formData.tags.map(tagId => {
                   const tag = mockTags.find(t => t._id === tagId);
                   return tag ? (
                     <span key={tagId} className="summary-tag">
-                      {tag.name}
+                      {tag.name?.en || tag.name}
                       <button
                         type="button"
                         onClick={() => toggleTag(tagId)}
@@ -338,9 +340,9 @@ const TaxonomySection = ({ formData, updateFormData }) => {
 
           <div className="summary-item">
             <strong>Countries:</strong>
-            {formData.relatedCountries?.length > 0 ? (
+            {formData.publishedCountries?.length > 0 ? (
               <div className="summary-tags">
-                {formData.relatedCountries.map(code => {
+                {formData.publishedCountries.map(code => {
                   const country = COUNTRIES.find(c => c.code === code);
                   return country ? (
                     <span key={code} className="summary-tag">

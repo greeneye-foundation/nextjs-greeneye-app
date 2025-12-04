@@ -1,13 +1,46 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { COUNTRIES, CARE_LEVELS, WATER_REQUIREMENTS, SUNLIGHT_REQUIREMENTS, CONSERVATION_STATUS, POLICY_TYPES, SDG_GOALS } from '@/lib/constants/encyclopedia';
+import { articleTypesAPI } from '@/lib/api/encyclopedia';
 
 const TypeSpecificSection = ({ formData, updateFormData, errors }) => {
-  const articleType = formData.articleTypeId;
+  const [articleTypes, setArticleTypes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+  // Fetch article types from API
+  useEffect(() => {
+    const fetchArticleTypes = async () => {
+      try {
+        const response = await articleTypesAPI.getAll('en');
+        setArticleTypes(response.data || []);
+      } catch (error) {
+        console.error('Error fetching article types:', error);
+        // Fallback to default types
+        setArticleTypes([
+          { _id: 'plant', slug: 'plant', name: { en: 'Plant' } },
+          { _id: 'topic', slug: 'topic', name: { en: 'Environmental Topic' } },
+          { _id: 'policy', slug: 'policy', name: { en: 'Policy' } },
+          { _id: 'product', slug: 'product', name: { en: 'Sustainable Product' } }
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  // Update type-specific data
+    fetchArticleTypes();
+  }, []);
+
+  const articleTypeId = formData.articleType;
+  
+  // Find the selected article type from the fetched types
+  const selectedType = articleTypes.find(type => type._id === articleTypeId);
+  const articleType = selectedType?.slug; // Use slug for comparison
+  
+  // Update type-specific data - use slug for storing data
   const updateTypeData = (field, value) => {
+    if (!articleType) return;
+    
     updateFormData('typeData', {
       ...formData.typeData,
       [articleType]: {
@@ -19,6 +52,46 @@ const TypeSpecificSection = ({ formData, updateFormData, errors }) => {
 
   const typeData = formData.typeData[articleType] || {};
 
+  // If loading
+  if (loading) {
+    return (
+      <div className="type-specific-section">
+        <div className="no-type-selected">
+          <i className="fas fa-spinner fa-spin"></i>
+          <h3>Loading...</h3>
+          <p>Please wait while we fetch article types.</p>
+        </div>
+        <style jsx>{`
+          .type-specific-section {
+            max-width: 900px;
+          }
+
+          .no-type-selected {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            color: rgba(47, 60, 59, 0.7);
+          }
+
+          .no-type-selected i {
+            font-size: 3rem;
+            color: var(--lime-spark);
+            margin-bottom: 1rem;
+          }
+
+          .no-type-selected h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--evergreen);
+            margin-bottom: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+          }
+        `}</style>
+      </div>
+    );
+  }
+  
   // If no article type selected
   if (!articleType) {
     return (
@@ -64,13 +137,10 @@ const TypeSpecificSection = ({ formData, updateFormData, errors }) => {
     <div className="type-specific-section">
       <h3 className="section-title">
         <i className="fas fa-list-alt"></i>
-        {articleType === 'plant' && 'Plant Details'}
-        {articleType === 'topic' && 'Topic Details'}
-        {articleType === 'policy' && 'Policy Details'}
-        {articleType === 'product' && 'Product Details'}
+        {selectedType?.name?.en || 'Type'} Details
       </h3>
       <p className="section-description">
-        Enter specific information for this {articleType} article.
+        Enter specific information for this {selectedType?.name?.en || 'article'} article.
       </p>
 
       {/* PLANT FIELDS */}
@@ -604,4 +674,4 @@ const TypeSpecificSection = ({ formData, updateFormData, errors }) => {
   );
 };
 
-export default TypeSpecificSection;
+export default TypeSpecificSection

@@ -5,9 +5,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import EncyclopediaAdminLayout from '@/components/encyclopedia/admin/EncyclopediaAdminLayout';
 import { useEncyclopedia } from '@/context/EncyclopediaContext';
+import { articlesAPI } from '@/lib/api/encyclopedia';
 import { ARTICLE_TYPES, ARTICLE_STATUS, TYPE_COLORS } from '@/lib/constants/encyclopedia';
 
-const ArticlesPage = () => {
+const ArticlesPage = ({ initialStatus = 'all' }) => {
   const router = useRouter();
   const { language, country, getText } = useEncyclopedia();
 
@@ -19,7 +20,7 @@ const ArticlesPage = () => {
 
   // Filters
   const [filters, setFilters] = useState({
-    status: 'all',
+    status: initialStatus,
     type: 'all',
     category: 'all',
     country: country || 'all',
@@ -27,88 +28,68 @@ const ArticlesPage = () => {
     dateTo: ''
   });
 
+    // Update filters when initialStatus changes
+  useEffect(() => {
+    setFilters(prev => ({
+      ...prev,
+      status: initialStatus
+    }));
+    setCurrentPage(1); // Reset to first page when status changes
+  }, [initialStatus]);
+
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(20);
+  const [totalArticles, setTotalArticles] = useState(0);
 
   // Sort
   const [sortBy, setSortBy] = useState('latest');
   const [sortOrder, setSortOrder] = useState('desc');
 
-  // Mock data - Replace with API call
   useEffect(() => {
-    fetchArticles();
-  }, [filters, currentPage, itemsPerPage, sortBy, sortOrder, searchTerm]);
-
-  const fetchArticles = async () => {
-    setLoading(true);
-
-    // TODO: Replace with actual API call
-    // const response = await fetch(`/api/v1/articles?${params}`);
-
-    // Mock data for demonstration
-    setTimeout(() => {
-      const mockArticles = [
-        {
-          _id: '1',
-          slug: 'mango-tree-cultivation',
-          title: { en: 'Mango Tree: Complete Cultivation Guide', hi: 'आम का पेड़: संपूर्ण खेती गाइड' },
-          excerpt: { en: 'Learn everything about growing mango trees...' },
-          articleType: { slug: 'plant', name: { en: 'Plant' } },
-          status: 'published',
-          author: { name: 'Dr. Rajesh Kumar', avatarUrl: '/images/avatar1.jpg' },
-          publishedAt: '2025-01-10T10:00:00Z',
-          viewCount: 1523,
-          isGlobal: true,
-          publishedCountries: []
-        },
-        {
-          _id: '2',
-          slug: 'solar-energy-india-2025',
-          title: { en: 'Solar Energy Policy India 2025', hi: 'सौर ऊर्जा नीति भारत 2025' },
-          excerpt: { en: 'New solar energy regulations...' },
-          articleType: { slug: 'policy', name: { en: 'Policy' } },
-          status: 'pending_review',
-          author: { name: 'Priya Sharma', avatarUrl: '/images/avatar2.jpg' },
-          publishedAt: null,
-          viewCount: 0,
-          isGlobal: false,
-          publishedCountries: ['IND']
-        },
-        {
-          _id: '3',
-          slug: 'eco-friendly-packaging',
-          title: { en: 'Best Eco-Friendly Packaging Solutions', hi: 'सर्वश्रेष्ठ पर्यावरण अनुकूल पैकेजिंग' },
-          excerpt: { en: 'Sustainable packaging alternatives...' },
-          articleType: { slug: 'product', name: { en: 'Product' } },
-          status: 'draft',
-          author: { name: 'Admin Bot', avatarUrl: '/images/bot-avatar.jpg' },
-          publishedAt: null,
-          viewCount: 0,
-          isGlobal: true,
-          publishedCountries: []
-        },
-        {
-          _id: '4',
-          slug: 'climate-change-2025',
-          title: { en: 'Climate Change Report 2025', hi: 'जलवायु परिवर्तन रिपोर्ट 2025' },
-          excerpt: { en: 'Latest findings on climate change...' },
-          articleType: { slug: 'topic', name: { en: 'Topic' } },
-          status: 'published',
-          author: { name: 'Dr. Sarah Chen', avatarUrl: '/images/avatar3.jpg' },
-          publishedAt: '2025-01-08T14:00:00Z',
-          viewCount: 3421,
-          isGlobal: true,
-          publishedCountries: []
+      fetchArticles();
+    }, [filters, currentPage, itemsPerPage, sortBy, sortOrder, searchTerm]);
+  
+    const fetchArticles = async () => {
+      setLoading(true);
+  
+      try {
+        // Build query parameters
+        const params = {
+          page: currentPage,
+          limit: itemsPerPage,
+          language: language,
+          sortBy: sortBy,
+          sortOrder: sortOrder
+        };
+  
+        // Add filters if not 'all'
+        if (filters.status !== 'all') params.status = filters.status;
+        if (filters.type !== 'all') params.type = filters.type;
+        if (filters.category !== 'all') params.category = filters.category;
+        if (filters.country !== 'all') params.country = filters.country;
+        if (searchTerm) params.search = searchTerm;
+        if (filters.dateFrom) params.dateFrom = filters.dateFrom;
+        if (filters.dateTo) params.dateTo = filters.dateTo;
+  
+        // Call API
+        const response = await articlesAPI.getAll(params);
+        if (response.success) {
+          setArticles(response.data.articles || []);
+          setTotalPages(response.pagination?.totalPages || 1);
+          setTotalArticles(response.pagination?.totalItems || 0);
+        } else {
+          throw new Error(response.message || 'Failed to fetch articles');
         }
-      ];
-
-      setArticles(mockArticles);
-      setTotalPages(3);
-      setLoading(false);
-    }, 500);
-  };
+      } catch (error) {
+        console.error('Error fetching articles:', error);
+        alert(`Failed to load articles: ${error.message}`);
+        setArticles([]);
+      } finally {
+        setLoading(false);
+      }
+    };
 
   // Handlers
   const handleSelectAll = (e) => {
@@ -136,9 +117,6 @@ const ArticlesPage = () => {
     const confirmed = confirm(`Are you sure you want to ${action} ${selectedArticles.length} article(s)?`);
     if (!confirmed) return;
 
-    // TODO: Implement bulk action API call
-    console.log(`Bulk ${action}:`, selectedArticles);
-
     // Refresh list
     fetchArticles();
     setSelectedArticles([]);
@@ -149,13 +127,11 @@ const ArticlesPage = () => {
     if (!confirmed) return;
 
     // TODO: Implement delete API call
-    console.log('Delete article:', id);
     fetchArticles();
   };
 
   const handleStatusChange = async (id, newStatus) => {
     // TODO: Implement status change API call
-    console.log('Change status:', id, newStatus);
     fetchArticles();
   };
 
@@ -346,7 +322,7 @@ const ArticlesPage = () => {
                     </td>
                     <td className="title-cell">
                       <div className="article-title">
-                        <Link href={`/admin/encyclopedia/articles/${article._id}/edit`}>
+                        <Link href={`/admin/encyclopedia/articles/${article.slug}/edit`}>
                           {getText(article.title)}
                         </Link>
                         <span className="article-slug">/{article.slug}</span>

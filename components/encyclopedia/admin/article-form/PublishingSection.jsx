@@ -98,8 +98,8 @@ const PublishingSection = ({ formData, updateFormData }) => {
       <div className="form-group">
         <label className="form-label">Author</label>
         <select
-          value={formData.authorId || ''}
-          onChange={(e) => updateFormData('authorId', e.target.value)}
+          value={formData.author || ''}
+          onChange={(e) => updateFormData('author', e.target.value)}
         >
           <option value="">Select author...</option>
           {mockAuthors.map(author => (
@@ -267,7 +267,7 @@ const PublishingSection = ({ formData, updateFormData }) => {
             <div>
               <strong>Author:</strong>
               <span>
-                {mockAuthors.find(a => a._id === formData.authorId)?.name || 'Not assigned'}
+                {mockAuthors.find(a => a._id === formData.author)?.name || 'Not assigned'}
               </span>
             </div>
           </div>

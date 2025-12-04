@@ -1,13 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import EncyclopediaAdminLayout from '@/components/encyclopedia/admin/EncyclopediaAdminLayout';
 import { useEncyclopedia } from '@/context/EncyclopediaContext';
-import { ARTICLE_TYPES, ARTICLE_STATUS } from '@/lib/constants/encyclopedia';
 import { articlesAPI } from '@/lib/api/encyclopedia';
 
-// Import form sections (we'll create these next)
+// Import form sections
 import BasicInfoSection from '@/components/encyclopedia/admin/article-form/BasicInfoSection';
 import ContentSection from '@/components/encyclopedia/admin/article-form/ContentSection';
 import TypeSpecificSection from '@/components/encyclopedia/admin/article-form/TypeSpecificSection';
@@ -16,72 +15,51 @@ import TaxonomySection from '@/components/encyclopedia/admin/article-form/Taxono
 import PublishingSection from '@/components/encyclopedia/admin/article-form/PublishingSection';
 import SEOSection from '@/components/encyclopedia/admin/article-form/SEOSection';
 
-const CreateArticlePage = () => {
+const EditArticlePage = () => {
   const router = useRouter();
+  const params = useParams();
+  const articleSlug = params.slug;
   const { language } = useEncyclopedia();
 
-  // Active tab
   const [activeTab, setActiveTab] = useState('basic');
-
-  // Form state
-  const [formData, setFormData] = useState({
-    // Basic Info
-    slug: '',
-    articleTypeId: '',
-    title: { en: '', hi: '', zh: '', ar: '' },
-    excerpt: { en: '', hi: '', zh: '', ar: '' },
-
-    // Content
-    content: { en: '', hi: '', zh: '', ar: '' },
-
-    // Type-specific data
-    typeData: {},
-
-    // Taxonomy
-    categoryIds: [],
-    tagIds: [],
-    relatedCountries: [],
-
-    // Media
-    mediaIds: [],
-
-    // Publishing
-    status: 'draft',
-    isGlobal: true,
-    publishedCountries: [],
-    authorId: '', // Will be set from logged-in user
-
-    // SEO
-    metaTitle: { en: '', hi: '', zh: '', ar: '' },
-    metaDescription: { en: '', hi: '', zh: '', ar: '' },
-    keywords: []
-  });
-
-  // Validation errors
+  const [formData, setFormData] = useState(null);
   const [errors, setErrors] = useState({});
-
-  // Saving state
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [articles, setArticles] = useState([]);
 
-  // Auto-save draft
+
+  // Fetch article data
   useEffect(() => {
-    const autoSaveInterval = setInterval(() => {
-      if (formData.slug && formData.title.en) {
-        saveDraft();
+    const fetchArticles = async () => {
+      setLoading(true);
+      try {
+        // Call API
+        const response = await articlesAPI.getBySlug(articleSlug);
+        if (response.success) {
+          setArticles(response.data || []);
+          setFormData(response.data);
+        } else {
+          throw new Error(response.message || 'Failed to fetch articles');
+        }
+      } catch (error) {
+        console.error('Error fetching articles:', error);
+        alert(`Failed to load articles: ${error.message}`);
+        setArticles([]);
+      } finally {
+        setLoading(false);
       }
-    }, 60000); // Auto-save every minute
+    };
 
-    return () => clearInterval(autoSaveInterval);
-  }, [formData]);
+    if (articleSlug) fetchArticles();
+  }, [articleSlug]);
 
-  // Update form data
   const updateFormData = (field, value) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
     }));
-    // Clear error for this field
     if (errors[field]) {
       setErrors(prev => {
         const newErrors = { ...prev };
@@ -91,7 +69,6 @@ const CreateArticlePage = () => {
     }
   };
 
-  // Generate slug from title
   const generateSlug = (title) => {
     return title
       .toLowerCase()
@@ -99,133 +76,52 @@ const CreateArticlePage = () => {
       .replace(/(^-|-$)/g, '');
   };
 
-  // Handle title change and auto-generate slug
   const handleTitleChange = (lang, value) => {
     updateFormData('title', { ...formData.title, [lang]: value });
-
-    // Auto-generate slug from English title if slug is empty
-    if (lang === 'en' && !formData.slug) {
-      updateFormData('slug', generateSlug(value));
-    }
   };
 
-  // Validate form
   const validateForm = () => {
     const newErrors = {};
-
-    // Basic validation
     if (!formData.slug) newErrors.slug = 'Slug is required';
-    if (!formData.articleTypeId) newErrors.articleTypeId = 'Article type is required';
+    if (!formData.articleType) newErrors.articleType = 'Article type is required';
     if (!formData.title.en) newErrors.titleEn = 'English title is required';
     if (!formData.content.en) newErrors.contentEn = 'English content is required';
-
-    // Type-specific validation
-    if (formData.articleTypeId) {
-      const articleType = formData.articleTypeId; // Get type slug
-
-      if (articleType === 'plant') {
-        if (!formData.typeData.plant?.scientificName) {
-          newErrors.scientificName = 'Scientific name is required for plants';
-        }
-      } else if (articleType === 'policy') {
-        if (!formData.typeData.policy?.countryCode) {
-          newErrors.policyCountry = 'Country is required for policies';
-        }
-      } else if (articleType === 'product') {
-        if (!formData.typeData.product?.productName) {
-          newErrors.productName = 'Product name is required';
-        }
-      }
-    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  // Save as draft
-  const saveDraft = async () => {
-    setSaving(true);
-
-    try {
-      const articleData = {
-        ...formData,
-        status: 'draft'
-      };
-
-      const response = await articlesAPI.create(articleData);
-
-      setSaveMessage('Draft saved successfully');
-      setTimeout(() => setSaveMessage(''), 3000);
-    } catch (error) {
-      console.error('Error saving draft:', error);
-      setSaveMessage(`Error: ${error.message}`);
-      setTimeout(() => setSaveMessage(''), 5000);
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  // Submit for review
-  const submitForReview = async () => {
-    if (!validateForm()) {
-      setActiveTab('basic'); // Go to first tab with errors
-      alert('Please fix the validation errors before submitting');
-      return;
-    }
-
-    setSaving(true);
-
-    try {
-      const articleData = {
-        ...formData,
-        status: 'pending_review'
-      };
-
-      const response = await articlesAPI.create(articleData);
-
-      alert('Article submitted for review successfully!');
-      router.push('/admin/encyclopedia/articles');
-    } catch (error) {
-      console.error('Error submitting article:', error);
-      alert(`Error: ${error.message}`);
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  // Publish immediately (admin only)
-  const publishNow = async () => {
+  const saveChanges = async () => {
     if (!validateForm()) {
       setActiveTab('basic');
-      alert('Please fix the validation errors before publishing');
+      alert('Please fix the validation errors');
       return;
     }
-
-    const confirmed = confirm('Are you sure you want to publish this article immediately?');
-    if (!confirmed) return;
 
     setSaving(true);
 
     try {
-      const articleData = {
-        ...formData,
-        status: 'published',
-        publishedAt: new Date().toISOString()
-      };
+      // 🔥 Yahi actual update request
+      const res = await articlesAPI.update(articleSlug, formData);
 
-      const response = await articlesAPI.create(articleData);
-
-      alert('Article published successfully!');
-      router.push('/admin/encyclopedia/articles');
+      if (res.success) {
+        setSaveMessage('Changes saved successfully');
+        setTimeout(() => {
+          setSaveMessage('');
+          router.push('/admin/encyclopedia/articles');
+        }, 1500);
+      } else {
+        alert(res.message || "Update failed");
+      }
     } catch (error) {
-      console.error('Error publishing article:', error);
-      alert(`Error: ${error.message}`);
+      console.error('Error updating article:', error);
+      alert(`Error updating article: ${error.message}`);
     } finally {
       setSaving(false);
     }
   };
 
-  // Tabs configuration
+
   const tabs = [
     { id: 'basic', label: 'Basic Info', icon: 'fa-info-circle' },
     { id: 'content', label: 'Content', icon: 'fa-file-text' },
@@ -235,6 +131,27 @@ const CreateArticlePage = () => {
     { id: 'publishing', label: 'Publishing', icon: 'fa-globe' },
     { id: 'seo', label: 'SEO', icon: 'fa-search' }
   ];
+
+  if (loading) {
+    return (
+      <EncyclopediaAdminLayout>
+        <div style={{ textAlign: 'center', padding: '4rem' }}>
+          <i className="fas fa-spinner fa-spin" style={{ fontSize: '3rem', color: 'var(--lime-spark)' }}></i>
+          <p>Loading article...</p>
+        </div>
+      </EncyclopediaAdminLayout>
+    );
+  }
+
+  if (!formData) {
+    return (
+      <EncyclopediaAdminLayout>
+        <div style={{ textAlign: 'center', padding: '4rem' }}>
+          <p>Article not found</p>
+        </div>
+      </EncyclopediaAdminLayout>
+    );
+  }
 
   return (
     <EncyclopediaAdminLayout>
@@ -249,8 +166,8 @@ const CreateArticlePage = () => {
               <i className="fas fa-arrow-left"></i>
             </button>
             <div>
-              <h2 className="form-title">Create New Article</h2>
-              <p className="form-subtitle">Fill in the details to create an encyclopedia article</p>
+              <h2 className="form-title">Edit Article</h2>
+              <p className="form-subtitle">Update article details</p>
             </div>
           </div>
 
@@ -262,30 +179,12 @@ const CreateArticlePage = () => {
             )}
 
             <button
-              className="btn btn-secondary"
-              onClick={saveDraft}
+              className="btn btn-primary"
+              onClick={saveChanges}
               disabled={saving}
             >
               <i className="fas fa-save"></i>
-              {saving ? 'Saving...' : 'Save Draft'}
-            </button>
-
-            <button
-              className="btn btn-warning"
-              onClick={submitForReview}
-              disabled={saving}
-            >
-              <i className="fas fa-paper-plane"></i>
-              Submit for Review
-            </button>
-
-            <button
-              className="btn btn-primary"
-              onClick={publishNow}
-              disabled={saving}
-            >
-              <i className="fas fa-check"></i>
-              Publish Now
+              {saving ? 'Saving...' : 'Save Changes'}
             </button>
           </div>
         </div>
@@ -300,7 +199,6 @@ const CreateArticlePage = () => {
             >
               <i className={`fas ${tab.icon}`}></i>
               <span>{tab.label}</span>
-              {errors[tab.id] && <i className="fas fa-exclamation-circle error-icon"></i>}
             </button>
           ))}
         </div>
@@ -361,21 +259,6 @@ const CreateArticlePage = () => {
             />
           )}
         </div>
-
-        {/* Validation Errors Summary */}
-        {Object.keys(errors).length > 0 && (
-          <div className="errors-summary">
-            <h4>
-              <i className="fas fa-exclamation-triangle"></i>
-              Please fix the following errors:
-            </h4>
-            <ul>
-              {Object.entries(errors).map(([field, error]) => (
-                <li key={field}>{error}</li>
-              ))}
-            </ul>
-          </div>
-        )}
       </div>
 
       <style jsx>{`
@@ -383,7 +266,6 @@ const CreateArticlePage = () => {
           max-width: 1200px;
         }
 
-        /* Header */
         .form-header {
           display: flex;
           justify-content: space-between;
@@ -435,7 +317,6 @@ const CreateArticlePage = () => {
           display: flex;
           align-items: center;
           gap: 0.75rem;
-          flex-wrap: wrap;
         }
 
         .save-message {
@@ -457,7 +338,6 @@ const CreateArticlePage = () => {
           gap: 0.5rem;
           font-family: 'Montserrat', sans-serif;
           border: none;
-          white-space: nowrap;
         }
 
         .btn:disabled {
@@ -476,26 +356,6 @@ const CreateArticlePage = () => {
           box-shadow: 0 4px 12px rgba(159, 211, 86, 0.3);
         }
 
-        .btn-secondary {
-          background: white;
-          color: var(--evergreen);
-          border: 1px solid rgba(159, 211, 86, 0.3);
-        }
-
-        .btn-secondary:hover:not(:disabled) {
-          background: rgba(159, 211, 86, 0.1);
-        }
-
-        .btn-warning {
-          background: #ffc107;
-          color: #000;
-        }
-
-        .btn-warning:hover:not(:disabled) {
-          background: #e0a800;
-        }
-
-        /* Tabs */
         .form-tabs {
           display: flex;
           gap: 0.5rem;
@@ -504,15 +364,6 @@ const CreateArticlePage = () => {
           border-radius: 12px 12px 0 0;
           overflow-x: auto;
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-
-        .form-tabs::-webkit-scrollbar {
-          height: 4px;
-        }
-
-        .form-tabs::-webkit-scrollbar-thumb {
-          background: rgba(159, 211, 86, 0.3);
-          border-radius: 2px;
         }
 
         .tab-btn {
@@ -529,7 +380,6 @@ const CreateArticlePage = () => {
           font-weight: 500;
           color: rgba(47, 60, 59, 0.7);
           white-space: nowrap;
-          position: relative;
         }
 
         .tab-btn:hover {
@@ -543,12 +393,6 @@ const CreateArticlePage = () => {
           font-weight: 600;
         }
 
-        .error-icon {
-          color: #e74c3c;
-          font-size: 0.85rem;
-        }
-
-        /* Form Content */
         .form-content {
           background: white;
           padding: 2rem;
@@ -556,80 +400,9 @@ const CreateArticlePage = () => {
           min-height: 500px;
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
-
-        /* Errors Summary */
-        .errors-summary {
-          background: #fff3cd;
-          border: 1px solid #ffc107;
-          border-radius: 8px;
-          padding: 1.5rem;
-          margin-top: 2rem;
-        }
-
-        .errors-summary h4 {
-          color: #856404;
-          margin: 0 0 1rem 0;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-        }
-
-        .errors-summary ul {
-          margin: 0;
-          padding-left: 1.5rem;
-          color: #856404;
-        }
-
-        .errors-summary li {
-          margin-bottom: 0.5rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 968px) {
-          .form-header {
-            flex-direction: column;
-          }
-
-          .header-right {
-            width: 100%;
-            justify-content: flex-start;
-          }
-
-          .form-tabs {
-            border-radius: 8px;
-          }
-
-          .form-content {
-            border-radius: 8px;
-            padding: 1.5rem;
-          }
-
-          .tab-btn span {
-            display: none;
-          }
-
-          .tab-btn.active span {
-            display: inline;
-          }
-        }
-
-        @media (max-width: 768px) {
-          .form-title {
-            font-size: 1.5rem;
-          }
-
-          .btn {
-            padding: 0.625rem 1rem;
-            font-size: 0.9rem;
-          }
-
-          .form-content {
-            padding: 1rem;
-          }
-        }
       `}</style>
     </EncyclopediaAdminLayout>
   );
 };
 
-export default CreateArticlePage;
+export default EditArticlePage;

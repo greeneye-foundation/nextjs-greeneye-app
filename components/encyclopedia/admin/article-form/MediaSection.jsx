@@ -1,77 +1,48 @@
 "use client";
 
-import React, { useState } from 'react';
-import { SOCIAL_MEDIA_PLATFORMS } from '@/lib/constants/encyclopedia';
+import React, { useState, useEffect } from 'react';
+import { mediaAPI } from '@/lib/api/encyclopedia';
 
 const MediaSection = ({ formData, updateFormData }) => {
-  const [uploadType, setUploadType] = useState('image'); // 'image', 'youtube', 'instagram'
+  const [uploadType, setUploadType] = useState('image');
   const [youtubeUrl, setYoutubeUrl] = useState('');
   const [instagramUrl, setInstagramUrl] = useState('');
   const [selectedMedia, setSelectedMedia] = useState(null);
-
-  // Mock media items (in real app, these come from mediaIds and API)
   const [mediaItems, setMediaItems] = useState([]);
+  const [uploading, setUploading] = useState(false);
 
-  // Extract YouTube video ID from URL
+  // Load existing media when component mounts
+  useEffect(() => {
+    if (formData.slug) {
+      loadExistingMedia();
+    }
+  }, [formData.slug]);
+
+  const loadExistingMedia = async () => {
+    try {
+      const response = await mediaAPI.getByArticle(formData.slug);
+      if (response.success) {
+        setMediaItems(response.data);
+      }
+    } catch (error) {
+      console.error('Error loading media:', error);
+    }
+  };
+
   const getYouTubeId = (url) => {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = url.match(regExp);
     return (match && match[2].length === 11) ? match[2] : null;
   };
 
-  // Extract Instagram post ID from URL
   const getInstagramId = (url) => {
     const regExp = /instagram.com\/(p|reel)\/([A-Za-z0-9_-]+)/;
     const match = url.match(regExp);
     return match ? match[2] : null;
   };
 
-  // Add YouTube video
-  const addYouTubeVideo = () => {
-    const videoId = getYouTubeId(youtubeUrl);
-    if (!videoId) {
-      alert('Invalid YouTube URL. Please enter a valid YouTube video URL.');
-      return;
-    }
-
-    const newMedia = {
-      id: Date.now(),
-      type: 'youtube',
-      videoId: videoId,
-      url: youtubeUrl,
-      thumbnail: `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`,
-      caption: '',
-      isFeatured: mediaItems.length === 0
-    };
-
-    setMediaItems([...mediaItems, newMedia]);
-    setYoutubeUrl('');
-  };
-
-  // Add Instagram reel
-  const addInstagramReel = () => {
-    const postId = getInstagramId(instagramUrl);
-    if (!postId) {
-      alert('Invalid Instagram URL. Please enter a valid Instagram post or reel URL.');
-      return;
-    }
-
-    const newMedia = {
-      id: Date.now(),
-      type: 'instagram',
-      postId: postId,
-      url: instagramUrl,
-      thumbnail: '/images/instagram-placeholder.png',
-      caption: '',
-      isFeatured: false
-    };
-
-    setMediaItems([...mediaItems, newMedia]);
-    setInstagramUrl('');
-  };
-
-  // Handle file upload (mock)
-  const handleFileUpload = (e) => {
+  // Handle file upload to backend
+  const handleFileUpload = async (e) => {
     const files = Array.from(e.target.files);
 
     if (mediaItems.filter(m => m.type === 'image').length + files.length > 10) {
@@ -79,51 +50,150 @@ const MediaSection = ({ formData, updateFormData }) => {
       return;
     }
 
-    const newMedia = files.map((file, index) => ({
-      id: Date.now() + index,
-      type: 'image',
-      file: file,
-      url: URL.createObjectURL(file),
-      caption: '',
-      altText: '',
-      isFeatured: mediaItems.length === 0 && index === 0
-    }));
+    if (!formData.slug) {
+      alert('Please save the article first before uploading images.');
+      return;
+    }
 
-    setMediaItems([...mediaItems, ...newMedia]);
-  };
+    setUploading(true);
 
-  // Remove media item
-  const removeMedia = (id) => {
-    setMediaItems(mediaItems.filter(m => m.id !== id));
-    if (selectedMedia?.id === id) {
-      setSelectedMedia(null);
+    try {
+      const formDataObj = new FormData();
+      
+      files.forEach(file => {
+        formDataObj.append('images', file);
+      });
+
+      // Add metadata
+      formDataObj.append('type', 'image');
+      formDataObj.append('altText', JSON.stringify({ en: '', hi: '', zh: '', ar: '' }));
+
+      const response = await mediaAPI.uploadMedia(formData.slug, formDataObj);
+
+      if (response.success) {
+        // Reload media list
+        await loadExistingMedia();
+        alert(`${files.length} image(s) uploaded successfully!`);
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      alert(`Failed to upload images: ${error.message}`);
+    } finally {
+      setUploading(false);
     }
   };
 
-  // Set featured image
-  const setFeatured = (id) => {
-    setMediaItems(mediaItems.map(m => ({
-      ...m,
-      isFeatured: m.id === id
-    })));
+  // Add YouTube video
+  const addYouTubeVideo = async () => {
+    const videoId = getYouTubeId(youtubeUrl);
+    if (!videoId) {
+      alert('Invalid YouTube URL. Please enter a valid YouTube video URL.');
+      return;
+    }
+
+    if (!formData.slug) {
+      alert('Please save the article first before adding videos.');
+      return;
+    }
+
+    setUploading(true);
+
+    try {
+      const response = await mediaAPI.addMedia(formData.slug, {
+        type: 'youtube_video',
+        videoId: videoId,
+        url: youtubeUrl
+      });
+
+      if (response.success) {
+        await loadExistingMedia();
+        setYoutubeUrl('');
+        alert('YouTube video added successfully!');
+      }
+    } catch (error) {
+      console.error('Error adding video:', error);
+      alert(`Failed to add video: ${error.message}`);
+    } finally {
+      setUploading(false);
+    }
   };
 
-  // Update caption
-  const updateCaption = (id, caption) => {
-    setMediaItems(mediaItems.map(m =>
-      m.id === id ? { ...m, caption } : m
-    ));
+  // Add Instagram reel
+  const addInstagramReel = async () => {
+    const postId = getInstagramId(instagramUrl);
+    if (!postId) {
+      alert('Invalid Instagram URL. Please enter a valid Instagram post or reel URL.');
+      return;
+    }
+
+    if (!formData.slug) {
+      alert('Please save the article first before adding Instagram content.');
+      return;
+    }
+
+    setUploading(true);
+
+    try {
+      const response = await mediaAPI.addMedia(formData.slug, {
+        type: 'instagram_reel',
+        url: instagramUrl
+      });
+
+      if (response.success) {
+        await loadExistingMedia();
+        setInstagramUrl('');
+        alert('Instagram reel added successfully!');
+      }
+    } catch (error) {
+      console.error('Error adding reel:', error);
+      alert(`Failed to add reel: ${error.message}`);
+    } finally {
+      setUploading(false);
+    }
   };
 
-  // Update alt text
-  const updateAltText = (id, altText) => {
-    setMediaItems(mediaItems.map(m =>
-      m.id === id ? { ...m, altText } : m
-    ));
+  // Remove media item
+  const removeMedia = async (mediaId) => {
+    const confirmed = confirm('Are you sure you want to delete this media?');
+    if (!confirmed) return;
+
+    try {
+      const response = await mediaAPI.deleteMedia(mediaId);
+      
+      if (response.success) {
+        setMediaItems(mediaItems.filter(m => m._id !== mediaId));
+        if (selectedMedia?._id === mediaId) {
+          setSelectedMedia(null);
+        }
+        alert('Media deleted successfully');
+      }
+    } catch (error) {
+      console.error('Error deleting media:', error);
+      alert(`Failed to delete media: ${error.message}`);
+    }
+  };
+
+  // Update media details
+  const updateMediaDetails = async (mediaId, updates) => {
+    try {
+      const response = await mediaAPI.updateMedia(mediaId, updates);
+      
+      if (response.success) {
+        setMediaItems(mediaItems.map(m => 
+          m._id === mediaId ? { ...m, ...updates } : m
+        ));
+        if (selectedMedia?._id === mediaId) {
+          setSelectedMedia({ ...selectedMedia, ...updates });
+        }
+      }
+    } catch (error) {
+      console.error('Error updating media:', error);
+      alert(`Failed to update media: ${error.message}`);
+    }
   };
 
   const imageCount = mediaItems.filter(m => m.type === 'image').length;
-  const videoCount = mediaItems.filter(m => m.type === 'youtube' || m.type === 'instagram').length;
+  const videoCount = mediaItems.filter(m => m.type !== 'image').length;
 
   return (
     <div className="media-section">
@@ -242,8 +312,8 @@ const MediaSection = ({ formData, updateFormData }) => {
           <div className="grid-items">
             {mediaItems.map(media => (
               <div
-                key={media.id}
-                className={`media-item ${selectedMedia?.id === media.id ? 'selected' : ''}`}
+                key={media._id}
+                className={`media-item ${selectedMedia?._id === media._id ? 'selected' : ''}`}
                 onClick={() => setSelectedMedia(media)}
               >
                 {media.isFeatured && (
@@ -255,18 +325,18 @@ const MediaSection = ({ formData, updateFormData }) => {
 
                 <div className="media-type-badge">
                   {media.type === 'image' && <i className="fas fa-image"></i>}
-                  {media.type === 'youtube' && <i className="fab fa-youtube"></i>}
-                  {media.type === 'instagram' && <i className="fab fa-instagram"></i>}
+                  {media.type === 'youtube_video' && <i className="fab fa-youtube"></i>}
+                  {media.type === 'instagram_reel' && <i className="fab fa-instagram"></i>}
                 </div>
 
                 <div className="media-preview">
                   {media.type === 'image' && (
-                    <img src={media.url} alt={media.altText || 'Preview'} />
+                    <img src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${media.url}`} alt={media.altText?.en || 'Preview'} />
                   )}
-                  {media.type === 'youtube' && (
+                  {media.type === 'youtube_video' && (
                     <img src={media.thumbnail} alt="YouTube thumbnail" />
                   )}
-                  {media.type === 'instagram' && (
+                  {media.type === 'instagram_reel' && (
                     <div className="instagram-preview">
                       <i className="fab fa-instagram"></i>
                       <span>Instagram Post</span>
@@ -281,7 +351,7 @@ const MediaSection = ({ formData, updateFormData }) => {
                       className="action-btn"
                       onClick={(e) => {
                         e.stopPropagation();
-                        setFeatured(media.id);
+                        setFeatured(media._id);
                       }}
                       title="Set as featured"
                     >
@@ -293,7 +363,7 @@ const MediaSection = ({ formData, updateFormData }) => {
                     className="action-btn delete"
                     onClick={(e) => {
                       e.stopPropagation();
-                      removeMedia(media.id);
+                      removeMedia(media._id);
                     }}
                     title="Remove"
                   >
@@ -317,12 +387,12 @@ const MediaSection = ({ formData, updateFormData }) => {
           <div className="details-content">
             <div className="details-preview">
               {selectedMedia.type === 'image' && (
-                <img src={selectedMedia.url} alt={selectedMedia.altText || 'Preview'} />
+                <img src={selectedMedia.url} alt={selectedMedia.altText?.en || 'Preview'} />
               )}
-              {selectedMedia.type === 'youtube' && (
+              {selectedMedia.type === 'youtube_video' && (
                 <img src={selectedMedia.thumbnail} alt="YouTube thumbnail" />
               )}
-              {selectedMedia.type === 'instagram' && (
+              {selectedMedia.type === 'instagram_reel' && (
                 <div className="instagram-preview-large">
                   <i className="fab fa-instagram"></i>
                   <p>Instagram Post</p>
@@ -336,8 +406,8 @@ const MediaSection = ({ formData, updateFormData }) => {
                   <label className="form-label">Alt Text (for SEO & accessibility)</label>
                   <input
                     type="text"
-                    value={selectedMedia.altText || ''}
-                    onChange={(e) => updateAltText(selectedMedia.id, e.target.value)}
+                    value={selectedMedia.altText?.en || ''}
+                    onChange={(e) => updateAltText(selectedMedia._id, e.target.value)}
                     placeholder="Describe the image for screen readers..."
                   />
                 </div>
@@ -347,7 +417,7 @@ const MediaSection = ({ formData, updateFormData }) => {
                 <label className="form-label">Caption</label>
                 <textarea
                   value={selectedMedia.caption || ''}
-                  onChange={(e) => updateCaption(selectedMedia.id, e.target.value)}
+                  onChange={(e) => updateCaption(selectedMedia._id, e.target.value)}
                   placeholder="Add a caption for this media..."
                   rows={3}
                 />

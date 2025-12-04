@@ -63,6 +63,12 @@ const AdminLayout = ({ children }) => {
           >
             Coupons
           </Link>
+          <Link
+              href="/admin/encyclopedia/articles"
+              className={pathname.startsWith("/admin/encyclopedia/articles") ? "active" : ""}
+            >
+              <span className="new-badge">Encyclopedia</span>
+            </Link>
         </nav>
       </aside>
 
