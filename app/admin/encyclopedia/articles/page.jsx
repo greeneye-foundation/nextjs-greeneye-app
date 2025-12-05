@@ -122,12 +122,23 @@ const ArticlesPage = ({ initialStatus = 'all' }) => {
     setSelectedArticles([]);
   };
 
-  const handleDelete = async (id) => {
-    const confirmed = confirm('Are you sure you want to delete this article?');
+  const handleDelete = async (slug) => {
+    const confirmed = confirm('Are you sure you want to delete this article? This action cannot be undone.');
     if (!confirmed) return;
 
-    // TODO: Implement delete API call
-    fetchArticles();
+    try {
+      const response = await articlesAPI.delete(slug);
+      
+      if (response.success) {
+        alert('Article deleted successfully!');
+        fetchArticles(); // Refresh the list
+      } else {
+        throw new Error(response.message || 'Delete failed');
+      }
+    } catch (error) {
+      console.error('Error deleting article:', error);
+      alert(`Failed to delete article: ${error.message}`);
+    }
   };
 
   const handleStatusChange = async (id, newStatus) => {
@@ -397,7 +408,7 @@ const ArticlesPage = ({ initialStatus = 'all' }) => {
                         <button
                           className="action-btn action-btn-danger"
                           title="Delete"
-                          onClick={() => handleDelete(article._id)}
+                          onClick={() => handleDelete(article.slug)}
                         >
                           <i className="fas fa-trash"></i>
                         </button>
