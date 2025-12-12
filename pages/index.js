@@ -20,6 +20,14 @@ export function getStaticProps({ locale }) {
 };
 
 export default function HomePage() {
+
+    useEffect(() => {
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("track", "ViewContent", {
+        page: "HomePage",
+      });
+    }
+  }, []);
   const t = useTranslations('home');
   return (
     <>
