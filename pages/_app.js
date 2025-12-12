@@ -61,6 +61,28 @@ export default function App({ Component, pageProps }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.asPath, router.locale]);
 
+   // Meta Pixel Init + PageView
+  useEffect(() => {
+    if (!window.fbq) return;
+
+    // INIT PIXEL
+    window.fbq('init', '1115975143739370');
+
+    // FIRE FIRST PAGE VIEW
+    window.fbq('track', 'PageView');
+
+    // TRACK ROUTE CHANGE PAGEVIEWS
+    const handleRouteChange = () => {
+      window.fbq('track', 'PageView');
+    };
+
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router.events]);
+
   // 3)If message missing then load dynamic (According to local)
   useEffect(() => {
     let cancelled = false;
