@@ -9,6 +9,7 @@ import Programs from "@/components/Programs";
 import BlogIndex from "@/components/BlogIndex";
 import Seo from "@/components/common/Seo";
 import InstagramFeed from "@/components/InstagramFeed";
+import { useEffect } from "react";
 
 export function getStaticProps({ locale }) {
   return {
