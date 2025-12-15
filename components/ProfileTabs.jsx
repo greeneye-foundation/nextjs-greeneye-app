@@ -28,6 +28,9 @@ export default function ProfileTabs() {
       <Link href="/mydonation" className="profile-tab" style={tabStyle(router.pathname.startsWith("/mydonation"))}>
         {t('myDonation')}
       </Link>
+      <Link href="/mygift" className="profile-tab" style={tabStyle(router.pathname.startsWith("/mygift"))}>
+        {t('myGift')}
+      </Link>
     </div>
   )
 }

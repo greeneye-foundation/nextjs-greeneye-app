@@ -54,7 +54,45 @@
   "profileTabs": {
     "profile": "Profile",
     "myOrders": "My Orders",
-    "myDonation": "My Donation"
+    "myDonation": "My Donation",
+    "myGift": "My Gift"
+  },
+  "myGift": {
+    "heading": "My Gift Trees",
+    "loading": "Loading your gifts...",
+    "notFound": "You haven't sent any gift trees yet",
+    "sendGift": "Send a Gift Tree",
+    "order": "Order",
+    "placed": "Placed",
+    "recipient": "Recipient",
+    "trees": "Trees",
+    "amount": "Amount",
+    "paymentMethod": "Payment Method",
+    "viewDetails": "View Details"
+  },
+  "giftDetails": {
+    "loading": "Loading gift details...",
+    "notFound": "Gift order not found",
+    "back": "Back to My Gifts",
+    "heading": "Gift Tree Order",
+    "orderId": "Order ID",
+    "orderStatus": "Order",
+    "paymentStatus": "Payment",
+    "occasion": "Occasion",
+    "orderDate": "Order Date",
+    "recipientInfo": "Recipient Information",
+    "senderInfo": "Your Information",
+    "message": "Personal Message",
+    "selectedTrees": "Selected Trees",
+    "deliveryAddress": "Delivery Address",
+    "paymentSummary": "Payment Summary",
+    "subtotal": "Subtotal",
+    "deliveryCharge": "Delivery Charge",
+    "tax": "Tax (GST 18%)",
+    "total": "Total Amount",
+    "paymentMethod": "Payment Method",
+    "backToGifts": "Back to My Gifts",
+    "sendAnother": "Send Another Gift"
   },
   "hero": {
     "heroImgAlt": "Green Forest",
