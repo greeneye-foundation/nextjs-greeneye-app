@@ -334,7 +334,7 @@ export default function GiftOrderDetails() {
               >
                 {product.image && (
                   <img
-                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${product.image}`}
+                    src={`${product.image}`}
                     alt={product.name}
                     style={{
                       width: 80,
