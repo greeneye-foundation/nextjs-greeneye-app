@@ -1,21 +1,70 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import LanguageSwitcher from '@/components/encyclopedia/LanguageSwitcher';
 import CountrySelector from '@/components/encyclopedia/CountrySelector';
+import { articlesAPI } from '@/lib/api/encyclopedia';
+import { useEncyclopedia } from '@/context/EncyclopediaContext';
 import '@/styles/encyclopedia-admin-layout.css';
 
 const EncyclopediaAdminLayout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const pathname = usePathname();
+  const { language, country } = useEncyclopedia();
+
+  // State for badge counts
+  const [badgeCounts, setBadgeCounts] = useState({
+    all: 0,
+    pending_review: 0,
+    draft: 0,
+    archived: 0
+  });
+
+  // Fetch badge counts on mount and when language/country changes
+  useEffect(() => {
+    fetchBadgeCounts();
+  }, [language, country]);
+
+  const fetchBadgeCounts = async () => {
+    try {
+      // Fetch counts for each status in parallel
+      const [allResponse, pendingResponse, draftResponse, archivedResponse] = await Promise.all([
+        articlesAPI.getAll({ 
+          language
+        }),
+        articlesAPI.getAll({ 
+          status: 'pending_review', 
+          language
+        }),
+        articlesAPI.getAll({ 
+          status: 'draft', 
+          language
+        }),
+        articlesAPI.getAll({ 
+          status: 'archived', 
+          language
+        })
+      ]);
+
+      setBadgeCounts({
+        all: allResponse?.data?.pagination?.totalArticles || 0,
+        pending_review: pendingResponse?.data?.pagination?.totalArticles || 0,
+        draft: draftResponse?.data?.pagination?.totalArticles || 0,
+        archived: archivedResponse?.data?.pagination?.totalArticles || 0
+      });
+    } catch (error) {
+      console.error('Error fetching badge counts:', error);
+      // Keep previous counts on error
+    }
+  };
 
   const menuItems = [
     {
       title: 'Dashboard',
       icon: 'fa-dashboard',
-      path: '/admin/encyclopedia',
+      path: '/admin',
       badge: null
     },
     {
@@ -24,11 +73,30 @@ const EncyclopediaAdminLayout = ({ children }) => {
       path: '/admin/encyclopedia/articles',
       badge: null,
       submenu: [
-        { title: 'All Articles', path: '/admin/encyclopedia/articles' },
-        { title: 'Create New', path: '/admin/encyclopedia/articles/create' },
-        { title: 'Pending Review', path: '/admin/encyclopedia/articles/pending', badge: '5' },
-        { title: 'Drafts', path: '/admin/encyclopedia/articles/drafts' },
-        { title: 'Archived', path: '/admin/encyclopedia/articles/archived' }
+        { 
+          title: 'All Articles', 
+          path: '/admin/encyclopedia/articles',
+          badge: badgeCounts.all > 0 ? badgeCounts.all.toString() : null
+        },
+        { 
+          title: 'Create New', 
+          path: '/admin/encyclopedia/articles/create' 
+        },
+        { 
+          title: 'Pending Review', 
+          path: '/admin/encyclopedia/articles/pending', 
+          badge: badgeCounts.pending_review > 0 ? badgeCounts.pending_review.toString() : null
+        },
+        { 
+          title: 'Drafts', 
+          path: '/admin/encyclopedia/articles/drafts',
+          badge: badgeCounts.draft > 0 ? badgeCounts.draft.toString() : null
+        },
+        { 
+          title: 'Archived', 
+          path: '/admin/encyclopedia/articles/archived',
+          badge: badgeCounts.archived > 0 ? badgeCounts.archived.toString() : null
+        }
       ]
     },
     {
@@ -55,24 +123,24 @@ const EncyclopediaAdminLayout = ({ children }) => {
       path: '/admin/encyclopedia/media',
       badge: null
     },
-    {
-      title: 'Authors',
-      icon: 'fa-users',
-      path: '/admin/encyclopedia/authors',
-      badge: null
-    },
+    // {
+    //   title: 'Authors',
+    //   icon: 'fa-users',
+    //   path: '/admin/encyclopedia/authors',
+    //   badge: null
+    // },
     {
       title: 'Analytics',
       icon: 'fa-chart-line',
       path: '/admin/encyclopedia/analytics',
       badge: null
     },
-    {
-      title: 'Settings',
-      icon: 'fa-cog',
-      path: '/admin/encyclopedia/settings',
-      badge: null
-    }
+    // {
+    //   title: 'Settings',
+    //   icon: 'fa-cog',
+    //   path: '/admin/encyclopedia/settings',
+    //   badge: null
+    // }
   ];
 
   const isActive = (path) => {

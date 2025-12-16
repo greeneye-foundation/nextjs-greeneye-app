@@ -190,7 +190,6 @@ const ShopSubmenu = () => {
   ];
 
   const handleButtonEnter = (itemId) => {
-    console.log('Button enter:', itemId, 'Current active:', activeMenu);
     // Clear any pending close timeout
     if (closeTimeoutRef.current) {
       clearTimeout(closeTimeoutRef.current);
@@ -201,17 +200,14 @@ const ShopSubmenu = () => {
   };
 
   const handleButtonLeave = () => {
-    console.log('Button leave, current active:', activeMenu);
     // Set a short timeout - if user moves to another button or mega menu, it will be cleared
     closeTimeoutRef.current = setTimeout(() => {
-      console.log('Button leave timeout executed, closing menu');
       setActiveMenu(null);
       closeTimeoutRef.current = null;
     }, 200);
   };
 
   const handleMegaMenuEnter = (itemId) => {
-    console.log('Mega menu enter:', itemId);
     // Clear any pending close timeout
     if (closeTimeoutRef.current) {
       clearTimeout(closeTimeoutRef.current);
@@ -220,16 +216,12 @@ const ShopSubmenu = () => {
   };
 
   const handleMegaMenuLeave = () => {
-    console.log('Mega menu leave, current active:', activeMenu);
     // Delay closing to allow mouse movement back to buttons
     closeTimeoutRef.current = setTimeout(() => {
-      console.log('Mega menu timeout executed, closing menu');
       setActiveMenu(null);
       closeTimeoutRef.current = null;
     }, 200);
   };
-
-  console.log('Render - activeMenu:', activeMenu);
 
   const activeMenuItem = menuItems.find(item => item.id === activeMenu);
 

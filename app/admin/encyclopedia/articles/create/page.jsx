@@ -7,7 +7,7 @@ import { useEncyclopedia } from '@/context/EncyclopediaContext';
 import { ARTICLE_TYPES, ARTICLE_STATUS } from '@/lib/constants/encyclopedia';
 import { articlesAPI } from '@/lib/api/encyclopedia';
 
-// Import form sections (we'll create these next)
+// Import form sections
 import BasicInfoSection from '@/components/encyclopedia/admin/article-form/BasicInfoSection';
 import ContentSection from '@/components/encyclopedia/admin/article-form/ContentSection';
 import TypeSpecificSection from '@/components/encyclopedia/admin/article-form/TypeSpecificSection';
@@ -23,11 +23,14 @@ const CreateArticlePage = () => {
   // Active tab
   const [activeTab, setActiveTab] = useState('basic');
 
+  // Store article types for slug conversion
+  const [articleTypes, setArticleTypes] = useState([]);
+
   // Form state
   const [formData, setFormData] = useState({
     // Basic Info
     slug: '',
-    articleTypeId: '',
+    articleType: '', // ✅ Changed from articleTypeId to articleType
     title: { en: '', hi: '', zh: '', ar: '' },
     excerpt: { en: '', hi: '', zh: '', ar: '' },
 
@@ -38,8 +41,8 @@ const CreateArticlePage = () => {
     typeData: {},
 
     // Taxonomy
-    categoryIds: [],
-    tagIds: [],
+    categories: [], // ✅ Changed from categoryIds to categories
+    tags: [], // ✅ Changed from tagIds to tags
     relatedCountries: [],
 
     // Media
@@ -49,7 +52,7 @@ const CreateArticlePage = () => {
     status: 'draft',
     isGlobal: true,
     publishedCountries: [],
-    authorId: '', // Will be set from logged-in user
+    author: '', // ✅ Changed from authorId to author
 
     // SEO
     metaTitle: { en: '', hi: '', zh: '', ar: '' },
@@ -74,6 +77,21 @@ const CreateArticlePage = () => {
 
     return () => clearInterval(autoSaveInterval);
   }, [formData]);
+
+  // ✅ Fetch article types to convert _id to slug
+  useEffect(() => {
+    const fetchArticleTypes = async () => {
+      try {
+        const { articleTypesAPI } = await import('@/lib/api/encyclopedia');
+        const response = await articleTypesAPI.getAll('en');
+        setArticleTypes(response.data || []);
+      } catch (error) {
+        console.error('Error fetching article types:', error);
+      }
+    };
+    
+    fetchArticleTypes();
+  }, []);
 
   // Update form data
   const updateFormData = (field, value) => {
@@ -115,13 +133,13 @@ const CreateArticlePage = () => {
 
     // Basic validation
     if (!formData.slug) newErrors.slug = 'Slug is required';
-    if (!formData.articleTypeId) newErrors.articleTypeId = 'Article type is required';
+    if (!formData.articleType) newErrors.articleType = 'Article type is required';
     if (!formData.title.en) newErrors.titleEn = 'English title is required';
     if (!formData.content.en) newErrors.contentEn = 'English content is required';
 
     // Type-specific validation
-    if (formData.articleTypeId) {
-      const articleType = formData.articleTypeId; // Get type slug
+    if (formData.articleType) {
+      const articleType = formData.articleType; // Get type slug
 
       if (articleType === 'plant') {
         if (!formData.typeData.plant?.scientificName) {
@@ -142,21 +160,56 @@ const CreateArticlePage = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  // ✅ Prepare data for API - convert field names AND ObjectId to slug
+  const prepareArticleData = (status) => {
+    // Convert articleType ObjectId to slug
+    let articleTypeSlug = formData.articleType;
+    
+    // If articleType looks like an ObjectId (24 chars), convert to slug
+    if (articleTypeSlug && articleTypeSlug.length === 24 && articleTypes.length > 0) {
+      const foundType = articleTypes.find(t => t._id === articleTypeSlug);
+      if (foundType) {
+        articleTypeSlug = foundType.slug;
+      }
+    }
+    
+    return {
+      slug: formData.slug,
+      articleTypeId: articleTypeSlug, // ✅ Now sending slug instead of ObjectId
+      title: formData.title,
+      excerpt: formData.excerpt,
+      content: formData.content,
+      typeData: formData.typeData,
+      categoryIds: formData.categories, // ✅ Send as categoryIds to backend
+      tagIds: formData.tags, // ✅ Send as tagIds to backend
+      relatedCountries: formData.relatedCountries,
+      mediaIds: formData.mediaIds,
+      status: status,
+      isGlobal: formData.isGlobal,
+      publishedCountries: formData.publishedCountries,
+      authorId: formData.author, // ✅ Send as authorId to backend
+      metaTitle: formData.metaTitle,
+      metaDescription: formData.metaDescription,
+      keywords: formData.keywords
+    };
+  };
+
   // Save as draft
   const saveDraft = async () => {
     setSaving(true);
 
     try {
-      const articleData = {
-        ...formData,
-        status: 'draft'
-      };
+      const articleData = prepareArticleData('draft'); // ✅ Use prepared data
 
       const response = await articlesAPI.create(articleData);
-      console.log('Draft saved:', response);
 
-      setSaveMessage('Draft saved successfully');
-      setTimeout(() => setSaveMessage(''), 3000);
+      if (response.success) {
+        setSaveMessage('Draft saved successfully');
+        setTimeout(() => {
+          setSaveMessage('');
+          router.push('/admin/encyclopedia/articles'); // ✅ Redirect after save
+        }, 1500);
+      }
     } catch (error) {
       console.error('Error saving draft:', error);
       setSaveMessage(`Error: ${error.message}`);
@@ -177,13 +230,9 @@ const CreateArticlePage = () => {
     setSaving(true);
 
     try {
-      const articleData = {
-        ...formData,
-        status: 'pending_review'
-      };
+      const articleData = prepareArticleData('pending_review'); // ✅ Use prepared data
 
       const response = await articlesAPI.create(articleData);
-      console.log('Submitted for review:', response);
 
       alert('Article submitted for review successfully!');
       router.push('/admin/encyclopedia/articles');
@@ -210,13 +259,11 @@ const CreateArticlePage = () => {
 
     try {
       const articleData = {
-        ...formData,
-        status: 'published',
+        ...prepareArticleData('published'), // ✅ Use prepared data
         publishedAt: new Date().toISOString()
       };
 
       const response = await articlesAPI.create(articleData);
-      console.log('Article published:', response);
 
       alert('Article published successfully!');
       router.push('/admin/encyclopedia/articles');

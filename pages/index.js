@@ -9,6 +9,7 @@ import Programs from "@/components/Programs";
 import BlogIndex from "@/components/BlogIndex";
 import Seo from "@/components/common/Seo";
 import InstagramFeed from "@/components/InstagramFeed";
+import { useEffect } from "react";
 
 export function getStaticProps({ locale }) {
   return {
@@ -20,6 +21,14 @@ export function getStaticProps({ locale }) {
 };
 
 export default function HomePage() {
+
+    useEffect(() => {
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("track", "ViewContent", {
+        page: "HomePage",
+      });
+    }
+  }, []);
   const t = useTranslations('home');
   return (
     <>
