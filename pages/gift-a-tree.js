@@ -47,10 +47,10 @@ export default function GiftATreePage() {
       country: "India",
       landmark: ""
     },
-    paymentMethod: "COD"
+    paymentMethod: "PAYU"
   });
 
-  // Fetch user profile if logged in - FIXED VERSION
+  // Fetch user profile if logged in
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -58,7 +58,7 @@ export default function GiftATreePage() {
         if (typeof window !== "undefined") {
           token = localStorage.getItem("authToken");
         }
-        
+
         if (!token) {
           setUserLoading(false);
           return;
@@ -68,10 +68,10 @@ export default function GiftATreePage() {
 
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/profile`,
-          { 
-            headers: { 
-              Authorization: `Bearer ${token}` 
-            } 
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
           }
         );
 
@@ -157,10 +157,10 @@ export default function GiftATreePage() {
   const scrollCarousel = (direction) => {
     if (carouselRef.current) {
       const scrollAmount = 300;
-      const newScrollPosition = direction === 'left' 
+      const newScrollPosition = direction === 'left'
         ? carouselRef.current.scrollLeft - scrollAmount
         : carouselRef.current.scrollLeft + scrollAmount;
-      
+
       carouselRef.current.scrollTo({
         left: newScrollPosition,
         behavior: 'smooth'
@@ -174,6 +174,62 @@ export default function GiftATreePage() {
   const tax = Math.round(subtotal * 0.18);
   const total = subtotal + deliveryCharge + tax;
 
+  // PayU Payment Integration
+  const initiatePayUPayment = (payuData, orderId) => {
+
+    // Validate required fields
+    const requiredFields = ['key', 'txnid', 'hash', 'amount', 'productinfo', 'firstname', 'email', 'surl', 'furl'];
+    const missingFields = requiredFields.filter(field => !payuData[field]);
+
+    if (missingFields.length > 0) {
+      console.error('Missing required PayU fields:', missingFields);
+      showNotification('Payment initialization failed - missing data', 'error');
+      setLoading(false);
+      return;
+    }
+
+    const payuForm = document.createElement('form');
+    payuForm.setAttribute('method', 'POST');
+
+    // Use test URL for testing
+    const payuUrl = process.env.NEXT_PUBLIC_PAYU_URL || 'https://test.payu.in/_payment';
+    payuForm.setAttribute('action', payuUrl);
+
+
+    // Create form parameters
+    const params = {
+      key: payuData.key,
+      txnid: payuData.txnid,
+      amount: String(payuData.amount),
+      productinfo: payuData.productinfo,
+      firstname: payuData.firstname,
+      email: payuData.email,
+      phone: payuData.phone || '',
+      udf1: payuData.udf1,
+      udf2: payuData.udf2,
+      udf3: payuData.udf3 || '',
+      udf4: payuData.udf4 || '',
+      udf5: payuData.udf5 || '',
+      surl: payuData.surl,
+      furl: payuData.furl,
+      hash: payuData.hash
+    };
+
+    // Create hidden inputs
+    Object.keys(params).forEach(key => {
+      const input = document.createElement('input');
+      input.setAttribute('type', 'hidden');
+      input.setAttribute('name', key);
+      input.setAttribute('value', params[key]);
+      payuForm.appendChild(input);
+    });
+
+    document.body.appendChild(payuForm);
+    payuForm.submit();
+  };
+
+
+  // Handle form submission - UPDATED
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -197,32 +253,44 @@ export default function GiftATreePage() {
         }
       );
 
-      setOrderDetails(response.data.data);
-      setShowOrderSuccess(true);
+      const orderData = response.data.data;
 
-      showNotification(
-        "Tree gift sent successfully!",
-        "success"
-      );
+      if (!orderData.payuData) {
+        console.error('PayU data not received from backend');
+        showNotification('Payment initialization failed', 'error');
+        setLoading(false);
+        return;
+      }
 
-      // Scroll to success section
+      // Verify PayU data has all required fields
+      const requiredFields = ['key', 'txnid', 'amount', 'hash', 'productinfo', 'firstname', 'email', 'surl', 'furl'];
+      const missingFields = requiredFields.filter(field => !orderData.payuData[field]);
+
+      if (missingFields.length > 0) {
+        console.error('Missing PayU fields:', missingFields);
+        showNotification('Payment initialization failed - incomplete data', 'error');
+        setLoading(false);
+        return;
+      }
+
+      setOrderDetails(orderData);
+
+      // Initiate PayU payment
       setTimeout(() => {
-        document.getElementById('order-success')?.scrollIntoView({ 
-          behavior: 'smooth',
-          block: 'center'
-        });
-      }, 300);
+        initiatePayUPayment(orderData.payuData, orderData.orderId);
+      }, 100);
 
     } catch (error) {
       console.error('Order submission error:', error);
+      console.error('Error response:', error.response?.data);
       showNotification(
         error.response?.data?.message || "Failed to send tree gift. Please try again.",
         "error"
       );
-    } finally {
       setLoading(false);
     }
   };
+
 
   const occasionLabels = {
     birthday: "Birthday",
@@ -244,7 +312,7 @@ export default function GiftATreePage() {
           title="Order Successful | GreenEye Foundation"
           description="Your tree gift order has been placed successfully"
         />
-        
+
         <section className="order-success-page" id="order-success">
           <div className="container">
             <motion.div
@@ -256,7 +324,7 @@ export default function GiftATreePage() {
               <div className="success-icon">
                 <i className="fas fa-check-circle"></i>
               </div>
-              
+
               <h1>Order Placed Successfully!</h1>
               <p className="success-message">
                 Your tree gift has been sent to {orderDetails.recipientName}
@@ -514,7 +582,7 @@ export default function GiftATreePage() {
                     <i className="fas fa-seedling"></i>
                     Select Your Trees ({selectedProducts.length}/{maxTrees})
                   </h3>
-                  
+
                   <div className="carousel-container">
                     <button
                       type="button"
@@ -531,8 +599,8 @@ export default function GiftATreePage() {
                         const isDisabled = !canAddMore && !isSelected;
 
                         return (
-                          <div 
-                            key={plant._id} 
+                          <div
+                            key={plant._id}
                             className={`plant-card ${isSelected ? 'selected' : ''} ${isDisabled ? 'disabled' : ''}`}
                           >
                             {plant.image && (
@@ -543,7 +611,7 @@ export default function GiftATreePage() {
                             <h4>{plant.name}</h4>
                             <p className="plant-price">₹{plant.price}</p>
                             <p className="plant-desc">{plant.description || 'Beautiful plant'}</p>
-                            
+
                             {isSelected ? (
                               <button
                                 type="button"
@@ -707,7 +775,7 @@ export default function GiftATreePage() {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="landmark">Landmark (Optional)</label>
+                    <label htmlFor="landmark">Landmark *</label>
                     <input
                       type="text"
                       id="landmark"
@@ -715,6 +783,7 @@ export default function GiftATreePage() {
                       value={form.deliveryAddress.landmark}
                       onChange={handleAddressChange}
                       placeholder="Near..."
+                      required
                     />
                     <i className="fas fa-map-pin input-icon"></i>
                   </div>
@@ -787,43 +856,6 @@ export default function GiftATreePage() {
                   </div>
                 </div>
 
-                <div className="form-section">
-                  <h3>
-                    <i className="fas fa-credit-card"></i>
-                    Payment Method
-                  </h3>
-
-                  <div className="payment-options">
-                    <label className="payment-option">
-                      <input
-                        type="radio"
-                        name="paymentMethod"
-                        value="COD"
-                        checked={form.paymentMethod === 'COD'}
-                        onChange={handleChange}
-                      />
-                      <div className="option-content">
-                        <i className="fas fa-money-bill-wave"></i>
-                        <span>Cash on Delivery</span>
-                      </div>
-                    </label>
-
-                    <label className="payment-option">
-                      <input
-                        type="radio"
-                        name="paymentMethod"
-                        value="ONLINE"
-                        checked={form.paymentMethod === 'ONLINE'}
-                        onChange={handleChange}
-                      />
-                      <div className="option-content">
-                        <i className="fas fa-credit-card"></i>
-                        <span>Online Payment</span>
-                      </div>
-                    </label>
-                  </div>
-                </div>
-
                 <div className="form-actions">
                   <button
                     type="button"
@@ -846,7 +878,7 @@ export default function GiftATreePage() {
                     ) : (
                       <>
                         <i className="fas fa-paper-plane"></i>
-                        <span>Send Gift (₹{total})</span>
+                        <span>Proceed to Pay (₹{total})</span>
                       </>
                     )}
                   </button>
