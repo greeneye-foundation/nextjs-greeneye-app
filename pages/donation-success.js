@@ -35,6 +35,14 @@ export default function DonationSuccess() {
           
           if (response.data.data.paymentStatus === 'COMPLETED') {
             showNotification('Donation completed successfully!', 'success');
+             // Fire Meta Pixel Purchase event
+                if (typeof window.fbq === "function") {
+                    window.fbq("track", "Purchase", {
+                    value: amount,
+                    currency: "INR",
+                    donation_id: donationId,
+                    });
+                }
           } else {
             showNotification('Donation received', 'info');
           }
