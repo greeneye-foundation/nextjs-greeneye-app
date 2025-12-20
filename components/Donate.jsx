@@ -111,7 +111,7 @@ const Donate = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!amount || parseInt(amount, 10) < 50) {
+    if (!amount || parseInt(amount, 10) < 10) {
       showNotification(
         t("minAmountError", { defaultMessage: "Please enter a minimum donation amount of ₹50." }),
         "error"
@@ -199,7 +199,7 @@ const Donate = () => {
                   id="customAmount"
                   name="amount"
                   placeholder={t("placeholderAmount")}
-                  min="50"
+                  min="10"
                   value={amount}
                   onChange={handleAmountChange}
                   required
