@@ -57,7 +57,7 @@ const AdminDonation = () => {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/payment/check-status`,
         {
-          razorpay_order_id: donation.paymentInfo?.razorpay_order_id,
+          transaction_id: donation.paymentInfo?.txnid || donation.paymentInfo?.razorpay_order_id,
           entityId: donation._id,
           entityType: "donation",
         },
@@ -152,7 +152,7 @@ const AdminDonation = () => {
                       {donation.isPaid ? "Yes" : "No"}
                     </td>
                     <td>{new Date(donation.createdAt).toLocaleString()}</td>
-                    <td>{donation.paymentInfo?.razorpay_payment_id || "-"}</td>
+                    <td>{donation.paymentInfo?.mihpayid || donation.paymentInfo?.razorpay_payment_id || "-"}</td>
                   </tr>
 
                   {/* Expandable Row */}
@@ -169,7 +169,7 @@ const AdminDonation = () => {
                           }}
                         >
                           <strong>Donation Details</strong>
-                          <p>Order ID: {donation.paymentInfo?.razorpay_order_id || "-"}</p>
+                          <p>Transaction ID: {donation.paymentInfo?.txnid || donation.paymentInfo?.razorpay_order_id || "-"}</p>
                           <p>Status: {donation.isPaid ? "✅ Paid" : "❌ Not Paid"}</p>
 
                           {!donation.isPaid && (

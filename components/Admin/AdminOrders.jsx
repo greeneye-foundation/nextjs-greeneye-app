@@ -81,7 +81,7 @@ function AdminOrders() {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/payment/check-status`,
         {
-          razorpay_order_id: selectedOrder.paymentResult?.id,
+          transaction_id: selectedOrder.paymentResult?.id || selectedOrder.paymentResult?.txnid,
           entityId: selectedOrder._id,
           entityType: "order"
         },

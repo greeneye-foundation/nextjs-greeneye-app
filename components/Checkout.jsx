@@ -165,6 +165,51 @@ const Checkout = () => {
     setSuccess(t("couponRemoved") || "Coupon removed");
   };
 
+  // PayU Payment Integration
+  const initiatePayUPayment = (payuData, orderId) => {
+    if (!payuData.key || !payuData.txnid || !payuData.hash) {
+      console.error('Missing required PayU fields:', payuData);
+      setError('Payment initialization failed');
+      setPlacing(false);
+      return;
+    }
+
+    const payuForm = document.createElement('form');
+    payuForm.setAttribute('method', 'POST');
+
+    const payuUrl = process.env.NEXT_PUBLIC_PAYU_URL || 'https://test.payu.in/_payment';
+    payuForm.setAttribute('action', payuUrl);
+
+    const params = {
+      key: payuData.key,
+      txnid: payuData.txnid,
+      amount: String(payuData.amount),
+      productinfo: payuData.productinfo,
+      firstname: payuData.firstname,
+      email: payuData.email,
+      phone: payuData.phone || '',
+      udf1: payuData.udf1,
+      udf2: payuData.udf2,
+      udf3: payuData.udf3 || '',
+      udf4: payuData.udf4 || '',
+      udf5: payuData.udf5 || '',
+      surl: payuData.surl,
+      furl: payuData.furl,
+      hash: payuData.hash
+    };
+
+    Object.keys(params).forEach(key => {
+      const input = document.createElement('input');
+      input.setAttribute('type', 'hidden');
+      input.setAttribute('name', key);
+      input.setAttribute('value', params[key]);
+      payuForm.appendChild(input);
+    });
+
+    document.body.appendChild(payuForm);
+    payuForm.submit();
+  };
+
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
     setError("");
@@ -214,54 +259,18 @@ const Checkout = () => {
 
       const createdOrder = res.data;
 
-      // 🚀 Razorpay Checkout if Razorpay selected
-      if (paymentMethod === "Razorpay") {
-        const razorpayOptions = {
-          key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-          amount: createdOrder.finalPrice * 100,
-          currency: "INR",
-          name: "GreenEye Store",
-          description: t("razorpayDesc"),
-          order_id: createdOrder.paymentResult.id,
-          handler: async function (response) {
-            try {
-              // Verify payment on backend before redirecting
-              await axios.post(
-                `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/orders/${createdOrder._id}/verify-payment`,
-                {
-                  razorpay_payment_id: response.razorpay_payment_id,
-                  razorpay_order_id: response.razorpay_order_id,
-                  razorpay_signature: response.razorpay_signature,
-                },
-                {
-                  headers: {
-                    Authorization: `Bearer ${token}`,
-                  },
-                }
-              );
-              setSuccess(t("paymentSuccess"));
-              setCart(null);
-              router.push("/myorders");
-            } catch (error) {
-              setError(t("paymentVerificationFailed"));
-            }
-          },
-          prefill: {
-            name: userInfo.name,
-            email: userInfo.email,
-            contact: userInfo.phone,
-          },
-          theme: { color: "#388e3c" },
-          modal: {
-            ondismiss: function () {
-              setPlacing(false);
-              setError(t("paymentCancelled"));
-            },
-          },
-        };
+      // 🚀 PayU Checkout if PayU selected
+      if (paymentMethod === "PAYU") {
+        if (!createdOrder.payuData) {
+          setError("Payment initialization failed");
+          setPlacing(false);
+          return;
+        }
 
-        const rzp = new window.Razorpay(razorpayOptions);
-        rzp.open();
+        // Initiate PayU payment
+        setTimeout(() => {
+          initiatePayUPayment(createdOrder.payuData, createdOrder._id);
+        }, 100);
       } else {
         setSuccess(t("orderPlacedCOD"));
         setCart(null);
@@ -421,7 +430,7 @@ const Checkout = () => {
         <div style={{ marginBottom: 20 }}>
           <label>{t("paymentMethod")}*</label>
           <div>
-            {["COD", "Razorpay"].map((method) => (
+            {["COD", "PAYU"].map((method) => (
               <label key={method} style={{ marginRight: 28 }}>
                 <input
                   type="radio"
