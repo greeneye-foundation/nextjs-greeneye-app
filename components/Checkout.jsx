@@ -284,218 +284,260 @@ const Checkout = () => {
   };
 
   return (
-    <div style={{
-      maxWidth: 600,
-      margin: "50px auto",
-      padding: 24,
-      background: "#fff",
-      borderRadius: 12,
-      boxShadow: "0 2px 16px #e0e0e0"
-    }}>
-      <Link
-        href="/plantshop"
-        style={{ color: "#388e3c", textDecoration: "none", fontWeight: 600 }}
-      >
+    <div className="checkout-container">
+      <Link href="/plantshop" className="checkout-back-link">
         ← Back to Plant Shop
       </Link>
-        {/* Address Fields */}
-        <h2 style={{ marginBottom: 22 }}>{t("checkoutTitle")}</h2>
-      <form onSubmit={handlePlaceOrder} autoComplete="off">
-        {[
-          { label: t("name"), name: "name" },
-          { label: t("email"), name: "email", type: "email" },
-          { label: t("phone"), name: "phone", type: "tel", pattern: "\\d{10}", maxLength: 10 },
-          { label: t("shippingAddress"), name: "street", isTextarea: true },
-          { label: t("city"), name: "city" },
-          { label: t("state"), name: "state" },
-          { label: t("pincode"), name: "pincode", pattern: "\\d{6}", maxLength: 6 },
-        ].map((field) => (
-          <div style={{ marginBottom: 16 }} key={field.name}>
-            <label>{field.label}*</label>
-            {field.isTextarea ? (
-              <textarea
-                name={field.name}
-                value={userInfo[field.name]}
-                onChange={handleChange}
-                required
-                className="form-input"
-                style={{ width: "100%", padding: 8, marginTop: 4, minHeight: 60 }}
-              />
-            ) : (
-              <input
-                name={field.name}
-                type={field.type || "text"}
-                value={userInfo[field.name]}
-                onChange={handleChange}
-                required
-                pattern={field.pattern}
-                maxLength={field.maxLength}
-                className="form-input"
-                style={{ width: "100%", padding: 8, marginTop: 4 }}
-              />
-            )}
-          </div>
-        ))}
 
-        {/* ✅ Coupon Section */}
-        <div style={{ marginBottom: 20 }}>
-          <button
-            type="button"
-            onClick={() => setCouponBoxOpen(!couponBoxOpen)}
-            style={{
-              background: "transparent",
-              border: "1px solid #388e3c",
-              padding: "6px 14px",
-              borderRadius: 6,
-              cursor: "pointer",
-              color: "#388e3c",
-              fontWeight: 600,
-            }}
-          >
-            {couponBoxOpen ? "Hide Coupon" : "Apply Coupon"}
-          </button>
+      <div className="checkout-card">
+        <div className="checkout-header">
+          <h1 className="checkout-title">{t("checkoutTitle")}</h1>
+          <p className="checkout-subtitle">Complete your order securely</p>
+        </div>
 
-          {couponBoxOpen && (
-            <div style={{ marginTop: 10 }}>
-              <input
-                type="text"
-                value={couponCode}
-                onChange={(e) => setCouponCode(e.target.value)}
-                placeholder="Enter coupon code"
-                style={{ width: "100%", padding: 8, marginBottom: 10 }}
-              />
-              <div style={{ display: "flex", gap: 10 }}>
-                <button
-                  type="button"
-                  onClick={handleApplyCoupon}
-                  disabled={!!appliedCouponCode}
-                  style={{
-                    padding: "8px 18px",
-                    background: appliedCouponCode ? "#ccc" : "#388e3c",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: 6,
-                    cursor: appliedCouponCode ? "not-allowed" : "pointer",
-                  }}
-                >
-                  {appliedCouponCode ? "Applied" : "Apply"}
-                </button>
-                {appliedCouponCode && (
-                  <button
-                    type="button"
-                    onClick={handleRemoveCoupon}
-                    style={{
-                      padding: "8px 18px",
-                      background: "#d32f2f",
-                      color: "#fff",
-                      border: "none",
-                      borderRadius: 6,
-                      cursor: "pointer",
-                    }}
-                  >
-                    Remove
-                  </button>
-                )}
+        <form onSubmit={handlePlaceOrder} autoComplete="off" className="checkout-form">
+          <div className="checkout-section">
+            <h3 className="section-title">Shipping Information</h3>
+
+            <div className="form-row">
+              <div className="form-group">
+                <label className="form-label">
+                  {t("name")}<span className="required">*</span>
+                </label>
+                <input
+                  name="name"
+                  type="text"
+                  value={userInfo.name}
+                  onChange={handleChange}
+                  required
+                  className="form-input"
+                />
               </div>
 
-              {availableCoupons.length > 0 && (
-                <div style={{ marginTop: 14 }}>
-                  <strong>Available Coupons:</strong>
-                  <ul style={{ padding: 0, listStyle: "none" }}>
-                    {availableCoupons.map((c) => (
-                      <li
-                        key={c._id}
-                        style={{
-                          cursor: "pointer",
-                          padding: "6px 8px",
-                          border: "1px dashed #ccc",
-                          marginTop: 6,
-                          borderRadius: 6,
-                        }}
-                        onClick={() => setCouponCode(c.code)}
-                      >
-                        {c.code} - {c.discountType === "percentage"
-                          ? `${c.discountValue}%`
-                          : `₹${c.discountValue}`}{" "}
-                        off
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-
-        <div style={{ marginBottom: 20 }}>
-          <label>{t("paymentMethod")}*</label>
-          <div>
-            {["COD", "PAYU"].map((method) => (
-              <label key={method} style={{ marginRight: 28 }}>
+              <div className="form-group">
+                <label className="form-label">
+                  {t("email")}<span className="required">*</span>
+                </label>
                 <input
-                  type="radio"
-                  name="paymentMethod"
-                  value={method}
-                  checked={paymentMethod === method}
-                  onChange={() => setPaymentMethod(method)}
-                />{" "}
-                {method === "COD" ? t("cod") : t("onlinePayment")}
+                  name="email"
+                  type="email"
+                  value={userInfo.email}
+                  onChange={handleChange}
+                  required
+                  className="form-input"
+                />
+              </div>
+            </div>
+
+            <div className="form-row">
+              <div className="form-group">
+                <label className="form-label">
+                  {t("phone")}<span className="required">*</span>
+                </label>
+                <input
+                  name="phone"
+                  type="tel"
+                  value={userInfo.phone}
+                  onChange={handleChange}
+                  required
+                  pattern="\d{10}"
+                  maxLength={10}
+                  className="form-input"
+                  placeholder="10-digit phone number"
+                />
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">
+                  {t("pincode")}<span className="required">*</span>
+                </label>
+                <input
+                  name="pincode"
+                  type="text"
+                  value={userInfo.pincode}
+                  onChange={handleChange}
+                  required
+                  pattern="\d{6}"
+                  maxLength={6}
+                  className="form-input"
+                  placeholder="6-digit pincode"
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label className="form-label">
+                {t("shippingAddress")}<span className="required">*</span>
               </label>
-            ))}
+              <textarea
+                name="street"
+                value={userInfo.street}
+                onChange={handleChange}
+                required
+                className="form-textarea"
+                placeholder="Enter your complete street address"
+              />
+            </div>
+
+            <div className="form-row">
+              <div className="form-group">
+                <label className="form-label">
+                  {t("city")}<span className="required">*</span>
+                </label>
+                <input
+                  name="city"
+                  type="text"
+                  value={userInfo.city}
+                  onChange={handleChange}
+                  required
+                  className="form-input"
+                />
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">
+                  {t("state")}<span className="required">*</span>
+                </label>
+                <input
+                  name="state"
+                  type="text"
+                  value={userInfo.state}
+                  onChange={handleChange}
+                  required
+                  className="form-input"
+                />
+              </div>
+            </div>
           </div>
-        </div>
 
-        <h3>{t("orderSummary")}</h3>
-        {cart && cart.items?.length > 0 ? (
-          <ul style={{ padding: 0, listStyle: "none", marginBottom: 8 }}>
-            {cart.items.map((item) => (
-              <li key={item._id} style={{ marginBottom: 4 }}>
-                <span style={{ fontWeight: 500 }}>{item.plant.name}</span>
-                {` x${item.quantity} `}
-                <span style={{ color: "#388e3c" }}>
-                  ₹{item.plant.price * item.quantity}
-                </span>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <div style={{ color: "#b62222", marginBottom: 8 }}>{t("cartNoItems")}</div>
-        )}
+          <div className="checkout-section coupon-section">
+            <button
+              type="button"
+              onClick={() => setCouponBoxOpen(!couponBoxOpen)}
+              className="coupon-toggle-btn"
+            >
+              {couponBoxOpen ? "✕ Hide Coupon" : "🎟️ Apply Coupon"}
+            </button>
 
-        {/* ✅ Show Discount */}
-        {discount > 0 && (
-          <div style={{ textAlign: "right", fontSize: 16, color: "#388e3c" }}>
-            Discount: -₹{discount}
+            {couponBoxOpen && (
+              <div className="coupon-box">
+                <div className="coupon-input-group">
+                  <input
+                    type="text"
+                    value={couponCode}
+                    onChange={(e) => setCouponCode(e.target.value)}
+                    placeholder="Enter coupon code"
+                    className="coupon-input"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleApplyCoupon}
+                    disabled={!!appliedCouponCode}
+                    className="coupon-apply-btn"
+                  >
+                    {appliedCouponCode ? "✓ Applied" : "Apply"}
+                  </button>
+                  {appliedCouponCode && (
+                    <button
+                      type="button"
+                      onClick={handleRemoveCoupon}
+                      className="coupon-remove-btn"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </div>
+
+                {availableCoupons.length > 0 && (
+                  <div className="available-coupons">
+                    <div className="available-coupons-title">Available Coupons:</div>
+                    <ul className="coupon-list">
+                      {availableCoupons.map((c) => (
+                        <li
+                          key={c._id}
+                          className="coupon-item"
+                          onClick={() => setCouponCode(c.code)}
+                        >
+                          <span className="coupon-code">{c.code}</span>
+                          <span className="coupon-discount">
+                            {c.discountType === "percentage"
+                              ? `${c.discountValue}% OFF`
+                              : `₹${c.discountValue} OFF`}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
-        )}
 
-        <div style={{ textAlign: "right", fontWeight: 600, fontSize: 18, color: "#388e3c" }}>
-          {t("total")}: ₹{finalAmount || total}
-        </div>
+          <div className="checkout-section">
+            <h3 className="section-title">Payment Method</h3>
+            <div className="payment-methods">
+              {["COD", "PAYU"].map((method) => (
+                <div key={method} className="payment-option">
+                  <input
+                    type="radio"
+                    id={`payment-${method}`}
+                    name="paymentMethod"
+                    value={method}
+                    checked={paymentMethod === method}
+                    onChange={() => setPaymentMethod(method)}
+                  />
+                  <label htmlFor={`payment-${method}`} className="payment-label">
+                    {method === "COD" ? t("cod") : t("onlinePayment")}
+                  </label>
+                </div>
+              ))}
+            </div>
+          </div>
 
-        {error && <div style={{ color: "#b62222", marginTop: 12 }}>{error}</div>}
-        {success && <div style={{ color: "#388e3c", marginTop: 12 }}>{success}</div>}
+          <div className="order-summary">
+            <h3 className="order-summary-title">{t("orderSummary")}</h3>
 
-        <button
-          type="submit"
-          disabled={placing || !cart?.items?.length}
-          style={{
-            marginTop: 22,
-            padding: "12px 36px",
-            background: (placing || !cart?.items?.length) ? "#a5a5a5" : "#388e3c",
-            color: "#fff",
-            border: "none",
-            borderRadius: 6,
-            fontWeight: 700,
-            fontSize: 17,
-            cursor: (placing || !cart?.items?.length) ? "not-allowed" : "pointer",
-            opacity: (placing || !cart?.items?.length) ? 0.6 : 1,
-            transition: "all 0.3s ease",
-          }}
-        >
-          {placing ? t("placingOrder") : t("placeOrder")}
-        </button>
-      </form>
+            {cart && cart.items?.length > 0 ? (
+              <ul className="order-items">
+                {cart.items.map((item) => (
+                  <li key={item._id} className="order-item">
+                    <div>
+                      <span className="item-name">{item.plant.name}</span>
+                      <span className="item-quantity">×{item.quantity}</span>
+                    </div>
+                    <span className="item-price">₹{item.plant.price * item.quantity}</span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div className="empty-cart-message">{t("cartNoItems")}</div>
+            )}
+
+            {discount > 0 && (
+              <div className="order-discount">
+                <span>Discount Applied:</span>
+                <span>-₹{discount}</span>
+              </div>
+            )}
+
+            <div className="order-total">
+              <span>{t("total")}:</span>
+              <span>₹{finalAmount || total}</span>
+            </div>
+          </div>
+
+          {error && <div className="message message-error">{error}</div>}
+          {success && <div className="message message-success">{success}</div>}
+
+          <button
+            type="submit"
+            disabled={placing || !cart?.items?.length}
+            className="submit-btn"
+          >
+            {placing ? t("placingOrder") : t("placeOrder")}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
