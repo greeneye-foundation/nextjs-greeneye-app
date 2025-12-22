@@ -14,6 +14,7 @@ import '@/styles/modal.css';
 import '@/styles/loading-bar.css';
 import '@/styles/relocate-tree-hero.css';
 import '@/styles/relocate-tree-page.css';
+import '@/styles/checkout.css';
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';

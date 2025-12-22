@@ -16,10 +16,9 @@ const Donate = () => {
   });
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const [success, setSuccess] = useState("");
   const t = useTranslations("donate");
 
-  // Auto-fill profile info if logged in (safe for SSR)
+  // Auto-fill profile info if logged in
   useEffect(() => {
     const fetchProfile = async () => {
       let token = null;
@@ -63,10 +62,56 @@ const Donate = () => {
     setForm((f) => ({ ...f, [name]: value }));
   };
 
+  // PayU Payment Integration
+  const initiatePayUPayment = (payuData, donationId) => {
+    
+    if (!payuData.key || !payuData.txnid || !payuData.hash) {
+      console.error('Missing required PayU fields:', payuData);
+      showNotification('Payment initialization failed', 'error');
+      setLoading(false);
+      return;
+    }
+
+    const payuForm = document.createElement('form');
+    payuForm.setAttribute('method', 'POST');
+    
+    const payuUrl = process.env.NEXT_PUBLIC_PAYU_URL || 'https://test.payu.in/_payment';
+    payuForm.setAttribute('action', payuUrl);
+
+    const params = {
+      key: payuData.key,
+      txnid: payuData.txnid,
+      amount: String(payuData.amount),
+      productinfo: payuData.productinfo,
+      firstname: payuData.firstname,
+      email: payuData.email,
+      phone: payuData.phone || '',
+      udf1: payuData.udf1,
+      udf2: payuData.udf2,
+      udf3: payuData.udf3 || '',
+      udf4: payuData.udf4 || '',
+      udf5: payuData.udf5 || '',
+      surl: payuData.surl,
+      furl: payuData.furl,
+      hash: payuData.hash
+    };
+
+    Object.keys(params).forEach(key => {
+      const input = document.createElement('input');
+      input.setAttribute('type', 'hidden');
+      input.setAttribute('name', key);
+      input.setAttribute('value', params[key]);
+      payuForm.appendChild(input);
+    });
+
+    document.body.appendChild(payuForm);
+    payuForm.submit();
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!amount || parseInt(amount, 10) < 50) {
+    if (!amount || parseInt(amount, 10) < 10) {
       showNotification(
         t("minAmountError", { defaultMessage: "Please enter a minimum donation amount of ₹50." }),
         "error"
@@ -87,43 +132,23 @@ const Donate = () => {
         }
       );
 
-      if (typeof window !== "undefined" && window.Razorpay) {
-        const options = {
-          key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-          amount: data.amount,
-          currency: data.currency,
-          name: t("razorpayTitle", { defaultMessage: "GreenEye Donation" }),
-          description: t("razorpayDesc", { defaultMessage: "Thank you for your support!" }),
-          order_id: data.orderId,
-          handler: async function (response) {
-            setSuccess(t("paymentProcessing"));
-            setAmount("");
-            setForm({ donorName: "", donorEmail: "", donorPhone: "" });
-            setActiveBtn(null);
-            router.push("/mydonation");
-          },
-          prefill: {
-            name: form.donorName,
-            email: form.donorEmail,
-            contact: form.donorPhone,
-          },
-          theme: { color: "#4CAF50" },
-        };
-
-        const razor = new window.Razorpay(options);
-        razor.open();
-      } else {
-        showNotification(
-          t("donationFail", { defaultMessage: "Donation failed. Please try again later." }),
-          "error"
-        );
+      if (!data.success || !data.payuData) {
+        showNotification('Failed to create donation', 'error');
+        setLoading(false);
+        return;
       }
+
+      // Initiate PayU payment
+      setTimeout(() => {
+        initiatePayUPayment(data.payuData, data.donationRefId);
+      }, 100);
+
     } catch (err) {
+      console.error('Donation error:', err);
       showNotification(
         t("donationFail", { defaultMessage: "Donation failed. Please try again later." }),
         "error"
       );
-    } finally {
       setLoading(false);
     }
   };
@@ -174,7 +199,7 @@ const Donate = () => {
                   id="customAmount"
                   name="amount"
                   placeholder={t("placeholderAmount")}
-                  min="50"
+                  min="10"
                   value={amount}
                   onChange={handleAmountChange}
                   required

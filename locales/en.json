@@ -36,7 +36,8 @@
     "corporatePartnerships": "Corporate Partnerships",
     "rightsReserved": "All rights reserved.",
     "shipping":"Shipping Policy",
-    "cancellation&refund":"Cancellation & Refund"
+    "cancellation&refund":"Cancellation & Refund",
+    "accountDeletion": "Account Deletion"
   },
   "notification": {
     "close": "Close",
@@ -328,7 +329,18 @@
     "dataProtectionText": "We follow standard data protection practices to ensure your information remains secure. However, no method of internet transmission is 100% secure.",
     "contactTitle": "Contact Information",
     "contactText": "If you have any questions about our privacy policy, you can contact us:",
-    "rightsReserved": "All rights reserved."
+    "rightsReserved": "All rights reserved.",
+    "accountDeletionTitle": "Account Deletion & Data Rights",
+    "accountDeletionText": "You have the right to request deletion of your account and all associated personal data at any time. We are committed to respecting your data privacy rights under applicable laws including GDPR and India's Digital Personal Data Protection Act.",
+    
+    "yourRightsTitle": "Your Rights Include:",
+    "rightToDelete": "Right to deletion of your personal data",
+    "rightToAccess": "Right to access your data",
+    "rightToCorrect": "Right to correct inaccurate data",
+    "rightToPortability": "Right to data portability",
+    "rightToWithdraw": "Right to withdraw consent",
+    "deletionProcess": "To request account deletion, please visit our dedicated account deletion page where you can submit your request. Our team will review and process your request within 7-10 business days.",
+    "requestDeletionButton": "Account Deletion Page"
   },
   "termsOfService": {
     "title": "Terms of Service",
@@ -627,5 +639,46 @@
     "seoDescription": "Send a meaningful gift by planting trees in someone's name. Perfect for birthdays, anniversaries, and special occasions.",
     "pageTitle": "Complete Your Tree Gift",
     "pageSubtitle": "Fill in the details below to send a beautiful tree gift"
+  },
+  "accountDeletion": {
+    "title": "Account Deletion Policy",
+    "subtitle": "Request permanent deletion of your GreenEye account",
+    
+    "overviewTitle": "Overview",
+    "overviewText": "At GreenEye Foundation, we respect your right to privacy and data control. If you wish to permanently delete your account and all associated data, you can submit a deletion request through this page.",
+    
+    "importantTitle": "Important Information",
+    "permanent": "Account deletion is permanent and cannot be undone",
+    "dataLoss": "All your personal information will be permanently deleted",
+    "ordersHistory": "Your order history, donation records, and gift tree orders will be removed",
+    "noRecovery": "Once deleted, you will not be able to recover your account or data",
+    
+    "dataDeletedTitle": "What Data Will Be Deleted",
+    "personalInfo": "Personal information (name, email, phone, address)",
+    "orderHistory": "All order history and details",
+    "donationRecords": "Donation records and receipts",
+    "volunteerInfo": "Volunteer registration information",
+    "giftOrders": "Gift tree orders and certificates",
+    "savedAddresses": "Saved addresses and preferences",
+    
+    "processTitle": "Deletion Process",
+    "step1": "Submit your deletion request by clicking the button below",
+    "step2": "Our admin team will review your request within 7-10 business days",
+    "step3": "You will receive an email confirmation once the review is complete",
+    "step4": "Upon approval, your account and all data will be permanently deleted",
+    
+    "legalTitle": "Legal Compliance",
+    "legalText": "We handle your deletion request in accordance with applicable data protection laws, including GDPR and India's Digital Personal Data Protection Act. Some information may be retained for legal or regulatory purposes as required by law.",
+    
+    "supportTitle": "Need Help?",
+    "supportText": "If you have any questions about account deletion or need assistance, please contact our support team at",
+    
+    "loggedInAs": "Logged in as",
+    "requestButton": "Request Account Deletion",
+    "loginRequired": "You must be logged in to request account deletion",
+    "loginButton": "Login to Continue",
+    "processing": "Processing...",
+    "confirmMessage": "Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently deleted.",
+    "contactUs": "Contact Support"
   }
 }

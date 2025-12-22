@@ -48,6 +48,13 @@ const AdminLayout = ({ children }) => {
           >
             <i className="fas fa-users"></i> Customers
           </Link>
+
+          <Link
+            href="/admin/customerdeletion"
+            className={pathname.startsWith("/admin/customerdeletion") ? "active" : ""}
+          >
+            <i className="fas fa-users"></i> Deletion Requests
+          </Link>
           
           <Link
             href="/admin/products"
