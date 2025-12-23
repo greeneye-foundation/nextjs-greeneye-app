@@ -7,6 +7,7 @@ import { showNotification } from "@/components/Notification";
 import { useTranslations } from "next-intl";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import Modal from "@/components/Modal";
+import GoogleLoginButton from "./GoogleLoginButton";
 
 const Register = ({ onSwitch }) => {
   const t = useTranslations("register");
@@ -351,6 +352,14 @@ const Register = ({ onSwitch }) => {
           )}
         </button>
         </form>
+
+        {/* Divider */}
+        <div className="auth-divider" style={{ marginTop: '20px' }}>
+          <span>{t("or")}</span>
+        </div>
+
+        {/* Google Login */}
+        <GoogleLoginButton />
       </div>
 
       <div className="auth-switch">

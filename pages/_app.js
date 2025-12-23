@@ -19,6 +19,7 @@ import '@/styles/checkout.css';
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { IntlProvider } from 'next-intl';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import Layout from '@/components/Layout';
 import Notification from '@/components/Notification';
 import BackToTop from '@/components/BackToTop';
@@ -148,31 +149,34 @@ export default function App({ Component, pageProps }) {
         </>
       )}
 
-      {/* ✅ Internationalization + Layout */}
-      <IntlProvider
-        messages={messages}
-        locale={locale}
-        defaultLocale="en"
-        getMessageFallback={({ key /*, namespace*/ }) => key}
-        onError={(err) => {
-          if (
-            err.code === 'MISSING_MESSAGE' ||
-            err.code === 'ENVIRONMENT_FALLBACK'
-          ) {
-            if (process.env.NODE_ENV === 'development') return;
-          }
-        }}
-      >
-        {isAdminRoute ? (
-          <Component {...pageProps} />
-        ) : (
-          <Layout>
-            <Notification />
+      {/* ✅ Google OAuth Provider */}
+      <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}>
+        {/* ✅ Internationalization + Layout */}
+        <IntlProvider
+          messages={messages}
+          locale={locale}
+          defaultLocale="en"
+          getMessageFallback={({ key /*, namespace*/ }) => key}
+          onError={(err) => {
+            if (
+              err.code === 'MISSING_MESSAGE' ||
+              err.code === 'ENVIRONMENT_FALLBACK'
+            ) {
+              if (process.env.NODE_ENV === 'development') return;
+            }
+          }}
+        >
+          {isAdminRoute ? (
             <Component {...pageProps} />
-            <BackToTop />
-          </Layout>
-        )}
-      </IntlProvider>
+          ) : (
+            <Layout>
+              <Notification />
+              <Component {...pageProps} />
+              <BackToTop />
+            </Layout>
+          )}
+        </IntlProvider>
+      </GoogleOAuthProvider>
     </>
   );
 }

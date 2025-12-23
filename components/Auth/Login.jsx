@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { showNotification } from "@/components/Notification";
 import { useTranslations } from "next-intl";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import GoogleLoginButton from "./GoogleLoginButton";
 
 const Login = ({ onSwitch, onLogin }) => {
   const t = useTranslations("login");
@@ -299,6 +300,14 @@ const Login = ({ onSwitch, onLogin }) => {
           )}
         </form>
       )}
+
+      {/* Divider */}
+      <div className="auth-divider">
+        <span>{t("or") || "OR"}</span>
+      </div>
+
+      {/* Google Login */}
+      <GoogleLoginButton onSuccess={onLogin} />
 
       {/* Switch to Register */}
       <div className="auth-switch">

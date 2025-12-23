@@ -40,6 +40,15 @@ const Profile = () => {
   const [saving, setSaving] = useState(false);
   const router = useRouter();
 
+  // Check if phone is editable
+  const isPhoneEditable = () => {
+    if (!user) return false;
+    // Phone is editable if:
+    // 1. User is a local user (not Google), OR
+    // 2. User is a Google user AND phone is empty
+    return user.authProvider === 'local' || (user.authProvider === 'google' && !user.phone);
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     if (!token) {
@@ -123,7 +132,19 @@ const Profile = () => {
       }
 
       setUser(updatedUser);
+      setEditData({
+        name: updatedUser.name,
+        email: updatedUser.email,
+        phone: updatedUser.phone || "",
+        address: {
+          street: updatedUser.address?.street || "",
+          city: updatedUser.address?.city || "",
+          state: updatedUser.address?.state || "",
+          pincode: updatedUser.address?.pincode || "",
+        },
+      });
       setEditMode(false);
+      alert(t("updateSuccess") || "Profile updated successfully!");
     } catch (e) {
       alert(e.response?.data?.message || t("updateError"));
     }
@@ -143,6 +164,8 @@ const Profile = () => {
     );
   }
 
+  const phoneEditable = isPhoneEditable();
+
   return (
     <section className="profile-page">
       <div className="container" style={{ maxWidth: 600, marginTop: 2 }}>
@@ -155,75 +178,202 @@ const Profile = () => {
           <div style={{ margin: "2rem 0" }}>
             <div className="form-group">
               <label>{t("name")}</label>
-              <input type="text" name="name" value={editMode ? editData.name : user.name} disabled={!editMode} onChange={handleChange} />
+              <input 
+                type="text" 
+                name="name" 
+                value={editMode ? editData.name : user.name} 
+                disabled={!editMode} 
+                onChange={handleChange} 
+              />
             </div>
             <div className="form-group">
               <label>{t("email")}</label>
-              <input type="email" name="email" value={editMode ? editData.email : user.email} disabled={!editMode} onChange={handleChange} />
+              <input 
+                type="email" 
+                name="email" 
+                value={editMode ? editData.email : user.email} 
+                disabled={!editMode} 
+                onChange={handleChange} 
+              />
             </div>
             <div className="form-group">
-              <label>{t("phone")}</label>
-              <input type="text" name="phone" value={user.phone || ""} disabled style={{ background: "#f7f7f7" }} />
+              <label>
+                {t("phone")}
+                {user.authProvider === 'google' && !user.phone && editMode && (
+                  <span style={{ fontSize: '0.85em', color: '#1976d2', marginLeft: '8px' }}>
+                    (Add phone - can only be set once)
+                  </span>
+                )}
+                {user.authProvider === 'google' && user.phone && (
+                  <span style={{ fontSize: '0.85em', color: '#666', marginLeft: '8px' }}>
+                    (Phone cannot be changed)
+                  </span>
+                )}
+              </label>
+              <input 
+                type="text" 
+                name="phone" 
+                value={editMode ? editData.phone : user.phone || ""} 
+                disabled={!editMode || !phoneEditable}
+                onChange={handleChange}
+                placeholder={phoneEditable && editMode ? "+91XXXXXXXXXX" : ""}
+                style={{ 
+                  background: (!editMode || !phoneEditable) ? "#f7f7f7" : "#fff",
+                  cursor: (!editMode || !phoneEditable) ? "not-allowed" : "text"
+                }} 
+              />
             </div>
             <div className="form-group">
               <label>{t("street")}</label>
-              <input type="text" name="street" value={editMode ? editData.address?.street : user.address?.street || ""} disabled={!editMode} onChange={handleAddressChange} />
+              <input 
+                type="text" 
+                name="street" 
+                value={editMode ? editData.address?.street : user.address?.street || ""} 
+                disabled={!editMode} 
+                onChange={handleAddressChange} 
+              />
             </div>
             <div className="form-group">
               <label>{t("city")}</label>
-              <input type="text" name="city" value={editMode ? editData.address?.city : user.address?.city || ""} disabled={!editMode} onChange={handleAddressChange} />
+              <input 
+                type="text" 
+                name="city" 
+                value={editMode ? editData.address?.city : user.address?.city || ""} 
+                disabled={!editMode} 
+                onChange={handleAddressChange} 
+              />
             </div>
             <div className="form-group">
               <label>{t("state")}</label>
-              <input type="text" name="state" value={editMode ? editData.address?.state : user.address?.state || ""} disabled={!editMode} onChange={handleAddressChange} />
+              <input 
+                type="text" 
+                name="state" 
+                value={editMode ? editData.address?.state : user.address?.state || ""} 
+                disabled={!editMode} 
+                onChange={handleAddressChange} 
+              />
             </div>
             <div className="form-group">
               <label>{t("pincode")}</label>
-              <input type="text" name="pincode" value={editMode ? editData.address?.pincode : user.address?.pincode || ""} disabled={!editMode} onChange={handleAddressChange} />
+              <input 
+                type="text" 
+                name="pincode" 
+                value={editMode ? editData.address?.pincode : user.address?.pincode || ""} 
+                disabled={!editMode} 
+                onChange={handleAddressChange} 
+              />
             </div>
             {user.is_volunteer && (
               <div style={{ marginTop: 24, background: "#f8f9fc", border: "1px solid #e0e7ef", borderRadius: 8, padding: "18px 18px 8px 18px" }}>
                 <div style={{ fontWeight: 600, color: "#1976d2", marginBottom: 10 }}>{t("volunteerDetails")}</div>
                 <div className="form-group">
                   <label>{t("city")}</label>
-                  <select name="city" value={editMode ? volEditData.city : user.volunteer?.city || ""} disabled={!editMode} onChange={handleVolChange}>
+                  <select 
+                    name="city" 
+                    value={editMode ? volEditData.city : user.volunteer?.city || ""} 
+                    disabled={!editMode} 
+                    onChange={handleVolChange}
+                  >
                     <option value="">{t("selectCity")}</option>
                     {cities.map(c => <option key={c} value={c}>{c}</option>)}
                   </select>
                 </div>
                 <div className="form-group">
                   <label>{t("availability")}</label>
-                  <select name="availability" value={editMode ? volEditData.availability : user.volunteer?.availability || ""} disabled={!editMode} onChange={handleVolChange}>
+                  <select 
+                    name="availability" 
+                    value={editMode ? volEditData.availability : user.volunteer?.availability || ""} 
+                    disabled={!editMode} 
+                    onChange={handleVolChange}
+                  >
                     <option value="">{t("select")}</option>
                     {availabilities.map(a => <option key={a.value} value={a.value}>{a.label}</option>)}
                   </select>
                 </div>
                 <div className="form-group">
                   <label>{t("sector")}</label>
-                  <select name="sector" value={editMode ? volEditData.sector : user.volunteer?.sector || ""} disabled={!editMode} onChange={handleVolChange}>
+                  <select 
+                    name="sector" 
+                    value={editMode ? volEditData.sector : user.volunteer?.sector || ""} 
+                    disabled={!editMode} 
+                    onChange={handleVolChange}
+                  >
                     <option value="">{t("select")}</option>
                     {sectors.map(s => <option key={s} value={s}>{s}</option>)}
                   </select>
                 </div>
                 <div className="form-group">
                   <label>{t("profession")}</label>
-                  <select name="profession" value={editMode ? volEditData.profession : user.volunteer?.profession || ""} disabled={!editMode} onChange={handleVolChange}>
+                  <select 
+                    name="profession" 
+                    value={editMode ? volEditData.profession : user.volunteer?.profession || ""} 
+                    disabled={!editMode} 
+                    onChange={handleVolChange}
+                  >
                     <option value="">{t("select")}</option>
                     {professions.map(p => <option key={p} value={p}>{p}</option>)}
                   </select>
                 </div>
                 <div className="form-group">
                   <label>{t("motivation")}</label>
-                  <textarea name="why_do_you_want_to_join_us" rows={3} value={editMode ? volEditData.why_do_you_want_to_join_us : user.volunteer?.why_do_you_want_to_join_us || ""} disabled={!editMode} onChange={handleVolChange} />
+                  <textarea 
+                    name="why_do_you_want_to_join_us" 
+                    rows={3} 
+                    value={editMode ? volEditData.why_do_you_want_to_join_us : user.volunteer?.why_do_you_want_to_join_us || ""} 
+                    disabled={!editMode} 
+                    onChange={handleVolChange} 
+                  />
                 </div>
               </div>
             )}
             {!editMode ? (
-              <button style={{ marginTop: 18, background: "#388e3c", color: "#fff", border: 0, borderRadius: 5, padding: "10px 24px", fontWeight: 600, cursor: "pointer" }} onClick={() => setEditMode(true)}>{t("editInfo")}</button>
+              <button 
+                style={{ 
+                  marginTop: 18, 
+                  background: "#388e3c", 
+                  color: "#fff", 
+                  border: 0, 
+                  borderRadius: 5, 
+                  padding: "10px 24px", 
+                  fontWeight: 600, 
+                  cursor: "pointer" 
+                }} 
+                onClick={() => setEditMode(true)}
+              >
+                {t("editInfo")}
+              </button>
             ) : (
               <div style={{ marginTop: 18 }}>
-                <button style={{ background: "#388e3c", color: "#fff", border: 0, borderRadius: 5, padding: "10px 24px", fontWeight: 600, cursor: "pointer", marginRight: 10 }} onClick={handleSave} disabled={saving}>{saving ? t("saving") : t("save")}</button>
-                <button style={{ background: "#bbb", color: "#fff", border: 0, borderRadius: 5, padding: "10px 18px", fontWeight: 500, cursor: "pointer" }} onClick={() => setEditMode(false)}>{t("cancel")}</button>
+                <button 
+                  style={{ 
+                    background: "#388e3c", 
+                    color: "#fff", 
+                    border: 0, 
+                    borderRadius: 5, 
+                    padding: "10px 24px", 
+                    fontWeight: 600, 
+                    cursor: "pointer", 
+                    marginRight: 10 
+                  }} 
+                  onClick={handleSave} 
+                  disabled={saving}
+                >
+                  {saving ? t("saving") : t("save")}
+                </button>
+                <button 
+                  style={{ 
+                    background: "#bbb", 
+                    color: "#fff", 
+                    border: 0, 
+                    borderRadius: 5, 
+                    padding: "10px 18px", 
+                    fontWeight: 500, 
+                    cursor: "pointer" 
+                  }} 
+                  onClick={() => setEditMode(false)}
+                >
+                  {t("cancel")}
+                </button>
               </div>
             )}
           </div>
