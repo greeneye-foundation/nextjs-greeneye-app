@@ -29,52 +29,52 @@ body {
     line-height: 1.7;
     color: var(--charcoal-bark);
     overflow-x: hidden;
-    font-size: 16px;
+    font-size: 18px; /* Increased from 16px for better readability */
 }
 
 /* Headings Typography */
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
+    font-weight: 700; /* Increased from 600 */
     line-height: 1.3;
     margin-bottom: 1rem;
 }
 
 h1 {
     font-size: 2.5rem;
-    font-weight: 700;
+    font-weight: 800; /* Increased from 700 */
     line-height: 1.2;
 }
 
 h2 {
     font-size: 2rem;
-    font-weight: 700;
+    font-weight: 800; /* Increased from 700 */
     line-height: 1.25;
 }
 
 h3 {
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: 700; /* Increased from 600 */
 }
 
 h4 {
     font-size: 1.25rem;
-    font-weight: 600;
+    font-weight: 700; /* Increased from 600 */
 }
 
 h5 {
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 700; /* Increased from 600 */
 }
 
 h6 {
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 700; /* Increased from 600 */
 }
 
 p {
     font-size: 1rem;
-    line-height: 1.7;
+    line-height: 1.8; /* Increased from 1.7 for better readability */
     margin-bottom: 1rem;
 }
 
@@ -106,6 +106,12 @@ main {
     --sky-breath: #5A9DA7;         /* Refined teal */
     --sunrise-amber: #D4A574;      /* Warm earth tone */
 
+    /* NEW: Vibrant Accent Colors for Actionability */
+    --warm-orange: #FF8C42;        /* Energetic orange for primary CTAs */
+    --sunny-yellow: #FFD93D;       /* Bright yellow for highlights */
+    --cream-beige: #F5F1E8;        /* Warm cream for sections */
+    --coral-accent: #FF6B35;       /* Deep coral for emphasis */
+
     /* Neutrals */
     --stone-mist: #F4F6F5;         /* Soft neutral */
     --charcoal-bark: #3A4442;      /* Warm charcoal */
@@ -119,6 +125,8 @@ main {
     --accent-amber: #D4A574;       /* Sunrise Amber */
     --background-light: #F4F6F5;   /* Stone Mist */
     --text-dark: #3A4442;          /* Charcoal Bark */
+    --yellow-sun: #FFD93D;         /* Bright sunny yellow */
+    --orange-action: #FF8C42;      /* Action button orange */
 
     /* Legacy Support (mapped to new palette) */
     --forest-deep: #2A7A4E;
@@ -437,9 +445,10 @@ main {
     right: 0;
     bottom: 0;
     background:
-        radial-gradient(circle at 20% 50%, rgba(159, 211, 86, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+        radial-gradient(circle at 20% 50%, rgba(159, 211, 86, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 217, 61, 0.06) 0%, transparent 50%);
     pointer-events: none;
+    opacity: 0.7; /* Further reduced overall opacity */
 }
 
 .hero-background {
@@ -480,13 +489,14 @@ main {
 }
 
 .hero-title-main {
-    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-size: clamp(3.5rem, 8vw, 7rem); /* Increased from 2.5rem-5rem to 3.5rem-7rem */
     display: block;
     font-weight: 800;
     margin-bottom: 0.5rem;
     color: var(--white);
     letter-spacing: -0.02em;
-    line-height: 1.1;
+    line-height: 1.05; /* Tightened for larger text */
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3); /* Added depth */
 }
 
 .hero-title-sub {
@@ -494,24 +504,26 @@ main {
     font-weight: 700;
     color: var(--yellow-sun);
     margin-bottom: 1.5rem;
-    font-size: clamp(1.75rem, 4.5vw, 3.5rem);
+    font-size: clamp(2.5rem, 6vw, 5rem); /* Increased from 1.75rem-3.5rem to 2.5rem-5rem */
     letter-spacing: -0.01em;
-    line-height: 1.2;
-    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    line-height: 1.15;
+    background: linear-gradient(135deg, #FFD93D 0%, #FFF176 100%); /* Brighter yellow gradient */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    text-shadow: 0 2px 15px rgba(255, 217, 61, 0.4); /* Glow effect */
 }
 
 .hero-description {
-    font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+    font-size: clamp(1.15rem, 2.5vw, 1.45rem); /* Slightly larger for better readability */
     margin-bottom: 2.5rem;
-    color: rgba(255, 255, 255, 0.95);
-    line-height: 1.7;
-    max-width: 700px;
+    color: rgba(255, 255, 255, 1); /* Increased from 0.95 to 1 for stronger contrast */
+    line-height: 1.8; /* Increased from 1.7 */
+    max-width: 750px; /* Increased from 700px */
     margin-left: auto;
     margin-right: auto;
     font-weight: 400;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.2); /* Added subtle shadow for readability */
 }
 
 .hero-buttons {
@@ -535,27 +547,34 @@ main {
 }
 
 .hero-buttons .btn-primary {
-    background: linear-gradient(135deg, var(--lime-spark) 0%, #7fb83e 100%);
-    color: var(--charcoal-bark);
-    box-shadow: 0 4px 20px rgba(159, 211, 86, 0.4);
+    background: linear-gradient(135deg, var(--warm-orange) 0%, var(--coral-accent) 100%);
+    color: var(--white);
+    box-shadow: 0 6px 25px rgba(255, 140, 66, 0.5);
+    font-weight: 700; /* Bolder text */
+    font-size: 1.1rem; /* Slightly larger */
+    padding: 1.15rem 2.5rem; /* More padding */
 }
 
 .hero-buttons .btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 30px rgba(159, 211, 86, 0.5);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 35px rgba(255, 107, 53, 0.6);
+    background: linear-gradient(135deg, #FFA055 0%, #FF7D42 100%); /* Brighter on hover */
 }
 
 .hero-buttons .btn-secondary {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.2); /* Slightly more opaque */
     color: var(--white);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.5); /* Stronger border */
     backdrop-filter: blur(10px);
+    font-weight: 600;
+    font-size: 1.05rem;
 }
 
 .hero-buttons .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.25);
-    border-color: rgba(255, 255, 255, 0.5);
-    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.8);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
 }
 
 .hero-stats {
@@ -564,51 +583,73 @@ main {
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
-    max-width: 700px;
+    max-width: 750px;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    gap: 2rem;
-    background: rgba(26, 77, 46, 0.95);
+    gap: 2.5rem;
+    background: rgba(26, 77, 46, 0.97);
     backdrop-filter: blur(20px);
-    padding: 2rem 2.5rem;
-    border-radius: 20px;
-    border: 1px solid rgba(159, 211, 86, 0.3);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    padding: 2.5rem 3rem;
+    border-radius: 24px;
+    border: 2px solid rgba(255, 217, 61, 0.2);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 217, 61, 0.1);
     z-index: 2;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-stats:hover {
+    transform: translateX(-50%) translateY(-5px);
+    box-shadow: 0 16px 56px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(255, 217, 61, 0.2);
 }
 
 .stat-item {
     text-align: center;
-    min-width: 100px;
+    min-width: 110px;
     position: relative;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.stat-item:hover {
+    transform: scale(1.1);
 }
 
 .stat-item::after {
     content: '';
     position: absolute;
-    bottom: -0.5rem;
+    bottom: -0.75rem;
     left: 50%;
     transform: translateX(-50%);
-    width: 40px;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, var(--yellow-sun), transparent);
+    width: 50px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--warm-orange), var(--sunny-yellow), transparent);
     border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.stat-item:hover::after {
+    width: 70px;
 }
 
 .stat-number {
     display: block;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800;
+    font-size: clamp(2.5rem, 5vw, 3.8rem); /* Increased from 2rem-3rem to 2.5rem-3.8rem */
+    font-weight: 900; /* Increased from 800 */
     color: var(--white);
     margin-bottom: 0.5rem;
+    text-shadow: 0 2px 12px rgba(255, 217, 61, 0.3);
+    background: linear-gradient(135deg, #ffffff 0%, var(--sunny-yellow) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .stat-label {
-    font-size: clamp(0.95rem, 1.8vw, 1.15rem);
-    color: rgba(255, 255, 255, 0.95);
-    font-weight: 600;
-    letter-spacing: 0.5px;
+    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+    color: rgba(255, 255, 255, 1); /* Increased from 0.95 */
+    font-weight: 700; /* Increased from 600 */
+    letter-spacing: 0.8px;
     text-transform: uppercase;
 }
 
@@ -678,16 +719,16 @@ main {
 }
 
 .btn-primary {
-    background: var(--lime-spark);
+    background: linear-gradient(135deg, var(--warm-orange) 0%, var(--coral-accent) 100%);
     color: var(--white);
-    font-weight: 600;
-    box-shadow: 0 2px 8px rgba(127, 173, 75, 0.15);
+    font-weight: 700; /* Increased from 600 */
+    box-shadow: 0 4px 16px rgba(255, 140, 66, 0.35);
 }
 
 .btn-primary:hover {
-    background: var(--evergreen);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(42, 122, 78, 0.25);
+    background: linear-gradient(135deg, #FFA055 0%, #FF7D42 100%);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 24px rgba(255, 107, 53, 0.5);
 }
 
 .btn-primary:hover i,
@@ -732,27 +773,41 @@ main {
 
 /* Section Styles */
 section {
-    padding: 5rem 0;
+    padding: 6rem 0; /* Increased from 5rem for more breathing room */
 }
 
 .section-header {
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 5rem; /* Increased from 4rem */
 }
 
 .section-title {
-    font-size: 2.5rem;
-    font-weight: 700;
+    font-size: 3rem; /* Increased from 2.5rem */
+    font-weight: 800; /* Increased from 700 */
     color: var(--primary-green);
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem; /* Increased from 1rem */
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -0.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 5px;
+    background: linear-gradient(90deg, var(--warm-orange) 0%, var(--sunny-yellow) 100%);
+    border-radius: 3px;
 }
 
 .section-subtitle {
-    font-size: 1.1rem;
+    font-size: 1.2rem; /* Increased from 1.1rem */
     color: var(--gray);
-    max-width: 600px;
+    max-width: 650px; /* Increased from 600px */
     margin: 0 auto;
-    line-height: 1.6;
+    line-height: 1.8; /* Increased from 1.6 */
 }
 
 /* About Section */
@@ -796,14 +851,20 @@ section {
 }
 
 .feature:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px var(--shadow-dark);
+    transform: translateY(-8px) scale(1.02); /* Enhanced from -5px */
+    box-shadow: 0 20px 40px var(--shadow-dark);
+    border: 2px solid var(--warm-orange);
 }
 
 .feature i {
-    font-size: 2.5rem;
-    color: var(--primary-green);
+    font-size: 3rem; /* Increased from 2.5rem */
+    color: var(--warm-orange); /* Changed from primary-green to warm-orange */
     margin-bottom: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.feature:hover i {
+    transform: scale(1.15) rotate(5deg);
 }
 
 .feature h4 {
@@ -836,8 +897,8 @@ section {
 }
 
 .program-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px var(--shadow-dark);
+    transform: translateY(-12px) scale(1.01); /* Enhanced hover effect */
+    box-shadow: 0 24px 48px var(--shadow-dark), 0 0 0 3px var(--warm-orange);
 }
 
 .program-image {
@@ -911,23 +972,32 @@ section {
 }
 
 .impact-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px var(--shadow-dark);
+    transform: translateY(-12px) scale(1.02); /* Enhanced hover */
+    box-shadow: 0 24px 48px var(--shadow-dark);
+    border: 2px solid var(--sunny-yellow);
 }
 
 .impact-icon {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem; /* Increased spacing */
+    transition: transform 0.3s ease;
+}
+
+.impact-card:hover .impact-icon {
+    transform: scale(1.15);
 }
 
 .impact-icon i {
-    font-size: 3rem;
-    color: var(--primary-green);
+    font-size: 3.5rem; /* Increased from 3rem */
+    color: var(--warm-orange); /* Changed to warm orange */
 }
 
 .impact-number {
-    font-size: 3rem;
-    font-weight: 700;
-    color: var(--primary-green);
+    font-size: 3.5rem; /* Increased from 3rem */
+    font-weight: 900; /* Increased from 700 */
+    background: linear-gradient(135deg, var(--warm-orange) 0%, var(--coral-accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin-bottom: 0.5rem;
 }
 

@@ -18,14 +18,24 @@ const Hero = () => {
         <p className="hero-description">
           {t("description")}
         </p>
+        <p className="hero-urgency" style={{
+          fontSize: '0.95rem',
+          color: 'rgba(255, 217, 61, 1)',
+          fontWeight: '600',
+          marginBottom: '1.5rem',
+          marginTop: '-1rem',
+          textShadow: '0 1px 6px rgba(0, 0, 0, 0.3)'
+        }}>
+          {t("urgency")}
+        </p>
         <div className="hero-buttons">
           <button className="btn btn-primary" onClick={() => router.push("/volunteer")}>
-            <i className="fas fa-hands-helping"></i>
-            <span>{t("joinMission")}</span>
+            <i className="fas fa-seedling"></i>
+            <span>{t("plantFirstTree")}</span>
           </button>
           <button className="btn btn-secondary" onClick={() => router.push("/donate")}>
             <i className="fas fa-heart"></i>
-            <span>{t("contribute")}</span>
+            <span>{t("makeImpact")}</span>
           </button>
         </div>
       </div>
