@@ -93,7 +93,7 @@ const HeroCarousel = () => {
 
       <div className="hero-stats">
         <div className="stat-item">
-          <span className="stat-number" data-target="50000">2000+</span>
+          <span className="stat-number" data-target="50000">50000+</span>
           <span className="stat-label">{tHero("statTrees")}</span>
         </div>
         <div className="stat-item">
