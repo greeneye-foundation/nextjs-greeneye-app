@@ -134,6 +134,14 @@ const Login = ({ onSwitch, onLogin }) => {
         </p>
       </div>
 
+      {/* Google Login */}
+      <GoogleLoginButton onSuccess={onLogin} />
+
+      {/* Divider */}
+      <div className="auth-divider">
+        <span>{t("or") || "OR"}</span>
+      </div>
+
       {/* Tab Switcher */}
       <div className="login-tabs">
         <button
@@ -300,14 +308,6 @@ const Login = ({ onSwitch, onLogin }) => {
           )}
         </form>
       )}
-
-      {/* Divider */}
-      <div className="auth-divider">
-        <span>{t("or") || "OR"}</span>
-      </div>
-
-      {/* Google Login */}
-      <GoogleLoginButton onSuccess={onLogin} />
 
       {/* Switch to Register */}
       <div className="auth-switch">
