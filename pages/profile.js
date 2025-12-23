@@ -42,11 +42,8 @@ const Profile = () => {
 
   // Check if phone is editable
   const isPhoneEditable = () => {
-    if (!user) return false;
-    // Phone is editable if:
-    // 1. User is a local user (not Google), OR
-    // 2. User is a Google user AND phone is empty
-    return user.authProvider === 'local' || (user.authProvider === 'google' && !user.phone);
+    // Phone is always editable for all users (both normal and Google users)
+    return true;
   };
 
   useEffect(() => {
@@ -199,28 +196,23 @@ const Profile = () => {
             <div className="form-group">
               <label>
                 {t("phone")}
-                {user.authProvider === 'google' && !user.phone && editMode && (
+                {editMode && (
                   <span style={{ fontSize: '0.85em', color: '#1976d2', marginLeft: '8px' }}>
-                    (Add phone - can only be set once)
-                  </span>
-                )}
-                {user.authProvider === 'google' && user.phone && (
-                  <span style={{ fontSize: '0.85em', color: '#666', marginLeft: '8px' }}>
-                    (Phone cannot be changed)
+                    (Optional - Can be updated anytime)
                   </span>
                 )}
               </label>
-              <input 
-                type="text" 
-                name="phone" 
-                value={editMode ? editData.phone : user.phone || ""} 
-                disabled={!editMode || !phoneEditable}
+              <input
+                type="text"
+                name="phone"
+                value={editMode ? editData.phone : user.phone || ""}
+                disabled={!editMode}
                 onChange={handleChange}
-                placeholder={phoneEditable && editMode ? "+91XXXXXXXXXX" : ""}
-                style={{ 
-                  background: (!editMode || !phoneEditable) ? "#f7f7f7" : "#fff",
-                  cursor: (!editMode || !phoneEditable) ? "not-allowed" : "text"
-                }} 
+                placeholder={editMode ? "+91XXXXXXXXXX" : ""}
+                style={{
+                  background: !editMode ? "#f7f7f7" : "#fff",
+                  cursor: !editMode ? "not-allowed" : "text"
+                }}
               />
             </div>
             <div className="form-group">

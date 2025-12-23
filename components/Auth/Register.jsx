@@ -15,7 +15,6 @@ const Register = ({ onSwitch }) => {
     firstName: "",
     lastName: "",
     email: "",
-    phone: "",
     password: "",
     confirmPassword: "",
     agreeTerms: false,
@@ -25,8 +24,6 @@ const Register = ({ onSwitch }) => {
   const [showPwd, setShowPwd] = useState(false);
   const [showConfirmPwd, setShowConfirmPwd] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [otpSent, setOtpSent] = useState(false);
-  const [otp, setOtp] = useState("");
   const [termsModalOpen, setTermsModalOpen] = useState(false);
   const [privacyModalOpen, setPrivacyModalOpen] = useState(false);
   const router = useRouter();
@@ -34,8 +31,6 @@ const Register = ({ onSwitch }) => {
 
   const isEmailValid = (email) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const isPhoneValid = (phone) =>
-    /^[+]?[1-9][\d]{9,15}$/.test(phone.replace(/\s/g, ""));
   const isPasswordStrong = (pwd) =>
     pwd.length >= 8 && /[A-Z]/.test(pwd) && /[a-z]/.test(pwd) && /\d/.test(pwd);
   const isPasswordMatch = form.password === form.confirmPassword;
@@ -60,61 +55,23 @@ const Register = ({ onSwitch }) => {
     if (!isPasswordStrong(form.password)) return showNotification(t("pwdWeak"), "error");
     if (!form.agreeTerms) return showNotification(t("agreeTermsMsg"), "error");
     if (!isEmailValid(form.email)) return showNotification(t("invalidEmail"), "error");
-    if (!isPhoneValid(form.phone)) return showNotification(t("invalidPhone"), "error");
     if (!executeRecaptcha) {
       showNotification("Recaptcha not ready, please try again.", "error");
       return;
     }
     setLoading(true);
     try {
-      const phone = form.phone.startsWith("+") ? form.phone : `+91${form.phone}`;
       // 🔹 recaptcha token generate
       const recaptchaToken = await executeRecaptcha("register_action");
-      await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/otp/send`, {
-        phone,
-        email: form.email,
-        recaptchaToken
-      });
 
-      showNotification("OTP sent to your SMS", "success");
-      setOtpSent(true);
-    } catch (err) {
-      const msg = err.response?.data?.message;
-      const field = err.response?.data?.field;
-
-      if (field === "email") {
-        showNotification("This email is already registered. Please login instead.", "error");
-        router.push("/login");
-        return;
-      }
-
-      if (field === "phone") {
-        showNotification("This phone number is already registered. Please login instead.", "error");
-        router.push("/login");
-        return;
-      }
-
-      showNotification(msg || "Failed to send OTP", "error");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleOTPVerification = async (e) => {
-    e.preventDefault();
-    if (!otp) return showNotification("Please enter OTP", "error");
-
-    setLoading(true);
-    try {
       const payload = {
         name: `${form.firstName} ${form.lastName}`.trim(),
         email: form.email,
         password: form.password,
-        phone: form.phone,
-        otp: otp,
+        recaptchaToken
       };
 
-      const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/otp/verify`, payload);
+      const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/register`, payload);
 
       if (data.token) {
         localStorage.setItem("authToken", data.token);
@@ -126,7 +83,6 @@ const Register = ({ onSwitch }) => {
         firstName: "",
         lastName: "",
         email: "",
-        phone: "",
         password: "",
         confirmPassword: "",
         agreeTerms: false,
@@ -134,9 +90,17 @@ const Register = ({ onSwitch }) => {
       });
 
       if (onSwitch) setTimeout(() => onSwitch(), 1000);
-    } catch (error) {
-      const errorMsg = error.response?.data?.message || error.response?.data?.error || t("registerFail");
-      showNotification(errorMsg, "error");
+    } catch (err) {
+      const msg = err.response?.data?.message;
+      const field = err.response?.data?.field;
+
+      if (field === "email") {
+        showNotification("This email is already registered. Please login instead.", "error");
+        router.push("/login");
+        return;
+      }
+
+      showNotification(msg || t("registerFail"), "error");
     } finally {
       setLoading(false);
     }
@@ -184,7 +148,7 @@ const Register = ({ onSwitch }) => {
 
       {/* Email/Phone Registration Form */}
       <div className="email-form-section">
-        <form className="auth-form" onSubmit={otpSent ? handleOTPVerification : handleSubmit}>
+        <form className="auth-form" onSubmit={handleSubmit}>
         <h3>{t("registerWithEmail")}</h3>
 
         {/* Name */}
@@ -227,20 +191,6 @@ const Register = ({ onSwitch }) => {
           <i className="fas fa-envelope"></i>
         </div>
 
-        {/* Phone */}
-        <div className="form-group">
-          <input
-            type="tel"
-            name="phone"
-            placeholder={t("phone")}
-            value={form.phone}
-            onChange={handleChange}
-            required
-            className={form.phone && !isPhoneValid(form.phone) ? "invalid" : ""}
-          />
-          <i className="fas fa-phone"></i>
-        </div>
-
         {/* Password */}
         <div className="form-group">
           <input
@@ -274,21 +224,6 @@ const Register = ({ onSwitch }) => {
             <i className={`fas ${showConfirmPwd ? "fa-eye-slash" : "fa-eye"}`}></i>
           </button>
         </div>
-
-        {/* OTP Input */}
-        {otpSent && (
-          <div className="form-group">
-            <input
-              type="text"
-              name="otp"
-              placeholder="Enter OTP"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-              required
-            />
-            <i className="fas fa-key"></i>
-          </div>
-        )}
 
         {/* Terms & Newsletter */}
         <div className="checkbox-group">
@@ -343,11 +278,11 @@ const Register = ({ onSwitch }) => {
         <button type="submit" className="btn btn-primary btn-full" disabled={loading}>
           {loading ? (
             <>
-              <i className="fas fa-spinner fa-spin"></i> <span>{otpSent ? "Verifying..." : "Sending OTP..."}</span>
+              <i className="fas fa-spinner fa-spin"></i> <span>{t("creatingAccount") || "Creating Account..."}</span>
             </>
           ) : (
             <>
-              <i className="fas fa-user-plus"></i> <span>{otpSent ? "Verify OTP & Register" : t("createAccount")}</span>
+              <i className="fas fa-user-plus"></i> <span>{t("createAccount")}</span>
             </>
           )}
         </button>
