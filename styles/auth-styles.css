@@ -793,12 +793,60 @@ h1, h2 {
     transform: translateY(-2px);
 }
 
-/* Google Login Button Wrapper */
+/* Custom Google Sign-In Button */
+.google-signin-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    background: var(--white);
+    border: 2px solid rgba(47, 60, 59, 0.15);
+    border-radius: 14px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--charcoal-bark);
+    cursor: pointer;
+    transition: var(--transition);
+    margin: 0;
+}
+
+.google-signin-button:hover:not(:disabled) {
+    border-color: #4285F4;
+    background: rgba(66, 133, 244, 0.04);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(66, 133, 244, 0.15);
+}
+
+.google-signin-button:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.google-signin-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.google-signin-button .google-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+}
+
+.google-signin-button span {
+    white-space: nowrap;
+}
+
+/* Google Login Wrapper - Legacy support */
 .google-login-wrapper {
-    margin: 1rem 0;
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 
 .google-login-wrapper > div {
@@ -1180,6 +1228,12 @@ h1, h2 {
     .btn {
         padding: 0.95rem 1.5rem;
         font-size: 0.975rem;
+        border-radius: 12px;
+    }
+
+    .google-signin-button {
+        padding: 0.95rem 1.25rem;
+        font-size: 0.95rem;
         border-radius: 12px;
     }
 
