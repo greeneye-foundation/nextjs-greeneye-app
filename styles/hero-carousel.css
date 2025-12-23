@@ -83,7 +83,7 @@
 .hero-indicator {
     background: transparent;
     border: none;
-    color: var(--charcoal-bark);
+    color: var(--white);
     padding: 0.5rem 0;
     cursor: pointer;
     transition: all 0.3s ease;
