@@ -26,7 +26,7 @@ import LoadingBar from '@/components/LoadingBar';
 import Script from 'next/script';
 
 // Supported locales:
-const SUPPORTED = ['en', 'fr', 'es', 'ar', 'zh', 'ja'];
+const SUPPORTED = ['en', 'fr', 'es', 'ar', 'zh', 'ja', 'hi'];
 
 function getPathLocale(asPath) {
   // "/ar/..." -> "ar"

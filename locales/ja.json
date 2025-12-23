@@ -2,15 +2,15 @@
   "navbar": {
     "siteTitle": "GreenEye",
     "home": "ホーム",
-    "programs": "プログラム",
+    "projects": "プロジェクト",
     "impact": "インパクト",
     "volunteer": "ボランティア",
     "donate": "寄付する",
     "giftTree": "木を贈る",
     "blog": "ブログ",
+    "contact": "お問い合わせ",
     "nursery": "苗床",
     "buyPlants": "植物を購入",
-    "contact": "お問い合わせ",
     "profile": "プロフィール",
     "admin": "管理者",
     "register": "登録",
@@ -36,7 +36,8 @@
     "corporatePartnerships": "企業パートナーシップ",
     "rightsReserved": "全著作権所有。",
     "shipping": "配送ポリシー",
-    "cancellation&refund": "キャンセルと返金"
+    "cancellation&refund": "キャンセルと返金",
+    "accountDeletion": "アカウント削除"
   },
   "notification": {
     "close": "閉じる",
@@ -54,7 +55,45 @@
   "profileTabs": {
     "profile": "プロフィール",
     "myOrders": "注文履歴",
-    "myDonation": "寄付履歴"
+    "myDonation": "寄付履歴",
+    "myGift": "ギフト履歴"
+  },
+  "myGift": {
+    "heading": "ギフトツリー履歴",
+    "loading": "ギフト情報を読み込み中...",
+    "notFound": "まだギフトツリーを送信していません",
+    "sendGift": "ギフトツリーを送る",
+    "order": "注文",
+    "placed": "注文日",
+    "recipient": "受取人",
+    "trees": "本数",
+    "amount": "金額",
+    "paymentMethod": "支払い方法",
+    "viewDetails": "詳細を見る"
+  },
+  "giftDetails": {
+    "loading": "ギフト詳細を読み込み中...",
+    "notFound": "ギフト注文が見つかりません",
+    "back": "ギフト一覧に戻る",
+    "heading": "ギフトツリー注文",
+    "orderId": "注文番号",
+    "orderStatus": "注文",
+    "paymentStatus": "支払い",
+    "occasion": "機会",
+    "orderDate": "注文日",
+    "recipientInfo": "受取人情報",
+    "senderInfo": "送り主情報",
+    "message": "メッセージ",
+    "selectedTrees": "選択された木",
+    "deliveryAddress": "配送先住所",
+    "paymentSummary": "支払い概要",
+    "subtotal": "小計",
+    "deliveryCharge": "配送料",
+    "tax": "税金（GST 18%）",
+    "total": "合計金額",
+    "paymentMethod": "支払い方法",
+    "backToGifts": "ギフト一覧に戻る",
+    "sendAnother": "別のギフトを送る"
   },
   "hero": {
     "heroImgAlt": "緑の森",
@@ -78,7 +117,11 @@
     "readMore": "続きを読む",
     "backToBlogs": "ブログ一覧に戻る",
     "loading": "ブログを読み込み中...",
-    "notFound": "ブログが見つかりません"
+    "notFound": "ブログが見つかりません",
+    "defaultMetaTitle": "ブログ | GreenEye",
+    "defaultMetaDescription": "GreenEyeの最新ブログを読む。",
+    "noTitle": "タイトルがありません",
+    "noContent": "コンテンツがありません"
   },
   "about": {
     "seoTitle": "私たちについて | GreenEye",
@@ -180,7 +223,8 @@
     "donationFail": "寄付に失敗しました。後でもう一度お試しください。",
     "processing": "処理中...",
     "donateNow": "今すぐ寄付",
-    "note": "すべての寄付は安全に処理され、80Gの税控除対象です"
+    "note": "すべての寄付は安全に処理され、80Gの税控除対象です",
+    "paymentProcessing": "支払い処理中"
   },
   "plantshop": {
     "storeTitle": "植物ストア",
@@ -270,8 +314,8 @@
   "privacyPolicy": {
     "title": "プライバシーポリシー",
     "effectiveDate": "施行日: 2025年7月14日",
-    "intro": "GreenEye（アクセス先：",
-    "intro2": "）は、お客様のプライバシー保護に努めています。本ポリシーは、当サイトを通じてご提供いただく個人情報の収集、利用、保護について説明します。",
+    "intro": "GEYE INNOVATION FOUNDATION（GREENEYE®として運営）は、アクセス先：",
+    "intro2": "でお客様のプライバシー保護に努めています。本ポリシーは、当サイトを通じてご提供いただく個人情報の収集、利用、保護について説明します。",
     "infoCollectedTitle": "収集する情報",
     "infoName": "名前",
     "infoEmail": "メールアドレス",
@@ -285,7 +329,18 @@
     "dataProtectionText": "情報の安全性を確保するため、標準的なデータ保護対策を講じていますが、インターネット通信は100％安全とは限りません。",
     "contactTitle": "連絡先情報",
     "contactText": "プライバシーポリシーに関するご質問は以下までご連絡ください：",
-    "rightsReserved": "全著作権所有。"
+    "rightsReserved": "全著作権所有。",
+    "accountDeletionTitle": "アカウント削除とデータの権利",
+    "accountDeletionText": "お客様はいつでもアカウントおよび関連する個人データの削除を要求する権利を有します。当財団は、GDPRやインドのデジタル個人データ保護法を含む適用法に基づき、お客様のデータプライバシー権を尊重することを約束します。",
+
+    "yourRightsTitle": "お客様の権利には以下が含まれます：",
+    "rightToDelete": "個人データの削除権",
+    "rightToAccess": "データへのアクセス権",
+    "rightToCorrect": "不正確なデータの修正権",
+    "rightToPortability": "データポータビリティの権利",
+    "rightToWithdraw": "同意の撤回権",
+    "deletionProcess": "アカウント削除をリクエストするには、専用のアカウント削除ページにアクセスしてリクエストを送信してください。当チームがリクエストを確認し、7〜10営業日以内に処理いたします。",
+    "requestDeletionButton": "アカウント削除ページ"
   },
   "termsOfService": {
     "title": "利用規約",
@@ -310,7 +365,7 @@
     "backToOrders": "注文一覧に戻る",
     "order": "注文",
     "placed": "注文日",
-    "status": "ステータス",
+    "status": "配送ステータス",
     "delivered": "配達済み",
     "pending": "保留中",
     "shippingAddress": "配送先住所",
@@ -318,7 +373,11 @@
     "items": "商品",
     "product": "商品名",
     "total": "合計",
-    "payment": "支払い"
+    "payment": "支払い",
+    "paymentMethod": "支払い方法",
+    "paymentStatus": "支払いステータス",
+    "paid": "支払い済み",
+    "notPaid": "未払い"
   },
   "donationDetails": {
     "loading": "寄付情報を読み込み中...",
@@ -352,9 +411,14 @@
     "order": "注文",
     "placed": "注文日",
     "items": "商品",
-    "status": "ステータス",
+    "status": "配送ステータス",
     "delivered": "配達済み",
-    "pending": "保留中"
+    "pending": "保留中",
+    "payment": "支払い",
+    "paymentMethod": "支払い方法",
+    "paymentStatus": "支払いステータス",
+    "paid": "支払い済み",
+    "notPaid": "未払い"
   },
   "profilePage": {
     "loading": "プロフィール読み込み中...",
@@ -417,10 +481,12 @@
     "paymentSuccess": "お支払いが完了しました！🌱",
     "paymentVerifyFail": "支払い確認に失敗しました。",
     "orderPlacedCOD": "代金引換で注文が完了しました！",
-    "placeOrderFail": "注文に失敗しました。"
+    "placeOrderFail": "注文に失敗しました。",
+    "paymentProcessing": "支払い処理中"
   },
   "login": {
     "signInTitle": "アカウントにサインイン",
+    "signInWithOTP": "OTPでサインイン",
     "emailPlaceholder": "メールアドレス",
     "passwordPlaceholder": "パスワード",
     "rememberMe": "ログイン状態を保持",
@@ -544,5 +610,66 @@
     "contactTitle": "お問い合わせ",
     "contactText": "キャンセルや返金に関するご質問は、contact@greeneye.foundation までご連絡ください。サポートチームが対応いたします。",
     "rightsReserved": "全著作権所有。"
+  },
+  "aqiWidget": {
+    "activateButton": "お住まいの地域の空気質を確認",
+    "loading": "空気質指数を読み込み中...",
+    "airQualityDetails": "空気質の詳細",
+    "dominantPollutant": "主な汚染物質",
+    "helpText": "お住まいの地域の空気質改善にご協力ください",
+    "supportButton": "クリーンエアを支援",
+    "updated": "更新日時",
+    "dataSource": "データ"
+  },
+  "plantGifting": {
+    "title": "木を贈る、命を贈る",
+    "subtitle": "あらゆる機会を自然で祝おう"
+  },
+  "giftTree": {
+    "seoTitle": "木を贈る | GreenEye Foundation",
+    "seoDescription": "誰かの名前で木を植えて、意味のあるギフトを送りましょう。誕生日、記念日、特別な機会に最適です。",
+    "pageTitle": "ツリーギフトを完成する",
+    "pageSubtitle": "以下の詳細を入力して、美しいツリーギフトを送信してください"
+  },
+  "accountDeletion": {
+    "title": "アカウント削除ポリシー",
+    "subtitle": "GreenEyeアカウントの完全削除をリクエスト",
+
+    "overviewTitle": "概要",
+    "overviewText": "GreenEye Foundationでは、お客様のプライバシーとデータ管理の権利を尊重しています。アカウントと関連するすべてのデータの完全削除をご希望の場合は、このページから削除リクエストを送信できます。",
+
+    "importantTitle": "重要な情報",
+    "permanent": "アカウント削除は永久的で、元に戻すことはできません",
+    "dataLoss": "すべての個人情報が完全に削除されます",
+    "ordersHistory": "注文履歴、寄付記録、ギフトツリー注文が削除されます",
+    "noRecovery": "一度削除されると、アカウントやデータを復元することはできません",
+
+    "dataDeletedTitle": "削除されるデータ",
+    "personalInfo": "個人情報（名前、メール、電話番号、住所）",
+    "orderHistory": "すべての注文履歴と詳細",
+    "donationRecords": "寄付記録と領収書",
+    "volunteerInfo": "ボランティア登録情報",
+    "giftOrders": "ギフトツリー注文と証明書",
+    "savedAddresses": "保存された住所と設定",
+
+    "processTitle": "削除手順",
+    "step1": "下のボタンをクリックして削除リクエストを送信",
+    "step2": "当財団の管理チームが7〜10営業日以内にリクエストを審査します",
+    "step3": "審査完了後、メールで確認通知をお送りします",
+    "step4": "承認後、アカウントとすべてのデータが完全に削除されます",
+
+    "legalTitle": "法令遵守",
+    "legalText": "削除リクエストは、GDPRやインドのデジタル個人データ保護法を含む適用されるデータ保護法に従って処理されます。一部の情報は、法律または規制上の目的で必要に応じて保持される場合があります。",
+
+    "supportTitle": "サポートが必要ですか？",
+    "supportText": "アカウント削除に関するご質問やサポートが必要な場合は、サポートチームまでお問い合わせください：",
+
+    "loggedInAs": "ログイン中：",
+    "requestButton": "アカウント削除をリクエスト",
+    "loginRequired": "アカウント削除をリクエストするにはログインが必要です",
+    "loginButton": "ログインして続行",
+    "processing": "処理中...",
+    "confirmMessage": "本当にアカウントを削除しますか？この操作は取り消すことができず、すべてのデータが完全に削除されます。",
+    "contactUs": "サポートに問い合わせ"
   }
 }

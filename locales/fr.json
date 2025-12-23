@@ -36,7 +36,8 @@
     "corporatePartnerships": "Partenariats d'entreprise",
     "rightsReserved": "Tous droits réservés.",
     "shipping": "Politique d'Expédition",
-    "cancellation&refund": "Annulation et Remboursement"
+    "cancellation&refund": "Annulation et Remboursement",
+    "accountDeletion": "Suppression de Compte"
   },
   "notification": {
     "close": "Fermer",
@@ -54,7 +55,45 @@
   "profileTabs": {
     "profile": "Profil",
     "myOrders": "Mes commandes",
-    "myDonation": "Mon don"
+    "myDonation": "Mon don",
+    "myGift": "Mes Cadeaux"
+  },
+  "myGift": {
+    "heading": "Mes Arbres Cadeaux",
+    "loading": "Chargement de vos cadeaux...",
+    "notFound": "Vous n'avez pas encore envoyé d'arbres cadeaux",
+    "sendGift": "Envoyer un Arbre Cadeau",
+    "order": "Commande",
+    "placed": "Passée",
+    "recipient": "Destinataire",
+    "trees": "Arbres",
+    "amount": "Montant",
+    "paymentMethod": "Mode de paiement",
+    "viewDetails": "Voir les détails"
+  },
+  "giftDetails": {
+    "loading": "Chargement des détails du cadeau...",
+    "notFound": "Commande de cadeau introuvable",
+    "back": "Retour à Mes Cadeaux",
+    "heading": "Commande d'Arbre Cadeau",
+    "orderId": "ID de commande",
+    "orderStatus": "Commande",
+    "paymentStatus": "Paiement",
+    "occasion": "Occasion",
+    "orderDate": "Date de commande",
+    "recipientInfo": "Informations du destinataire",
+    "senderInfo": "Vos informations",
+    "message": "Message personnel",
+    "selectedTrees": "Arbres sélectionnés",
+    "deliveryAddress": "Adresse de livraison",
+    "paymentSummary": "Résumé du paiement",
+    "subtotal": "Sous-total",
+    "deliveryCharge": "Frais de livraison",
+    "tax": "Taxe (GST 18%)",
+    "total": "Montant total",
+    "paymentMethod": "Mode de paiement",
+    "backToGifts": "Retour à Mes Cadeaux",
+    "sendAnother": "Envoyer un autre cadeau"
   },
   "hero": {
     "heroImgAlt": "Forêt verte",
@@ -78,7 +117,11 @@
     "readMore": "Lire la suite",
     "backToBlogs": "Retour aux blogs",
     "loading": "Chargement du blog...",
-    "notFound": "Blog introuvable"
+    "notFound": "Blog introuvable",
+    "defaultMetaTitle": "Blog | GreenEye",
+    "defaultMetaDescription": "Lisez le dernier blog de GreenEye.",
+    "noTitle": "Aucun titre disponible",
+    "noContent": "Aucun contenu disponible"
   },
   "about": {
     "seoTitle": "À propos de nous | GreenEye",
@@ -180,7 +223,8 @@
     "donationFail": "Échec du don. Veuillez réessayer plus tard.",
     "processing": "Traitement...",
     "donateNow": "Faire un don",
-    "note": "Tous les dons sont sécurisés et déductibles d'impôts sous 80G"
+    "note": "Tous les dons sont sécurisés et déductibles d'impôts sous 80G",
+    "paymentProcessing": "Traitement du paiement"
   },
   "plantshop": {
     "storeTitle": "Boutique de plantes",
@@ -270,7 +314,7 @@
   "privacyPolicy": {
     "title": "Politique de confidentialité",
     "effectiveDate": "Date d'entrée en vigueur : 14 juillet 2025",
-    "intro": "Chez GreenEye, accessible à",
+    "intro": "Chez GEYE INNOVATION FOUNDATION (opérant sous le nom GREENEYE®), accessible à",
     "intro2": "nous nous engageons à protéger votre vie privée. Cette politique de confidentialité explique comment nous recueillons, utilisons et protégeons les informations personnelles que vous fournissez sur notre site Web.",
     "infoCollectedTitle": "Informations que nous recueillons",
     "infoName": "Nom",
@@ -285,7 +329,18 @@
     "dataProtectionText": "Nous suivons des pratiques standard de protection des données pour garantir la sécurité de vos informations. Cependant, aucune méthode de transmission sur Internet n'est 100% sécurisée.",
     "contactTitle": "Informations de contact",
     "contactText": "Si vous avez des questions sur notre politique de confidentialité, vous pouvez nous contacter :",
-    "rightsReserved": "Tous droits réservés."
+    "rightsReserved": "Tous droits réservés.",
+    "accountDeletionTitle": "Suppression de Compte et Droits relatifs aux Données",
+    "accountDeletionText": "Vous avez le droit de demander la suppression de votre compte et de toutes les données personnelles associées à tout moment. Nous nous engageons à respecter vos droits en matière de confidentialité des données en vertu des lois applicables, notamment le RGPD et la loi indienne sur la protection des données personnelles numériques.",
+
+    "yourRightsTitle": "Vos Droits Incluent :",
+    "rightToDelete": "Droit à la suppression de vos données personnelles",
+    "rightToAccess": "Droit d'accéder à vos données",
+    "rightToCorrect": "Droit de corriger les données inexactes",
+    "rightToPortability": "Droit à la portabilité des données",
+    "rightToWithdraw": "Droit de retirer votre consentement",
+    "deletionProcess": "Pour demander la suppression de votre compte, veuillez visiter notre page dédiée à la suppression de compte où vous pourrez soumettre votre demande. Notre équipe examinera et traitera votre demande dans un délai de 7 à 10 jours ouvrables.",
+    "requestDeletionButton": "Page de Suppression de Compte"
   },
   "termsOfService": {
     "title": "Conditions d'utilisation",
@@ -310,7 +365,7 @@
     "backToOrders": "Retour aux commandes",
     "order": "Commande",
     "placed": "Passée",
-    "status": "Statut",
+    "status": "Statut de livraison",
     "delivered": "Livrée",
     "pending": "En attente",
     "shippingAddress": "Adresse de livraison",
@@ -318,7 +373,11 @@
     "items": "Articles",
     "product": "Produit",
     "total": "Total",
-    "payment": "Paiement"
+    "payment": "Paiement",
+    "paymentMethod": "Mode de paiement",
+    "paymentStatus": "Statut du paiement",
+    "paid": "Payé",
+    "notPaid": "Non payé"
   },
   "donationDetails": {
     "loading": "Chargement du don...",
@@ -352,9 +411,14 @@
     "order": "Commande",
     "placed": "Passée",
     "items": "Articles",
-    "status": "Statut",
+    "status": "Statut de livraison",
     "delivered": "Livrée",
-    "pending": "En attente"
+    "pending": "En attente",
+    "payment": "Paiement",
+    "paymentMethod": "Mode de paiement",
+    "paymentStatus": "Statut du paiement",
+    "paid": "Payé",
+    "notPaid": "Non payé"
   },
   "profilePage": {
     "loading": "Chargement du profil...",
@@ -417,10 +481,12 @@
     "paymentSuccess": "Paiement réussi ! 🌱",
     "paymentVerifyFail": "Échec de la vérification du paiement.",
     "orderPlacedCOD": "Commande passée avec succès en paiement à la livraison !",
-    "placeOrderFail": "Échec de la commande."
+    "placeOrderFail": "Échec de la commande.",
+    "paymentProcessing": "Traitement du paiement"
   },
   "login": {
     "signInTitle": "Connectez-vous à votre compte",
+    "signInWithOTP": "Se connecter avec OTP",
     "emailPlaceholder": "Adresse e-mail",
     "passwordPlaceholder": "Mot de passe",
     "rememberMe": "Se souvenir de moi",
@@ -544,5 +610,66 @@
     "contactTitle": "Contactez-nous",
     "contactText": "Pour toute question concernant les annulations et remboursements, veuillez nous contacter à : contact@greeneye.foundation. Notre équipe d'assistance se fera un plaisir de vous aider.",
     "rightsReserved": "Tous droits réservés."
+  },
+  "aqiWidget": {
+    "activateButton": "Vérifier la Qualité de l'Air dans Votre Région",
+    "loading": "Chargement de l'IQA...",
+    "airQualityDetails": "Détails de la Qualité de l'Air",
+    "dominantPollutant": "Polluant Dominant",
+    "helpText": "Aidez-nous à améliorer la qualité de l'air dans votre région",
+    "supportButton": "Soutenir l'Air Pur",
+    "updated": "Mis à jour",
+    "dataSource": "Données"
+  },
+  "plantGifting": {
+    "title": "Offrir un Arbre, Offrir la Vie",
+    "subtitle": "Célébrez chaque occasion avec la nature"
+  },
+  "giftTree": {
+    "seoTitle": "Offrir un Arbre | GreenEye Foundation",
+    "seoDescription": "Envoyez un cadeau significatif en plantant des arbres au nom de quelqu'un. Parfait pour les anniversaires, les anniversaires de mariage et les occasions spéciales.",
+    "pageTitle": "Finalisez Votre Cadeau d'Arbre",
+    "pageSubtitle": "Remplissez les détails ci-dessous pour envoyer un magnifique cadeau d'arbre"
+  },
+  "accountDeletion": {
+    "title": "Politique de Suppression de Compte",
+    "subtitle": "Demander la suppression permanente de votre compte GreenEye",
+
+    "overviewTitle": "Aperçu",
+    "overviewText": "Chez GreenEye Foundation, nous respectons votre droit à la vie privée et au contrôle de vos données. Si vous souhaitez supprimer définitivement votre compte et toutes les données associées, vous pouvez soumettre une demande de suppression via cette page.",
+
+    "importantTitle": "Informations Importantes",
+    "permanent": "La suppression du compte est permanente et ne peut pas être annulée",
+    "dataLoss": "Toutes vos informations personnelles seront définitivement supprimées",
+    "ordersHistory": "Votre historique de commandes, vos dons et vos commandes d'arbres cadeaux seront supprimés",
+    "noRecovery": "Une fois supprimé, vous ne pourrez pas récupérer votre compte ou vos données",
+
+    "dataDeletedTitle": "Quelles Données Seront Supprimées",
+    "personalInfo": "Informations personnelles (nom, email, téléphone, adresse)",
+    "orderHistory": "Tout l'historique des commandes et les détails",
+    "donationRecords": "Dossiers de dons et reçus",
+    "volunteerInfo": "Informations d'inscription des bénévoles",
+    "giftOrders": "Commandes d'arbres cadeaux et certificats",
+    "savedAddresses": "Adresses et préférences enregistrées",
+
+    "processTitle": "Processus de Suppression",
+    "step1": "Soumettez votre demande de suppression en cliquant sur le bouton ci-dessous",
+    "step2": "Notre équipe administrative examinera votre demande dans un délai de 7 à 10 jours ouvrables",
+    "step3": "Vous recevrez un email de confirmation une fois l'examen terminé",
+    "step4": "Après approbation, votre compte et toutes les données seront définitivement supprimés",
+
+    "legalTitle": "Conformité Légale",
+    "legalText": "Nous traitons votre demande de suppression conformément aux lois applicables en matière de protection des données, notamment le RGPD et la loi indienne sur la protection des données personnelles numériques. Certaines informations peuvent être conservées à des fins légales ou réglementaires conformément à la loi.",
+
+    "supportTitle": "Besoin d'Aide ?",
+    "supportText": "Si vous avez des questions sur la suppression de compte ou besoin d'assistance, veuillez contacter notre équipe d'assistance à",
+
+    "loggedInAs": "Connecté en tant que",
+    "requestButton": "Demander la Suppression du Compte",
+    "loginRequired": "Vous devez être connecté pour demander la suppression du compte",
+    "loginButton": "Se connecter pour Continuer",
+    "processing": "Traitement...",
+    "confirmMessage": "Êtes-vous sûr de vouloir supprimer votre compte ? Cette action ne peut pas être annulée et toutes vos données seront définitivement supprimées.",
+    "contactUs": "Contacter l'Assistance"
   }
 }

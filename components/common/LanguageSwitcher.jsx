@@ -6,7 +6,8 @@ const LANG_LABELS = {
   es: "Español",
   ar: "العربية",
   zh: "中文",
-  ja: "日本語"
+  ja: "日本語",
+  hi: "हिन्दी",
 };
 
 export default function LanguageSwitcher() {

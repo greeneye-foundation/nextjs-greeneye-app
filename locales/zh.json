@@ -8,9 +8,9 @@
     "donate": "捐赠",
     "giftTree": "赠送树木",
     "blog": "博客",
+    "contact": "联系我们",
     "nursery": "苗圃",
     "buyPlants": "购买植物",
-    "contact": "联系我们",
     "profile": "个人资料",
     "admin": "管理员",
     "register": "注册",
@@ -36,7 +36,8 @@
     "corporatePartnerships": "企业合作",
     "rightsReserved": "版权所有。",
     "shipping": "运输政策",
-    "cancellation&refund": "取消与退款"
+    "cancellation&refund": "取消与退款",
+    "accountDeletion": "账户删除"
   },
   "notification": {
     "close": "关闭",
@@ -54,7 +55,45 @@
   "profileTabs": {
     "profile": "个人资料",
     "myOrders": "我的订单",
-    "myDonation": "我的捐赠"
+    "myDonation": "我的捐赠",
+    "myGift": "我的礼物"
+  },
+  "myGift": {
+    "heading": "我的礼物树",
+    "loading": "正在加载您的礼物...",
+    "notFound": "您还没有赠送任何礼物树",
+    "sendGift": "赠送礼物树",
+    "order": "订单",
+    "placed": "下单时间",
+    "recipient": "收件人",
+    "trees": "树木",
+    "amount": "金额",
+    "paymentMethod": "支付方式",
+    "viewDetails": "查看详情"
+  },
+  "giftDetails": {
+    "loading": "正在加载礼物详情...",
+    "notFound": "未找到礼物订单",
+    "back": "返回我的礼物",
+    "heading": "礼物树订单",
+    "orderId": "订单号",
+    "orderStatus": "订单",
+    "paymentStatus": "支付",
+    "occasion": "场合",
+    "orderDate": "订单日期",
+    "recipientInfo": "收件人信息",
+    "senderInfo": "您的信息",
+    "message": "个性化留言",
+    "selectedTrees": "选择的树木",
+    "deliveryAddress": "配送地址",
+    "paymentSummary": "支付摘要",
+    "subtotal": "小计",
+    "deliveryCharge": "配送费",
+    "tax": "税费（GST 18%）",
+    "total": "总金额",
+    "paymentMethod": "支付方式",
+    "backToGifts": "返回我的礼物",
+    "sendAnother": "赠送另一个礼物"
   },
   "hero": {
     "heroImgAlt": "绿色森林",
@@ -78,7 +117,11 @@
     "readMore": "阅读更多",
     "backToBlogs": "返回博客",
     "loading": "博客加载中...",
-    "notFound": "未找到博客"
+    "notFound": "未找到博客",
+    "defaultMetaTitle": "博客 | GreenEye",
+    "defaultMetaDescription": "阅读GreenEye的最新博客。",
+    "noTitle": "无标题",
+    "noContent": "无内容"
   },
   "about": {
     "seoTitle": "关于我们 | GreenEye",
@@ -172,7 +215,7 @@
     "placeholderName": "全名",
     "placeholderEmail": "电子邮箱",
     "placeholderPhone": "电话号码",
-    "minAmountError": "请捐赠不少于₹50。",
+    "minAmountError": "请捐赠不少于₹10。",
     "razorpayTitle": "GreenEye捐赠",
     "razorpayDesc": "感谢您的支持！",
     "successMessage": "感谢您的捐赠 ₹{amount}！🌿",
@@ -180,7 +223,8 @@
     "donationFail": "捐赠失败。请稍后再试。",
     "processing": "处理中...",
     "donateNow": "立即捐赠",
-    "note": "所有捐赠均安全并可享受80G税收减免"
+    "note": "所有捐赠均安全并可享受80G税收减免",
+    "paymentProcessing": "支付处理中"
   },
   "plantshop": {
     "storeTitle": "植物商店",
@@ -270,8 +314,8 @@
   "privacyPolicy": {
     "title": "隐私政策",
     "effectiveDate": "生效日期：2025年7月14日",
-    "intro": "在GreenEye（访问地址：",
-    "intro2": "）我们致力于保护您的隐私。本隐私政策说明了我们如何收集、使用和保护您通过网站提供的个人信息。",
+    "intro": "在 GEYE INNOVATION FOUNDATION（以 GREENEYE® 名义运营），访问地址：",
+    "intro2": "我们致力于保护您的隐私。本隐私政策说明了我们如何收集、使用和保护您通过网站提供的个人信息。",
     "infoCollectedTitle": "我们收集的信息",
     "infoName": "姓名",
     "infoEmail": "电子邮箱",
@@ -285,12 +329,22 @@
     "dataProtectionText": "我们遵循标准数据保护做法以确保您的信息安全。但互联网传输并非100%安全。",
     "contactTitle": "联系信息",
     "contactText": "如有关于隐私政策的问题，欢迎联系我们：",
-    "rightsReserved": "版权所有。"
+    "rightsReserved": "版权所有。",
+    "accountDeletionTitle": "账户删除与数据权利",
+    "accountDeletionText": "您有权随时要求删除您的账户及所有相关个人数据。我们致力于尊重适用法律（包括 GDPR 和印度《数字个人数据保护法》）规定的数据隐私权。",
+    "yourRightsTitle": "您的权利包括：",
+    "rightToDelete": "删除个人数据的权利",
+    "rightToAccess": "访问数据的权利",
+    "rightToCorrect": "更正不准确数据的权利",
+    "rightToPortability": "数据可移植性的权利",
+    "rightToWithdraw": "撤回同意的权利",
+    "deletionProcess": "如需申请账户删除，请访问我们的专用账户删除页面提交申请。我们的团队将在7-10个工作日内审核并处理您的请求。",
+    "requestDeletionButton": "账户删除页面"
   },
   "termsOfService": {
     "title": "服务条款",
     "effectiveDate": "生效日期：2025年7月14日",
-    "welcome": "欢迎访问GreenEye。通过访问我们的网站（",
+    "welcome": "欢迎访问 GEYE INNOVATION FOUNDATION（以 GREENEYE® 名义运营）。通过访问我们的网站（",
     "agree": "），即表示您同意这些服务条款。请仔细阅读。",
     "useTitle": "网站使用",
     "useText": "本网站旨在提供我们的环保工作信息，并便于用户与我们联系。您同意不滥用本网站或发布有害、非法或冒犯性内容。",
@@ -310,7 +364,7 @@
     "backToOrders": "返回订单列表",
     "order": "订单",
     "placed": "下单时间",
-    "status": "状态",
+    "status": "配送状态",
     "delivered": "已送达",
     "pending": "待处理",
     "shippingAddress": "收货地址",
@@ -318,7 +372,11 @@
     "items": "商品",
     "product": "产品",
     "total": "总计",
-    "payment": "付款"
+    "payment": "支付",
+    "paymentMethod": "支付方式",
+    "paymentStatus": "支付状态",
+    "paid": "已支付",
+    "notPaid": "未支付"
   },
   "donationDetails": {
     "loading": "捐赠信息加载中...",
@@ -352,9 +410,14 @@
     "order": "订单",
     "placed": "下单时间",
     "items": "商品",
-    "status": "状态",
+    "status": "配送状态",
     "delivered": "已送达",
-    "pending": "待处理"
+    "pending": "待处理",
+    "payment": "支付",
+    "paymentMethod": "支付方式",
+    "paymentStatus": "支付状态",
+    "paid": "已支付",
+    "notPaid": "未支付"
   },
   "profilePage": {
     "loading": "个人资料加载中...",
@@ -417,10 +480,12 @@
     "paymentSuccess": "支付成功！🌱",
     "paymentVerifyFail": "支付验证失败。",
     "orderPlacedCOD": "货到付款订单已成功提交！",
-    "placeOrderFail": "下单失败。"
+    "placeOrderFail": "下单失败。",
+    "paymentProcessing": "支付处理中"
   },
   "login": {
     "signInTitle": "登录您的账户",
+    "signInWithOTP": "使用OTP登录",
     "emailPlaceholder": "电子邮箱",
     "passwordPlaceholder": "密码",
     "rememberMe": "记住我",
@@ -455,11 +520,11 @@
     "resendOtp": "重新发送OTP"
   },
   "register": {
-    "whatsappQRAlt": "WhatsApp二维码",
+    "whatsappQRAlt": "WhatsApp QR码",
     "registerWithWhatsapp": "通过WhatsApp注册",
     "waStep1": "在手机上打开WhatsApp",
     "waStep2": "点击相机图标",
-    "waStep3": "发送“hi”消息开始注册",
+    "waStep3": "发送消息开始注册",
     "waInstant": "即时注册",
     "waNotif": "活动通知",
     "waCommunity": "社区动态",
@@ -490,25 +555,25 @@
     "registerSuccess": "账户创建成功。",
     "registerFail": "注册失败，请重试。"
   },
-  "plant":{
-  "loading": "加载中...",
-  "notFound": "未找到植物。",
-  "defaultDescription": "植物的详细信息和规格",
-  "backToShop": "返回植物商店",
-  "inStock": "有库存",
-  "outOfStock": "缺货",
-  "noDescription": "暂无描述。",
-  "sku": "库存单位",
-  "category": "类别",
-  "brand": "品牌",
-  "availableCountries": "可用国家",
-  "defaultCategory": "植物",
-  "addToCart": "加入购物车",
-  "viewCart": "查看购物车",
-  "addedToCart": "已加入购物车",
-  "pleaseLogin": "请先登录。",
-  "addFailed": "添加到购物车失败。"
-},
+  "plant": {
+    "loading": "加载中...",
+    "notFound": "未找到植物。",
+    "defaultDescription": "植物的详细信息和规格",
+    "backToShop": "返回植物商店",
+    "inStock": "有库存",
+    "outOfStock": "缺货",
+    "noDescription": "暂无描述。",
+    "sku": "SKU",
+    "category": "类别",
+    "brand": "品牌",
+    "availableCountries": "可用国家",
+    "defaultCategory": "植物",
+    "addToCart": "加入购物车",
+    "viewCart": "查看购物车",
+    "addedToCart": "已加入购物车",
+    "pleaseLogin": "请先登录。",
+    "addFailed": "添加到购物车失败。"
+  },
   "shippingPolicy": {
     "title": "运输与配送政策",
     "intro": "GEYE INNOVATION FOUNDATION（以 GREENEYE® 名义运营）承诺为您提供快速、安全、高效的产品配送。在下单前，请仔细阅读以下条款。",
@@ -538,11 +603,65 @@
     "refundTitle": "退款政策",
     "refundText": "退款将在收到并检验退回商品后启动。经批准后，退款将在 7-10 个工作日内处理，并退回至原支付方式。运费不予退还。",
     "exceptionsTitle": "不可取消或退款的商品",
-    "exceptionsText": "以下商品不可取消或退款：易腐商品（如植物）、定制产品、数字服务以及标记为“最终销售”的商品。",
+    "exceptionsText": "以下商品不可取消或退款：易腐商品（如植物）、定制产品、数字服务以及标记为最终销售的商品。",
     "disclaimerTitle": "免责声明",
     "disclaimerText": "GEYE INNOVATION FOUNDATION 不对快递公司或不可预见情况造成的延误负责。因延误提出的退款或取消申请将不被受理（除非另有特别协议）。",
     "contactTitle": "联系我们",
     "contactText": "如有关于取消或退款的问题，请联系 contact@greeneye.foundation。我们的支持团队将竭诚为您服务。",
     "rightsReserved": "版权所有。"
+  },
+  "aqiWidget": {
+    "activateButton": "查看您所在地区的空气质量",
+    "loading": "正在加载空气质量指数...",
+    "airQualityDetails": "空气质量详情",
+    "dominantPollutant": "主要污染物",
+    "helpText": "帮助我们改善您所在地区的空气质量",
+    "supportButton": "支持清洁空气",
+    "updated": "更新于",
+    "dataSource": "数据"
+  },
+  "plantGifting": {
+    "title": "赠送树木，赠送生命",
+    "subtitle": "用自然庆祝每一个特殊时刻"
+  },
+  "giftTree": {
+    "seoTitle": "赠送树木 | GreenEye 基金会",
+    "seoDescription": "以某人的名义种植树木，送出有意义的礼物。适合生日、周年纪念和特殊场合。",
+    "pageTitle": "完成您的树木礼物",
+    "pageSubtitle": "填写以下信息以发送精美的树木礼物"
+  },
+  "accountDeletion": {
+    "title": "账户删除政策",
+    "subtitle": "申请永久删除您的GreenEye账户",
+    "overviewTitle": "概述",
+    "overviewText": "在GreenEye基金会，我们尊重您的隐私权和数据控制权。如果您希望永久删除您的账户及所有相关数据，您可以通过此页面提交删除请求。",
+    "importantTitle": "重要信息",
+    "permanent": "账户删除是永久性的，无法撤销",
+    "dataLoss": "您的所有个人信息将被永久删除",
+    "ordersHistory": "您的订单历史、捐赠记录和礼物树订单将被移除",
+    "noRecovery": "一旦删除，您将无法恢复账户或数据",
+    "dataDeletedTitle": "将被删除的数据",
+    "personalInfo": "个人信息（姓名、邮箱、电话、地址）",
+    "orderHistory": "所有订单历史和详情",
+    "donationRecords": "捐赠记录和收据",
+    "volunteerInfo": "志愿者注册信息",
+    "giftOrders": "礼物树订单和证书",
+    "savedAddresses": "保存的地址和偏好设置",
+    "processTitle": "删除流程",
+    "step1": "点击下方按钮提交删除请求",
+    "step2": "我们的管理团队将在7-10个工作日内审核您的请求",
+    "step3": "审核完成后，您将收到电子邮件确认",
+    "step4": "批准后，您的账户和所有数据将被永久删除",
+    "legalTitle": "法律合规",
+    "legalText": "我们根据适用的数据保护法律（包括GDPR和印度《数字个人数据保护法》）处理您的删除请求。根据法律要求，某些信息可能会因法律或监管目的而保留。",
+    "supportTitle": "需要帮助？",
+    "supportText": "如果您对账户删除有任何疑问或需要帮助，请通过以下方式联系我们的支持团队：",
+    "loggedInAs": "已登录为",
+    "requestButton": "申请删除账户",
+    "loginRequired": "您必须登录才能申请账户删除",
+    "loginButton": "登录以继续",
+    "processing": "处理中...",
+    "confirmMessage": "您确定要删除您的账户吗？此操作无法撤销，您的所有数据将被永久删除。",
+    "contactUs": "联系支持"
   }
 }
