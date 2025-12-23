@@ -533,6 +533,8 @@
     "waNotif": "Event Notifications",
     "waCommunity": "Community Updates",
     "or": "OR",
+    "quickRegister": "Quick Registration",
+    "quickRegisterDesc": "Sign up instantly with your Google account",
     "registerWithEmail": "Register with Email",
     "firstName": "First Name",
     "lastName": "Last Name",

@@ -148,8 +148,22 @@ const Register = ({ onSwitch }) => {
 
       {/* Email/Phone Registration Form */}
       <div className="email-form-section">
+        {/* Google Sign-In Section - Priority */}
+        <div className="quick-register-section">
+          <h3 className="section-title">
+            <i className="fas fa-bolt"></i> {t("quickRegister") || "Quick Registration"}
+          </h3>
+          <p className="section-subtitle">{t("quickRegisterDesc") || "Sign up instantly with your Google account"}</p>
+          <GoogleLoginButton />
+        </div>
+
+        {/* Divider */}
+        <div className="auth-divider" style={{ margin: '24px 0' }}>
+          <span>{t("or")}</span>
+        </div>
+
         <form className="auth-form" onSubmit={handleSubmit}>
-        <h3>{t("registerWithEmail")}</h3>
+        <h3 className="section-title">{t("registerWithEmail")}</h3>
 
         {/* Name */}
         <div className="form-row">
@@ -287,14 +301,6 @@ const Register = ({ onSwitch }) => {
           )}
         </button>
         </form>
-
-        {/* Divider */}
-        <div className="auth-divider" style={{ marginTop: '20px' }}>
-          <span>{t("or")}</span>
-        </div>
-
-        {/* Google Login */}
-        <GoogleLoginButton />
       </div>
 
       <div className="auth-switch">
