@@ -95,7 +95,7 @@
 }
 
 .hero-indicator:hover {
-    color: var(--lime-spark);
+    color: var(--yellow-sun);
 }
 
 .hero-indicator:focus {
