@@ -58,15 +58,19 @@ const GoogleLoginButton = ({ onSuccess: customOnSuccess }) => {
   };
 
   return (
-    <div className="google-login-wrapper">
+    <div className="google-login-wrapper" data-label="QUICK SIGN IN">
       <GoogleLogin
         onSuccess={handleSuccess}
         onError={handleError}
-        theme="outline"
+        theme="filled_blue"
         size="large"
         text="signin_with"
         shape="rectangular"
-        width="100%"
+        width="400"
+        logo_alignment="left"
+        useOneTap={true}
+        auto_select={true}
+        context="signin"
       />
     </div>
   );
