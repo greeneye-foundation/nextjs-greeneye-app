@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl';
 import Seo from '@/components/common/Seo';
 import BlogGrid from '@/components/BlogGrid';
+import EncyclopediaArticlesSection from '@/components/EncyclopediaArticlesSection';
 
 export function getStaticProps({ locale }) {
   return {
@@ -29,6 +30,7 @@ export default function BlogPage() {
         </div>
       </section>
       <BlogGrid />
+      <EncyclopediaArticlesSection />
     </>
   );
 }
