@@ -112,8 +112,10 @@ const Navbar = () => {
           {isLoggedIn && (
             <li>
               <Link href="/profile" className={`nav-link${isActive("/profile") ? " active" : ""}`}>
-                <i className="fas fa-user-circle" style={{ marginRight: 5 }}></i>
-                {userName || t("profile")}
+                <i className="fas fa-user-circle"></i>
+                <span className="nav-user-name">
+                  {(userName || t("profile")).split("(")[0].trim()}
+                </span>
               </Link>
             </li>
           )}
@@ -131,16 +133,16 @@ const Navbar = () => {
               <button
                 className="nav-link btn-link"
                 onClick={handleLogout}
-                style={{ background: "none", border: "none", padding: 0, cursor: "pointer", font: "inherit" }}
+                style={{ background: "none", border: "none", cursor: "pointer", font: "inherit" }}
               >
-                <i className="fas fa-sign-out-alt" style={{ marginRight: 5 }}></i>
+                <i className="fas fa-sign-out-alt"></i>
                 {t("logout")}
               </button>
             </li>
           ) : (
             <li>
               <Link href="/login" className={`nav-link${isActive("/login") ? " active" : ""}`}>
-                <i className="fas fa-sign-in-alt" style={{ marginRight: 5 }}></i>
+                <i className="fas fa-sign-in-alt"></i>
                 {t("login")}
               </Link>
             </li>
@@ -148,8 +150,8 @@ const Navbar = () => {
 
           {isLoggedIn && userInfo?.isAdmin && (
             <li>
-              <Link href="/admin" className={`nav-link${isActive("/admin") ? " active" : ""}`}>
-                <i className="fas fa-user-shield" style={{ marginRight: 5 }}></i>
+              <Link href="/admin" className={`nav-link nav-admin-link${isActive("/admin") ? " active" : ""}`}>
+                <i className="fas fa-user-shield"></i>
                 Admin
               </Link>
             </li>

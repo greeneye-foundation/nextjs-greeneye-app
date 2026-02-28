@@ -247,16 +247,17 @@ main {
 .nav-link.active {
     color: var(--lime-spark) !important;
     font-weight: 700;
+    background: rgba(255,255,255,0.1);
 }
 
 .navbar-links i.fas.fa-user-circle {
-    margin-right: 6px;
-    font-size: 1.2em;
+    margin-right: 4px;
+    font-size: 1em;
     vertical-align: middle;
 }
 
 .nav-link.active::after {
-    width: 100%;
+    transform: scaleX(1);
     background: var(--lime-spark);
 }
 
@@ -312,45 +313,68 @@ main {
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 2rem;
+    gap: 0;
+    flex-wrap: nowrap;
 }
 
 .nav-menu li {
     margin: 0;
     display: flex;
     align-items: center;
+    flex-shrink: 0;
 }
 
 .nav-link {
     color: var(--stone-mist) !important;
     text-decoration: none;
     font-weight: 500;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    padding: 5px 9px;
+    border-radius: 6px;
     transition: var(--transition);
     position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .nav-link:hover {
     color: var(--lime-spark) !important;
+    background: rgba(255,255,255,0.08);
 }
 
 .nav-link::after {
     content: '';
     position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
+    bottom: -2px;
+    left: 9px;
+    right: 9px;
+    width: auto;
     height: 2px;
     background: var(--lime-spark);
-    transition: var(--transition);
+    transform: scaleX(0);
+    transition: transform 0.2s ease;
+    border-radius: 2px;
 }
 
 .nav-link:hover::after {
-    width: 100%;
+    transform: scaleX(1);
 }
 
 .nav-link:focus {
     outline: none;
     box-shadow: none;
+}
+
+/* Username truncation in nav */
+.nav-user-name {
+    max-width: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: bottom;
 }
 
 /* Nav link with tagline */
@@ -360,13 +384,29 @@ main {
 }
 
 .nav-link-main {
-    font-size: 1rem;
+    font-size: 0.875rem;
     font-weight: 500;
+}
+
+/* Admin nav link — subtle amber accent */
+.nav-admin-link {
+    color: #f5a623 !important;
+}
+.nav-admin-link:hover {
+    color: #ffbe4d !important;
+    background: rgba(245, 166, 35, 0.12) !important;
+}
+.nav-admin-link.active {
+    color: #f5a623 !important;
+    background: rgba(245, 166, 35, 0.15) !important;
+}
+.nav-admin-link::after {
+    background: #f5a623 !important;
 }
 
 .nav-link-tagline {
     position: absolute;
-    top: -12px;
+    top: -10px;
     left: 50%;
     transform: translateX(-50%);
     font-size: 0.6rem;
