@@ -125,12 +125,6 @@ export default function App({ Component, pageProps }) {
       {/* Loading Bar for route transitions */}
       <LoadingBar />
 
-      {/* ✅ Razorpay checkout script */}
-      <Script
-        src="https://checkout.razorpay.com/v1/checkout.js"
-        strategy="afterInteractive"
-      />
-
       {/* ✅ Google Analytics (gtag.js) */}
       {process.env.NEXT_PUBLIC_GA_ID && (
         <>
