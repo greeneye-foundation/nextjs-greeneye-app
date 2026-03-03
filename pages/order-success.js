@@ -5,6 +5,7 @@ import axios from 'axios';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
+import Seo from '@/components/common/Seo';
 
 export default function OrderSuccess() {
   const { getAuthHeaders } = useAuth();
@@ -143,8 +144,10 @@ export default function OrderSuccess() {
   }
 
   return (
-    <div style={{
-      minHeight: '100vh',
+    <>
+      <Seo noindex title="Order Successful | GREENEYE" />
+      <div style={{
+        minHeight: '100vh',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -465,5 +468,6 @@ export default function OrderSuccess() {
         </div>
       </motion.div>
     </div>
+    </>
   );
 }

@@ -23,7 +23,7 @@ export default function DonationFailure() {
   if (loading) {
     return (
       <>
-        <Seo title="Processing..." />
+        <Seo noindex title="Processing..." />
         <section className="donation-loading" style={{
           minHeight: '100vh',
           display: 'flex',
@@ -58,7 +58,7 @@ export default function DonationFailure() {
 
   return (
     <>
-      <Seo title="Donation Failed | GreenEye Foundation" />
+      <Seo noindex title="Donation Failed | GreenEye Foundation" />
       <section className="donation-failure" style={{
         minHeight: '100vh',
         display: 'flex',

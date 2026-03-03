@@ -7,6 +7,7 @@ import axios from "axios";
 import ProfileTabs from '@/components/ProfileTabs';
 import { useTranslations } from 'next-intl';
 import { useAuth } from '@/context/AuthContext';
+import Seo from '@/components/common/Seo';
 
 const cities = ["Jaipur", "Mumbai", "Delhi", "Bangalore", "Pune", "Hyderabad", "Chennai", "Kolkata", "Other"];
 const availabilities = [
@@ -163,6 +164,8 @@ const Profile = () => {
   const phoneEditable = isPhoneEditable();
 
   return (
+    <>
+    <Seo noindex title="Profile | GREENEYE" />
     <section className="profile-page">
       <div className="container" style={{ maxWidth: 600, marginTop: 2 }}>
         <ProfileTabs />
@@ -371,6 +374,7 @@ const Profile = () => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 

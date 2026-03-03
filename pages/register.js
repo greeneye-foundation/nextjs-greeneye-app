@@ -6,6 +6,7 @@ import Register from '@/components/Auth/Register';
 import { useTranslations } from 'next-intl';
 import { IntlProvider } from 'next-intl';
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+import Seo from '@/components/common/Seo';
 
 // ✅ This receives messages and locale
 export default function RegisterPage({ messages, locale }) {
@@ -21,6 +22,8 @@ export default function RegisterPage({ messages, locale }) {
   const t = useTranslations('auth'); // Optional: For switching text
 
   return (
+    <>
+    <Seo noindex title="Register | GREENEYE" />
     <GoogleReCaptchaProvider
       reCaptchaKey={process.env.NEXT_PUBLIC_CAPTCHA_KEY}
       scriptProps={{ async: true, defer: true, appendTo: "head" }}
@@ -54,6 +57,7 @@ export default function RegisterPage({ messages, locale }) {
         </div>
       </IntlProvider>
     </GoogleReCaptchaProvider>
+    </>
   );
 }
 

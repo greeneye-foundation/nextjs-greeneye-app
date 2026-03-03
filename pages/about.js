@@ -21,6 +21,8 @@ export default function AboutPage() {
         ogTitle={t('seoTitle')}
         ogDescription={t('seoDescription')}
         canonical="https://greeneye.foundation/about"
+        siteName="GREENEYE"
+        twitterSite="@greeneye_org"
       />
       <About />
     </>

@@ -385,6 +385,8 @@ export default function EncyclopediaArticlePage() {
         ogDescription={article.excerpt?.en}
         ogImage={heroImg}
         canonical={`https://greeneye.foundation/encyclopedia/${slug}`}
+        siteName="GREENEYE"
+        twitterSite="@greeneye_org"
       />
 
       <div className="encyc-article-page">

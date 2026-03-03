@@ -22,6 +22,8 @@ export default function BlogPage() {
         ogTitle={t('seoTitle', { defaultMessage: 'Blog | GreenEye' })}
         ogDescription={t('seoDescription', { defaultMessage: 'Read the latest news and stories from GreenEye.' })}
         canonical="https://greeneye.foundation/blog"
+        siteName="GREENEYE"
+        twitterSite="@greeneye_org"
       />
       <section className="page-header">
         <div className="container">

@@ -38,7 +38,7 @@ const localBusinessSchema = {
   "hasMap": "https://maps.app.goo.gl/hc2w2LcDFF1Ax3QQ7",
   "sameAs": [
     "https://www.facebook.com/greeneye.foundation/",
-    "https://x.com/greeneye_india/",
+    "https://x.com/greeneye_org/",
     "https://www.instagram.com/greeneye.foundation/",
     "https://www.linkedin.com/company/greeneye-foundation/",
     "https://www.youtube.com/@greeneye.foundation/"
@@ -55,6 +55,8 @@ export default function ContactPage() {
         ogTitle={t('seoTitle', { defaultMessage: 'Contact Us | GreenEye' })}
         ogDescription={t('seoDescription', { defaultMessage: "We're here to answer your questions and welcome your feedback. Reach out to GreenEye for any inquiries or support." })}
         canonical="https://greeneye.foundation/contact"
+        siteName="GREENEYE"
+        twitterSite="@greeneye_org"
         structuredData={localBusinessSchema}
       />
       <section className="page-header">

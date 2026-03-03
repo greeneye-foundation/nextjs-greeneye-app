@@ -1,6 +1,31 @@
-# *
 User-agent: *
 Allow: /
+
+# Admin panel
+Disallow: /admin/
+Disallow: /admin
+
+# Auth pages
+Disallow: /login
+Disallow: /register
+Disallow: /otp-login
+
+# User account pages (private)
+Disallow: /profile
+Disallow: /myorders
+Disallow: /mydonation
+Disallow: /mygift
+
+# Payment result pages
+Disallow: /order-success
+Disallow: /order-failure
+Disallow: /donation-success
+Disallow: /donation-failure
+Disallow: /gift-payment-success
+Disallow: /gift-payment-failure
+
+# API routes
+Disallow: /api/
 
 # Host
 Host: https://greeneye.foundation

@@ -143,7 +143,7 @@ const Contact = () => {
                 <a href="https://www.facebook.com/greeneye.foundation/" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                   <i className="fab fa-facebook"></i>
                 </a>
-                <a href="https://x.com/greeneye_india/" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                <a href="https://x.com/greeneye_org/" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
                   <i className="fab fa-twitter"></i>
                 </a>
                 <a href="https://www.instagram.com/greeneye.foundation/" className="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram">

@@ -64,7 +64,7 @@ export default function DonationSuccess() {
   if (loading) {
     return (
       <>
-        <Seo title="Processing Donation..." />
+        <Seo noindex title="Processing Donation..." />
         <section className="donation-loading" style={{
           minHeight: '100vh',
           display: 'flex',
@@ -103,7 +103,7 @@ export default function DonationSuccess() {
   if (error) {
     return (
       <>
-        <Seo title="Error" />
+        <Seo noindex title="Error" />
         <section className="donation-error" style={{
           minHeight: '100vh',
           display: 'flex',
@@ -180,7 +180,7 @@ export default function DonationSuccess() {
 
   return (
     <>
-      <Seo title="Donation Successful | GreenEye Foundation" />
+      <Seo noindex title="Donation Successful | GreenEye Foundation" />
       <section className="donation-success" style={{
         minHeight: '100vh',
         display: 'flex',

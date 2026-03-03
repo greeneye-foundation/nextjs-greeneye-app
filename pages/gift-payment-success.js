@@ -56,7 +56,7 @@ export default function GiftPaymentSuccess() {
     if (loading) {
         return (
             <>
-                <Seo title="Loading..." />
+                <Seo noindex title="Loading..." />
                 <section className="payment-loading" style={{
                     minHeight: '100vh',
                     display: 'flex',
@@ -95,7 +95,7 @@ export default function GiftPaymentSuccess() {
     if (error) {
         return (
             <>
-                <Seo title="Error" />
+                <Seo noindex title="Error" />
                 <section className="payment-error" style={{
                     minHeight: '100vh',
                     display: 'flex',
@@ -172,7 +172,7 @@ export default function GiftPaymentSuccess() {
 
     return (
         <>
-            <Seo title="Payment Successful | GreenEye Foundation" />
+            <Seo noindex title="Payment Successful | GreenEye Foundation" />
             <section className="payment-success" style={{
                 minHeight: '100vh',
                 display: 'flex',

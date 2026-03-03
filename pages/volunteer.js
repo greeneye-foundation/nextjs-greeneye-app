@@ -21,6 +21,8 @@ export default function VolunteerPage() {
         ogTitle={t('seoTitle', { defaultMessage: 'Volunteer with Us | GreenEye' })}
         ogDescription={t('seoDescription', { defaultMessage: 'Become part of a movement for a greener planet. Sign up today to volunteer with GreenEye.' })}
         canonical="https://greeneye.foundation/volunteer"
+        siteName="GREENEYE"
+        twitterSite="@greeneye_org"
       />
       <section className="page-header">
         <div className="container">

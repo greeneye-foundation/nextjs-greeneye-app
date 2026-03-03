@@ -21,6 +21,8 @@ export default function ImpactPage() {
         ogTitle={t('seoTitle', { defaultMessage: 'Our Impact | GreenEye' })}
         ogDescription={t('seoDescription', { defaultMessage: "Measurable results and stories from our global reforestation journey. See how GreenEye is making a difference." })}
         canonical="https://greeneye.foundation/impact"
+        siteName="GREENEYE"
+        twitterSite="@greeneye_org"
       />
       <section className="page-header">
         <div className="container">

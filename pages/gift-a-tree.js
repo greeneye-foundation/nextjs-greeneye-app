@@ -413,6 +413,8 @@ export default function GiftATreePage() {
         ogTitle="Gift a Tree | GEYE INNOVATION FOUNDATION"
         ogDescription="Send a meaningful gift by planting trees in someone's name."
         canonical="https://greeneye.foundation/gift-a-tree"
+        siteName="GREENEYE"
+        twitterSite="@greeneye_org"
       />
 
       <section className="gift-tree-page">

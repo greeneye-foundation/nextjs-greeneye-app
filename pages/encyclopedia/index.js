@@ -17,7 +17,11 @@ export default function EncyclopediaPage() {
       <Seo
         title="Green Encyclopedia | GEYE INNOVATION FOUNDATION"
         description="Explore our comprehensive encyclopedia of plants, environmental topics, policies, and sustainable products."
+        ogTitle="Green Encyclopedia | GEYE INNOVATION FOUNDATION"
+        ogDescription="Explore our comprehensive encyclopedia of plants, environmental topics, policies, and sustainable products."
         canonical="https://greeneye.foundation/encyclopedia"
+        siteName="GREENEYE"
+        twitterSite="@greeneye_org"
       />
       <section className="page-header">
         <div className="container">

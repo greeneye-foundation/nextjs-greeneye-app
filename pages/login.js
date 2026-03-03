@@ -4,6 +4,7 @@ import Login from '@/components/Auth/Login';
 import { useTranslations } from 'next-intl';
 import { IntlProvider } from 'next-intl';
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+import Seo from '@/components/common/Seo';
 
 // Export getStaticProps to fetch translation messages
 export async function getStaticProps({ locale }) {
@@ -19,6 +20,8 @@ export default function LoginPage({ messages, locale }) {
   const t = useTranslations('auth');
 
   return (
+    <>
+    <Seo noindex title="Login | GREENEYE" />
     <GoogleReCaptchaProvider
       reCaptchaKey={process.env.NEXT_PUBLIC_CAPTCHA_KEY}
       scriptProps={{ async: true, defer: true, appendTo: "head" }}
@@ -40,5 +43,6 @@ export default function LoginPage({ messages, locale }) {
         </div>
       </IntlProvider>
     </GoogleReCaptchaProvider>
+    </>
   );
 }

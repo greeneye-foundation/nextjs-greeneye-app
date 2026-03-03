@@ -22,6 +22,8 @@ export default function ProgramsPage() {
         ogTitle={t('seoTitle', { defaultMessage: 'Our Programs | GreenEye' })}
         ogDescription={t('seoDescription', { defaultMessage: 'Explore our reforestation, education, and community initiatives. Join GreenEye\'s programs for a greener future.' })}
         canonical="https://greeneye.foundation/programs"
+        siteName="GREENEYE"
+        twitterSite="@greeneye_org"
       />
       <section className="page-header">
         <div className="container">

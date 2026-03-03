@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import axios from 'axios';
 import { useAuth } from '@/context/AuthContext';
+import Seo from '@/components/common/Seo';
 
 export default function OrderFailure() {
   const { getAuthHeaders } = useAuth();
@@ -65,8 +66,10 @@ export default function OrderFailure() {
   };
 
   return (
-    <div style={{
-      minHeight: '100vh',
+    <>
+      <Seo noindex title="Order Failed | GREENEYE" />
+      <div style={{
+        minHeight: '100vh',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -408,5 +411,6 @@ export default function OrderFailure() {
         </div>
       </motion.div>
     </div>
+    </>
   );
 }   

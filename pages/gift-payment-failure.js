@@ -23,7 +23,7 @@ export default function GiftPaymentFailure() {
     if (loading) {
         return (
             <>
-                <Seo title="Processing..." />
+                <Seo noindex title="Processing..." />
                 <section className="payment-loading" style={{
                     minHeight: '100vh',
                     display: 'flex',
@@ -58,7 +58,7 @@ export default function GiftPaymentFailure() {
 
     return (
         <>
-            <Seo title="Payment Failed | GreenEye Foundation" />
+            <Seo noindex title="Payment Failed | GreenEye Foundation" />
             <section className="payment-failure" style={{
                 minHeight: '100vh',
                 display: 'flex',

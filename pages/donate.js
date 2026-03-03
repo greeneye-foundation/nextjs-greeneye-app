@@ -21,6 +21,8 @@ export default function DonatePage() {
         ogTitle={t('seoTitle', { defaultMessage: 'Support GreenEye | Donate' })}
         ogDescription={t('seoDescription', { defaultMessage: "Your donation helps us plant more trees and expand our environmental impact. Support GreenEye's mission for a greener planet." })}
         canonical="https://greeneye.foundation/donate"
+        siteName="GREENEYE"
+        twitterSite="@greeneye_org"
       />
       <section className="page-header">
         <div className="container">

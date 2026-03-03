@@ -6,6 +6,7 @@ import Link from 'next/link';
 import ProfileTabs from '@/components/ProfileTabs';
 import { useTranslations } from 'next-intl';
 import { useAuth } from '@/context/AuthContext';
+import Seo from '@/components/common/Seo';
 
 export function getStaticProps({ locale }) {
   return {
@@ -62,6 +63,8 @@ export default function MyDonations() {
     }
 
     return (
+        <>
+        <Seo noindex title="My Donations | GREENEYE" />
         <div className="container" style={{ maxWidth: 600, marginTop: 70 }}>
             <ProfileTabs />
             <h2 style={{ marginTop: 5, marginBottom: 20 }}>
@@ -107,5 +110,6 @@ export default function MyDonations() {
                 </Link>
             ))}
         </div>
+        </>
     )
 }

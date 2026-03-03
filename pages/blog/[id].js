@@ -125,7 +125,8 @@ const BlogDetails = () => {
         ogImageHeight={ogImageHeight}
         ogImageAlt={ogImageAlt}
         ogUrl={pageUrl}
-        siteName="GreenEye"
+        siteName="GREENEYE"
+        twitterSite="@greeneye_org"
         locale={locale === "hi" ? "hi_IN" : "en_US"}
         canonical={pageUrl}
         twitterCard="summary_large_image"

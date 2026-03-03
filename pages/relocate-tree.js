@@ -140,6 +140,8 @@ const RelocateTreePage = () => {
         ogTitle="Relocate a Tree | Save Trees from Being Cut"
         ogDescription="Join our mission to save trees. Report trees at risk and help us relocate them safely."
         canonical="https://greeneye.foundation/relocate-tree"
+        siteName="GREENEYE"
+        twitterSite="@greeneye_org"
       />
 
       <div className="relocate-tree-page">
