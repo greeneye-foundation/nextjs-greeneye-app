@@ -126,9 +126,14 @@ const Contact = () => {
               <div className="contact-details">
                 <h4>{t("locationTitle")}</h4>
                 <p>
-                  Prime, C11, Kanak Vrindavan<br />
-                  Jaipur, Rajasthan, Bajiri Mandi-302034<br />
-                  {t("country", { defaultMessage: "India" })}
+                  <a
+                    href="https://maps.app.goo.gl/hc2w2LcDFF1Ax3QQ7"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    G-4-2, Kanak Vrindavan, Indra Marg<br />
+                    Jaipur, 302024, Rajasthan, India
+                  </a>
                 </p>
               </div>
             </div>
