@@ -165,7 +165,12 @@ const ArticleSEO = ({ article, url }) => {
       {/* Schema.org Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(schemaData)
+            .replace(/</g, '\\u003c')
+            .replace(/>/g, '\\u003e')
+            .replace(/&/g, '\\u0026'),
+        }}
       />
 
       {/* Breadcrumb Schema */}
@@ -196,6 +201,9 @@ const ArticleSEO = ({ article, url }) => {
               }
             ]
           })
+            .replace(/</g, '\\u003c')
+            .replace(/>/g, '\\u003e')
+            .replace(/&/g, '\\u0026'),
         }}
       />
     </Head>

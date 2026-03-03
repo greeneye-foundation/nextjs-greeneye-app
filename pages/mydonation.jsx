@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import ProfileTabs from '@/components/ProfileTabs';
 import { useTranslations } from 'next-intl';
+import { useAuth } from '@/context/AuthContext';
 
 export function getStaticProps({ locale }) {
   return {
@@ -16,21 +17,21 @@ export function getStaticProps({ locale }) {
 }
 
 export default function MyDonations() {
+    const { getAuthHeaders } = useAuth();
     const t = useTranslations('myDonations');
     const [donations, setDonations] = useState([])
     const [loading, setLoading] = useState(true)
     const router = useRouter()
 
     useEffect(() => {
-        const token = localStorage.getItem('authToken')
-        if (!token) {
+        if (!getAuthHeaders().Authorization) {
             router.push('/login')
             return
         }
 
         axios
             .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/donations/mydonations`, {
-                headers: { Authorization: `Bearer ${token}` },
+                headers: getAuthHeaders(),
             })
             .then((res) => {
                 setDonations(res.data || [])

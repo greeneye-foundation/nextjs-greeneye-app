@@ -4,6 +4,7 @@ import { useRouter } from "next/router"
 import axios from "axios"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
+import { useAuth } from "@/context/AuthContext"
 
 export async function getServerSideProps({ locale }) {
   return {
@@ -15,6 +16,7 @@ export async function getServerSideProps({ locale }) {
 }
 
 export default function DonationDetails() {
+  const { getAuthHeaders } = useAuth();
   const t = useTranslations("donationDetails")
   const router = useRouter()
   const { id } = router.query
@@ -25,15 +27,14 @@ export default function DonationDetails() {
   useEffect(() => {
     if (!id) return
 
-    const token = localStorage.getItem("authToken")
-    if (!token) {
+    if (!getAuthHeaders().Authorization) {
       router.push("/login")
       return
     }
 
     axios
       .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/donations/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: getAuthHeaders(),
       })
       .then((res) => {
         setDonation(res.data)

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import axios from 'axios'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
+import { useAuth } from '@/context/AuthContext'
 
 export function getServerSideProps({ locale }) {
   return {
@@ -15,6 +16,7 @@ export function getServerSideProps({ locale }) {
 }
 
 export default function GiftOrderDetails() {
+  const { getAuthHeaders } = useAuth();
   const router = useRouter()
   const { orderId } = router.query
   const t = useTranslations('giftDetails')
@@ -25,15 +27,14 @@ export default function GiftOrderDetails() {
   useEffect(() => {
     if (!orderId) return
 
-    const token = localStorage.getItem('authToken')
-    if (!token) {
+    if (!getAuthHeaders().Authorization) {
       router.push('/login')
       return
     }
 
     axios
       .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/gift-tree/${orderId}`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: getAuthHeaders()
       })
       .then((res) => {
         setOrder(res.data.data)

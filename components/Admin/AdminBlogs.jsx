@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useAuth } from "@/context/AuthContext";
 
 const LANGUAGES = ["en", "fr", "ar", "es", "ja", "zh"]; // supported language codes
 
@@ -19,6 +20,7 @@ const initialForm = {
 };
 
 export default function AdminBlogs() {
+  const { getAuthHeaders } = useAuth();
   const [blogs, setBlogs] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [form, setForm] = useState(initialForm);
@@ -103,7 +105,6 @@ export default function AdminBlogs() {
   // Save blog (create/update)
   const handleSave = async () => {
     setSaving(true);
-    const token = localStorage.getItem("authToken");
 
     let imageUrl = form.image;
 
@@ -135,14 +136,14 @@ export default function AdminBlogs() {
         await axios.put(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/blogs/${editBlogId}`,
           payload,
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: getAuthHeaders() }
         );
       } else {
         // If creating, create new blog
         await axios.post(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/blogs`,
           payload,
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: getAuthHeaders() }
         );
       }
 
@@ -162,13 +163,12 @@ export default function AdminBlogs() {
   // Delete blog and its image
   const handleDelete = async () => {
     if (!window.confirm("Delete this blog?")) return;
-    const token = localStorage.getItem("authToken");
 
     try {
       // Delete blog entry from backend
       await axios.delete(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/blogs/${editBlogId}`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: getAuthHeaders() }
       );
 
       // Delete image from Cloudinary if exists

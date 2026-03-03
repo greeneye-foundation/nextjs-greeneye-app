@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useAuth } from "@/context/AuthContext";
 
 const ORDER_STATUS_OPTIONS = [
   "Pending",
@@ -10,6 +11,7 @@ const ORDER_STATUS_OPTIONS = [
 ];
 
 function AdminOrders() {
+  const { getAuthHeaders } = useAuth();
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [status, setStatus] = useState("");
@@ -22,10 +24,9 @@ function AdminOrders() {
     const fetchOrders = async () => {
       setLoading(true);
       try {
-        const token = localStorage.getItem("authToken");
         const { data } = await axios.get(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/orders`,
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: getAuthHeaders() }
         );
         setOrders(data.orders);
       } catch (e) {
@@ -53,12 +54,11 @@ function AdminOrders() {
     setSaving(true);
     setSaveMsg("");
     try {
-      const token = localStorage.getItem("authToken");
       const { data } = await axios.put(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/orders/${selectedOrder._id}`,
         { orderStatus: status, isDelivered },
         {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: getAuthHeaders()
         }
       );
       setSaveMsg("Order status updated!");
@@ -77,7 +77,6 @@ function AdminOrders() {
   const handleSyncPayment = async () => {
     if (!selectedOrder) return;
     try {
-      const token = localStorage.getItem("authToken");
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/payment/check-status`,
         {
@@ -85,7 +84,7 @@ function AdminOrders() {
           entityId: selectedOrder._id,
           entityType: "order"
         },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: getAuthHeaders() }
       );
 
       if (res.data.success) {

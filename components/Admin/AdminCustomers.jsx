@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useAuth } from "@/context/AuthContext";
 
 const availabilityLabels = {
   weekends: "Weekends Only",
@@ -9,6 +10,7 @@ const availabilityLabels = {
 };
 
 export default function AdminCustomers() {
+  const { getAuthHeaders } = useAuth();
   const [users, setUsers] = useState([]);
   const [selected, setSelected] = useState(null);
   const [edit, setEdit] = useState({});
@@ -24,10 +26,9 @@ export default function AdminCustomers() {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem("authToken");
       const { data } = await axios.get(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/users`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: getAuthHeaders() }
       );
       setUsers(data.users);
     } catch (e) {
@@ -69,11 +70,10 @@ export default function AdminCustomers() {
     setSaving(true);
     setSaveMsg("");
     try {
-      const token = localStorage.getItem("authToken");
       const { data } = await axios.put(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/users/${selected._id}`,
         edit,
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: getAuthHeaders() }
       );
       setSaveMsg("Saved!");
       setUsers(users =>
@@ -89,11 +89,10 @@ export default function AdminCustomers() {
   const handleDelete = async () => {
     if (!window.confirm("Delete this user?")) return;
     setSaving(true);
-    const token = localStorage.getItem("authToken");
     try {
       await axios.delete(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/users/${selected._id}`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: getAuthHeaders() }
       );
       setUsers(users => users.filter(u => u._id !== selected._id));
       closeDetail();

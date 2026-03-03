@@ -4,8 +4,10 @@ import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import axios from 'axios';
+import { useAuth } from '@/context/AuthContext';
 
 export default function OrderFailure() {
+  const { getAuthHeaders } = useAuth();
   const router = useRouter();
   const [orderDetails, setOrderDetails] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
@@ -38,13 +40,12 @@ export default function OrderFailure() {
 
   const fetchOrderDetails = async (orderId) => {
     try {
-      const token = localStorage.getItem('authToken');
-      if (!token) return;
+      if (!getAuthHeaders().Authorization) return;
 
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/orders/${orderId}`,
         {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: getAuthHeaders()
         }
       );
 

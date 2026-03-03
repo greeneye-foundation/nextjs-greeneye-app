@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
 
 function AdminDashboard() {
+  const { getAuthHeaders } = useAuth();
   const [stats, setStats] = useState(null);
   const [giftStats, setGiftStats] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -14,12 +16,10 @@ function AdminDashboard() {
 
   const fetchAllStats = async () => {
     try {
-      const token = localStorage.getItem("authToken");
-      
       // Fetch regular stats
       const { data: statsData } = await axios.get(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/stats`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: getAuthHeaders() }
       );
       setStats(statsData.data);
 
@@ -27,7 +27,7 @@ function AdminDashboard() {
       try {
         const { data: giftData } = await axios.get(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/gift-orders/stats`,
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: getAuthHeaders() }
         );
         setGiftStats(giftData);
       } catch (giftErr) {

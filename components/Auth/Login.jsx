@@ -5,9 +5,14 @@ import { showNotification } from "@/components/Notification";
 import { useTranslations } from "next-intl";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import GoogleLoginButton from "./GoogleLoginButton";
+import { useAuth } from "@/context/AuthContext";
 
 const Login = ({ onSwitch, onLogin }) => {
   const t = useTranslations("login");
+  const { login } = useAuth();
+  const redirectTo = typeof window !== 'undefined'
+    ? new URLSearchParams(window.location.search).get('from') || '/profile'
+    : '/profile';
   const [activeTab, setActiveTab] = useState("email");
   const [form, setForm] = useState({
     email: "",
@@ -46,7 +51,7 @@ const Login = ({ onSwitch, onLogin }) => {
     }
     setLoading(true);
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/otp/send`, { phone: mobile });
+      await axios.post('/api/auth/otp-send', { phone: mobile });
       showNotification(t("otpSent") || "OTP sent successfully", "success");
       setOtpSent(true);
     } catch (error) {
@@ -63,10 +68,10 @@ const Login = ({ onSwitch, onLogin }) => {
     }
     setLoading(true);
     try {
-      const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/otp/login`, { phone: mobile, otp });
-      localStorage.setItem("authToken", data.token);
+      const { data } = await axios.post('/api/auth/otp-login', { phone: mobile, otp });
+      login(data, data.token);
       showNotification(t("loginSuccess"), "success");
-      router.push("/profile");
+      router.push(redirectTo);
       if (onLogin) onLogin(data);
     } catch (error) {
       showNotification(error.response?.data?.message || t("invalidOtp") || "Invalid OTP", "error");
@@ -95,20 +100,15 @@ const Login = ({ onSwitch, onLogin }) => {
     try {
       // 🔹 recaptcha token generate
       const recaptchaToken = await executeRecaptcha("login_action");
-      const { data } = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/login`,
-        {
-          email: form.email,
-          password: form.password,
-          recaptchaToken,
-        }
-      );
+      const { data } = await axios.post('/api/auth/login', {
+        email: form.email,
+        password: form.password,
+        recaptchaToken,
+      });
 
-      if (data.token) {
-        localStorage.setItem("authToken", data.token);
-        showNotification(t("loginSuccess"), "success");
-        router.push("/profile");
-      }
+      login(data, data.token);
+      showNotification(t("loginSuccess"), "success");
+      router.push(redirectTo);
 
       if (onLogin) onLogin(data);
 

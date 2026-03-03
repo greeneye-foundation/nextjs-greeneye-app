@@ -8,9 +8,11 @@ import { useTranslations } from "next-intl";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import Modal from "@/components/Modal";
 import GoogleLoginButton from "./GoogleLoginButton";
+import { useAuth } from "@/context/AuthContext";
 
 const Register = ({ onSwitch }) => {
   const t = useTranslations("register");
+  const { login } = useAuth();
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -71,13 +73,11 @@ const Register = ({ onSwitch }) => {
         recaptchaToken
       };
 
-      const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/register`, payload);
+      const { data } = await axios.post('/api/auth/register', payload);
 
-      if (data.token) {
-        localStorage.setItem("authToken", data.token);
-        showNotification(t("registerSuccess"), "success");
-        router.push("/profile");
-      }
+      login(data, data.token);
+      showNotification(t("registerSuccess"), "success");
+      router.push("/profile");
 
       setForm({
         firstName: "",

@@ -3,8 +3,10 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
 
 const Checkout = () => {
+  const { getAuthHeaders } = useAuth();
   const t = useTranslations("checkout");
   const [cart, setCart] = useState(null);
   const [userInfo, setUserInfo] = useState({
@@ -32,20 +34,15 @@ const Checkout = () => {
   const router = useRouter();
 
   useEffect(() => {
-    // Read token once and reuse across all fetch functions
-    const token = localStorage.getItem("authToken");
-
     const fetchCart = async () => {
       setError("");
       try {
-        if (!token) {
+        if (!getAuthHeaders().Authorization) {
           setError(t("loginRequired"));
           return;
         }
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/cart`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: getAuthHeaders(),
         });
         setCart(res.data);
       } catch (err) {
@@ -55,12 +52,10 @@ const Checkout = () => {
 
     const fetchUserInfo = async () => {
       try {
-        if (!token) return;
+        if (!getAuthHeaders().Authorization) return;
 
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/profile`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: getAuthHeaders(),
         });
 
         const { name, email, phone, address } = res.data;
@@ -82,9 +77,9 @@ const Checkout = () => {
     // ✅ Fetch available coupons
     const fetchCoupons = async () => {
       try {
-        if (!token) return;
+        if (!getAuthHeaders().Authorization) return;
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/coupons/available`, {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: getAuthHeaders(),
         });
         setAvailableCoupons(res.data);
       } catch (err) {
@@ -135,8 +130,7 @@ const Checkout = () => {
     }
 
     try {
-      const token = localStorage.getItem("authToken");
-      if (!token) {
+      if (!getAuthHeaders().Authorization) {
         setError(t("loginRequired"));
         return;
       }
@@ -144,7 +138,7 @@ const Checkout = () => {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/coupons/apply`,
         { code: couponCode, orderAmount: total },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: getAuthHeaders() }
       );
 
       setDiscount(res.data.discount);
@@ -223,8 +217,7 @@ const Checkout = () => {
 
     setPlacing(true);
     try {
-      const token = localStorage.getItem("authToken");
-      if (!token) {
+      if (!getAuthHeaders().Authorization) {
         setError(t("loginRequired"));
         setPlacing(false);
         return;
@@ -252,9 +245,7 @@ const Checkout = () => {
       };
 
       const res = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/orders`, orderData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: getAuthHeaders(),
       });
 
       const createdOrder = res.data;

@@ -25,6 +25,7 @@ import Notification from '@/components/Notification';
 import BackToTop from '@/components/BackToTop';
 import LoadingBar from '@/components/LoadingBar';
 import Script from 'next/script';
+import { AuthProvider } from '@/context/AuthContext';
 
 // Supported locales:
 const SUPPORTED = ['en', 'fr', 'es', 'ar', 'zh', 'ja', 'hi'];
@@ -151,31 +152,33 @@ export default function App({ Component, pageProps }) {
 
       {/* ✅ Google OAuth Provider */}
       <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}>
-        {/* ✅ Internationalization + Layout */}
-        <IntlProvider
-          messages={messages}
-          locale={locale}
-          defaultLocale="en"
-          getMessageFallback={({ key /*, namespace*/ }) => key}
-          onError={(err) => {
-            if (
-              err.code === 'MISSING_MESSAGE' ||
-              err.code === 'ENVIRONMENT_FALLBACK'
-            ) {
-              if (process.env.NODE_ENV === 'development') return;
-            }
-          }}
-        >
-          {isAdminRoute ? (
-            <Component {...pageProps} />
-          ) : (
-            <Layout>
-              <Notification />
+        <AuthProvider>
+          {/* ✅ Internationalization + Layout */}
+          <IntlProvider
+            messages={messages}
+            locale={locale}
+            defaultLocale="en"
+            getMessageFallback={({ key /*, namespace*/ }) => key}
+            onError={(err) => {
+              if (
+                err.code === 'MISSING_MESSAGE' ||
+                err.code === 'ENVIRONMENT_FALLBACK'
+              ) {
+                if (process.env.NODE_ENV === 'development') return;
+              }
+            }}
+          >
+            {isAdminRoute ? (
               <Component {...pageProps} />
-              <BackToTop />
-            </Layout>
-          )}
-        </IntlProvider>
+            ) : (
+              <Layout>
+                <Notification />
+                <Component {...pageProps} />
+                <BackToTop />
+              </Layout>
+            )}
+          </IntlProvider>
+        </AuthProvider>
       </GoogleOAuthProvider>
     </>
   );

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { showNotification } from "@/components/Notification";
 import { useTranslations } from "next-intl";
+import { useAuth } from "@/context/AuthContext";
 
 const cities = [
   "Jaipur", "Mumbai", "Delhi", "Bangalore", "Pune", "Hyderabad", "Chennai", "Kolkata", "Other"
@@ -79,6 +80,7 @@ const professions = [
 
 const Volunteer = () => {
   const t = useTranslations("volunteerForm");
+  const { getAuthHeaders, isLoggedIn: ctxLoggedIn, login } = useAuth();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -96,21 +98,18 @@ const Volunteer = () => {
   const [isVolunteer, setIsVolunteer] = useState(false);
   const router = useRouter();
 
-  // Safely check authToken in useEffect, not during render
+  // Safely check auth via context on mount
   useEffect(() => {
     const fetchProfile = async () => {
-      let token = null;
-      if (typeof window !== "undefined") {
-        token = localStorage.getItem("authToken");
-      }
-      if (!token) return;
+      const headers = getAuthHeaders();
+      if (!headers.Authorization) return;
 
       setIsLoggedIn(true);
 
       try {
         const { data } = await axios.get(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/profile`,
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers }
         );
 
         setForm((f) => ({
@@ -127,7 +126,7 @@ const Volunteer = () => {
     };
 
     fetchProfile();
-  }, []);
+  }, [getAuthHeaders]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -138,13 +137,10 @@ const Volunteer = () => {
     e.preventDefault();
     setLoading(true);
 
-    let token = null;
-    if (typeof window !== "undefined") {
-      token = localStorage.getItem("authToken");
-    }
+    const authHeaders = getAuthHeaders();
 
     try {
-      if (isLoggedIn && token) {
+      if (isLoggedIn && authHeaders.Authorization) {
         await axios.put(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/volunteer`,
           {
@@ -154,7 +150,7 @@ const Volunteer = () => {
             profession: form.profession,
             why_do_you_want_to_join_us: form.motivation,
           },
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: authHeaders }
         );
         setIsVolunteer(true);
         showNotification(t("notifVolunteerSuccess"), "success");
@@ -180,8 +176,8 @@ const Volunteer = () => {
           }
         );
 
-        if (typeof window !== "undefined" && data.token) {
-          localStorage.setItem("authToken", data.token);
+        if (data.token) {
+          login(data, data.token);
           showNotification(t("notifRegisterSuccess"), "success");
           router.push("/profile");
         }

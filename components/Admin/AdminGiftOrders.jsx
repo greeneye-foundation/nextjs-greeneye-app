@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useAuth } from "@/context/AuthContext";
 
 const ORDER_STATUS_OPTIONS = [
   "PENDING",
@@ -17,6 +18,7 @@ const PAYMENT_STATUS_OPTIONS = [
 ];
 
 function AdminGiftOrders() {
+  const { getAuthHeaders } = useAuth();
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [orderStatus, setOrderStatus] = useState("");
@@ -32,10 +34,9 @@ function AdminGiftOrders() {
   const fetchOrders = async () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem("authToken");
       const { data } = await axios.get(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/gift-tree`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: getAuthHeaders() }
       );
       setOrders(data.data || []);
     } catch (e) {
@@ -63,15 +64,14 @@ function AdminGiftOrders() {
     setSaveMsg("");
     
     try {
-      const token = localStorage.getItem("authToken");
       const { data } = await axios.put(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/gift-tree/${selectedOrder.orderId}/status`,
-        { 
-          orderStatus, 
-          paymentStatus 
+        {
+          orderStatus,
+          paymentStatus
         },
         {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: getAuthHeaders()
         }
       );
       
@@ -109,10 +109,9 @@ function AdminGiftOrders() {
     }
 
     try {
-      const token = localStorage.getItem("authToken");
       await axios.delete(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/gift-tree/${selectedOrder.orderId}`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: getAuthHeaders() }
       );
       
       alert("✅ Gift order deleted successfully!");

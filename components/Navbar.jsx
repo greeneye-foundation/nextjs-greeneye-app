@@ -2,9 +2,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import axios from "axios";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "@/components/common/LanguageSwitcher";
+import { useAuth } from "@/context/AuthContext";
 
 const NAV_LINKS = [
   { href: "/", labelKey: "home" },
@@ -18,10 +18,7 @@ const Navbar = () => {
   const router = useRouter();
   const navMenuRef = useRef();
   const [menuActive, setMenuActive] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userName, setUserName] = useState("");
-  const [userInfo, setUserInfo] = useState("");
-
+  const { isLoggedIn, user, logout, isLoading } = useAuth();
 
   const t = useTranslations("navbar");
 
@@ -41,49 +38,14 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Consolidated authentication and user profile check
-  useEffect(() => {
-    const checkAuthAndFetchUser = async () => {
-      const token = localStorage.getItem("authToken");
-      const hasToken = !!token;
-      setIsLoggedIn(hasToken);
-
-      if (hasToken && token) {
-        try {
-          const res = await axios.get(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/profile`,
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
-          setUserName(res.data.name || t("profile"));
-          setUserInfo(res.data || {});
-        } catch (error) {
-          // Token might be invalid, clear auth state
-          setUserName("");
-          setUserInfo({});
-        }
-      } else {
-        setUserName("");
-        setUserInfo({});
-      }
-    };
-
-    checkAuthAndFetchUser();
-
-    // Listen for storage changes (e.g., login/logout in another tab)
-    const handleStorageChange = () => checkAuthAndFetchUser();
-    window.addEventListener("storage", handleStorageChange);
-
-    return () => window.removeEventListener("storage", handleStorageChange);
-  }, [router.pathname, t]);
-
-  const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    setIsLoggedIn(false);
-    setUserName("");
+  const handleLogout = async () => {
+    await logout();
     router.push("/login");
   };
 
   const isActive = (path) => router.pathname === path;
+
+  const userName = user?.name || "";
 
   return (
     <nav className="navbar" id="navbar">
@@ -148,7 +110,7 @@ const Navbar = () => {
             </li>
           )}
 
-          {isLoggedIn && userInfo?.isAdmin && (
+          {isLoggedIn && user?.isAdmin && (
             <li>
               <Link href="/admin" className={`nav-link nav-admin-link${isActive("/admin") ? " active" : ""}`}>
                 <i className="fas fa-user-shield"></i>
@@ -178,4 +140,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

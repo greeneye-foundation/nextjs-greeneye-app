@@ -1,5 +1,4 @@
 // pages/api/geo.js
-
 export default async function handler(req, res) {
   // Get IP address; behind proxies, check x-forwarded-for (first IP is the user's real IP)
   const forwarded = req.headers['x-forwarded-for'];

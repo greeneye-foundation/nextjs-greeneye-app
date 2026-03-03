@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import ProfileTabs from '@/components/ProfileTabs'
 import { useTranslations } from 'next-intl'
+import { useAuth } from '@/context/AuthContext'
 
 export function getStaticProps({ locale }) {
   return {
@@ -16,20 +17,20 @@ export function getStaticProps({ locale }) {
 }
 
 export default function MyOrders() {
+  const { getAuthHeaders } = useAuth();
   const t = useTranslations('myOrders');
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(true)
   const router = useRouter()
 
   useEffect(() => {
-    const token = localStorage.getItem('authToken')
-    if (!token) {
+    if (!getAuthHeaders().Authorization) {
       router.push('/login')
       return
     }
     axios
       .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/orders/myorders`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: getAuthHeaders(),
       })
       .then((res) => {
         setOrders(res.data || [])

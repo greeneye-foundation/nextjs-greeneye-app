@@ -7,6 +7,7 @@ import axios from 'axios';
 import Seo from '@/components/common/Seo';
 import { showNotification } from '@/components/Notification';
 import OccasionSelector from '@/components/OccasionSelector';
+import { useAuth } from '@/context/AuthContext';
 
 export function getStaticProps({ locale }) {
   return {
@@ -18,6 +19,7 @@ export function getStaticProps({ locale }) {
 }
 
 export default function GiftATreePage() {
+  const { getAuthHeaders } = useAuth();
   const t = useTranslations('giftTree');
   const router = useRouter();
   const carouselRef = useRef(null);
@@ -54,12 +56,7 @@ export default function GiftATreePage() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        let token = null;
-        if (typeof window !== "undefined") {
-          token = localStorage.getItem("authToken");
-        }
-
-        if (!token) {
+        if (!getAuthHeaders().Authorization) {
           setUserLoading(false);
           return;
         }
@@ -69,9 +66,7 @@ export default function GiftATreePage() {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/profile`,
           {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
+            headers: getAuthHeaders()
           }
         );
 

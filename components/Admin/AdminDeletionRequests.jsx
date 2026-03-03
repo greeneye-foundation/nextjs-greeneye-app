@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useAuth } from "@/context/AuthContext";
 
 export default function AdminDeletionRequests() {
+  const { getAuthHeaders } = useAuth();
   const [requests, setRequests] = useState([]);
   const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -16,10 +18,9 @@ export default function AdminDeletionRequests() {
   const fetchRequests = async () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem("authToken");
       const { data } = await axios.get(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/deletion-requests?status=${filterStatus}`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: getAuthHeaders() }
       );
       setRequests(data.requests || []);
     } catch (e) {
@@ -47,11 +48,10 @@ export default function AdminDeletionRequests() {
     setProcessing(true);
     setActionMsg("");
     try {
-      const token = localStorage.getItem("authToken");
       const { data } = await axios.put(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/deletion-requests/${selected._id}/approve`,
         {},
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: getAuthHeaders() }
       );
       setActionMsg(data.message);
       setRequests(requests.filter(r => r._id !== selected._id));
@@ -68,11 +68,10 @@ export default function AdminDeletionRequests() {
     setProcessing(true);
     setActionMsg("");
     try {
-      const token = localStorage.getItem("authToken");
       const { data } = await axios.put(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/deletion-requests/${selected._id}/reject`,
         { reason },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: getAuthHeaders() }
       );
       setActionMsg(data.message);
       setRequests(requests.map(r => r._id === selected._id ? data.user : r));

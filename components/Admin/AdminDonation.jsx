@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useAuth } from "@/context/AuthContext";
 
 const AdminDonation = () => {
+  const { getAuthHeaders } = useAuth();
   const [donations, setDonations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -18,8 +20,6 @@ const AdminDonation = () => {
     setError("");
 
     try {
-      const token = localStorage.getItem("authToken");
-
       const params = new URLSearchParams();
       if (donor) params.append("donor", donor);
       if (phone) params.append("phone", phone);
@@ -29,7 +29,7 @@ const AdminDonation = () => {
       const { data } = await axios.get(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/donations?${params.toString()}`,
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: getAuthHeaders(),
         }
       );
 
@@ -53,7 +53,6 @@ const AdminDonation = () => {
   // ✅ Sync Payment Function
   const handleSyncPayment = async (donation) => {
     try {
-      const token = localStorage.getItem("authToken");
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/payment/check-status`,
         {
@@ -61,7 +60,7 @@ const AdminDonation = () => {
           entityId: donation._id,
           entityType: "donation",
         },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: getAuthHeaders() }
       );
 
       if (res.data.success) {

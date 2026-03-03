@@ -182,11 +182,18 @@ const ContentSection = ({ formData, updateFormData, errors }) => {
               className="preview-content"
               dangerouslySetInnerHTML={{
                 __html: (formData.content[selectedLanguage] || 'No content yet...')
+                  // Escape raw HTML first to prevent XSS
+                  .replace(/&/g, '&amp;')
+                  .replace(/</g, '&lt;')
+                  .replace(/>/g, '&gt;')
+                  .replace(/"/g, '&quot;')
+                  // Then apply markdown transforms on the escaped string
                   .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                   .replace(/\*(.*?)\*/g, '<em>$1</em>')
                   .replace(/^## (.*$)/gm, '<h2>$1</h2>')
                   .replace(/^- (.*$)/gm, '<li>$1</li>')
-                  .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank">$1</a>')
+                  // Only allow http/https URLs to prevent javascript: attacks
+                  .replace(/\[(.*?)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
                   .replace(/\n/g, '<br>')
               }}
             />

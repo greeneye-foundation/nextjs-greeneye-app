@@ -30,11 +30,21 @@ function getLocaleFromCountryCode(code) {
 export async function middleware(request) {
   const { pathname, locale } = request.nextUrl;
 
+  // ✅ Admin route protection — redirect to /login if no auth cookie
+  if (pathname.startsWith('/admin')) {
+    const token = request.cookies.get('auth_token')?.value;
+    if (!token) {
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set('from', pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+    return NextResponse.next();
+  }
+
   // ✅ Ignore static assets & API routes
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/api') ||
-    pathname.startsWith('/admin') ||
     pathname.match(/\.(.*)$/)
   ) {
     return NextResponse.next();
@@ -74,7 +84,8 @@ export async function middleware(request) {
 
 export const config = {
   matcher: [
-    '/', 
-    '/((?!_next|api|.*\\..*|admin(?:/.*)?).*)' // 🧠 exclude `/admin` & subpaths
-  ]
+    '/',
+    '/admin/:path*',
+    '/((?!_next|api|.*\\..*).*)',
+  ],
 };

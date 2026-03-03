@@ -3,6 +3,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { useAuth } from "@/context/AuthContext";
 
 export async function getServerSideProps({ locale }) {
   return {
@@ -14,6 +15,7 @@ export async function getServerSideProps({ locale }) {
 }
 
 const OrderDetails = () => {
+  const { getAuthHeaders } = useAuth();
   const t = useTranslations("orderDetails");
   const router = useRouter();
   const { orderId } = router.query;
@@ -24,15 +26,14 @@ const OrderDetails = () => {
   useEffect(() => {
     if (!orderId) return;
 
-    const token = localStorage.getItem("authToken");
-    if (!token) {
+    if (!getAuthHeaders().Authorization) {
       router.push("/login");
       return;
     }
 
     axios
       .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/orders/${orderId}`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: getAuthHeaders(),
       })
       .then((res) => {
         setOrder(res.data);

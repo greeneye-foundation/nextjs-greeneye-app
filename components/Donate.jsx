@@ -3,10 +3,12 @@ import axios from "axios";
 import { showNotification } from "@/components/Notification";
 import { useRouter } from "next/router";
 import { useTranslations } from "next-intl";
+import { useAuth } from "@/context/AuthContext";
 
 const presetAmounts = [100, 500, 1000, 5000];
 
 const Donate = () => {
+  const { getAuthHeaders } = useAuth();
   const [amount, setAmount] = useState("");
   const [activeBtn, setActiveBtn] = useState(null);
   const [form, setForm] = useState({
@@ -21,16 +23,12 @@ const Donate = () => {
   // Auto-fill profile info if logged in
   useEffect(() => {
     const fetchProfile = async () => {
-      let token = null;
-      if (typeof window !== "undefined") {
-        token = localStorage.getItem("authToken");
-      }
-      if (!token) return;
+      if (!getAuthHeaders().Authorization) return;
 
       try {
         const { data } = await axios.get(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/profile`,
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: getAuthHeaders() }
         );
 
         setForm((f) => ({

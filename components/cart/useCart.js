@@ -1,32 +1,25 @@
 // components/cart/useCart.js
 import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
-
-const getToken = () =>
-  typeof window !== "undefined" ? localStorage.getItem("authToken") : null;
+import { useAuth } from "@/context/AuthContext";
 
 export default function useCart() {
+  const { getAuthHeaders } = useAuth();
   const [cart, setCart] = useState({ items: [] });
   const [open, setOpen] = useState(false);
-  const token = getToken();
-
-  const headers = useMemo(
-    () => (token ? { Authorization: `Bearer ${token}` } : {}),
-    [token]
-  );
 
   const fetchCart = useCallback(async () => {
-    if (!token) return setCart({ items: [] });
+    if (!getAuthHeaders().Authorization) return setCart({ items: [] });
     try {
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/cart`,
-        { headers }
+        { headers: getAuthHeaders() }
       );
       setCart(res.data);
     } catch {
       setCart({ items: [] });
     }
-  }, [headers, token]);
+  }, [getAuthHeaders]);
 
   useEffect(() => {
     fetchCart();
@@ -34,42 +27,42 @@ export default function useCart() {
 
   const addToCart = useCallback(
     async (plantOrId, quantity = 1) => {
-      if (!token) throw new Error("LOGIN_REQUIRED");
+      if (!getAuthHeaders().Authorization) throw new Error("LOGIN_REQUIRED");
       const plantId = typeof plantOrId === "string" ? plantOrId : plantOrId._id;
       await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/cart`,
         { plantId, quantity },
-        { headers }
+        { headers: getAuthHeaders() }
       );
       await fetchCart();
       setOpen(true);
     },
-    [headers, token, fetchCart]
+    [getAuthHeaders, fetchCart]
   );
 
   const removeFromCart = useCallback(
     async (itemId) => {
-      if (!token) return;
+      if (!getAuthHeaders().Authorization) return;
       await axios.delete(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/cart/${itemId}`,
-        { headers }
+        { headers: getAuthHeaders() }
       );
       await fetchCart();
     },
-    [headers, token, fetchCart]
+    [getAuthHeaders, fetchCart]
   );
 
   const changeQty = useCallback(
     async (itemId, newQty) => {
-      if (!token || newQty < 1) return;
+      if (!getAuthHeaders().Authorization || newQty < 1) return;
       await axios.put(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/cart/${itemId}`,
         { quantity: newQty },
-        { headers }
+        { headers: getAuthHeaders() }
       );
       await fetchCart();
     },
-    [headers, token, fetchCart]
+    [getAuthHeaders, fetchCart]
   );
 
   const cartCount = useMemo(

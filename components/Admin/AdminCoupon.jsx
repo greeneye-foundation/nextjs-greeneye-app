@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useAuth } from "@/context/AuthContext";
 
 export default function AdminCoupons() {
+  const { getAuthHeaders } = useAuth();
   const [coupons, setCoupons] = useState([]);
   const [selected, setSelected] = useState(null);
   const [edit, setEdit] = useState({});
@@ -9,10 +11,6 @@ export default function AdminCoupons() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saveMsg, setSaveMsg] = useState("");
-
-  // ✅ Token from localStorage
-  const token =
-    typeof window !== "undefined" ? localStorage.getItem("authToken") : null;
 
   useEffect(() => {
     fetchCoupons();
@@ -25,7 +23,7 @@ export default function AdminCoupons() {
       const { data } = await axios.get(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/coupons`,
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: getAuthHeaders(),
         }
       );
       setCoupons(data);
@@ -87,7 +85,7 @@ export default function AdminCoupons() {
         const { data } = await axios.post(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/coupons/create`,
           edit,
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: getAuthHeaders() }
         );
         setCoupons((arr) => [data, ...arr]);
         setSaveMsg("Coupon created!");
@@ -96,7 +94,7 @@ export default function AdminCoupons() {
         const { data } = await axios.put(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/coupons/${selected._id}`,
           edit,
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: getAuthHeaders() }
         );
         setCoupons((arr) =>
           arr.map((c) => (c._id === data._id ? { ...c, ...data } : c))
@@ -117,7 +115,7 @@ export default function AdminCoupons() {
     try {
       await axios.delete(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/coupons/${selected._id}`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: getAuthHeaders() }
       );
       setCoupons((arr) => arr.filter((c) => c._id !== selected._id));
       closeModal();

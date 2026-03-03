@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useAuth } from "@/context/AuthContext";
 
 export default function AdminProduct() {
+  const { getAuthHeaders } = useAuth();
   const [plants, setPlants] = useState([]);
   const [selected, setSelected] = useState(null);
   const [edit, setEdit] = useState({});
@@ -120,7 +122,6 @@ export default function AdminProduct() {
     }
 
     try {
-      const token = localStorage.getItem("authToken");
       const countryArray = edit.country
         .split(",")
         .map((c) => c.trim().toUpperCase())
@@ -142,7 +143,7 @@ export default function AdminProduct() {
         const { data } = await axios.post(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/plants`,
           payload,
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: getAuthHeaders() }
         );
         setPlants((arr) => [data, ...arr]);
         setSaveMsg("Product created!");
@@ -151,7 +152,7 @@ export default function AdminProduct() {
         const { data } = await axios.put(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/plants/${selected._id}`,
           payload,
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: getAuthHeaders() }
         );
         setPlants((arr) =>
           arr.map((p) => (p._id === data._id ? { ...p, ...data } : p))
@@ -170,10 +171,9 @@ export default function AdminProduct() {
     if (!window.confirm("Delete this product?")) return;
     setSaving(true);
     try {
-      const token = localStorage.getItem("authToken");
       await axios.delete(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/plants/${selected._id}`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: getAuthHeaders() }
       );
       setPlants((arr) => arr.filter((p) => p._id !== selected._id));
       closeModal();

@@ -4,8 +4,10 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useAuth } from '@/context/AuthContext';
 
 export default function OrderSuccess() {
+  const { getAuthHeaders } = useAuth();
   const router = useRouter();
   const [orderDetails, setOrderDetails] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -25,8 +27,7 @@ export default function OrderSuccess() {
         }
 
         // Fetch order details
-        const token = localStorage.getItem('authToken');
-        if (!token) {
+        if (!getAuthHeaders().Authorization) {
           setError('Please login to view order details');
           setLoading(false);
           return;
@@ -35,7 +36,7 @@ export default function OrderSuccess() {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/orders/${orderId}`,
           {
-            headers: { Authorization: `Bearer ${token}` }
+            headers: getAuthHeaders()
           }
         );
 

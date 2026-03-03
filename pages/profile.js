@@ -6,6 +6,7 @@ import Link from "next/link";
 import axios from "axios";
 import ProfileTabs from '@/components/ProfileTabs';
 import { useTranslations } from 'next-intl';
+import { useAuth } from '@/context/AuthContext';
 
 const cities = ["Jaipur", "Mumbai", "Delhi", "Bangalore", "Pune", "Hyderabad", "Chennai", "Kolkata", "Other"];
 const availabilities = [
@@ -31,6 +32,7 @@ export function getStaticProps({ locale }) {
 }
 
 const Profile = () => {
+  const { getAuthHeaders } = useAuth();
   const t = useTranslations('profilePage');
   const [user, setUser] = useState(null);
   const [editMode, setEditMode] = useState(false);
@@ -47,13 +49,12 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (!token) {
+    if (!getAuthHeaders().Authorization) {
       router.push("/login");
       return;
     }
     axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/profile`, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: getAuthHeaders(),
     })
       .then((res) => {
         setUser(res.data);
@@ -78,7 +79,6 @@ const Profile = () => {
         setLoading(false);
       })
       .catch(() => {
-        localStorage.removeItem("authToken");
         router.push("/login");
       });
   }, [router]);
@@ -100,11 +100,10 @@ const Profile = () => {
   const handleSave = async () => {
     setSaving(true);
     try {
-      const token = localStorage.getItem("authToken");
       const profileRes = await axios.put(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/profile`,
         editData,
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: getAuthHeaders() }
       );
       let updatedUser = profileRes.data;
 
@@ -112,11 +111,11 @@ const Profile = () => {
         await axios.put(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/volunteer`,
           volEditData,
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: getAuthHeaders() }
         );
         const { data: refreshed } = await axios.get(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/profile`,
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: getAuthHeaders() }
         );
         updatedUser = refreshed;
         setVolEditData({

@@ -1,13 +1,13 @@
-// components/Legal/AccountDeletion.jsx - WITH DEBUG LOGS
-
 import React, { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { useAuth } from "@/context/AuthContext";
 
 const AccountDeletion = () => {
   const t = useTranslations("accountDeletion");
   const router = useRouter();
+  const { getAuthHeaders, logout } = useAuth();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -20,19 +20,18 @@ const AccountDeletion = () => {
   }, []);
 
   const checkLoginStatus = async () => {
-    const token = localStorage.getItem("authToken");
-    
-    if (token) {
+    const headers = getAuthHeaders();
+
+    if (headers.Authorization) {
       try {
         const { data } = await axios.get(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/profile`,
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers }
         );
-        
+
         setIsLoggedIn(true);
         setUserData(data);
-        
-        // Check if user has pending deletion request
+
         if (data.deletionRequest && data.deletionRequest.status === 'PENDING') {
           setHasPendingRequest(true);
         } else {
@@ -41,7 +40,7 @@ const AccountDeletion = () => {
       } catch (err) {
         console.error("❌ Failed to fetch user data:", err);
         setIsLoggedIn(false);
-        localStorage.removeItem("authToken");
+        await logout();
       }
     }
   };
@@ -54,11 +53,10 @@ const AccountDeletion = () => {
     setError("");
 
     try {
-      const token = localStorage.getItem("authToken");
       const { data } = await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/request-deletion`,
         {},
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: getAuthHeaders() }
       );
       
       // Update state immediately
@@ -85,10 +83,9 @@ const AccountDeletion = () => {
     setError("");
 
     try {
-      const token = localStorage.getItem("authToken");
       const { data } = await axios.delete(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/cancel-deletion`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: getAuthHeaders() }
       );
       
       // Update state immediately
