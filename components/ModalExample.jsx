@@ -88,7 +88,7 @@ const ModalExample = () => {
         onClose={() => setCustomModalOpen(false)}
         title="Custom Content Example"
         content={`
-# Welcome to GreenEye Foundation
+# Welcome to GEYE INNOVATION FOUNDATION
 
 This is an example of **custom inline content** in the modal.
 

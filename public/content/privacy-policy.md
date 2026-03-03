@@ -2,7 +2,7 @@
 
 **Last Updated: January 2025**
 
-At GreenEye Foundation, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website.
+At GEYE INNOVATION FOUNDATION, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website.
 
 ## 1. Information We Collect
 
@@ -192,7 +192,7 @@ Our lawful basis for processing includes:
 
 If you have questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us:
 
-**GreenEye Foundation**
+**GEYE INNOVATION FOUNDATION**
 Email: privacy@greeneye.foundation
 Address: [Your Address]
 Phone: [Your Phone Number]

@@ -103,9 +103,9 @@ const PlantShop = () => {
   return (
     <>
       <Seo
-        title="Plant Shop | GreenEye Foundation"
+        title="Plant Shop | GEYE INNOVATION FOUNDATION"
         description="Shop for indoor plants, outdoor plants, succulents, seeds, planters, and plant care products. Quality plants delivered to your doorstep."
-        ogTitle="Plant Shop | GreenEye Foundation"
+        ogTitle="Plant Shop | GEYE INNOVATION FOUNDATION"
         ogDescription="Shop for indoor plants, outdoor plants, succulents, seeds, planters, and plant care products."
         canonical="https://greeneye.foundation/plantshop"
       />

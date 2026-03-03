@@ -14,12 +14,12 @@ export function getStaticProps({ locale }) {
 const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": ["GardenStore", "NGO"],
-  "name": "GREENEYE™ Nursery & Sustainability Center",
-  "alternateName": "GreenEye Foundation",
+  "name": "GEYE INNOVATION FOUNDATION",
+  "alternateName": "GREENEYE",
   "url": "https://greeneye.foundation",
   "logo": "https://greeneye.foundation/assets/GreenLandscape.png",
   "image": "https://greeneye.foundation/assets/GreenLandscape.png",
-  "description": "GreenEye Foundation is a sustainability-focused nursery and environmental organization in Jaipur, Rajasthan, India. We plant trees, run eco-programs, and promote environmental awareness.",
+  "description": "GEYE INNOVATION FOUNDATION, branded as GREENEYE, is a sustainability-focused nursery and environmental organization in Jaipur, Rajasthan, India. We plant trees, run eco-programs, and promote environmental awareness.",
   "telephone": "+919226492263",
   "email": "contact@greeneye.foundation",
   "address": {

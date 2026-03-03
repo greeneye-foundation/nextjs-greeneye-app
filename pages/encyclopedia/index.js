@@ -15,7 +15,7 @@ export default function EncyclopediaPage() {
   return (
     <>
       <Seo
-        title="Green Encyclopedia | GreenEye Foundation"
+        title="Green Encyclopedia | GEYE INNOVATION FOUNDATION"
         description="Explore our comprehensive encyclopedia of plants, environmental topics, policies, and sustainable products."
         canonical="https://greeneye.foundation/encyclopedia"
       />

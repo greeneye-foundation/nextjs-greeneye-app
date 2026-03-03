@@ -2,7 +2,7 @@
 
 **Last Updated: January 2025**
 
-Welcome to GreenEye Foundation. By accessing and using our website, you agree to comply with and be bound by the following terms and conditions.
+Welcome to GEYE INNOVATION FOUNDATION. By accessing and using our website, you agree to comply with and be bound by the following terms and conditions.
 
 ## 1. Acceptance of Terms
 
@@ -10,7 +10,7 @@ By using this website, you accept these terms and conditions in full. If you dis
 
 ## 2. License to Use Website
 
-Unless otherwise stated, GreenEye Foundation and/or its licensors own the intellectual property rights in the website and material on the website. Subject to the license below, all these intellectual property rights are reserved.
+Unless otherwise stated, GEYE INNOVATION FOUNDATION and/or its licensors own the intellectual property rights in the website and material on the website. Subject to the license below, all these intellectual property rights are reserved.
 
 You may:
 - View pages from our website in a web browser
@@ -51,7 +51,7 @@ Your order constitutes an offer to purchase products. All orders are subject to 
 
 ### 4.1 Program Details
 Our Gift-a-Tree program allows you to sponsor tree planting in various regions. By participating, you agree that:
-- Trees will be planted in designated areas as determined by GreenEye Foundation
+- Trees will be planted in designated areas as determined by GEYE INNOVATION FOUNDATION
 - You will receive updates and certificates via email
 - Actual planting may take time based on seasonal and environmental factors
 
@@ -105,7 +105,7 @@ To the maximum extent permitted by law:
 
 ## 9. Indemnification
 
-You agree to indemnify and hold harmless GreenEye Foundation, its officers, directors, employees, and agents from any claims, damages, losses, or expenses arising from:
+You agree to indemnify and hold harmless GEYE INNOVATION FOUNDATION, its officers, directors, employees, and agents from any claims, damages, losses, or expenses arising from:
 - Your use of the website
 - Your violation of these terms
 - Your violation of any rights of another party
@@ -133,13 +133,13 @@ If any provision of these terms is found to be invalid or unenforceable, the rem
 
 ## 14. Entire Agreement
 
-These terms and conditions, together with our Privacy Policy, constitute the entire agreement between you and GreenEye Foundation regarding your use of the website.
+These terms and conditions, together with our Privacy Policy, constitute the entire agreement between you and GEYE INNOVATION FOUNDATION regarding your use of the website.
 
 ## 15. Contact Information
 
 If you have any questions about these Terms and Conditions, please contact us at:
 
-**GreenEye Foundation**
+**GEYE INNOVATION FOUNDATION**
 Email: support@greeneye.foundation
 Website: https://greeneye.foundation
 

@@ -304,7 +304,7 @@ export default function GiftATreePage() {
     return (
       <>
         <Seo
-          title="Order Successful | GreenEye Foundation"
+          title="Order Successful | GEYE INNOVATION FOUNDATION"
           description="Your tree gift order has been placed successfully"
         />
 
@@ -408,9 +408,9 @@ export default function GiftATreePage() {
   return (
     <>
       <Seo
-        title="Gift a Tree | GreenEye Foundation"
+        title="Gift a Tree | GEYE INNOVATION FOUNDATION"
         description="Send a meaningful gift by planting trees in someone's name. Perfect for birthdays, anniversaries, and special occasions."
-        ogTitle="Gift a Tree | GreenEye Foundation"
+        ogTitle="Gift a Tree | GEYE INNOVATION FOUNDATION"
         ogDescription="Send a meaningful gift by planting trees in someone's name."
         canonical="https://greeneye.foundation/gift-a-tree"
       />
