@@ -1,4 +1,6 @@
 // Dynamic sitemap generation for Google Search Console
+// Revalidate every 24 hours so new articles appear without redeployment
+export const revalidate = 86400;
 
 export default async function sitemap() {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://greeneye.org';
@@ -49,8 +51,7 @@ export default async function sitemap() {
         headers: {
           'x-api-key': API_KEY,
         },
-        // Disable caching for sitemap generation
-        cache: 'no-store',
+        next: { revalidate: 86400 },
       }
     );
 
@@ -80,7 +81,7 @@ export default async function sitemap() {
         headers: {
           'x-api-key': API_KEY,
         },
-        cache: 'no-store',
+        next: { revalidate: 86400 },
       }
     );
 
@@ -109,7 +110,7 @@ export default async function sitemap() {
         headers: {
           'x-api-key': API_KEY,
         },
-        cache: 'no-store',
+        next: { revalidate: 86400 },
       }
     );
 
