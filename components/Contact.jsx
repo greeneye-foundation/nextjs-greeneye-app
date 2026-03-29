@@ -49,12 +49,25 @@ const Contact = () => {
     setLoading(true);
 
     try {
-      // TODO: Replace this with actual API endpoint when backend is ready
-      // For now, we'll simulate the API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000';
 
-      // In production, this should send data to your contact API:
-      // const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contact`, form);
+      const response = await fetch(`${API_BASE}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: `${form.firstName} ${form.lastName}`.trim(),
+          email: form.email,
+          phone: form.phone || '',
+          subject: form.subject || '',
+          message: form.message
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to send message');
+      }
 
       setForm({
         firstName: "",
@@ -72,6 +85,7 @@ const Contact = () => {
       );
     } catch (error) {
       showNotification(
+        error.message ||
         t("errorMessage", {
           defaultMessage: "Failed to send message. Please try again or contact us directly."
         }),
