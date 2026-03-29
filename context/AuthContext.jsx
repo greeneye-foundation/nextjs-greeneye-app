@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { showNotification } from '@/components/Notification';
 
 const AuthContext = createContext(null);
 
@@ -15,6 +16,12 @@ export function AuthProvider({ children }) {
         if (data) {
           setUser(data.user);
           setToken(data.token);
+        }
+      })
+      .catch((err) => {
+        // 401 is expected for unauthenticated users, don't show error
+        if (err.response?.status !== 401) {
+          showNotification('Connection error. Please check your network.', 'error');
         }
       })
       .finally(() => setIsLoading(false));

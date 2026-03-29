@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 let showNotificationFn;
-export function showNotification(message, type = 'info') {
-  if (showNotificationFn) showNotificationFn({ message, type });
+export function showNotification(message, type = 'info', options = {}) {
+  if (showNotificationFn) showNotificationFn({ message, type, ...options });
 }
 
 const icons = {
@@ -52,6 +52,27 @@ const Notification = () => {
       <div className="notification-content">
         <i className={`fas ${icons[notif.type] || icons.info}`}></i>
         <span>{message}</span>
+        {notif.onRetry && (
+          <button
+            className="notification-retry"
+            onClick={() => {
+              notif.onRetry();
+              setNotif(null);
+            }}
+            style={{
+              marginLeft: '8px',
+              padding: '2px 8px',
+              border: '1px solid currentColor',
+              borderRadius: '4px',
+              background: 'transparent',
+              color: 'inherit',
+              cursor: 'pointer',
+              fontSize: '0.85em'
+            }}
+          >
+            Try again
+          </button>
+        )}
         <button
           className="notification-close"
           onClick={() => setNotif(null)}

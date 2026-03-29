@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
+import { showNotification } from "@/components/Notification";
 
 const Checkout = () => {
   const { getAuthHeaders } = useAuth();
@@ -46,7 +47,11 @@ const Checkout = () => {
         });
         setCart(res.data);
       } catch (err) {
-        setError(err.response?.data?.message || t("fetchCartError"));
+        const msg = err.response?.data?.message || t("fetchCartError");
+        setError(msg);
+        showNotification(msg, 'error', {
+          onRetry: () => fetchCart()
+        });
       }
     };
 
@@ -70,7 +75,11 @@ const Checkout = () => {
           pincode: address?.pincode || "",
         }));
       } catch (error) {
-        // Failed to fetch user info - user can still fill form manually
+        // Non-critical: user can still fill form manually
+        showNotification(
+          error.response?.data?.message || 'Could not load your profile. Please fill in your details.',
+          'warning'
+        );
       }
     };
 
@@ -83,7 +92,11 @@ const Checkout = () => {
         });
         setAvailableCoupons(res.data);
       } catch (err) {
-        // Failed to fetch coupons - user can still checkout without coupon
+        // Non-critical: user can still checkout without coupon
+        showNotification(
+          err.response?.data?.message || 'Could not load coupons.',
+          'warning'
+        );
       }
     };
 
@@ -146,7 +159,10 @@ const Checkout = () => {
       setAppliedCouponCode(couponCode);
       setSuccess(`Coupon applied! You saved ₹${res.data.discount}`);
     } catch (err) {
-      setError(err.response?.data?.message || "Invalid coupon");
+      const msg = err.response?.data?.message || "Invalid coupon";
+      setError(msg);
+      showNotification(msg, 'error');
+      // No onRetry -- form submission should not auto-retry
     }
   };
 
@@ -268,7 +284,10 @@ const Checkout = () => {
         router.push("/myorders");
       }
     } catch (err) {
-      setError(err.response?.data?.message || t("placeOrderFail"));
+      const msg = err.response?.data?.message || t("placeOrderFail");
+      setError(msg);
+      showNotification(msg, 'error');
+      // No onRetry -- form submission should not auto-retry to prevent duplicate orders
     } finally {
       setPlacing(false);
     }

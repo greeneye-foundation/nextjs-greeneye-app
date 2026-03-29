@@ -37,18 +37,11 @@ export default function GiftATreePage() {
     recipientName: "",
     recipientEmail: "",
     recipientPhone: "",
+    recipientWhatsapp: "",
     senderName: "",
     senderEmail: "",
     senderPhone: "",
     message: "",
-    deliveryAddress: {
-      street: "",
-      city: "",
-      state: "",
-      pincode: "",
-      country: "India",
-      landmark: ""
-    },
     paymentMethod: "PAYU"
   });
 
@@ -123,17 +116,6 @@ export default function GiftATreePage() {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleAddressChange = (e) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      deliveryAddress: {
-        ...prev.deliveryAddress,
-        [name]: value
-      }
-    }));
-  };
-
   const handleAddProduct = (plant) => {
     const maxTrees = parseInt(form.numberOfTrees);
     if (selectedProducts.length < maxTrees) {
@@ -163,11 +145,10 @@ export default function GiftATreePage() {
     }
   };
 
-  // Calculate pricing
+  // Calculate pricing (no delivery charge — trees planted on GreenEye landbank)
   const subtotal = selectedProducts.reduce((sum, p) => sum + (p.price || 0), 0);
-  const deliveryCharge = subtotal >= 499 ? 0 : 50;
   const tax = Math.round(subtotal * 0.18);
-  const total = subtotal + deliveryCharge + tax;
+  const total = subtotal + tax;
 
   // PayU Payment Integration
   const initiatePayUPayment = (payuData, orderId) => {
@@ -382,15 +363,8 @@ export default function GiftATreePage() {
                       recipientName: "",
                       recipientEmail: "",
                       recipientPhone: "",
+                      recipientWhatsapp: "",
                       message: "",
-                      deliveryAddress: {
-                        street: "",
-                        city: "",
-                        state: "",
-                        pincode: "",
-                        country: "India",
-                        landmark: ""
-                      }
                     });
                   }}
                 >
@@ -504,18 +478,6 @@ export default function GiftATreePage() {
                     <span>Subtotal:</span>
                     <span>₹{subtotal}</span>
                   </div>
-                  <div className="price-row">
-                    <span>Delivery Charge:</span>
-                    <span className={deliveryCharge === 0 ? "free" : ""}>
-                      {deliveryCharge === 0 ? "FREE" : `₹${deliveryCharge}`}
-                    </span>
-                  </div>
-                  {subtotal < 499 && (
-                    <div className="free-delivery-note">
-                      <i className="fas fa-info-circle"></i>
-                      Add ₹{499 - subtotal} more for free delivery
-                    </div>
-                  )}
                   <div className="price-row">
                     <span>Tax (18% GST):</span>
                     <span>₹{tax}</span>
@@ -693,96 +655,21 @@ export default function GiftATreePage() {
                     />
                     <i className="fas fa-phone input-icon"></i>
                   </div>
-                </div>
-
-                <div className="form-section">
-                  <h3>
-                    <i className="fas fa-map-marker-alt"></i>
-                    Delivery Address
-                  </h3>
 
                   <div className="form-group">
-                    <label htmlFor="street">Street Address *</label>
+                    <label htmlFor="recipientWhatsapp">{t('recipientWhatsapp') || 'Recipient WhatsApp Number'}</label>
                     <input
-                      type="text"
-                      id="street"
-                      name="street"
-                      value={form.deliveryAddress.street}
-                      onChange={handleAddressChange}
-                      placeholder="House no., Street name"
-                      required
+                      type="tel"
+                      id="recipientWhatsapp"
+                      name="recipientWhatsapp"
+                      value={form.recipientWhatsapp}
+                      onChange={handleChange}
+                      placeholder="+919876543210"
+                      className="form-control"
                     />
-                    <i className="fas fa-home input-icon"></i>
-                  </div>
-
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label htmlFor="city">City *</label>
-                      <input
-                        type="text"
-                        id="city"
-                        name="city"
-                        value={form.deliveryAddress.city}
-                        onChange={handleAddressChange}
-                        placeholder="City"
-                        required
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label htmlFor="state">State *</label>
-                      <input
-                        type="text"
-                        id="state"
-                        name="state"
-                        value={form.deliveryAddress.state}
-                        onChange={handleAddressChange}
-                        placeholder="State"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label htmlFor="pincode">Pincode *</label>
-                      <input
-                        type="text"
-                        id="pincode"
-                        name="pincode"
-                        value={form.deliveryAddress.pincode}
-                        onChange={handleAddressChange}
-                        placeholder="123456"
-                        required
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label htmlFor="country">Country *</label>
-                      <input
-                        type="text"
-                        id="country"
-                        name="country"
-                        value={form.deliveryAddress.country}
-                        onChange={handleAddressChange}
-                        placeholder="India"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="landmark">Landmark *</label>
-                    <input
-                      type="text"
-                      id="landmark"
-                      name="landmark"
-                      value={form.deliveryAddress.landmark}
-                      onChange={handleAddressChange}
-                      placeholder="Near..."
-                      required
-                    />
-                    <i className="fas fa-map-pin input-icon"></i>
+                    <small className="form-text text-muted">
+                      {t('whatsappHint') || 'Used for tree planting notifications (optional)'}
+                    </small>
                   </div>
                 </div>
 

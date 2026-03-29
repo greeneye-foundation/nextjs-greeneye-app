@@ -35,7 +35,7 @@ const PlantShop = () => {
   } = useCart();
 
   // Fetch plants
-  useEffect(() => {
+  const fetchPlants = () => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/plants`)
       .then((res) => {
@@ -47,10 +47,19 @@ const PlantShop = () => {
           setPriceRange([Math.min(...prices), Math.max(...prices)]);
         }
       })
-      .catch(() => {
+      .catch((err) => {
         setPlants([]);
         setFilteredPlants([]);
+        showNotification(
+          err.response?.data?.message || 'Failed to load plants. Please try again.',
+          'error',
+          { onRetry: () => fetchPlants() }
+        );
       });
+  };
+
+  useEffect(() => {
+    fetchPlants();
   }, []);
 
   // Fetch user's country (client-side only)
@@ -59,7 +68,10 @@ const PlantShop = () => {
     fetch("/api/geo")
       .then((res) => res.json())
       .then((geo) => setUserCountry(geo.countryCode))
-      .catch(() => setUserCountry(null));
+      .catch(() => {
+        setUserCountry(null);
+        // Geo detection is non-critical -- silent fallback is intentional
+      });
   }, []);
 
   // Filter plants by country when plants or userCountry changes
