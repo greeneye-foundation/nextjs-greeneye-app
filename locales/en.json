@@ -35,8 +35,8 @@
     "schoolPrograms": "School Programs",
     "corporatePartnerships": "Corporate Partnerships",
     "rightsReserved": "All rights reserved.",
-    "shipping":"Shipping Policy",
-    "cancellation&refund":"Cancellation & Refund",
+    "shipping": "Shipping Policy",
+    "cancellation&refund": "Cancellation & Refund",
     "accountDeletion": "Account Deletion"
   },
   "notification": {
@@ -177,7 +177,7 @@
     "listHabitat": "Habitat restoration and wildlife protection"
   },
   "contact": {
-     "seoTitle": "Contact Us | GreenEye",
+    "seoTitle": "Contact Us | GreenEye",
     "seoDescription": "We're here to answer your questions and welcome your feedback. Reach out to GreenEye for any inquiries or support.",
     "pageTitle": "Contact Us",
     "pageSubtitle": "We're here to answer your questions and welcome your feedback.",
@@ -335,7 +335,6 @@
     "rightsReserved": "All rights reserved.",
     "accountDeletionTitle": "Account Deletion & Data Rights",
     "accountDeletionText": "You have the right to request deletion of your account and all associated personal data at any time. We are committed to respecting your data privacy rights under applicable laws including GDPR and India's Digital Personal Data Protection Act.",
-    
     "yourRightsTitle": "Your Rights Include:",
     "rightToDelete": "Right to deletion of your personal data",
     "rightToAccess": "Right to access your data",
@@ -561,70 +560,61 @@
     "registerSuccess": "Account created successfully.",
     "registerFail": "Registration failed. Please try again."
   },
-  "plant":{
-  "loading": "Loading...",
-  "notFound": "Plant not found.",
-  "defaultDescription": "Plant details and specifications",
-  "backToShop": "Back to Plant Shop",
-  "inStock": "In stock",
-  "outOfStock": "Out of stock",
-  "noDescription": "No description available.",
-  "sku": "SKU",
-  "category": "Category",
-  "brand": "Brand",
-  "availableCountries": "Available Countries",
-  "defaultCategory": "Plants",
-  "addToCart": "Add to Cart",
-  "viewCart": "View Cart",
-  "addedToCart": "Added to cart",
-  "pleaseLogin": "Please login first.",
-  "addFailed": "Failed to add to cart."
-},
-"shippingPolicy": {
-  "title": "Shipping & Delivery Policy",
-  "intro": "At  GEYE INNOVATION FOUNDATION (doing business as GREENEYE®), we are committed to delivering your products in a timely, safe, and efficient manner. Please read the following shipping and delivery terms carefully before placing your order.",
-  
-  "domesticTitle": "Domestic Shipping",
-  "domesticText": "For domestic buyers, all orders are shipped through registered Indian courier companies and/or Speed Post services only. We currently do not ship products outside of India.",
-  
-  "processingTitle": "Order Processing",
-  "processingText": "Orders are usually processed and dispatched within 5-7 working days from the date of order confirmation and successful payment, or as per the delivery date agreed at the time of order confirmation. Processing and delivery are subject to the policies and timelines of our courier partners.",
-  
-  "liabilityTitle": "Delivery & Liability",
-  "liabilityText": " GEYE INNOVATION FOUNDATION is not responsible for delays caused by courier companies, postal authorities, or unforeseen events. Our responsibility is limited to handing over the consignment to the courier company within the promised time frame. All deliveries will be made to the registered address provided at checkout. We are not liable for any damage to the products while in transit.",
-  
-  "paymentsTitle": "Payments",
-  "paymentsText": "We are proud to use secure payment gateways such as Razorpay for fast, reliable, and safe transactions. All major credit cards, debit cards, UPI, and net banking options are accepted. Your financial details are never shared with us and remain encrypted at all times.",
-  
-  "servicesTitle": "Shipping & Delivery Policy (Services)",
-  "servicesText": "For services purchased on our website, confirmation details will be sent to your registered email ID at the time of order. If you face any issues while using our services, please reach out to our helpdesk at contact@greeneye.foundation.",
-  
-  "chargesTitle": "Delivery Charges & Multiple Orders",
-  "chargesText": "For Indian customers, a standard shipping charge of ₹79 applies to all product orders. If multiple items are ordered to a single address, the system calculates total weight and applies one delivery fee. However, if different products are ordered for delivery to different locations, delivery charges are applied separately as per each shipping address.",
-  
-  "disclaimerTitle": "Disclaimer",
-  "disclaimerText": "Products will be delivered to all serviceable urban areas in India through leading courier agencies. For remote or rural areas, delivery may be routed through local couriers or India Speed Post and could take additional time. Please note that certain products may be subject to area-specific delivery restrictions.",
-  
-  "contactTitle": "Contact Us",
-  "contactText": "For shipping-related queries, please write to us at: contact@greeneye.foundation or call 📞 +91 92264-92263",
-  
-  "rightsReserved": "All rights reserved."
-},
+  "plant": {
+    "loading": "Loading...",
+    "notFound": "Plant not found.",
+    "defaultDescription": "Plant details and specifications",
+    "backToShop": "Back to Plant Shop",
+    "inStock": "In stock",
+    "outOfStock": "Out of stock",
+    "noDescription": "No description available.",
+    "sku": "SKU",
+    "category": "Category",
+    "brand": "Brand",
+    "availableCountries": "Available Countries",
+    "defaultCategory": "Plants",
+    "addToCart": "Add to Cart",
+    "viewCart": "View Cart",
+    "addedToCart": "Added to cart",
+    "pleaseLogin": "Please login first.",
+    "addFailed": "Failed to add to cart."
+  },
+  "shippingPolicy": {
+    "title": "Shipping & Delivery Policy",
+    "intro": "At  GEYE INNOVATION FOUNDATION (doing business as GREENEYE®), we are committed to delivering your products in a timely, safe, and efficient manner. Please read the following shipping and delivery terms carefully before placing your order.",
+    "domesticTitle": "Domestic Shipping",
+    "domesticText": "For domestic buyers, all orders are shipped through registered Indian courier companies and/or Speed Post services only. We currently do not ship products outside of India.",
+    "processingTitle": "Order Processing",
+    "processingText": "Orders are usually processed and dispatched within 5-7 working days from the date of order confirmation and successful payment, or as per the delivery date agreed at the time of order confirmation. Processing and delivery are subject to the policies and timelines of our courier partners.",
+    "liabilityTitle": "Delivery & Liability",
+    "liabilityText": " GEYE INNOVATION FOUNDATION is not responsible for delays caused by courier companies, postal authorities, or unforeseen events. Our responsibility is limited to handing over the consignment to the courier company within the promised time frame. All deliveries will be made to the registered address provided at checkout. We are not liable for any damage to the products while in transit.",
+    "paymentsTitle": "Payments",
+    "paymentsText": "We are proud to use secure payment gateways such as Razorpay for fast, reliable, and safe transactions. All major credit cards, debit cards, UPI, and net banking options are accepted. Your financial details are never shared with us and remain encrypted at all times.",
+    "servicesTitle": "Shipping & Delivery Policy (Services)",
+    "servicesText": "For services purchased on our website, confirmation details will be sent to your registered email ID at the time of order. If you face any issues while using our services, please reach out to our helpdesk at contact@greeneye.foundation.",
+    "chargesTitle": "Delivery Charges & Multiple Orders",
+    "chargesText": "For Indian customers, a standard shipping charge of ₹79 applies to all product orders. If multiple items are ordered to a single address, the system calculates total weight and applies one delivery fee. However, if different products are ordered for delivery to different locations, delivery charges are applied separately as per each shipping address.",
+    "disclaimerTitle": "Disclaimer",
+    "disclaimerText": "Products will be delivered to all serviceable urban areas in India through leading courier agencies. For remote or rural areas, delivery may be routed through local couriers or India Speed Post and could take additional time. Please note that certain products may be subject to area-specific delivery restrictions.",
+    "contactTitle": "Contact Us",
+    "contactText": "For shipping-related queries, please write to us at: contact@greeneye.foundation or call 📞 +91 92264-92263",
+    "rightsReserved": "All rights reserved."
+  },
   "cancellationsRefunds": {
-  "title": "Cancellations & Refunds Policy",
-  "intro": "At GEYE INNOVATION FOUNDATION (doing business as GREENEYE®), we value your trust and want to make sure your experience with us is smooth, transparent, and fair. Please read our detailed cancellations and refunds policy carefully before making a purchase.",
-  "cancellationTitle": "Order Cancellations",
-  "cancellationText": "Orders may be cancelled within 24 hours of placing them, provided they have not yet been processed or shipped. Once the order has been dispatched, we regret that cancellations cannot be accepted. To request a cancellation, please contact us immediately with your order details.",
-  "refundTitle": "Refund Policy",
-  "refundText": "Refunds are initiated only after the returned product has been inspected and approved by our quality team. Once approved, refunds will be processed within 7-10 business days and credited back to the original method of payment. Please note that shipping charges are non-refundable.",
-  "exceptionsTitle": "Non-Refundable & Non-Cancellable Items",
-  "exceptionsText": "Certain items are not eligible for cancellation or refund. These include: perishable goods (such as plants), customized or personalized products, digital services, and items marked as 'Final Sale'.",
-  "disclaimerTitle": "Disclaimer",
-  "disclaimerText": "GEYE INNOVATION FOUNDATION is not responsible for delays caused by courier companies or unforeseen events. Refunds or cancellations due to such delays will not be entertained unless explicitly agreed upon.",
-  "contactTitle": "Contact Us",
-  "contactText": "For cancellation and refund-related queries, please reach out to us at: contact@greeneye.foundation. Our support team will be happy to assist you.",
-  "rightsReserved": " All rights reserved."
-},
+    "title": "Cancellations & Refunds Policy",
+    "intro": "At GEYE INNOVATION FOUNDATION (doing business as GREENEYE®), we value your trust and want to make sure your experience with us is smooth, transparent, and fair. Please read our detailed cancellations and refunds policy carefully before making a purchase.",
+    "cancellationTitle": "Order Cancellations",
+    "cancellationText": "Orders may be cancelled within 24 hours of placing them, provided they have not yet been processed or shipped. Once the order has been dispatched, we regret that cancellations cannot be accepted. To request a cancellation, please contact us immediately with your order details.",
+    "refundTitle": "Refund Policy",
+    "refundText": "Refunds are initiated only after the returned product has been inspected and approved by our quality team. Once approved, refunds will be processed within 7-10 business days and credited back to the original method of payment. Please note that shipping charges are non-refundable.",
+    "exceptionsTitle": "Non-Refundable & Non-Cancellable Items",
+    "exceptionsText": "Certain items are not eligible for cancellation or refund. These include: perishable goods (such as plants), customized or personalized products, digital services, and items marked as 'Final Sale'.",
+    "disclaimerTitle": "Disclaimer",
+    "disclaimerText": "GEYE INNOVATION FOUNDATION is not responsible for delays caused by courier companies or unforeseen events. Refunds or cancellations due to such delays will not be entertained unless explicitly agreed upon.",
+    "contactTitle": "Contact Us",
+    "contactText": "For cancellation and refund-related queries, please reach out to us at: contact@greeneye.foundation. Our support team will be happy to assist you.",
+    "rightsReserved": " All rights reserved."
+  },
   "aqiWidget": {
     "activateButton": "Check Air Quality in Your Area",
     "loading": "Loading AQI...",
@@ -648,16 +638,13 @@
   "accountDeletion": {
     "title": "Account Deletion Policy",
     "subtitle": "Request permanent deletion of your GreenEye account",
-    
     "overviewTitle": "Overview",
     "overviewText": "At GEYE INNOVATION FOUNDATION, we respect your right to privacy and data control. If you wish to permanently delete your account and all associated data, you can submit a deletion request through this page.",
-    
     "importantTitle": "Important Information",
     "permanent": "Account deletion is permanent and cannot be undone",
     "dataLoss": "All your personal information will be permanently deleted",
     "ordersHistory": "Your order history, donation records, and gift tree orders will be removed",
     "noRecovery": "Once deleted, you will not be able to recover your account or data",
-    
     "dataDeletedTitle": "What Data Will Be Deleted",
     "personalInfo": "Personal information (name, email, phone, address)",
     "orderHistory": "All order history and details",
@@ -665,19 +652,15 @@
     "volunteerInfo": "Volunteer registration information",
     "giftOrders": "Gift tree orders and certificates",
     "savedAddresses": "Saved addresses and preferences",
-    
     "processTitle": "Deletion Process",
     "step1": "Submit your deletion request by clicking the button below",
     "step2": "Our admin team will review your request within 7-10 business days",
     "step3": "You will receive an email confirmation once the review is complete",
     "step4": "Upon approval, your account and all data will be permanently deleted",
-    
     "legalTitle": "Legal Compliance",
     "legalText": "We handle your deletion request in accordance with applicable data protection laws, including GDPR and India's Digital Personal Data Protection Act. Some information may be retained for legal or regulatory purposes as required by law.",
-    
     "supportTitle": "Need Help?",
     "supportText": "If you have any questions about account deletion or need assistance, please contact our support team at",
-    
     "loggedInAs": "Logged in as",
     "requestButton": "Request Account Deletion",
     "loginRequired": "You must be logged in to request account deletion",
@@ -685,5 +668,56 @@
     "processing": "Processing...",
     "confirmMessage": "Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently deleted.",
     "contactUs": "Contact Support"
+  },
+  "treeTracking": {
+    "title": "Track Your Tree",
+    "shareButton": "Share Tree",
+    "shareCopied": "Tracking link copied!",
+    "downloadCertificate": "Download Certificate",
+    "nameYourTree": "Name Your Tree",
+    "nameTreePlaceholder": "e.g. Sage, Evergreen, Hope...",
+    "saveTreeName": "Save Tree Name",
+    "viewOnMap": "View on Map",
+    "expectedBy": "Expected by {date}",
+    "prePlanting": "Your tree is on its way! We're preparing for planting.",
+    "status": {
+      "PAID": "Payment Confirmed",
+      "PLANT_SELECTED": "Plant Selected",
+      "PLANTING_SCHEDULED": "Planting Scheduled",
+      "PLANTED": "Planted",
+      "GROWING": "Growing"
+    },
+    "emptyState": {
+      "heading": "We're getting started",
+      "body": "Your tree record has been created. Check back soon for updates on its journey."
+    },
+    "errorState": {
+      "heading": "Tree not found",
+      "body": "We couldn't find a tree with this tracking ID. Double-check the link you received, or contact us for help."
+    }
+  },
+  "certificate": {
+    "title": "Certificate of Tree Adoption",
+    "verifiedTitle": "Certificate Verified",
+    "occasion": "Occasion",
+    "from": "Gifted by",
+    "to": "For",
+    "treeName": "Tree Name",
+    "certificateId": "Certificate ID",
+    "trackTree": "Track This Tree",
+    "errorState": {
+      "heading": "Certificate not found",
+      "body": "This certificate ID could not be verified. If you believe this is an error, please contact us."
+    }
+  },
+  "forest": {
+    "title": "GreenEye Forest",
+    "subtitle": "Every tree we've planted, on the map",
+    "totalTrees": "{count} trees planted",
+    "clickToTrack": "Click a tree to see its journey",
+    "emptyState": {
+      "heading": "Our forest is just beginning",
+      "body": "Trees are being prepared for planting. Check back soon to see them on the map."
+    }
   }
 }

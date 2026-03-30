@@ -1,0 +1,158 @@
+/* Forest page */
+.forest-page {
+  padding-top: 70px; /* navbar offset */
+  position: relative;
+  height: 100vh;
+  background: var(--stone-mist, #F4F6F5);
+}
+
+/* Header overlay on map */
+.forest-header {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 24px;
+  pointer-events: none;
+}
+.forest-header-content {
+  max-width: 600px;
+  pointer-events: auto;
+}
+.forest-title {
+  font-family: var(--font-heading, Montserrat, sans-serif);
+  font-size: 28px;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 4px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+.forest-subtitle {
+  font-size: 16px;
+  color: rgba(255,255,255,0.9);
+  margin: 0 0 12px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+/* Tree count badge */
+.forest-tree-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--evergreen, #2A7A4E);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.forest-tree-count .count-number {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--evergreen, #2A7A4E);
+}
+
+/* Map instruction hint */
+.forest-hint {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  padding: 8px 16px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 20px;
+  font-size: 14px;
+  color: #3A4442;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  pointer-events: none;
+}
+
+/* Map container fills viewport */
+.forest-map-container {
+  position: absolute;
+  inset: 0;
+  top: 70px; /* below navbar */
+}
+
+/* Empty state (centered on page) */
+.forest-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 70px);
+  padding: 48px 24px;
+  text-align: center;
+}
+.forest-empty h2 {
+  font-family: var(--font-heading, Montserrat, sans-serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: #3A4442;
+  margin: 0 0 12px;
+}
+.forest-empty p {
+  font-size: 16px;
+  color: #7A8583;
+  margin: 0;
+  max-width: 400px;
+}
+
+/* Loading */
+.forest-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 70px);
+}
+
+/* Marker popup */
+.forest-popup-name {
+  font-weight: 700;
+  font-size: 14px;
+  color: #3A4442;
+  margin: 0 0 4px;
+}
+.forest-popup-date {
+  font-size: 12px;
+  color: #7A8583;
+  margin: 0 0 8px;
+}
+.forest-popup-link {
+  font-size: 13px;
+  color: var(--evergreen, #2A7A4E);
+  text-decoration: none;
+  font-weight: 700;
+}
+.forest-popup-link:hover { text-decoration: underline; }
+
+/* Cluster custom styles */
+.marker-cluster-small {
+  background-color: rgba(127, 173, 75, 0.6) !important; /* --lime-spark */
+}
+.marker-cluster-small div {
+  background-color: rgba(127, 173, 75, 0.8) !important;
+}
+.marker-cluster-medium {
+  background-color: rgba(42, 122, 78, 0.6) !important; /* --evergreen */
+}
+.marker-cluster-medium div {
+  background-color: rgba(42, 122, 78, 0.8) !important;
+}
+.marker-cluster-large {
+  background-color: rgba(27, 94, 32, 0.6) !important;
+}
+.marker-cluster-large div {
+  background-color: rgba(27, 94, 32, 0.8) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .forest-header { padding: 16px; }
+  .forest-title { font-size: 22px; }
+  .forest-tree-count { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 1000; }
+  .forest-hint { display: none; }
+}

@@ -1,0 +1,382 @@
+/* Admin Trees Page */
+.admin-trees {
+  padding: 0;
+}
+
+/* Filters bar */
+.admin-trees-filters {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.admin-trees-filters select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  min-width: 180px;
+  height: 44px; /* touch target */
+  background: #fff;
+}
+.admin-trees-filters input[type="text"] {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  flex: 1;
+  min-width: 200px;
+  height: 44px;
+  background: #fff;
+}
+.admin-trees-filters select:focus,
+.admin-trees-filters input[type="text"]:focus {
+  border-color: var(--evergreen, #2A7A4E);
+  outline: none;
+}
+
+/* Tree list table */
+.admin-trees-table {
+  width: 100%;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px #0001;
+  border-collapse: collapse;
+}
+.admin-trees-table th {
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 2px solid #eee;
+  font-size: 14px;
+  font-weight: 700;
+  color: #3A4442;
+  background: #f0f0f3;
+}
+.admin-trees-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  cursor: pointer;
+}
+.admin-trees-table tr:hover td {
+  background: #f9f9f9;
+}
+
+/* Status badges */
+.tree-status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.tree-status-badge.PAID { background: #FFF3E0; color: #E65100; }
+.tree-status-badge.PLANT_SELECTED { background: #E8F5E9; color: #2E7D32; }
+.tree-status-badge.PLANTING_SCHEDULED { background: #E3F2FD; color: #1565C0; }
+.tree-status-badge.PLANTED { background: #C8E6C9; color: #1B5E20; }
+.tree-status-badge.GROWING { background: #A5D6A7; color: #1B5E20; }
+
+/* Pagination */
+.admin-trees-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+  align-items: center;
+}
+.admin-trees-pagination button {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  min-height: 44px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.15s, border-color 0.15s;
+}
+.admin-trees-pagination button:hover:not(:disabled) {
+  border-color: var(--evergreen, #2A7A4E);
+  background: #f0f8f4;
+}
+.admin-trees-pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.admin-trees-pagination button.active {
+  background: var(--evergreen, #2A7A4E);
+  color: white;
+  border-color: var(--evergreen, #2A7A4E);
+}
+.admin-trees-pagination .page-info {
+  font-size: 14px;
+  color: #7A8583;
+  padding: 0 8px;
+}
+
+/* Loading */
+.admin-trees-loading {
+  text-align: center;
+  padding: 48px 16px;
+  color: #7A8583;
+  font-size: 16px;
+}
+.admin-trees-loading i {
+  margin-right: 8px;
+}
+
+/* No results */
+.admin-trees-empty {
+  text-align: center;
+  padding: 48px 16px;
+  color: #7A8583;
+  font-size: 16px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+/* Total count badge */
+.admin-trees-count {
+  font-size: 14px;
+  background: #388e3c20;
+  color: #388e3c;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+/* Responsive: mobile */
+@media (max-width: 768px) {
+  .admin-trees { padding: 0; }
+  .admin-trees-filters { flex-direction: column; }
+  .admin-trees-filters select,
+  .admin-trees-filters input[type="text"] { width: 100%; }
+  /* Hide some columns on mobile */
+  .admin-trees-table .hide-mobile { display: none; }
+  .admin-trees-table th,
+  .admin-trees-table td { padding: 10px 8px; font-size: 13px; }
+}
+
+/* ============================================ */
+/* Tree Update Form                             */
+/* ============================================ */
+
+.tree-update-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: white;
+  overflow-y: auto;
+  padding: 24px;
+  padding-bottom: 80px; /* space for sticky save button */
+}
+@media (min-width: 769px) {
+  .tree-update-overlay {
+    left: auto;
+    width: 500px;
+    box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+  }
+}
+
+.tree-update-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(30, 40, 60, 0.38);
+}
+
+.tree-update-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.tree-update-header h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #3A4442;
+  margin: 0;
+}
+.tree-update-close {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 50%;
+  color: #3A4442;
+  font-size: 20px;
+}
+.tree-update-close:hover { background: #f0f0f0; }
+
+/* Form fields */
+.tree-form-group { margin-bottom: 24px; }
+.tree-form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #3A4442;
+  margin-bottom: 8px;
+}
+.tree-form-group select,
+.tree-form-group input,
+.tree-form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px; /* prevents zoom on iOS */
+  min-height: 44px;
+  background: #fff;
+}
+.tree-form-group select:focus,
+.tree-form-group input:focus,
+.tree-form-group textarea:focus {
+  border-color: var(--evergreen, #2A7A4E);
+  outline: none;
+}
+.tree-form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: inherit;
+}
+.char-counter {
+  font-size: 12px;
+  color: #7A8583;
+  text-align: right;
+  margin-top: 4px;
+}
+
+/* GPS Capture */
+.gps-capture-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--evergreen, #2A7A4E);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  min-height: 44px;
+  width: 100%;
+  justify-content: center;
+  transition: background 0.15s;
+}
+.gps-capture-btn:hover { background: var(--lime-spark, #7FAD4B); }
+.gps-capture-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.gps-coords-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #E8F5E9;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #2E7D32;
+}
+
+/* Photo Upload */
+.photo-upload-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: white;
+  color: var(--evergreen, #2A7A4E);
+  border: 2px dashed var(--evergreen, #2A7A4E);
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  min-height: 44px;
+  width: 100%;
+  justify-content: center;
+  transition: background 0.15s;
+}
+.photo-upload-btn:hover { background: #f0f8f4; }
+.photo-upload-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.photo-previews {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.photo-preview-item { position: relative; }
+.photo-preview-thumb {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid #eee;
+}
+.photo-remove-btn {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 20px;
+  height: 20px;
+  background: #b62222;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  padding: 0;
+  line-height: 1;
+}
+.photo-remove-btn:hover { background: #d32f2f; }
+.photo-count-info {
+  font-size: 12px;
+  color: #7A8583;
+  margin-top: 4px;
+}
+
+/* Save button */
+.tree-save-btn {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  padding: 14px;
+  background: var(--evergreen, #2A7A4E);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+  transition: background 0.15s;
+}
+.tree-save-btn:hover { background: var(--lime-spark, #7FAD4B); }
+.tree-save-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Tree info header in form */
+.tree-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  font-size: 13px;
+  color: #7A8583;
+}
+.tree-info-row strong {
+  color: #3A4442;
+}

@@ -1,0 +1,126 @@
+/* Certificate verification page */
+.verify-page {
+  background: var(--stone-mist, #F4F6F5);
+  min-height: 100vh;
+  padding-top: 70px; /* navbar offset */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* Verification card */
+.verify-card {
+  background: var(--white, #FFFFFF);
+  border-radius: 16px;
+  padding: 48px 40px;
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+/* Green checkmark circle */
+.verify-checkmark {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #C8E6C9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+}
+.verify-checkmark svg { color: #1B5E20; }
+
+.verify-title {
+  font-family: var(--font-heading, Montserrat, sans-serif);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--evergreen, #2A7A4E);
+  margin: 0 0 32px;
+}
+
+/* Detail rows */
+.verify-details {
+  text-align: left;
+  margin: 0 0 32px;
+}
+.verify-detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+.verify-detail-row:last-child { border-bottom: none; }
+.verify-detail-label {
+  font-size: 14px;
+  color: var(--gray, #7A8583);
+}
+.verify-detail-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #3A4442;
+}
+
+/* Track This Tree CTA */
+.verify-track-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: var(--evergreen, #2A7A4E);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  min-height: 44px;
+}
+.verify-track-btn:hover { background: var(--lime-spark, #7FAD4B); }
+.verify-track-btn:focus-visible {
+  outline: 2px solid var(--evergreen, #2A7A4E);
+  outline-offset: 2px;
+}
+
+/* Error state */
+.verify-error {
+  text-align: center;
+  padding: 48px 24px;
+  background: white;
+  border-radius: 16px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+.verify-error h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #3A4442;
+  margin: 0 0 12px;
+}
+.verify-error p {
+  font-size: 16px;
+  color: #7A8583;
+  margin: 0 0 24px;
+}
+.verify-error a {
+  color: var(--evergreen, #2A7A4E);
+  font-weight: 700;
+}
+
+/* Loading */
+.verify-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 70px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .verify-card { padding: 32px 24px; }
+  .verify-title { font-size: 20px; }
+}

@@ -335,7 +335,6 @@
     "rightsReserved": "全著作権所有。",
     "accountDeletionTitle": "アカウント削除とデータの権利",
     "accountDeletionText": "お客様はいつでもアカウントおよび関連する個人データの削除を要求する権利を有します。当財団は、GDPRやインドのデジタル個人データ保護法を含む適用法に基づき、お客様のデータプライバシー権を尊重することを約束します。",
-
     "yourRightsTitle": "お客様の権利には以下が含まれます：",
     "rightToDelete": "個人データの削除権",
     "rightToAccess": "データへのアクセス権",
@@ -559,25 +558,25 @@
     "registerSuccess": "アカウントが正常に作成されました。",
     "registerFail": "登録に失敗しました。再度お試しください。"
   },
-  "plant":{
-  "loading": "読み込み中...",
-  "notFound": "植物が見つかりません。",
-  "defaultDescription": "植物の詳細と仕様",
-  "backToShop": "植物ショップに戻る",
-  "inStock": "在庫あり",
-  "outOfStock": "在庫切れ",
-  "noDescription": "説明はありません。",
-  "sku": "SKU",
-  "category": "カテゴリー",
-  "brand": "ブランド",
-  "availableCountries": "利用可能な国",
-  "defaultCategory": "植物",
-  "addToCart": "カートに追加",
-  "viewCart": "カートを見る",
-  "addedToCart": "カートに追加されました",
-  "pleaseLogin": "まずログインしてください。",
-  "addFailed": "カートへの追加に失敗しました。"
-},
+  "plant": {
+    "loading": "読み込み中...",
+    "notFound": "植物が見つかりません。",
+    "defaultDescription": "植物の詳細と仕様",
+    "backToShop": "植物ショップに戻る",
+    "inStock": "在庫あり",
+    "outOfStock": "在庫切れ",
+    "noDescription": "説明はありません。",
+    "sku": "SKU",
+    "category": "カテゴリー",
+    "brand": "ブランド",
+    "availableCountries": "利用可能な国",
+    "defaultCategory": "植物",
+    "addToCart": "カートに追加",
+    "viewCart": "カートを見る",
+    "addedToCart": "カートに追加されました",
+    "pleaseLogin": "まずログインしてください。",
+    "addFailed": "カートへの追加に失敗しました。"
+  },
   "shippingPolicy": {
     "title": "配送・発送ポリシー",
     "intro": "GEYE INNOVATION FOUNDATION（GREENEYE®として運営）は、迅速かつ安全で効率的な製品配送をお約束します。ご注文前に以下の条件をよくお読みください。",
@@ -637,16 +636,13 @@
   "accountDeletion": {
     "title": "アカウント削除ポリシー",
     "subtitle": "GreenEyeアカウントの完全削除をリクエスト",
-
     "overviewTitle": "概要",
     "overviewText": "GEYE INNOVATION FOUNDATIONでは、お客様のプライバシーとデータ管理の権利を尊重しています。アカウントと関連するすべてのデータの完全削除をご希望の場合は、このページから削除リクエストを送信できます。",
-
     "importantTitle": "重要な情報",
     "permanent": "アカウント削除は永久的で、元に戻すことはできません",
     "dataLoss": "すべての個人情報が完全に削除されます",
     "ordersHistory": "注文履歴、寄付記録、ギフトツリー注文が削除されます",
     "noRecovery": "一度削除されると、アカウントやデータを復元することはできません",
-
     "dataDeletedTitle": "削除されるデータ",
     "personalInfo": "個人情報（名前、メール、電話番号、住所）",
     "orderHistory": "すべての注文履歴と詳細",
@@ -654,19 +650,15 @@
     "volunteerInfo": "ボランティア登録情報",
     "giftOrders": "ギフトツリー注文と証明書",
     "savedAddresses": "保存された住所と設定",
-
     "processTitle": "削除手順",
     "step1": "下のボタンをクリックして削除リクエストを送信",
     "step2": "当財団の管理チームが7〜10営業日以内にリクエストを審査します",
     "step3": "審査完了後、メールで確認通知をお送りします",
     "step4": "承認後、アカウントとすべてのデータが完全に削除されます",
-
     "legalTitle": "法令遵守",
     "legalText": "削除リクエストは、GDPRやインドのデジタル個人データ保護法を含む適用されるデータ保護法に従って処理されます。一部の情報は、法律または規制上の目的で必要に応じて保持される場合があります。",
-
     "supportTitle": "サポートが必要ですか？",
     "supportText": "アカウント削除に関するご質問やサポートが必要な場合は、サポートチームまでお問い合わせください：",
-
     "loggedInAs": "ログイン中：",
     "requestButton": "アカウント削除をリクエスト",
     "loginRequired": "アカウント削除をリクエストするにはログインが必要です",
@@ -674,5 +666,56 @@
     "processing": "処理中...",
     "confirmMessage": "本当にアカウントを削除しますか？この操作は取り消すことができず、すべてのデータが完全に削除されます。",
     "contactUs": "サポートに問い合わせ"
+  },
+  "treeTracking": {
+    "title": "あなたの木を追跡",
+    "shareButton": "木を共有",
+    "shareCopied": "追跡リンクをコピーしました！",
+    "downloadCertificate": "証明書をダウンロード",
+    "nameYourTree": "木に名前をつける",
+    "nameTreePlaceholder": "例：知恵、希望、平和...",
+    "saveTreeName": "名前を保存",
+    "viewOnMap": "地図で見る",
+    "expectedBy": "{date}までに予定",
+    "prePlanting": "あなたの木は準備中です！植樹の準備をしています。",
+    "status": {
+      "PAID": "支払い確認済み",
+      "PLANT_SELECTED": "植物選択済み",
+      "PLANTING_SCHEDULED": "植樹予定",
+      "PLANTED": "植樹済み",
+      "GROWING": "成長中"
+    },
+    "emptyState": {
+      "heading": "始まりました",
+      "body": "木の記録が作成されました。またすぐ更新を確認してください。"
+    },
+    "errorState": {
+      "heading": "木が見つかりません",
+      "body": "この追跡IDの木が見つかりません。リンクを確認するか、お問い合わせください。"
+    }
+  },
+  "certificate": {
+    "title": "木の養子縁組証明書",
+    "verifiedTitle": "証明書確認済み",
+    "occasion": "場合",
+    "from": "贈り主",
+    "to": "受取人",
+    "treeName": "木の名前",
+    "certificateId": "証明書ID",
+    "trackTree": "この木を追跡",
+    "errorState": {
+      "heading": "証明書が見つかりません",
+      "body": "この証明書IDを確認できませんでした。間違いだと思う場合はお問い合わせください。"
+    }
+  },
+  "forest": {
+    "title": "GreenEye の森",
+    "subtitle": "私たちが植えたすべての木を地図で",
+    "totalTrees": "{count}本の木を植樹",
+    "clickToTrack": "木をクリックしてその旅を見る",
+    "emptyState": {
+      "heading": "私たちの森は始まったばかり",
+      "body": "木々は植樹の準備中です。またすぐ地図で確認してください。"
+    }
   }
 }

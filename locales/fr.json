@@ -335,7 +335,6 @@
     "rightsReserved": "Tous droits réservés.",
     "accountDeletionTitle": "Suppression de Compte et Droits relatifs aux Données",
     "accountDeletionText": "Vous avez le droit de demander la suppression de votre compte et de toutes les données personnelles associées à tout moment. Nous nous engageons à respecter vos droits en matière de confidentialité des données en vertu des lois applicables, notamment le RGPD et la loi indienne sur la protection des données personnelles numériques.",
-
     "yourRightsTitle": "Vos Droits Incluent :",
     "rightToDelete": "Droit à la suppression de vos données personnelles",
     "rightToAccess": "Droit d'accéder à vos données",
@@ -559,25 +558,25 @@
     "registerSuccess": "Compte créé avec succès.",
     "registerFail": "Échec de l'inscription. Veuillez réessayer."
   },
-  "plant":{
-  "loading": "Chargement...",
-  "notFound": "Plante introuvable.",
-  "defaultDescription": "Détails et spécifications de la plante",
-  "backToShop": "Retour à la boutique de plantes",
-  "inStock": "En stock",
-  "outOfStock": "Rupture de stock",
-  "noDescription": "Aucune description disponible.",
-  "sku": "SKU",
-  "category": "Catégorie",
-  "brand": "Marque",
-  "availableCountries": "Pays disponibles",
-  "defaultCategory": "Plantes",
-  "addToCart": "Ajouter au panier",
-  "viewCart": "Voir le panier",
-  "addedToCart": "Ajouté au panier",
-  "pleaseLogin": "Veuillez vous connecter d'abord.",
-  "addFailed": "Échec de l'ajout au panier."
-},
+  "plant": {
+    "loading": "Chargement...",
+    "notFound": "Plante introuvable.",
+    "defaultDescription": "Détails et spécifications de la plante",
+    "backToShop": "Retour à la boutique de plantes",
+    "inStock": "En stock",
+    "outOfStock": "Rupture de stock",
+    "noDescription": "Aucune description disponible.",
+    "sku": "SKU",
+    "category": "Catégorie",
+    "brand": "Marque",
+    "availableCountries": "Pays disponibles",
+    "defaultCategory": "Plantes",
+    "addToCart": "Ajouter au panier",
+    "viewCart": "Voir le panier",
+    "addedToCart": "Ajouté au panier",
+    "pleaseLogin": "Veuillez vous connecter d'abord.",
+    "addFailed": "Échec de l'ajout au panier."
+  },
   "shippingPolicy": {
     "title": "Politique d'Expédition et de Livraison",
     "intro": "Chez GEYE INNOVATION FOUNDATION (opérant sous le nom GREENEYE®), nous nous engageons à livrer vos produits de manière rapide, sécurisée et efficace. Veuillez lire attentivement les conditions suivantes avant de passer votre commande.",
@@ -637,16 +636,13 @@
   "accountDeletion": {
     "title": "Politique de Suppression de Compte",
     "subtitle": "Demander la suppression permanente de votre compte GreenEye",
-
     "overviewTitle": "Aperçu",
     "overviewText": "Chez GEYE INNOVATION FOUNDATION, nous respectons votre droit à la vie privée et au contrôle de vos données. Si vous souhaitez supprimer définitivement votre compte et toutes les données associées, vous pouvez soumettre une demande de suppression via cette page.",
-
     "importantTitle": "Informations Importantes",
     "permanent": "La suppression du compte est permanente et ne peut pas être annulée",
     "dataLoss": "Toutes vos informations personnelles seront définitivement supprimées",
     "ordersHistory": "Votre historique de commandes, vos dons et vos commandes d'arbres cadeaux seront supprimés",
     "noRecovery": "Une fois supprimé, vous ne pourrez pas récupérer votre compte ou vos données",
-
     "dataDeletedTitle": "Quelles Données Seront Supprimées",
     "personalInfo": "Informations personnelles (nom, email, téléphone, adresse)",
     "orderHistory": "Tout l'historique des commandes et les détails",
@@ -654,19 +650,15 @@
     "volunteerInfo": "Informations d'inscription des bénévoles",
     "giftOrders": "Commandes d'arbres cadeaux et certificats",
     "savedAddresses": "Adresses et préférences enregistrées",
-
     "processTitle": "Processus de Suppression",
     "step1": "Soumettez votre demande de suppression en cliquant sur le bouton ci-dessous",
     "step2": "Notre équipe administrative examinera votre demande dans un délai de 7 à 10 jours ouvrables",
     "step3": "Vous recevrez un email de confirmation une fois l'examen terminé",
     "step4": "Après approbation, votre compte et toutes les données seront définitivement supprimés",
-
     "legalTitle": "Conformité Légale",
     "legalText": "Nous traitons votre demande de suppression conformément aux lois applicables en matière de protection des données, notamment le RGPD et la loi indienne sur la protection des données personnelles numériques. Certaines informations peuvent être conservées à des fins légales ou réglementaires conformément à la loi.",
-
     "supportTitle": "Besoin d'Aide ?",
     "supportText": "Si vous avez des questions sur la suppression de compte ou besoin d'assistance, veuillez contacter notre équipe d'assistance à",
-
     "loggedInAs": "Connecté en tant que",
     "requestButton": "Demander la Suppression du Compte",
     "loginRequired": "Vous devez être connecté pour demander la suppression du compte",
@@ -674,5 +666,56 @@
     "processing": "Traitement...",
     "confirmMessage": "Êtes-vous sûr de vouloir supprimer votre compte ? Cette action ne peut pas être annulée et toutes vos données seront définitivement supprimées.",
     "contactUs": "Contacter l'Assistance"
+  },
+  "treeTracking": {
+    "title": "Suivez votre arbre",
+    "shareButton": "Partager",
+    "shareCopied": "Lien de suivi copié !",
+    "downloadCertificate": "Télécharger le certificat",
+    "nameYourTree": "Nommez votre arbre",
+    "nameTreePlaceholder": "ex. Sage, Espérance, Harmonie...",
+    "saveTreeName": "Enregistrer le nom",
+    "viewOnMap": "Voir sur la carte",
+    "expectedBy": "Prévu pour le {date}",
+    "prePlanting": "Votre arbre est en route ! Nous préparons la plantation.",
+    "status": {
+      "PAID": "Paiement confirmé",
+      "PLANT_SELECTED": "Plante sélectionnée",
+      "PLANTING_SCHEDULED": "Plantation planifiée",
+      "PLANTED": "Planté",
+      "GROWING": "En croissance"
+    },
+    "emptyState": {
+      "heading": "Nous commençons",
+      "body": "Votre arbre a été enregistré. Revenez bientôt pour suivre son parcours."
+    },
+    "errorState": {
+      "heading": "Arbre non trouvé",
+      "body": "Nous n'avons pas trouvé d'arbre avec cet identifiant. Vérifiez le lien reçu ou contactez-nous."
+    }
+  },
+  "certificate": {
+    "title": "Certificat d'adoption d'arbre",
+    "verifiedTitle": "Certificat vérifié",
+    "occasion": "Occasion",
+    "from": "Offert par",
+    "to": "Pour",
+    "treeName": "Nom de l'arbre",
+    "certificateId": "ID du certificat",
+    "trackTree": "Suivre cet arbre",
+    "errorState": {
+      "heading": "Certificat non trouvé",
+      "body": "Cet identifiant de certificat n'a pas pu être vérifié. Si vous pensez qu'il s'agit d'une erreur, contactez-nous."
+    }
+  },
+  "forest": {
+    "title": "Forêt GreenEye",
+    "subtitle": "Chaque arbre que nous avons planté, sur la carte",
+    "totalTrees": "{count} arbres plantés",
+    "clickToTrack": "Cliquez sur un arbre pour voir son parcours",
+    "emptyState": {
+      "heading": "Notre forêt commence à peine",
+      "body": "Des arbres sont en préparation pour la plantation. Revenez bientôt pour les voir sur la carte."
+    }
   }
 }

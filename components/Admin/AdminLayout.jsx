@@ -68,6 +68,13 @@ const AdminLayout = ({ children }) => {
           </Link>
 
           <Link
+            href="/admin/trees"
+            className={pathname.startsWith("/admin/trees") ? "active" : ""}
+          >
+            <i className="fas fa-tree"></i> Trees
+          </Link>
+
+          <Link
             href="/admin/customers"
             className={pathname.startsWith("/admin/customers") ? "active" : ""}
           >

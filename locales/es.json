@@ -666,5 +666,56 @@
     "processing": "Procesando...",
     "confirmMessage": "¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer y todos tus datos se eliminarán permanentemente.",
     "contactUs": "Contactar Soporte"
+  },
+  "treeTracking": {
+    "title": "Rastrea tu árbol",
+    "shareButton": "Compartir árbol",
+    "shareCopied": "¡Enlace de seguimiento copiado!",
+    "downloadCertificate": "Descargar certificado",
+    "nameYourTree": "Nombra tu árbol",
+    "nameTreePlaceholder": "ej. Sabio, Esperanza, Armonía...",
+    "saveTreeName": "Guardar nombre",
+    "viewOnMap": "Ver en el mapa",
+    "expectedBy": "Esperado para el {date}",
+    "prePlanting": "¡Tu árbol está en camino! Estamos preparando la plantación.",
+    "status": {
+      "PAID": "Pago confirmado",
+      "PLANT_SELECTED": "Planta seleccionada",
+      "PLANTING_SCHEDULED": "Plantación programada",
+      "PLANTED": "Plantado",
+      "GROWING": "Creciendo"
+    },
+    "emptyState": {
+      "heading": "Estamos comenzando",
+      "body": "Tu árbol ha sido registrado. Vuelve pronto para ver actualizaciones de su viaje."
+    },
+    "errorState": {
+      "heading": "Árbol no encontrado",
+      "body": "No pudimos encontrar un árbol con este ID de seguimiento. Verifica el enlace que recibiste o contáctanos."
+    }
+  },
+  "certificate": {
+    "title": "Certificado de adopción de árbol",
+    "verifiedTitle": "Certificado verificado",
+    "occasion": "Ocasión",
+    "from": "Regalado por",
+    "to": "Para",
+    "treeName": "Nombre del árbol",
+    "certificateId": "ID del certificado",
+    "trackTree": "Rastrear este árbol",
+    "errorState": {
+      "heading": "Certificado no encontrado",
+      "body": "Este ID de certificado no pudo ser verificado. Si crees que es un error, contáctanos."
+    }
+  },
+  "forest": {
+    "title": "Bosque GreenEye",
+    "subtitle": "Cada árbol que hemos plantado, en el mapa",
+    "totalTrees": "{count} árboles plantados",
+    "clickToTrack": "Haz clic en un árbol para ver su viaje",
+    "emptyState": {
+      "heading": "Nuestro bosque está comenzando",
+      "body": "Los árboles se están preparando para la plantación. Vuelve pronto para verlos en el mapa."
+    }
   }
 }

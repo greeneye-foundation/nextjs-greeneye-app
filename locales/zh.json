@@ -666,5 +666,56 @@
     "processing": "处理中...",
     "confirmMessage": "您确定要删除您的账户吗？此操作无法撤销，您的所有数据将被永久删除。",
     "contactUs": "联系支持"
+  },
+  "treeTracking": {
+    "title": "追踪你的树",
+    "shareButton": "分享树木",
+    "shareCopied": "追踪链接已复制！",
+    "downloadCertificate": "下载证书",
+    "nameYourTree": "给你的树命名",
+    "nameTreePlaceholder": "例如：智慧、希望、和平...",
+    "saveTreeName": "保存名称",
+    "viewOnMap": "在地图上查看",
+    "expectedBy": "预计于 {date}",
+    "prePlanting": "你的树正在路上！我们正在准备种植。",
+    "status": {
+      "PAID": "付款已确认",
+      "PLANT_SELECTED": "已选择植物",
+      "PLANTING_SCHEDULED": "已安排种植",
+      "PLANTED": "已种植",
+      "GROWING": "生长中"
+    },
+    "emptyState": {
+      "heading": "我们开始了",
+      "body": "你的树木记录已创建。请稍后回来查看更新。"
+    },
+    "errorState": {
+      "heading": "未找到树木",
+      "body": "我们找不到这个追踪编号的树木。请检查链接或联系我们。"
+    }
+  },
+  "certificate": {
+    "title": "树木认养证书",
+    "verifiedTitle": "证书已验证",
+    "occasion": "场合",
+    "from": "赠送者",
+    "to": "接收者",
+    "treeName": "树名",
+    "certificateId": "证书编号",
+    "trackTree": "追踪这棵树",
+    "errorState": {
+      "heading": "未找到证书",
+      "body": "无法验证此证书编号。如果您认为这是错误，请联系我们。"
+    }
+  },
+  "forest": {
+    "title": "GreenEye 森林",
+    "subtitle": "我们种下的每一棵树，尽在地图上",
+    "totalTrees": "已种植 {count} 棵树",
+    "clickToTrack": "点击树木查看其旅程",
+    "emptyState": {
+      "heading": "我们的森林刚刚开始",
+      "body": "树木正在准备种植。请稍后回来在地图上查看。"
+    }
   }
 }

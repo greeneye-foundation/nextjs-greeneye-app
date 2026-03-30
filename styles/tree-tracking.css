@@ -1,0 +1,427 @@
+/* Tree Tracking Page Styles */
+
+/* Tracking page layout */
+.tracking-page {
+  background: var(--stone-mist, #F4F6F5);
+  min-height: 100vh;
+  padding-top: 70px; /* navbar offset */
+}
+.tracking-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 16px 64px;
+}
+
+/* Tree Header */
+.tree-header {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  border-radius: 0 0 16px 16px;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+.tree-header-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.6);
+}
+.tree-header-no-photo {
+  background: linear-gradient(135deg, var(--evergreen, #2A7A4E), var(--lime-spark, #7FAD4B));
+}
+.tree-header-content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px;
+  color: white;
+}
+.tree-header-name {
+  font-family: var(--font-heading, Montserrat, sans-serif);
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: white;
+}
+.tree-header-species {
+  font-size: 16px;
+  opacity: 0.9;
+  margin: 0 0 12px;
+}
+.tree-header-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Status Badge (reusable) */
+.tree-status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.tree-status-badge.PAID { background: #FFF3E0; color: #E65100; }
+.tree-status-badge.PLANT_SELECTED { background: #E8F5E9; color: #2E7D32; }
+.tree-status-badge.PLANTING_SCHEDULED { background: #E3F2FD; color: #1565C0; }
+.tree-status-badge.PLANTED { background: #C8E6C9; color: #1B5E20; }
+.tree-status-badge.GROWING { background: #A5D6A7; color: #1B5E20; }
+
+/* Timeline */
+.tree-timeline {
+  position: relative;
+  padding: 0;
+  list-style: none;
+  margin: 0 0 48px;
+}
+.timeline-step {
+  display: flex;
+  gap: 16px;
+  position: relative;
+  padding-bottom: 32px;
+}
+/* Vertical line connecting dots */
+.timeline-step:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 12px;
+  bottom: -20px;
+  width: 2px;
+  background: var(--evergreen, #2A7A4E);
+}
+.timeline-step.upcoming:not(:last-child)::before {
+  background: var(--gray, #7A8583);
+  border-left: 1px dashed var(--gray, #7A8583);
+  width: 0;
+}
+/* Dot */
+.timeline-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--evergreen, #2A7A4E);
+  flex-shrink: 0;
+  margin-top: 4px;
+  position: relative;
+  z-index: 1;
+}
+.timeline-step.upcoming .timeline-dot {
+  background: transparent;
+  border: 2px dashed var(--gray, #7A8583);
+}
+.timeline-step.current .timeline-dot {
+  box-shadow: 0 0 0 4px rgba(42, 122, 78, 0.2);
+}
+
+/* Timeline content */
+.timeline-content {
+  flex: 1;
+  background: var(--white, #FFFFFF);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.timeline-step.upcoming .timeline-content {
+  opacity: 0.5;
+  background: transparent;
+  box-shadow: none;
+  padding: 8px 16px;
+}
+.timeline-status-label {
+  font-family: var(--font-heading, Montserrat, sans-serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: #3A4442;
+  margin: 0 0 4px;
+}
+.timeline-date {
+  font-size: 14px;
+  color: var(--gray, #7A8583);
+  margin: 0 0 8px;
+}
+.timeline-notes {
+  font-size: 14px;
+  color: #3A4442;
+  margin: 0 0 12px;
+}
+.timeline-expected {
+  font-size: 14px;
+  color: var(--gray, #7A8583);
+  font-style: italic;
+}
+
+/* Milestone photos */
+.milestone-photos {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.milestone-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 6px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.milestone-photo:hover { transform: scale(1.05); }
+
+/* Photo Lightbox */
+.photo-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.7);
+}
+.photo-lightbox img {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 8px;
+}
+.photo-lightbox-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  background: rgba(255,255,255,0.9);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Share Button */
+.share-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 20px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  min-height: 36px;
+}
+.share-btn:hover { background: rgba(255,255,255,0.3); }
+
+/* Action bar (non-header context) */
+.tracking-action-bar .share-btn {
+  background: var(--evergreen, #2A7A4E);
+  color: white;
+  border: none;
+}
+.tracking-action-bar .share-btn:hover {
+  background: var(--lime-spark, #7FAD4B);
+}
+
+/* Download Certificate Button */
+.download-cert-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: var(--evergreen, #2A7A4E);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 44px;
+}
+.download-cert-btn:hover { background: var(--lime-spark, #7FAD4B); }
+.download-cert-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Spin animation for loader */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.spin { animation: spin 1s linear infinite; }
+
+/* Tree Name Form */
+.tree-name-form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 16px 0;
+}
+.tree-name-form input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  min-height: 44px;
+}
+.tree-name-form button {
+  padding: 10px 16px;
+  background: var(--evergreen, #2A7A4E);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+/* Name Your Tree trigger button */
+.name-tree-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px dashed var(--evergreen, #2A7A4E);
+  border-radius: 6px;
+  color: var(--evergreen, #2A7A4E);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 16px 0;
+}
+.name-tree-trigger:hover {
+  background: #E8F5E9;
+}
+
+/* Map section */
+.tree-map-section {
+  margin: 32px 0;
+}
+.tree-map-section h3 {
+  font-family: var(--font-heading, Montserrat, sans-serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: #3A4442;
+  margin: 0 0 16px;
+}
+.tree-map-compact {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.tree-map-expand-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  background: rgba(255,255,255,0.9);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.tree-map-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: black;
+}
+.tree-map-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2001;
+  width: 44px;
+  height: 44px;
+  background: rgba(255,255,255,0.9);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tree-map-loading {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eee;
+  border-radius: 12px;
+  color: #7A8583;
+}
+
+/* Error state */
+.tracking-error {
+  text-align: center;
+  padding: 64px 24px;
+  background: white;
+  border-radius: 12px;
+  margin-top: 48px;
+}
+.tracking-error h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #3A4442;
+  margin: 0 0 12px;
+}
+.tracking-error p {
+  font-size: 16px;
+  color: #7A8583;
+  margin: 0 0 24px;
+}
+
+/* Pre-planting message */
+.pre-planting-message {
+  background: #E8F5E9;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+  font-size: 16px;
+  color: #2E7D32;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tree-header { height: 220px; }
+  .tree-header-name { font-size: 22px; }
+  .tracking-container { padding: 0 12px 48px; }
+  .tree-name-form { flex-direction: column; }
+  .tree-name-form button { width: 100%; }
+}
+
+/* Focus indicators (accessibility) */
+.share-btn:focus-visible,
+.download-cert-btn:focus-visible,
+.tree-map-expand-btn:focus-visible,
+.milestone-photo:focus-visible {
+  outline: 2px solid var(--evergreen, #2A7A4E);
+  outline-offset: 2px;
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
