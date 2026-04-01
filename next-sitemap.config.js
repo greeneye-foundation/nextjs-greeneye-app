@@ -2,7 +2,7 @@ module.exports = {
   siteUrl: 'https://greeneye.foundation',
   generateRobotsTxt: true,
   sitemapSize: 7000,
-  exclude: ['/server-sitemap.xml'],
+  exclude: ['/server-sitemap.xml', '/404'],
   changefreq: 'weekly',
   priority: 0.7,
   generateIndexSitemap: true,
