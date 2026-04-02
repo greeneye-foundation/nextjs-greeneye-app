@@ -201,28 +201,27 @@ export default function GiftATreePage() {
             <div className="ge-trees">
               <label className="ge-trees__label">Number of Trees</label>
               <div className="ge-trees__control">
-                <button
-                  type="button"
-                  className="ge-trees__btn"
-                  onClick={() => {
-                    const val = Math.max(1, parseInt(form.numberOfTrees) - 1);
-                    handleChange({ target: { name: 'numberOfTrees', value: String(val) } });
-                    setSelectedProducts([]);
-                  }}
-                  disabled={parseInt(form.numberOfTrees) <= 1}
-                >
-                  <i className="fas fa-minus"></i>
-                </button>
-
-                <div className="ge-trees__slider-area">
-                  <input
-                    type="range"
-                    min="1" max="100" step="1"
-                    value={form.numberOfTrees}
-                    onChange={(e) => { handleChange({ target: { name: 'numberOfTrees', value: e.target.value } }); setSelectedProducts([]); }}
-                    className="ge-trees__range"
-                    style={{ background: `linear-gradient(to right, var(--ge-forest) ${((parseInt(form.numberOfTrees) - 1) / 99) * 100}%, var(--ge-cloud) ${((parseInt(form.numberOfTrees) - 1) / 99) * 100}%)` }}
-                  />
+                <input
+                  type="range"
+                  min="1" max="100" step="1"
+                  value={form.numberOfTrees}
+                  onChange={(e) => { handleChange({ target: { name: 'numberOfTrees', value: e.target.value } }); setSelectedProducts([]); }}
+                  className="ge-trees__range"
+                  style={{ background: `linear-gradient(to right, var(--ge-forest) ${((parseInt(form.numberOfTrees) - 1) / 99) * 100}%, var(--ge-cloud) ${((parseInt(form.numberOfTrees) - 1) / 99) * 100}%)` }}
+                />
+                <div className="ge-trees__row">
+                  <button
+                    type="button"
+                    className="ge-trees__btn"
+                    onClick={() => {
+                      const val = Math.max(1, parseInt(form.numberOfTrees) - 1);
+                      handleChange({ target: { name: 'numberOfTrees', value: String(val) } });
+                      setSelectedProducts([]);
+                    }}
+                    disabled={parseInt(form.numberOfTrees) <= 1}
+                  >
+                    <i className="fas fa-minus"></i>
+                  </button>
                   <div className="ge-trees__display">
                     <input
                       type="number"
@@ -238,20 +237,19 @@ export default function GiftATreePage() {
                     />
                     <span className="ge-trees__unit">{parseInt(form.numberOfTrees) === 1 ? 'tree' : 'trees'}</span>
                   </div>
+                  <button
+                    type="button"
+                    className="ge-trees__btn"
+                    onClick={() => {
+                      const val = Math.min(100, parseInt(form.numberOfTrees) + 1);
+                      handleChange({ target: { name: 'numberOfTrees', value: String(val) } });
+                      setSelectedProducts([]);
+                    }}
+                    disabled={parseInt(form.numberOfTrees) >= 100}
+                  >
+                    <i className="fas fa-plus"></i>
+                  </button>
                 </div>
-
-                <button
-                  type="button"
-                  className="ge-trees__btn"
-                  onClick={() => {
-                    const val = Math.min(100, parseInt(form.numberOfTrees) + 1);
-                    handleChange({ target: { name: 'numberOfTrees', value: String(val) } });
-                    setSelectedProducts([]);
-                  }}
-                  disabled={parseInt(form.numberOfTrees) >= 100}
-                >
-                  <i className="fas fa-plus"></i>
-                </button>
               </div>
             </div>
 

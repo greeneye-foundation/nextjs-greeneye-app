@@ -189,19 +189,28 @@
 
 .ge-trees__control {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: var(--ge-space-3);
 }
 
+/* Row: - [number] + */
+.ge-trees__row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ge-space-4);
+}
+
 /* +/- buttons */
 .ge-trees__btn {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: var(--ge-radius-full);
   border: 1.5px solid var(--ge-cloud);
   background: var(--ge-white);
   color: var(--ge-charcoal);
-  font-size: 12px;
+  font-size: 11px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -217,25 +226,15 @@
 }
 
 .ge-trees__btn:active:not(:disabled) {
-  transform: scale(0.92);
+  transform: scale(0.9);
 }
 
 .ge-trees__btn:disabled {
-  opacity: 0.3;
+  opacity: 0.25;
   cursor: not-allowed;
 }
 
-/* Center area: slider + display */
-.ge-trees__slider-area {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--ge-space-2);
-  min-width: 0;
-}
-
-/* Range */
+/* Range — full width */
 .ge-trees__range {
   -webkit-appearance: none;
   appearance: none;
@@ -244,6 +243,7 @@
   border-radius: 2px;
   outline: none;
   cursor: pointer;
+  margin: 0;
 }
 
 .ge-trees__range::-webkit-slider-thumb {
