@@ -359,7 +359,8 @@ export default function GiftOrderDetails() {
           </div>
         </div>
 
-        {/* Delivery Address */}
+        {/* Delivery Address (only for legacy orders that have it) */}
+        {order.deliveryAddress && (
         <div style={{ padding: '20px 30px', borderBottom: '1px solid #e0e0e0' }}>
           <h3 style={{ margin: '0 0 16px 0', fontSize: 18, color: '#222' }}>
             <i className="fas fa-map-marker-alt" style={{ color: '#388e3c', marginRight: 8 }}></i>
@@ -384,6 +385,7 @@ export default function GiftOrderDetails() {
             )}
           </div>
         </div>
+        )}
 
         {/* Payment Summary */}
         <div style={{ padding: '20px 30px' }}>
