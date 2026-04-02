@@ -1,97 +1,33 @@
-"use client";
 import React from 'react';
-import { motion } from 'framer-motion';
 
 const occasions = [
-  {
-    value: "birthday",
-    label: "Birthday",
-    icon: "fas fa-birthday-cake",
-    color: "#FF6B9D"
-  },
-  {
-    value: "anniversary",
-    label: "Anniversary",
-    icon: "fas fa-heart",
-    color: "#E74C3C"
-  },
-  {
-    value: "wedding",
-    label: "Wedding",
-    icon: "fas fa-ring",
-    color: "#F39C12"
-  },
-  {
-    value: "memorial",
-    label: "Memorial",
-    icon: "fas fa-dove",
-    color: "#95A5A6"
-  },
-  {
-    value: "corporate",
-    label: "Corporate Gift",
-    icon: "fas fa-briefcase",
-    color: "#3498DB"
-  },
-  {
-    value: "holiday",
-    label: "Holiday",
-    icon: "fas fa-gifts",
-    color: "#27AE60"
-  },
-  {
-    value: "just-because",
-    label: "Just Because",
-    icon: "fas fa-star",
-    color: "#9B59B6"
-  }
+  { value: "birthday", label: "Birthday", emoji: "🎂" },
+  { value: "anniversary", label: "Anniversary", emoji: "💍" },
+  { value: "wedding", label: "Wedding", emoji: "💒" },
+  { value: "memorial", label: "Memorial", emoji: "🕊️" },
+  { value: "corporate", label: "Corporate", emoji: "🏢" },
+  { value: "holiday", label: "Holiday", emoji: "🎄" },
+  { value: "just-because", label: "Just Because", emoji: "💚" },
 ];
 
 const OccasionSelector = ({ value, onChange, required = false }) => {
   const handleSelect = (occasionValue) => {
-    // Create a synthetic event to match the existing form handling
-    const syntheticEvent = {
-      target: {
-        name: 'occasion',
-        value: occasionValue
-      }
-    };
-    onChange(syntheticEvent);
+    onChange({ target: { name: 'occasion', value: occasionValue } });
   };
 
   return (
-    <div className="occasion-selector">
-      <div className="occasion-grid">
-        {occasions.map((occasion, index) => (
-          <motion.button
-            key={occasion.value}
+    <div className="ge-occasion">
+      <div className="ge-occasion__grid">
+        {occasions.map((o) => (
+          <button
+            key={o.value}
             type="button"
-            className={`occasion-card ${value === occasion.value ? 'selected' : ''}`}
-            onClick={() => handleSelect(occasion.value)}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: index * 0.05 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            style={{
-              '--occasion-color': occasion.color
-            }}
+            className={`ge-occasion__item${value === o.value ? ' ge-occasion__item--active' : ''}`}
+            onClick={() => handleSelect(o.value)}
           >
-            <div className="occasion-icon-wrapper">
-              <i className={occasion.icon}></i>
-            </div>
-            <span className="occasion-label">{occasion.label}</span>
-            {value === occasion.value && (
-              <motion.div
-                className="occasion-checkmark"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ type: "spring", stiffness: 500, damping: 30 }}
-              >
-                <i className="fas fa-check"></i>
-              </motion.div>
-            )}
-          </motion.button>
+            <span className="ge-occasion__emoji">{o.emoji}</span>
+            <span className="ge-occasion__label">{o.label}</span>
+          </button>
         ))}
       </div>
       {required && !value && (
