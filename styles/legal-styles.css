@@ -173,6 +173,20 @@
   border-bottom-color: var(--ge-forest-light);
 }
 
+/* Reset link styles when used as a button */
+.legal-card a.ge-btn {
+  border-bottom: none;
+  color: inherit;
+}
+
+.legal-card a.ge-btn.legal-btn-delete {
+  color: var(--ge-white);
+}
+
+.legal-card a.ge-btn.legal-btn-delete:hover {
+  color: var(--ge-white);
+}
+
 .legal-card strong {
   color: var(--ge-ink);
   font-weight: 700;
