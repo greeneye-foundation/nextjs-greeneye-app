@@ -34,7 +34,7 @@
   --ge-info: #4A8FA8;
 
   /* Typography */
-  --ge-font-display: 'Instrument Serif', Georgia, serif;
+  --ge-font-display: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --ge-font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --ge-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
@@ -117,8 +117,9 @@
 
 /* ── Typography ────────────────────────────────────── */
 .ge-display {
-  font-family: var(--ge-font-display);
-  letter-spacing: -0.01em;
+  font-family: var(--ge-font-body);
+  font-weight: 700;
+  letter-spacing: -0.025em;
   line-height: 1.1;
 }
 

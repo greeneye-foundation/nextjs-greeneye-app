@@ -36,41 +36,42 @@ body {
 
 /* Headings Typography */
 h1, h2, h3, h4, h5, h6 {
-    font-family: var(--ge-font-display, 'Instrument Serif', Georgia, serif);
-    font-weight: 400;
+    font-family: var(--ge-font-body, 'DM Sans', sans-serif);
     line-height: 1.2;
     margin-bottom: 1rem;
     color: var(--ge-ink, #1A2B23);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
 }
 
 h1 {
     font-size: var(--ge-text-5xl, 2.5rem);
+    font-weight: 700;
     line-height: 1.1;
 }
 
 h2 {
     font-size: var(--ge-text-4xl, 2rem);
+    font-weight: 700;
     line-height: 1.15;
 }
 
 h3 {
     font-size: var(--ge-text-3xl, 1.5rem);
+    font-weight: 600;
 }
 
 h4 {
     font-size: var(--ge-text-2xl, 1.25rem);
+    font-weight: 600;
 }
 
 h5 {
     font-size: var(--ge-text-xl, 1.1rem);
-    font-family: var(--ge-font-body, 'DM Sans', sans-serif);
     font-weight: 600;
 }
 
 h6 {
     font-size: var(--ge-text-lg, 1rem);
-    font-family: var(--ge-font-body, 'DM Sans', sans-serif);
     font-weight: 600;
 }
 

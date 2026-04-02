@@ -53,10 +53,11 @@
 }
 
 .ge-nav__logo-text {
-  font-family: var(--ge-font-display);
+  font-family: var(--ge-font-body);
   font-size: var(--ge-text-xl);
+  font-weight: 700;
   color: var(--ge-forest);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 /* ── Menu ──────────────────────────────────────────── */

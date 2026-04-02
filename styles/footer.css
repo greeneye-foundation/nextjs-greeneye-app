@@ -33,9 +33,10 @@
 }
 
 .ge-footer__logo span {
-  font-family: var(--ge-font-display);
+  font-family: var(--ge-font-body);
   font-size: var(--ge-text-xl);
-  letter-spacing: -0.01em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .ge-footer__mission {
