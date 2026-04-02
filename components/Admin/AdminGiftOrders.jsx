@@ -379,14 +379,15 @@ function AdminGiftOrders() {
               </div>
             )}
 
-            {/* Delivery Address */}
+            {/* Delivery Address (only for legacy orders) */}
+            {selectedOrder.deliveryAddress && (
             <div style={{ marginBottom: 20 }}>
               <div style={{ fontWeight: 600, marginBottom: 8 }}>
                 <i className="fas fa-map-marker-alt" style={{ color: '#388e3c' }}></i> Delivery Address:
               </div>
-              <div style={{ 
-                background: '#f9f9f9', 
-                padding: 12, 
+              <div style={{
+                background: '#f9f9f9',
+                padding: 12,
                 borderRadius: 6,
                 fontSize: 14,
                 border: '1px solid #e0e0e0'
@@ -401,6 +402,7 @@ function AdminGiftOrders() {
                 )}
               </div>
             </div>
+            )}
 
             {/* Products/Trees */}
             <div style={{ marginBottom: 20 }}>
