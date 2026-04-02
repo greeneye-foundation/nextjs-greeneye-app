@@ -292,260 +292,151 @@ const Checkout = () => {
   };
 
   return (
-    <div className="checkout-container">
-      <Link href="/plantshop" className="checkout-back-link">
-        ← Back to Plant Shop
-      </Link>
+    <div className="co">
+      <div className="co__header">
+        <Link href="/plantshop" className="co__back">
+          <i className="fas fa-arrow-left"></i> Back to Shop
+        </Link>
+        <h1>Checkout</h1>
+      </div>
 
-      <div className="checkout-card">
-        <div className="checkout-header">
-          <h1 className="checkout-title">{t("checkoutTitle")}</h1>
-          <p className="checkout-subtitle">Complete your order securely</p>
-        </div>
-
-        <form onSubmit={handlePlaceOrder} autoComplete="off" className="checkout-form">
-          <div className="checkout-section">
-            <h3 className="section-title">Shipping Information</h3>
-
-            <div className="form-row">
-              <div className="form-group">
-                <label className="form-label">
-                  {t("name")}<span className="required">*</span>
-                </label>
-                <input
-                  name="name"
-                  type="text"
-                  value={userInfo.name}
-                  onChange={handleChange}
-                  required
-                  className="form-input"
-                />
+      <form onSubmit={handlePlaceOrder} autoComplete="off" className="co__grid">
+        {/* Left — Shipping + Payment */}
+        <div className="co__left">
+          {/* Shipping */}
+          <div className="co__card">
+            <h3 className="co__card-title"><i className="fas fa-truck"></i> Shipping Information</h3>
+            <div className="co__row">
+              <div className="co__field">
+                <label>{t("name")} *</label>
+                <input name="name" type="text" value={userInfo.name} onChange={handleChange} required />
               </div>
-
-              <div className="form-group">
-                <label className="form-label">
-                  {t("email")}<span className="required">*</span>
-                </label>
-                <input
-                  name="email"
-                  type="email"
-                  value={userInfo.email}
-                  onChange={handleChange}
-                  required
-                  className="form-input"
-                />
+              <div className="co__field">
+                <label>{t("email")} *</label>
+                <input name="email" type="email" value={userInfo.email} onChange={handleChange} required />
               </div>
             </div>
-
-            <div className="form-row">
-              <div className="form-group">
-                <label className="form-label">
-                  {t("phone")}<span className="required">*</span>
-                </label>
-                <input
-                  name="phone"
-                  type="tel"
-                  value={userInfo.phone}
-                  onChange={handleChange}
-                  required
-                  pattern="\d{10}"
-                  maxLength={10}
-                  className="form-input"
-                  placeholder="10-digit phone number"
-                />
+            <div className="co__row">
+              <div className="co__field">
+                <label>{t("phone")} *</label>
+                <input name="phone" type="tel" value={userInfo.phone} onChange={handleChange} required pattern="\d{10}" maxLength={10} placeholder="10-digit number" />
               </div>
-
-              <div className="form-group">
-                <label className="form-label">
-                  {t("pincode")}<span className="required">*</span>
-                </label>
-                <input
-                  name="pincode"
-                  type="text"
-                  value={userInfo.pincode}
-                  onChange={handleChange}
-                  required
-                  pattern="\d{6}"
-                  maxLength={6}
-                  className="form-input"
-                  placeholder="6-digit pincode"
-                />
+              <div className="co__field">
+                <label>{t("pincode")} *</label>
+                <input name="pincode" type="text" value={userInfo.pincode} onChange={handleChange} required pattern="\d{6}" maxLength={6} placeholder="6-digit pincode" />
               </div>
             </div>
-
-            <div className="form-group">
-              <label className="form-label">
-                {t("shippingAddress")}<span className="required">*</span>
-              </label>
-              <textarea
-                name="street"
-                value={userInfo.street}
-                onChange={handleChange}
-                required
-                className="form-textarea"
-                placeholder="Enter your complete street address"
-              />
+            <div className="co__field">
+              <label>{t("shippingAddress")} *</label>
+              <textarea name="street" value={userInfo.street} onChange={handleChange} required placeholder="Complete street address" rows={2} />
             </div>
-
-            <div className="form-row">
-              <div className="form-group">
-                <label className="form-label">
-                  {t("city")}<span className="required">*</span>
-                </label>
-                <input
-                  name="city"
-                  type="text"
-                  value={userInfo.city}
-                  onChange={handleChange}
-                  required
-                  className="form-input"
-                />
+            <div className="co__row">
+              <div className="co__field">
+                <label>{t("city")} *</label>
+                <input name="city" type="text" value={userInfo.city} onChange={handleChange} required />
               </div>
-
-              <div className="form-group">
-                <label className="form-label">
-                  {t("state")}<span className="required">*</span>
-                </label>
-                <input
-                  name="state"
-                  type="text"
-                  value={userInfo.state}
-                  onChange={handleChange}
-                  required
-                  className="form-input"
-                />
+              <div className="co__field">
+                <label>{t("state")} *</label>
+                <input name="state" type="text" value={userInfo.state} onChange={handleChange} required />
               </div>
             </div>
           </div>
 
-          <div className="checkout-section coupon-section">
-            <button
-              type="button"
-              onClick={() => setCouponBoxOpen(!couponBoxOpen)}
-              className="coupon-toggle-btn"
-            >
-              {couponBoxOpen ? "✕ Hide Coupon" : "🎟️ Apply Coupon"}
-            </button>
-
-            {couponBoxOpen && (
-              <div className="coupon-box">
-                <div className="coupon-input-group">
-                  <input
-                    type="text"
-                    value={couponCode}
-                    onChange={(e) => setCouponCode(e.target.value)}
-                    placeholder="Enter coupon code"
-                    className="coupon-input"
-                  />
-                  <button
-                    type="button"
-                    onClick={handleApplyCoupon}
-                    disabled={!!appliedCouponCode}
-                    className="coupon-apply-btn"
-                  >
-                    {appliedCouponCode ? "✓ Applied" : "Apply"}
-                  </button>
-                  {appliedCouponCode && (
-                    <button
-                      type="button"
-                      onClick={handleRemoveCoupon}
-                      className="coupon-remove-btn"
-                    >
-                      Remove
-                    </button>
-                  )}
-                </div>
-
-                {availableCoupons.length > 0 && (
-                  <div className="available-coupons">
-                    <div className="available-coupons-title">Available Coupons:</div>
-                    <ul className="coupon-list">
-                      {availableCoupons.map((c) => (
-                        <li
-                          key={c._id}
-                          className="coupon-item"
-                          onClick={() => setCouponCode(c.code)}
-                        >
-                          <span className="coupon-code">{c.code}</span>
-                          <span className="coupon-discount">
-                            {c.discountType === "percentage"
-                              ? `${c.discountValue}% OFF`
-                              : `₹${c.discountValue} OFF`}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-
-          <div className="checkout-section">
-            <h3 className="section-title">Payment Method</h3>
-            <div className="payment-methods">
+          {/* Payment */}
+          <div className="co__card">
+            <h3 className="co__card-title"><i className="fas fa-credit-card"></i> Payment Method</h3>
+            <div className="co__payments">
               {["COD", "PAYU"].map((method) => (
-                <div key={method} className="payment-option">
-                  <input
-                    type="radio"
-                    id={`payment-${method}`}
-                    name="paymentMethod"
-                    value={method}
-                    checked={paymentMethod === method}
-                    onChange={() => setPaymentMethod(method)}
-                  />
-                  <label htmlFor={`payment-${method}`} className="payment-label">
-                    {method === "COD" ? t("cod") : t("onlinePayment")}
-                  </label>
-                </div>
+                <label key={method} className={`co__pay-option${paymentMethod === method ? ' co__pay-option--active' : ''}`}>
+                  <input type="radio" name="paymentMethod" value={method} checked={paymentMethod === method} onChange={() => setPaymentMethod(method)} />
+                  <span>{method === "COD" ? t("cod") : t("onlinePayment")}</span>
+                </label>
               ))}
             </div>
           </div>
+        </div>
 
-          <div className="order-summary">
-            <h3 className="order-summary-title">{t("orderSummary")}</h3>
+        {/* Right — Summary (sticky) */}
+        <div className="co__right">
+          <div className="co__summary">
+            <h3 className="co__card-title">{t("orderSummary")}</h3>
 
             {cart && cart.items?.length > 0 ? (
-              <ul className="order-items">
+              <div className="co__items">
                 {cart.items.map((item) => (
-                  <li key={item._id} className="order-item">
-                    <div>
-                      <span className="item-name">{item.plant.name}</span>
-                      <span className="item-quantity">×{item.quantity}</span>
+                  <div key={item._id} className="co__item">
+                    {item.plant?.image && <img src={item.plant.image} alt={item.plant.name} className="co__item-img" />}
+                    <div className="co__item-info">
+                      <strong>{item.plant?.name}</strong>
+                      <span>Qty: {item.quantity}</span>
                     </div>
-                    <span className="item-price">₹{item.plant.price * item.quantity}</span>
-                  </li>
+                    <span className="co__item-price">₹{(item.plant?.price || 0) * item.quantity}</span>
+                  </div>
                 ))}
-              </ul>
-            ) : (
-              <div className="empty-cart-message">{t("cartNoItems")}</div>
-            )}
-
-            {discount > 0 && (
-              <div className="order-discount">
-                <span>Discount Applied:</span>
-                <span>-₹{discount}</span>
               </div>
+            ) : (
+              <div className="co__empty">{t("cartNoItems")}</div>
             )}
 
-            <div className="order-total">
-              <span>{t("total")}:</span>
-              <span>₹{finalAmount || total}</span>
+            {/* Coupon */}
+            <div className="co__coupon">
+              {!couponBoxOpen ? (
+                <button type="button" className="co__coupon-toggle" onClick={() => setCouponBoxOpen(true)}>
+                  <i className="fas fa-tag"></i> Apply Coupon
+                </button>
+              ) : (
+                <div className="co__coupon-box">
+                  <div className="co__coupon-input">
+                    <input type="text" value={couponCode} onChange={(e) => setCouponCode(e.target.value)} placeholder="Coupon code" />
+                    {appliedCouponCode ? (
+                      <button type="button" onClick={handleRemoveCoupon} className="co__coupon-rm">Remove</button>
+                    ) : (
+                      <button type="button" onClick={handleApplyCoupon} className="co__coupon-apply">Apply</button>
+                    )}
+                  </div>
+                  {availableCoupons.length > 0 && (
+                    <div className="co__coupon-list">
+                      {availableCoupons.map((c) => (
+                        <button type="button" key={c._id} className="co__coupon-pill" onClick={() => setCouponCode(c.code)}>
+                          <strong>{c.code}</strong>
+                          <span>{c.discountType === "percentage" ? `${c.discountValue}%` : `₹${c.discountValue}`} OFF</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
+
+            {/* Totals */}
+            <div className="co__totals">
+              <div className="co__totals-row">
+                <span>Subtotal</span>
+                <span>₹{total}</span>
+              </div>
+              {discount > 0 && (
+                <div className="co__totals-row co__totals-row--discount">
+                  <span>Discount</span>
+                  <span>-₹{discount}</span>
+                </div>
+              )}
+              <div className="co__totals-row co__totals-row--total">
+                <span>{t("total")}</span>
+                <strong>₹{finalAmount || total}</strong>
+              </div>
+            </div>
+
+            {error && <div className="message message-error">{error}</div>}
+            {success && <div className="message message-success">{success}</div>}
+
+            <button type="submit" disabled={placing || !cart?.items?.length} className="co__pay-btn">
+              {placing ? <><i className="fas fa-spinner fa-spin"></i> {t("placingOrder")}</> : <>{t("placeOrder")} <i className="fas fa-arrow-right"></i></>}
+            </button>
+
+            <p className="co__secure"><i className="fas fa-lock"></i> Secure checkout powered by PayU</p>
           </div>
-
-          {error && <div className="message message-error">{error}</div>}
-          {success && <div className="message message-success">{success}</div>}
-
-          <button
-            type="submit"
-            disabled={placing || !cart?.items?.length}
-            className="submit-btn"
-          >
-            {placing ? t("placingOrder") : t("placeOrder")}
-          </button>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   );
 };
