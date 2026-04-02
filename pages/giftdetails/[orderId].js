@@ -16,19 +16,19 @@ export function getServerSideProps({ locale }) {
 }
 
 export default function GiftOrderDetails() {
-  const { getAuthHeaders } = useAuth();
+  const { getAuthHeaders, isLoading: authLoading, isLoggedIn } = useAuth();
   const router = useRouter()
   const { orderId } = router.query
   const t = useTranslations('giftDetails')
-  
+
   const [order, setOrder] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (!orderId) return
+    if (authLoading || !orderId) return
 
-    if (!getAuthHeaders().Authorization) {
-      router.push('/login')
+    if (!isLoggedIn) {
+      router.push(`/login?from=/giftdetails/${orderId}`)
       return
     }
 
@@ -44,7 +44,7 @@ export default function GiftOrderDetails() {
         console.error('Failed to fetch gift order:', err)
         setLoading(false)
       })
-  }, [orderId, router])
+  }, [orderId, authLoading, isLoggedIn])
 
   const getOccasionIcon = (occasion) => {
     const icons = {
