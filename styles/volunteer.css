@@ -17,6 +17,8 @@
 
 .ge-vol__visual img {
   width: 100%;
+  max-height: 280px;
+  object-fit: cover;
   border-radius: var(--ge-radius-xl);
   box-shadow: var(--ge-shadow-lg);
   margin-bottom: var(--ge-space-6);
