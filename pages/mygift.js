@@ -87,20 +87,21 @@ export default function MyGift() {
 
   if (loading) {
     return (
-      <div className="container" style={{ maxWidth: 600, marginTop: 40 }}>
-        <div style={{ textAlign: 'center', padding: '2rem 0' }}>
-          <i className="fas fa-spinner fa-spin"></i> {t('loading') || 'Loading...'}
+      <section className="ge-profile">
+        <div className="ge-profile__container">
+          <div className="ge-profile__loading"><i className="fas fa-spinner fa-spin"></i><p>{t('loading') || 'Loading...'}</p></div>
         </div>
-      </div>
+      </section>
     )
   }
 
   return (
     <>
-    <Seo noindex title="My Gift Trees | GREENEYE" />
-    <div className="container" style={{ maxWidth: 600, marginTop: 70 }}>
+    <Seo noindex title="My Gift Trees | GreenEye" />
+    <section className="ge-profile">
+    <div className="ge-profile__container">
       <ProfileTabs />
-      <h2 style={{ marginTop: 30, marginBottom: 20 }}>
+      <h2 className="ge-profile__page-title">
         <i className="fas fa-gift"></i> {t('heading') || 'My Gift Trees'}
       </h2>
       
@@ -330,6 +331,7 @@ export default function MyGift() {
         ))
       )}
     </div>
+    </section>
     </>
   )
 }
