@@ -1,0 +1,324 @@
+/* ═══════════════════════════════════════════════════════
+   Profile + ProfileTabs — Design System v2
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Profile Tabs ──────────────────────────────────── */
+.ge-profile-tabs {
+  display: flex;
+  gap: var(--ge-space-1);
+  border-bottom: 1px solid var(--ge-cloud);
+  margin-bottom: var(--ge-space-6);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.ge-profile-tabs::-webkit-scrollbar { display: none; }
+
+.ge-profile-tabs__tab {
+  display: flex;
+  align-items: center;
+  gap: var(--ge-space-2);
+  padding: var(--ge-space-3) var(--ge-space-4);
+  font-family: var(--ge-font-body);
+  font-size: var(--ge-text-sm);
+  font-weight: 500;
+  color: var(--ge-slate);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: all var(--ge-duration-fast) var(--ge-ease);
+}
+
+.ge-profile-tabs__tab:hover {
+  color: var(--ge-charcoal);
+}
+
+.ge-profile-tabs__tab--active {
+  color: var(--ge-forest);
+  font-weight: 600;
+  border-bottom-color: var(--ge-forest);
+}
+
+.ge-profile-tabs__tab i {
+  font-size: 13px;
+}
+
+/* ── Profile Page ──────────────────────────────────── */
+.ge-profile {
+  min-height: 100vh;
+  background: var(--ge-snow);
+  padding: var(--ge-space-8) 0 var(--ge-space-16);
+}
+
+.ge-profile__container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 var(--ge-space-6);
+}
+
+.ge-profile__loading {
+  text-align: center;
+  padding: var(--ge-space-16) 0;
+  color: var(--ge-mist);
+}
+
+.ge-profile__loading i {
+  font-size: 24px;
+  display: block;
+  margin-bottom: var(--ge-space-3);
+}
+
+/* ── Header ────────────────────────────────────────── */
+.ge-profile__header {
+  display: flex;
+  align-items: center;
+  gap: var(--ge-space-4);
+  margin-bottom: var(--ge-space-8);
+}
+
+.ge-profile__avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--ge-radius-full);
+  background: var(--ge-forest);
+  color: var(--ge-white);
+  font-family: var(--ge-font-body);
+  font-size: var(--ge-text-xl);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ge-profile__intro {
+  flex: 1;
+  min-width: 0;
+}
+
+.ge-profile__intro h1 {
+  font-family: var(--ge-font-body);
+  font-size: var(--ge-text-xl);
+  font-weight: 700;
+  color: var(--ge-ink);
+  margin: 0;
+}
+
+.ge-profile__intro p {
+  font-size: var(--ge-text-sm);
+  color: var(--ge-slate);
+  margin: 0;
+}
+
+.ge-profile__intro .ge-badge {
+  margin-top: var(--ge-space-2);
+}
+
+.ge-profile__edit-btn {
+  padding: var(--ge-space-2) var(--ge-space-4);
+  background: transparent;
+  color: var(--ge-forest);
+  border: 1.5px solid var(--ge-forest);
+  border-radius: var(--ge-radius-full);
+  font-family: var(--ge-font-body);
+  font-size: var(--ge-text-xs);
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--ge-space-2);
+  white-space: nowrap;
+  transition: all var(--ge-duration-fast) var(--ge-ease);
+}
+
+.ge-profile__edit-btn:hover {
+  background: var(--ge-mint);
+}
+
+.ge-profile__edit-actions {
+  display: flex;
+  gap: var(--ge-space-2);
+  flex-shrink: 0;
+}
+
+.ge-profile__save-btn {
+  padding: var(--ge-space-2) var(--ge-space-4);
+  background: var(--ge-forest);
+  color: var(--ge-white);
+  border: none;
+  border-radius: var(--ge-radius-full);
+  font-family: var(--ge-font-body);
+  font-size: var(--ge-text-xs);
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--ge-space-2);
+  transition: all var(--ge-duration-fast) var(--ge-ease);
+}
+
+.ge-profile__save-btn:hover:not(:disabled) {
+  background: #164A2C;
+}
+
+.ge-profile__save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ge-profile__cancel-btn {
+  padding: var(--ge-space-2) var(--ge-space-4);
+  background: transparent;
+  color: var(--ge-slate);
+  border: 1.5px solid var(--ge-cloud);
+  border-radius: var(--ge-radius-full);
+  font-family: var(--ge-font-body);
+  font-size: var(--ge-text-xs);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--ge-duration-fast) var(--ge-ease);
+}
+
+.ge-profile__cancel-btn:hover {
+  background: var(--ge-snow);
+  border-color: var(--ge-mist);
+}
+
+/* ── Sections ──────────────────────────────────────── */
+.ge-profile__section {
+  background: var(--ge-white);
+  border-radius: var(--ge-radius-lg);
+  border: 1px solid var(--ge-cloud);
+  padding: var(--ge-space-6);
+  margin-bottom: var(--ge-space-5);
+}
+
+.ge-profile__section h3 {
+  font-family: var(--ge-font-body);
+  font-size: var(--ge-text-sm);
+  font-weight: 700;
+  color: var(--ge-ink);
+  margin: 0 0 var(--ge-space-5) 0;
+  display: flex;
+  align-items: center;
+  gap: var(--ge-space-2);
+  padding-bottom: var(--ge-space-3);
+  border-bottom: 1px solid var(--ge-cloud);
+}
+
+.ge-profile__section h3 i {
+  color: var(--ge-forest);
+  font-size: 14px;
+}
+
+.ge-profile__section--volunteer {
+  border-color: var(--ge-sage);
+  background: linear-gradient(180deg, rgba(143, 191, 154, 0.04) 0%, var(--ge-white) 100%);
+}
+
+.ge-profile__section--volunteer h3 i {
+  color: var(--ge-sage);
+}
+
+/* ── Form Grid ─────────────────────────────────────── */
+.ge-profile__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--ge-space-4);
+}
+
+.ge-profile__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ge-space-1);
+}
+
+.ge-profile__field--full {
+  grid-column: 1 / -1;
+}
+
+.ge-profile__field label {
+  font-size: var(--ge-text-xs);
+  font-weight: 600;
+  color: var(--ge-charcoal);
+  letter-spacing: 0.01em;
+}
+
+.ge-profile__field input,
+.ge-profile__field select,
+.ge-profile__field textarea {
+  width: 100%;
+  padding: var(--ge-space-2) var(--ge-space-3);
+  font-family: var(--ge-font-body);
+  font-size: var(--ge-text-sm);
+  color: var(--ge-charcoal);
+  background: var(--ge-white);
+  border: 1.5px solid var(--ge-cloud);
+  border-radius: var(--ge-radius-sm);
+  transition: border-color var(--ge-duration-fast) var(--ge-ease);
+  min-height: 40px;
+}
+
+.ge-profile__field input:focus,
+.ge-profile__field select:focus,
+.ge-profile__field textarea:focus {
+  outline: none;
+  border-color: var(--ge-forest);
+  box-shadow: 0 0 0 3px rgba(27, 94, 58, 0.08);
+}
+
+.ge-profile__field input:disabled,
+.ge-profile__field select:disabled,
+.ge-profile__field textarea:disabled {
+  background: var(--ge-snow);
+  color: var(--ge-charcoal);
+  cursor: default;
+  border-color: transparent;
+}
+
+.ge-profile__field textarea {
+  resize: vertical;
+  min-height: 72px;
+}
+
+/* ── Responsive ────────────────────────────────────── */
+@media (max-width: 640px) {
+  .ge-profile__container {
+    padding: 0 var(--ge-space-4);
+  }
+
+  .ge-profile__header {
+    flex-wrap: wrap;
+  }
+
+  .ge-profile__edit-btn,
+  .ge-profile__edit-actions {
+    width: 100%;
+  }
+
+  .ge-profile__edit-btn {
+    justify-content: center;
+  }
+
+  .ge-profile__edit-actions {
+    justify-content: stretch;
+  }
+
+  .ge-profile__edit-actions button {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .ge-profile__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ge-profile__section {
+    padding: var(--ge-space-4);
+  }
+
+  .ge-profile-tabs__tab {
+    padding: var(--ge-space-3);
+    font-size: var(--ge-text-xs);
+  }
+}
