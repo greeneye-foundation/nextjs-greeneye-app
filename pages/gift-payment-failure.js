@@ -6,280 +6,137 @@ import Seo from '@/components/common/Seo';
 import { showNotification } from '@/components/Notification';
 
 export default function GiftPaymentFailure() {
-    const router = useRouter();
-    const [paymentInfo, setPaymentInfo] = useState(null);
-    const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const [paymentInfo, setPaymentInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        if (router.isReady) {
-            const params = router.query;
+  useEffect(() => {
+    if (router.isReady) {
+      const params = router.query;
 
-            setPaymentInfo(params);
-            showNotification('Payment failed. Please try again.', 'error');
-            setLoading(false);
-        }
-    }, [router.isReady, router.query]);
-
-    if (loading) {
-        return (
-            <>
-                <Seo noindex title="Processing..." />
-                <section className="payment-loading" style={{
-                    minHeight: '100vh',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-                }}>
-                    <div className="container">
-                        <div className="loading-card" style={{
-                            background: 'white',
-                            borderRadius: '20px',
-                            padding: '3rem',
-                            textAlign: 'center',
-                            boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
-                            maxWidth: '500px',
-                            margin: '0 auto'
-                        }}>
-                            <i className="fas fa-spinner fa-spin" style={{
-                                fontSize: '4rem',
-                                color: '#f44336',
-                                marginBottom: '1rem'
-                            }}></i>
-                            <h2 style={{ marginBottom: '0.5rem', color: '#333' }}>
-                                Processing...
-                            </h2>
-                        </div>
-                    </div>
-                </section>
-            </>
-        );
+      setPaymentInfo(params);
+      showNotification('Payment failed. Please try again.', 'error');
+      setLoading(false);
     }
+  }, [router.isReady, router.query]);
 
+  if (loading) {
     return (
-        <>
-            <Seo noindex title="Payment Failed | GreenEye Foundation" />
-            <section className="payment-failure" style={{
-                minHeight: '100vh',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-                padding: '2rem 1rem'
-            }}>
-                <div className="container">
-                    <motion.div
-                        className="failure-card"
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5 }}
-                        style={{
-                            background: 'white',
-                            borderRadius: '20px',
-                            padding: '3rem',
-                            boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
-                            maxWidth: '600px',
-                            margin: '0 auto'
-                        }}
-                    >
-                        <div className="failure-icon" style={{ textAlign: 'center', marginBottom: '2rem' }}>
-                            <motion.i
-                                className="fas fa-times-circle"
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
-                                transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-                                style={{
-                                    fontSize: '5rem',
-                                    color: '#f44336'
-                                }}
-                            ></motion.i>
-                        </div>
-
-                        <h1 style={{ textAlign: 'center', marginBottom: '0.5rem', color: '#333' }}>
-                            Payment Failed
-                        </h1>
-                        <p className="failure-message" style={{
-                            textAlign: 'center',
-                            color: '#666',
-                            marginBottom: '2rem',
-                            fontSize: '1.1rem'
-                        }}>
-                            Unfortunately, your payment could not be processed
-                        </p>
-
-                        {paymentInfo && (
-                            <div className="payment-info" style={{
-                                background: '#ffebee',
-                                borderRadius: '12px',
-                                padding: '1.5rem',
-                                marginBottom: '1.5rem'
-                            }}>
-                                {paymentInfo.orderId && (
-                                    <div className="info-row" style={{
-                                        display: 'flex',
-                                        justifyContent: 'space-between',
-                                        padding: '0.75rem 0',
-                                        borderBottom: '1px solid #ffcdd2'
-                                    }}>
-                                        <span className="label" style={{ color: '#666', fontWeight: '500' }}>
-                                            Order ID:
-                                        </span>
-                                        <span className="value" style={{
-                                            color: '#333',
-                                            fontWeight: '600',
-                                            fontSize: '0.9rem'
-                                        }}>
-                                            {paymentInfo.orderId}
-                                        </span>
-                                    </div>
-                                )}
-                                {paymentInfo.txnid && (
-                                    <div className="info-row" style={{
-                                        display: 'flex',
-                                        justifyContent: 'space-between',
-                                        padding: '0.75rem 0',
-                                        borderBottom: '1px solid #ffcdd2'
-                                    }}>
-                                        <span className="label" style={{ color: '#666', fontWeight: '500' }}>
-                                            Transaction ID:
-                                        </span>
-                                        <span className="value" style={{
-                                            color: '#333',
-                                            fontWeight: '600',
-                                            fontSize: '0.9rem',
-                                            textAlign: 'right',
-                                            wordBreak: 'break-all'
-                                        }}>
-                                            {paymentInfo.txnid}
-                                        </span>
-                                    </div>
-                                )}
-                                {paymentInfo.error_Message && (
-                                    <div className="error-message" style={{
-                                        marginTop: '1rem',
-                                        padding: '1rem',
-                                        background: '#fff',
-                                        borderRadius: '8px',
-                                        border: '1px solid #f44336',
-                                        display: 'flex',
-                                        alignItems: 'start',
-                                        gap: '0.5rem'
-                                    }}>
-                                        <i className="fas fa-info-circle" style={{
-                                            color: '#f44336',
-                                            marginTop: '2px'
-                                        }}></i>
-                                        <span style={{ color: '#333', flex: 1 }}>{paymentInfo.error_Message}</span>
-                                    </div>
-                                )}
-                            </div>
-                        )}
-
-                        <div className="failure-reasons" style={{
-                            background: '#f8f9fa',
-                            borderRadius: '12px',
-                            padding: '1.5rem',
-                            marginBottom: '2rem'
-                        }}>
-                            <h3 style={{
-                                fontSize: '1.1rem',
-                                marginBottom: '1rem',
-                                color: '#333'
-                            }}>
-                                Common reasons for payment failure:
-                            </h3>
-                            <ul style={{
-                                margin: 0,
-                                paddingLeft: '1.5rem',
-                                color: '#666',
-                                lineHeight: '1.8'
-                            }}>
-                                <li>Insufficient funds in your account</li>
-                                <li>Incorrect card details or OTP</li>
-                                <li>Transaction timeout</li>
-                                <li>Bank server issues</li>
-                                <li>Payment gateway error</li>
-                            </ul>
-                        </div>
-
-                        <div className="failure-actions" style={{
-                            display: 'flex',
-                            gap: '1rem',
-                            justifyContent: 'center',
-                            flexWrap: 'wrap',
-                            marginBottom: '2rem'
-                        }}>
-                            <button
-                                className="btn btn-primary"
-                                onClick={() => router.push('/gift-a-tree')}
-                                style={{
-                                    padding: '12px 30px',
-                                    fontSize: '1rem',
-                                    borderRadius: '50px',
-                                    border: 'none',
-                                    background: '#4CAF50',
-                                    color: 'white',
-                                    cursor: 'pointer',
-                                    transition: 'all 0.3s',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '8px'
-                                }}
-                            >
-                                <i className="fas fa-redo"></i>
-                                Try Again
-                            </button>
-                            <button
-                                className="btn btn-secondary"
-                                onClick={() => router.push('/')}
-                                style={{
-                                    padding: '12px 30px',
-                                    fontSize: '1rem',
-                                    borderRadius: '50px',
-                                    border: '2px solid #667eea',
-                                    background: 'white',
-                                    color: '#667eea',
-                                    cursor: 'pointer',
-                                    transition: 'all 0.3s',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '8px'
-                                }}
-                            >
-                                <i className="fas fa-home"></i>
-                                Back to Home
-                            </button>
-                        </div>
-
-                        <div className="help-section" style={{
-                            textAlign: 'center',
-                            padding: '1.5rem',
-                            background: '#e3f2fd',
-                            borderRadius: '12px'
-                        }}>
-                            <p style={{ marginBottom: '0.75rem', color: '#1976d2', fontWeight: '500' }}>
-                                Need help? Contact our support team
-                            </p>
-                            <a
-                                href="mailto:support@greeneye.foundation"
-                                className="support-link"
-                                style={{
-                                    color: '#1976d2',
-                                    textDecoration: 'none',
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    gap: '0.5rem',
-                                    fontSize: '1.05rem',
-                                    fontWeight: '600'
-                                }}
-                            >
-                                <i className="fas fa-envelope"></i>
-                                support@greeneye.foundation
-                            </a>
-                        </div>
-                    </motion.div>
-                </div>
-            </section>
-        </>
+      <>
+        <Seo noindex title="Processing..." />
+        <div className="ge-status">
+          <div className="ge-status-card ge-text-center">
+            <div className="ge-status-icon ge-status-icon--loading">
+              <i className="fas fa-spinner fa-spin"></i>
+            </div>
+            <h2 className="ge-status-title">Processing...</h2>
+          </div>
+        </div>
+      </>
     );
+  }
+
+  return (
+    <>
+      <Seo noindex title="Payment Failed | GreenEye Foundation" />
+      <div className="ge-status">
+        <motion.div
+          className="ge-status-card"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          {/* Error Icon */}
+          <motion.div
+            className="ge-status-icon ge-status-icon--error"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+          >
+            <i className="fas fa-times"></i>
+          </motion.div>
+
+          <h1 className="ge-status-title">Payment Failed</h1>
+          <p className="ge-status-subtitle">
+            Unfortunately, your payment could not be processed
+          </p>
+
+          {/* Payment Info */}
+          {paymentInfo && (paymentInfo.orderId || paymentInfo.txnid) && (
+            <div className="ge-status-info">
+              {paymentInfo.orderId && (
+                <div className="ge-status-row">
+                  <span className="ge-status-label">Order ID</span>
+                  <span className="ge-status-value">{paymentInfo.orderId}</span>
+                </div>
+              )}
+              {paymentInfo.txnid && (
+                <div className="ge-status-row">
+                  <span className="ge-status-label">Transaction ID</span>
+                  <span className="ge-status-value">{paymentInfo.txnid}</span>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Error Message */}
+          {paymentInfo && paymentInfo.error_Message && (
+            <div className="ge-status-alert ge-status-alert--error">
+              <i className="fas fa-info-circle"></i>
+              <div>
+                <p className="ge-status-alert-text">{paymentInfo.error_Message}</p>
+              </div>
+            </div>
+          )}
+
+          {/* Common Reasons */}
+          <div className="ge-status-section">
+            <h3 className="ge-status-section-title">
+              <i className="fas fa-info-circle"></i>
+              Common Reasons for Payment Failure
+            </h3>
+            <ul className="ge-status-reasons">
+              <li>Insufficient funds in your account</li>
+              <li>Incorrect card details or OTP</li>
+              <li>Transaction timeout</li>
+              <li>Bank server issues</li>
+              <li>Payment gateway error</li>
+            </ul>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="ge-status-actions">
+            <button
+              className="ge-btn ge-btn-primary ge-btn-lg"
+              onClick={() => router.push('/gift-a-tree')}
+            >
+              <i className="fas fa-redo"></i>
+              Try Again
+            </button>
+            <button
+              className="ge-btn ge-btn-secondary ge-btn-lg"
+              onClick={() => router.push('/')}
+            >
+              <i className="fas fa-home"></i>
+              Back to Home
+            </button>
+          </div>
+
+          {/* Help Section */}
+          <div className="ge-status-help">
+            <p className="ge-status-help-title">Need Help?</p>
+            <p className="ge-status-help-text">
+              If you continue to face issues, please contact our support team
+            </p>
+            <div className="ge-status-help-links">
+              <a href="mailto:support@greeneye.foundation">
+                <i className="fas fa-envelope"></i>
+                support@greeneye.foundation
+              </a>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </>
+  );
 }

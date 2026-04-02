@@ -375,6 +375,15 @@
   to { opacity: 1; transform: translateX(0); }
 }
 
+@keyframes ge-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.ge-spin {
+  animation: ge-spin 1s linear infinite;
+}
+
 .ge-animate-in {
   animation: ge-fade-in var(--ge-duration-slow) var(--ge-ease-out) both;
 }
@@ -461,6 +470,16 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--ge-slate);
+}
+
+/* ── Spin animation ───────────────────────────────── */
+@keyframes ge-spin-anim {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.ge-spin {
+  animation: ge-spin-anim 1s linear infinite;
 }
 
 /* ── Selection ─────────────────────────────────────── */

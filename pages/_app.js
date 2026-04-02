@@ -29,6 +29,8 @@ import '@/styles/contact.css';
 import '@/styles/blog.css';
 import '@/styles/volunteer.css';
 import '@/styles/not-found.css';
+import '@/styles/status-page.css';
+import '@/styles/detail-page.css';
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';

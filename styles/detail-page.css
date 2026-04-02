@@ -1,0 +1,502 @@
+/* ═══════════════════════════════════════════════════════
+   Detail Pages — Order / Donation / Gift / Plant
+   Shared styles for single-item detail views
+   ═══════════════════════════════════════════════════════ */
+
+/* Layout wrapper */
+.ge-detail {
+  max-width: var(--ge-content-width);
+  margin: 0 auto;
+  padding: var(--ge-space-10) var(--ge-space-6) var(--ge-space-16);
+}
+
+.ge-detail-wide {
+  max-width: 860px;
+}
+
+/* Back link */
+.ge-detail-back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ge-space-2);
+  color: var(--ge-forest);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: var(--ge-text-sm);
+  margin-bottom: var(--ge-space-6);
+  transition: color var(--ge-duration-fast) var(--ge-ease);
+}
+
+.ge-detail-back:hover {
+  color: var(--ge-forest-light);
+}
+
+.ge-detail-back i {
+  font-size: 0.75rem;
+}
+
+/* Header banner (for gift details) */
+.ge-detail-header {
+  background: var(--ge-forest);
+  color: var(--ge-white);
+  padding: var(--ge-space-8);
+  border-radius: var(--ge-radius-xl) var(--ge-radius-xl) 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ge-detail-header-title {
+  font-size: var(--ge-text-2xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--ge-space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--ge-space-3);
+}
+
+.ge-detail-header-sub {
+  font-size: var(--ge-text-sm);
+  opacity: 0.9;
+}
+
+.ge-detail-header-icon {
+  font-size: 3rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+}
+
+/* Card container */
+.ge-detail-card {
+  background: var(--ge-white);
+  border-radius: var(--ge-radius-xl);
+  box-shadow: var(--ge-shadow-lg);
+  overflow: hidden;
+  animation: ge-fade-in var(--ge-duration-slow) var(--ge-ease-out) both;
+}
+
+/* Card without header (rounded all corners) */
+.ge-detail-card--standalone {
+  border-radius: var(--ge-radius-xl);
+}
+
+/* Card with header above (flat top) */
+.ge-detail-card--body {
+  border-radius: 0 0 var(--ge-radius-xl) var(--ge-radius-xl);
+}
+
+/* Section inside card */
+.ge-detail-section {
+  padding: var(--ge-space-6) var(--ge-space-8);
+  border-bottom: 1px solid var(--ge-cloud);
+}
+
+.ge-detail-section:last-child {
+  border-bottom: none;
+}
+
+.ge-detail-section-title {
+  font-size: var(--ge-text-lg);
+  font-weight: 700;
+  color: var(--ge-ink);
+  margin-bottom: var(--ge-space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--ge-space-2);
+}
+
+.ge-detail-section-title i {
+  color: var(--ge-forest);
+  font-size: var(--ge-text-base);
+}
+
+/* Status badges row */
+.ge-detail-badges {
+  display: flex;
+  gap: var(--ge-space-3);
+  flex-wrap: wrap;
+  padding: var(--ge-space-5) var(--ge-space-8);
+  border-bottom: 1px solid var(--ge-cloud);
+}
+
+/* Two-column meta grid */
+.ge-detail-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--ge-space-5);
+}
+
+.ge-detail-meta-label {
+  font-size: var(--ge-text-xs);
+  color: var(--ge-mist);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  margin-bottom: var(--ge-space-1);
+}
+
+.ge-detail-meta-value {
+  font-size: var(--ge-text-base);
+  font-weight: 600;
+  color: var(--ge-ink);
+}
+
+/* Info box (recipient, sender, address) */
+.ge-detail-infobox {
+  background: var(--ge-snow);
+  padding: var(--ge-space-4);
+  border-radius: var(--ge-radius-md);
+  border: 1px solid var(--ge-cloud);
+}
+
+.ge-detail-infobox-row {
+  display: flex;
+  align-items: center;
+  gap: var(--ge-space-3);
+  padding: var(--ge-space-2) 0;
+  font-size: var(--ge-text-sm);
+  color: var(--ge-charcoal);
+}
+
+.ge-detail-infobox-row i {
+  color: var(--ge-forest);
+  width: 18px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.ge-detail-infobox-row strong {
+  color: var(--ge-ink);
+  font-size: var(--ge-text-base);
+}
+
+/* Message box (personal message) */
+.ge-detail-message {
+  background: var(--ge-amber);
+  padding: var(--ge-space-4);
+  border-radius: var(--ge-radius-md);
+  border-left: 3px solid var(--ge-gold);
+  font-style: italic;
+  color: var(--ge-charcoal);
+  line-height: 1.6;
+}
+
+/* Product / tree items */
+.ge-detail-product {
+  display: flex;
+  align-items: center;
+  gap: var(--ge-space-4);
+  padding: var(--ge-space-4);
+  background: var(--ge-snow);
+  border-radius: var(--ge-radius-md);
+  border: 1px solid var(--ge-cloud);
+}
+
+.ge-detail-product + .ge-detail-product {
+  margin-top: var(--ge-space-3);
+}
+
+.ge-detail-product-img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: var(--ge-radius-md);
+  border: 2px solid var(--ge-mint);
+  flex-shrink: 0;
+}
+
+.ge-detail-product-name {
+  font-weight: 600;
+  color: var(--ge-ink);
+  margin-bottom: var(--ge-space-1);
+}
+
+.ge-detail-product-price {
+  font-size: var(--ge-text-lg);
+  font-weight: 700;
+  color: var(--ge-forest);
+}
+
+/* Track tree link */
+.ge-detail-track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--ge-space-4);
+  background: var(--ge-mint);
+  border-radius: var(--ge-radius-md);
+  border: 1px solid rgba(27, 94, 58, 0.15);
+  text-decoration: none;
+  color: var(--ge-ink);
+  transition: all var(--ge-duration-base) var(--ge-ease);
+}
+
+.ge-detail-track:hover {
+  box-shadow: var(--ge-shadow-md);
+  border-color: var(--ge-forest);
+}
+
+.ge-detail-track + .ge-detail-track {
+  margin-top: var(--ge-space-3);
+}
+
+.ge-detail-track-name {
+  font-weight: 600;
+  margin-bottom: var(--ge-space-1);
+}
+
+.ge-detail-track-status {
+  font-size: var(--ge-text-xs);
+  color: var(--ge-slate);
+}
+
+.ge-detail-track-status span {
+  font-weight: 600;
+  color: var(--ge-forest);
+}
+
+.ge-detail-track-btn {
+  padding: var(--ge-space-2) var(--ge-space-4);
+  background: var(--ge-forest);
+  color: var(--ge-white);
+  border-radius: var(--ge-radius-sm);
+  font-weight: 600;
+  font-size: var(--ge-text-xs);
+  white-space: nowrap;
+}
+
+/* Payment summary */
+.ge-detail-summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--ge-space-2) 0;
+  font-size: var(--ge-text-sm);
+  color: var(--ge-slate);
+}
+
+.ge-detail-summary-row span:last-child {
+  font-weight: 600;
+  color: var(--ge-ink);
+}
+
+.ge-detail-summary-total {
+  border-top: 2px solid var(--ge-forest);
+  margin-top: var(--ge-space-3);
+  padding-top: var(--ge-space-3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ge-detail-summary-total-label {
+  font-size: var(--ge-text-lg);
+  font-weight: 700;
+  color: var(--ge-ink);
+}
+
+.ge-detail-summary-total-value {
+  font-size: var(--ge-text-2xl);
+  font-weight: 700;
+  color: var(--ge-forest);
+}
+
+/* Action buttons */
+.ge-detail-actions {
+  display: flex;
+  gap: var(--ge-space-3);
+  justify-content: center;
+  margin-top: var(--ge-space-8);
+}
+
+/* Order items list */
+.ge-detail-items li {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--ge-space-2) 0;
+  border-bottom: 1px solid var(--ge-cloud);
+  font-size: var(--ge-text-sm);
+}
+
+.ge-detail-items li:last-child {
+  border-bottom: none;
+}
+
+.ge-detail-items-name {
+  color: var(--ge-ink);
+  font-weight: 500;
+}
+
+.ge-detail-items-price {
+  color: var(--ge-forest);
+  font-weight: 600;
+}
+
+/* Plant detail page — two column layout */
+.ge-plant-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: var(--ge-space-8);
+  margin-top: var(--ge-space-6);
+}
+
+.ge-plant-image {
+  background: var(--ge-snow);
+  border-radius: var(--ge-radius-xl);
+  min-height: 420px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ge-space-5);
+}
+
+.ge-plant-image-placeholder {
+  font-size: 7rem;
+  color: var(--ge-leaf);
+}
+
+.ge-plant-info {
+  padding: var(--ge-space-6);
+}
+
+.ge-plant-name {
+  font-size: var(--ge-text-3xl);
+  font-weight: 700;
+  color: var(--ge-ink);
+  letter-spacing: -0.02em;
+  margin-bottom: var(--ge-space-3);
+}
+
+.ge-plant-price-row {
+  display: flex;
+  align-items: center;
+  gap: var(--ge-space-3);
+  margin-bottom: var(--ge-space-4);
+}
+
+.ge-plant-price {
+  font-size: var(--ge-text-2xl);
+  font-weight: 700;
+  color: var(--ge-forest);
+}
+
+.ge-plant-description {
+  color: var(--ge-charcoal);
+  line-height: 1.7;
+  margin-bottom: var(--ge-space-5);
+  font-size: var(--ge-text-base);
+}
+
+.ge-plant-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--ge-space-3);
+  margin-bottom: var(--ge-space-6);
+  font-size: var(--ge-text-sm);
+  color: var(--ge-charcoal);
+}
+
+.ge-plant-meta b {
+  color: var(--ge-ink);
+}
+
+.ge-plant-buttons {
+  display: flex;
+  gap: var(--ge-space-3);
+}
+
+/* Loading states */
+.ge-detail-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: var(--ge-space-4);
+  color: var(--ge-slate);
+}
+
+.ge-detail-loading i {
+  font-size: 2.5rem;
+  color: var(--ge-forest);
+}
+
+/* Empty / not found */
+.ge-detail-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  gap: var(--ge-space-4);
+  text-align: center;
+}
+
+.ge-detail-empty i {
+  font-size: 2.5rem;
+  color: var(--ge-gold);
+}
+
+.ge-detail-empty p {
+  color: var(--ge-slate);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ge-detail {
+    padding: var(--ge-space-6) var(--ge-space-4) var(--ge-space-12);
+  }
+
+  .ge-detail-header {
+    padding: var(--ge-space-6);
+    flex-direction: column;
+    text-align: center;
+    gap: var(--ge-space-4);
+  }
+
+  .ge-detail-section {
+    padding: var(--ge-space-5) var(--ge-space-5);
+  }
+
+  .ge-detail-badges {
+    padding: var(--ge-space-4) var(--ge-space-5);
+  }
+
+  .ge-detail-meta {
+    grid-template-columns: 1fr;
+    gap: var(--ge-space-3);
+  }
+
+  .ge-detail-actions {
+    flex-direction: column;
+  }
+
+  .ge-detail-actions .ge-btn {
+    width: 100%;
+  }
+
+  .ge-plant-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ge-plant-image {
+    min-height: 280px;
+  }
+
+  .ge-plant-info {
+    padding: var(--ge-space-4) 0;
+  }
+
+  .ge-plant-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .ge-plant-buttons {
+    flex-direction: column;
+  }
+
+  .ge-plant-buttons .ge-btn {
+    width: 100%;
+  }
+}

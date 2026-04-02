@@ -48,187 +48,109 @@ export default function GiftOrderDetails() {
 
   const getOccasionIcon = (occasion) => {
     const icons = {
-      birthday: '🎂',
-      anniversary: '💑',
-      wedding: '💒',
-      memorial: '🕊️',
-      corporate: '🏢',
-      holiday: '🎄',
-      'just-because': '💚'
+      birthday: '🎂', anniversary: '💑', wedding: '💒',
+      memorial: '🕊️', corporate: '🏢', holiday: '🎄', 'just-because': '💚'
     }
     return icons[occasion] || '🎁'
   }
 
   const getOccasionLabel = (occasion) => {
     const labels = {
-      birthday: 'Birthday',
-      anniversary: 'Anniversary',
-      wedding: 'Wedding',
-      memorial: 'Memorial',
-      corporate: 'Corporate Gift',
-      holiday: 'Holiday',
-      'just-because': 'Just Because'
+      birthday: 'Birthday', anniversary: 'Anniversary', wedding: 'Wedding',
+      memorial: 'Memorial', corporate: 'Corporate Gift', holiday: 'Holiday', 'just-because': 'Just Because'
     }
     return labels[occasion] || occasion
   }
 
-  const getStatusColor = (status) => {
-    const colors = {
-      PENDING: '#ff9800',
-      CONFIRMED: '#2196f3',
-      PROCESSING: '#9c27b0',
-      CANCELLED: '#f44336',
-      COMPLETED: '#388e3c',
-      FAILED: '#f44336',
-      EXPIRED: '#9e9e9e'
+  const getBadgeClass = (status) => {
+    const map = {
+      PENDING: 'ge-badge-gold', CONFIRMED: 'ge-badge-blue', PROCESSING: 'ge-badge-blue',
+      CANCELLED: 'ge-badge-red', COMPLETED: 'ge-badge-green', FAILED: 'ge-badge-red', EXPIRED: 'ge-badge-gray'
     }
-    return colors[status] || '#666'
+    return map[status] || 'ge-badge-gray'
   }
 
   if (loading) {
     return (
-      <div className="container" style={{ maxWidth: 800, marginTop: 100, textAlign: 'center' }}>
-        <i className="fas fa-spinner fa-spin" style={{ fontSize: 40, color: '#388e3c' }}></i>
-        <p style={{ marginTop: 20, color: '#666' }}>{t('loading') || 'Loading gift details...'}</p>
+      <div className="ge-detail ge-detail-wide">
+        <div className="ge-detail-loading">
+          <i className="fas fa-spinner fa-spin"></i>
+          <p>{t('loading') || 'Loading gift details...'}</p>
+        </div>
       </div>
     )
   }
 
   if (!order) {
     return (
-      <div className="container" style={{ maxWidth: 800, marginTop: 100, textAlign: 'center' }}>
-        <i className="fas fa-exclamation-triangle" style={{ fontSize: 40, color: '#ff9800' }}></i>
-        <p style={{ marginTop: 20, color: '#666' }}>{t('notFound') || 'Gift order not found'}</p>
-        <Link 
-          href="/mygift"
-          style={{
-            display: 'inline-block',
-            marginTop: 20,
-            padding: '12px 24px',
-            background: '#388e3c',
-            color: '#fff',
-            textDecoration: 'none',
-            borderRadius: 6,
-            fontWeight: 600
-          }}
-        >
-          <i className="fas fa-arrow-left"></i> {t('back') || 'Back to My Gifts'}
-        </Link>
+      <div className="ge-detail ge-detail-wide">
+        <div className="ge-detail-empty">
+          <i className="fas fa-exclamation-triangle"></i>
+          <p>{t('notFound') || 'Gift order not found'}</p>
+          <Link href="/mygift" className="ge-btn ge-btn-primary">
+            <i className="fas fa-arrow-left"></i> {t('back') || 'Back to My Gifts'}
+          </Link>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="container" style={{ maxWidth: 800, marginTop: 80, marginBottom: 60 }}>
+    <div className="ge-detail ge-detail-wide">
       {/* Back Button */}
-      <Link 
-        href="/mygift"
-        style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: 8,
-          color: '#388e3c',
-          textDecoration: 'none',
-          fontWeight: 600,
-          marginBottom: 20,
-          fontSize: 15
-        }}
-      >
+      <Link href="/mygift" className="ge-detail-back">
         <i className="fas fa-arrow-left"></i> {t('back') || 'Back to My Gifts'}
       </Link>
 
       {/* Header */}
-      <div style={{
-        background: 'linear-gradient(135deg, #388e3c 0%, #66bb6a 100%)',
-        color: '#fff',
-        padding: '30px',
-        borderRadius: '12px 12px 0 0',
-        boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
-      }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div>
-            <h1 style={{ margin: 0, fontSize: 28, fontWeight: 700 }}>
-              <i className="fas fa-gift"></i> {t('heading') || 'Gift Tree Order'}
-            </h1>
-            <p style={{ margin: '8px 0 0 0', opacity: 0.95, fontSize: 15 }}>
-              {t('orderId') || 'Order ID'}: <strong>#{order.orderId}</strong>
-            </p>
+      <div className="ge-detail-header">
+        <div>
+          <div className="ge-detail-header-title">
+            <i className="fas fa-gift"></i>
+            {t('heading') || 'Gift Tree Order'}
           </div>
-          <div style={{ fontSize: 48, filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))' }}>
-            {getOccasionIcon(order.occasion)}
+          <div className="ge-detail-header-sub">
+            {t('orderId') || 'Order ID'}: <strong>#{order.orderId}</strong>
           </div>
+        </div>
+        <div className="ge-detail-header-icon">
+          {getOccasionIcon(order.occasion)}
         </div>
       </div>
 
       {/* Main Content */}
-      <div style={{
-        background: '#fff',
-        borderRadius: '0 0 12px 12px',
-        boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-        padding: 0
-      }}>
-        {/* Status Section */}
-        <div style={{
-          padding: '20px 30px',
-          borderBottom: '1px solid #e0e0e0',
-          display: 'flex',
-          gap: 12,
-          flexWrap: 'wrap'
-        }}>
-          <div style={{
-            padding: '8px 16px',
-            borderRadius: 20,
-            fontSize: 14,
-            fontWeight: 600,
-            background: getStatusColor(order.orderStatus) + '20',
-            color: getStatusColor(order.orderStatus),
-            border: `2px solid ${getStatusColor(order.orderStatus)}40`,
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 8
-          }}>
+      <div className="ge-detail-card ge-detail-card--body">
+        {/* Status Badges */}
+        <div className="ge-detail-badges">
+          <span className={`ge-badge ${getBadgeClass(order.orderStatus)}`}>
             <i className="fas fa-shipping-fast"></i>
-            <span>{t('orderStatus') || 'Order'}: {order.orderStatus}</span>
-          </div>
-          <div style={{
-            padding: '8px 16px',
-            borderRadius: 20,
-            fontSize: 14,
-            fontWeight: 600,
-            background: order.paymentStatus === 'COMPLETED' ? '#388e3c20' : '#ff980020',
-            color: order.paymentStatus === 'COMPLETED' ? '#388e3c' : '#ff9800',
-            border: order.paymentStatus === 'COMPLETED' ? '2px solid #388e3c40' : '2px solid #ff980040',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 8
-          }}>
+            {t('orderStatus') || 'Order'}: {order.orderStatus}
+          </span>
+          <span className={`ge-badge ${order.paymentStatus === 'COMPLETED' ? 'ge-badge-green' : 'ge-badge-gold'}`}>
             <i className="fas fa-money-bill-wave"></i>
-            <span>{t('paymentStatus') || 'Payment'}: {order.paymentStatus}</span>
-          </div>
+            {t('paymentStatus') || 'Payment'}: {order.paymentStatus}
+          </span>
         </div>
 
         {/* Occasion & Date */}
-        <div style={{ padding: '20px 30px', borderBottom: '1px solid #e0e0e0' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+        <div className="ge-detail-section">
+          <div className="ge-detail-meta">
             <div>
-              <div style={{ fontSize: 13, color: '#888', marginBottom: 6 }}>
-                <i className="fas fa-calendar-alt"></i> {t('occasion') || 'Occasion'}
+              <div className="ge-detail-meta-label">
+                {t('occasion') || 'Occasion'}
               </div>
-              <div style={{ fontSize: 16, fontWeight: 600, color: '#222' }}>
+              <div className="ge-detail-meta-value">
                 {getOccasionLabel(order.occasion)}
               </div>
             </div>
             <div>
-              <div style={{ fontSize: 13, color: '#888', marginBottom: 6 }}>
-                <i className="fas fa-clock"></i> {t('orderDate') || 'Order Date'}
+              <div className="ge-detail-meta-label">
+                {t('orderDate') || 'Order Date'}
               </div>
-              <div style={{ fontSize: 16, fontWeight: 600, color: '#222' }}>
+              <div className="ge-detail-meta-value">
                 {new Date(order.orderDate || order.createdAt).toLocaleString('en-IN', {
-                  day: '2-digit',
-                  month: 'long',
-                  year: 'numeric',
-                  hour: '2-digit',
-                  minute: '2-digit'
+                  day: '2-digit', month: 'long', year: 'numeric',
+                  hour: '2-digit', minute: '2-digit'
                 })}
               </div>
             </div>
@@ -236,57 +158,47 @@ export default function GiftOrderDetails() {
         </div>
 
         {/* Recipient Information */}
-        <div style={{ padding: '20px 30px', borderBottom: '1px solid #e0e0e0' }}>
-          <h3 style={{ margin: '0 0 16px 0', fontSize: 18, color: '#222' }}>
-            <i className="fas fa-user-friends" style={{ color: '#388e3c', marginRight: 8 }}></i>
+        <div className="ge-detail-section">
+          <h3 className="ge-detail-section-title">
+            <i className="fas fa-user-friends"></i>
             {t('recipientInfo') || 'Recipient Information'}
           </h3>
-          <div style={{
-            background: '#f9f9f9',
-            padding: '16px',
-            borderRadius: 8,
-            border: '1px solid #e0e0e0'
-          }}>
-            <div style={{ marginBottom: 12 }}>
-              <i className="fas fa-user" style={{ color: '#388e3c', marginRight: 8, width: 20 }}></i>
+          <div className="ge-detail-infobox">
+            <div className="ge-detail-infobox-row">
+              <i className="fas fa-user"></i>
               <strong>{order.recipientName}</strong>
             </div>
-            <div style={{ marginBottom: 12, fontSize: 14, color: '#666' }}>
-              <i className="fas fa-envelope" style={{ color: '#388e3c', marginRight: 8, width: 20 }}></i>
+            <div className="ge-detail-infobox-row">
+              <i className="fas fa-envelope"></i>
               {order.recipientEmail}
             </div>
-            <div style={{ fontSize: 14, color: '#666' }}>
-              <i className="fas fa-phone" style={{ color: '#388e3c', marginRight: 8, width: 20 }}></i>
+            <div className="ge-detail-infobox-row">
+              <i className="fas fa-phone"></i>
               {order.recipientPhone}
             </div>
           </div>
         </div>
 
         {/* Sender Information */}
-        <div style={{ padding: '20px 30px', borderBottom: '1px solid #e0e0e0' }}>
-          <h3 style={{ margin: '0 0 16px 0', fontSize: 18, color: '#222' }}>
-            <i className="fas fa-user-circle" style={{ color: '#388e3c', marginRight: 8 }}></i>
+        <div className="ge-detail-section">
+          <h3 className="ge-detail-section-title">
+            <i className="fas fa-user-circle"></i>
             {t('senderInfo') || 'Your Information'}
           </h3>
-          <div style={{
-            background: '#f9f9f9',
-            padding: '16px',
-            borderRadius: 8,
-            border: '1px solid #e0e0e0'
-          }}>
-            <div style={{ marginBottom: 12 }}>
-              <i className="fas fa-user" style={{ color: '#388e3c', marginRight: 8, width: 20 }}></i>
+          <div className="ge-detail-infobox">
+            <div className="ge-detail-infobox-row">
+              <i className="fas fa-user"></i>
               <strong>{order.senderName}</strong>
             </div>
             {order.senderEmail && (
-              <div style={{ marginBottom: 12, fontSize: 14, color: '#666' }}>
-                <i className="fas fa-envelope" style={{ color: '#388e3c', marginRight: 8, width: 20 }}></i>
+              <div className="ge-detail-infobox-row">
+                <i className="fas fa-envelope"></i>
                 {order.senderEmail}
               </div>
             )}
             {order.senderPhone && (
-              <div style={{ fontSize: 14, color: '#666' }}>
-                <i className="fas fa-phone" style={{ color: '#388e3c', marginRight: 8, width: 20 }}></i>
+              <div className="ge-detail-infobox-row">
+                <i className="fas fa-phone"></i>
                 {order.senderPhone}
               </div>
             )}
@@ -295,245 +207,141 @@ export default function GiftOrderDetails() {
 
         {/* Personal Message */}
         {order.message && (
-          <div style={{ padding: '20px 30px', borderBottom: '1px solid #e0e0e0' }}>
-            <h3 style={{ margin: '0 0 16px 0', fontSize: 18, color: '#222' }}>
-              <i className="fas fa-heart" style={{ color: '#e91e63', marginRight: 8 }}></i>
+          <div className="ge-detail-section">
+            <h3 className="ge-detail-section-title">
+              <i className="fas fa-heart"></i>
               {t('message') || 'Personal Message'}
             </h3>
-            <div style={{
-              background: '#fff3e0',
-              padding: '16px',
-              borderRadius: 8,
-              border: '1px solid #ffb74d',
-              fontStyle: 'italic',
-              color: '#555',
-              lineHeight: 1.6
-            }}>
-              "{order.message}"
+            <div className="ge-detail-message">
+              &ldquo;{order.message}&rdquo;
             </div>
           </div>
         )}
 
         {/* Selected Trees */}
-        <div style={{ padding: '20px 30px', borderBottom: '1px solid #e0e0e0' }}>
-          <h3 style={{ margin: '0 0 16px 0', fontSize: 18, color: '#222' }}>
-            <i className="fas fa-tree" style={{ color: '#388e3c', marginRight: 8 }}></i>
+        <div className="ge-detail-section">
+          <h3 className="ge-detail-section-title">
+            <i className="fas fa-tree"></i>
             {t('selectedTrees') || 'Selected Trees'} ({order.numberOfTrees})
           </h3>
-          <div style={{ display: 'grid', gap: 12 }}>
-            {order.products.map((product, index) => (
-              <div
-                key={index}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 16,
-                  padding: 16,
-                  background: '#f9f9f9',
-                  borderRadius: 8,
-                  border: '1px solid #e0e0e0'
-                }}
-              >
-                {product.image && (
-                  <img
-                    src={`${product.image}`}
-                    alt={product.name}
-                    style={{
-                      width: 80,
-                      height: 80,
-                      objectFit: 'cover',
-                      borderRadius: 8,
-                      border: '2px solid #388e3c'
-                    }}
-                  />
-                )}
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 16, fontWeight: 600, color: '#222', marginBottom: 4 }}>
-                    {product.name}
-                  </div>
-                  <div style={{ fontSize: 18, fontWeight: 700, color: '#388e3c' }}>
-                    ₹{product.price}
-                  </div>
-                </div>
+          {order.products.map((product, index) => (
+            <div key={index} className="ge-detail-product">
+              {product.image && (
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="ge-detail-product-img"
+                />
+              )}
+              <div>
+                <div className="ge-detail-product-name">{product.name}</div>
+                <div className="ge-detail-product-price">₹{product.price}</div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
 
         {/* Track Your Trees */}
         {order.trees && order.trees.length > 0 && (
-          <div style={{ padding: '20px 30px', borderBottom: '1px solid #e0e0e0' }}>
-            <h3 style={{ margin: '0 0 16px 0', fontSize: 18, color: '#222' }}>
-              <i className="fas fa-map-marked-alt" style={{ color: '#388e3c', marginRight: 8 }}></i>
+          <div className="ge-detail-section">
+            <h3 className="ge-detail-section-title">
+              <i className="fas fa-map-marked-alt"></i>
               Track Your Trees
             </h3>
-            <div style={{ display: 'grid', gap: 12 }}>
-              {order.trees.map((tree) => (
-                <Link
-                  key={tree.trackingId}
-                  href={`/track/${tree.trackingId}`}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: 16,
-                    background: '#e8f5e9',
-                    borderRadius: 8,
-                    border: '1px solid #388e3c40',
-                    textDecoration: 'none',
-                    color: '#222',
-                    transition: 'background 0.2s'
-                  }}
-                >
-                  <div>
-                    <div style={{ fontWeight: 600, marginBottom: 4 }}>
-                      <i className="fas fa-seedling" style={{ color: '#388e3c', marginRight: 8 }}></i>
-                      {tree.treeName || tree.plantName}
-                    </div>
-                    <div style={{ fontSize: 13, color: '#666' }}>
-                      Status: <span style={{ fontWeight: 600, color: '#388e3c' }}>{tree.status}</span>
-                    </div>
+            {order.trees.map((tree) => (
+              <Link
+                key={tree.trackingId}
+                href={`/track/${tree.trackingId}`}
+                className="ge-detail-track"
+              >
+                <div>
+                  <div className="ge-detail-track-name">
+                    <i className="fas fa-seedling" style={{ color: 'var(--ge-forest)', marginRight: '8px' }}></i>
+                    {tree.treeName || tree.plantName}
                   </div>
-                  <div style={{
-                    padding: '8px 16px',
-                    background: '#388e3c',
-                    color: '#fff',
-                    borderRadius: 6,
-                    fontWeight: 600,
-                    fontSize: 14
-                  }}>
-                    Track <i className="fas fa-arrow-right"></i>
+                  <div className="ge-detail-track-status">
+                    Status: <span>{tree.status}</span>
                   </div>
-                </Link>
-              ))}
-            </div>
+                </div>
+                <div className="ge-detail-track-btn">
+                  Track <i className="fas fa-arrow-right"></i>
+                </div>
+              </Link>
+            ))}
           </div>
         )}
 
-        {/* Delivery Address (only for legacy orders that have it) */}
+        {/* Delivery Address */}
         {order.deliveryAddress && (
-        <div style={{ padding: '20px 30px', borderBottom: '1px solid #e0e0e0' }}>
-          <h3 style={{ margin: '0 0 16px 0', fontSize: 18, color: '#222' }}>
-            <i className="fas fa-map-marker-alt" style={{ color: '#388e3c', marginRight: 8 }}></i>
-            {t('deliveryAddress') || 'Delivery Address'}
-          </h3>
-          <div style={{
-            background: '#f9f9f9',
-            padding: '16px',
-            borderRadius: 8,
-            border: '1px solid #e0e0e0',
-            lineHeight: 1.8,
-            color: '#444'
-          }}>
-            <div>{order.deliveryAddress.street}</div>
-            <div>{order.deliveryAddress.city}, {order.deliveryAddress.state}</div>
-            <div>{order.deliveryAddress.pincode}, {order.deliveryAddress.country}</div>
-            {order.deliveryAddress.landmark && (
-              <div style={{ marginTop: 8, fontSize: 14, color: '#666' }}>
-                <i className="fas fa-map-pin" style={{ marginRight: 6 }}></i>
-                Landmark: {order.deliveryAddress.landmark}
+          <div className="ge-detail-section">
+            <h3 className="ge-detail-section-title">
+              <i className="fas fa-map-marker-alt"></i>
+              {t('deliveryAddress') || 'Delivery Address'}
+            </h3>
+            <div className="ge-detail-infobox">
+              <div className="ge-detail-infobox-row">
+                <i className="fas fa-road"></i>
+                {order.deliveryAddress.street}
               </div>
-            )}
+              <div className="ge-detail-infobox-row">
+                <i className="fas fa-city"></i>
+                {order.deliveryAddress.city}, {order.deliveryAddress.state}
+              </div>
+              <div className="ge-detail-infobox-row">
+                <i className="fas fa-globe"></i>
+                {order.deliveryAddress.pincode}, {order.deliveryAddress.country}
+              </div>
+              {order.deliveryAddress.landmark && (
+                <div className="ge-detail-infobox-row">
+                  <i className="fas fa-map-pin"></i>
+                  Landmark: {order.deliveryAddress.landmark}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
         )}
 
         {/* Payment Summary */}
-        <div style={{ padding: '20px 30px' }}>
-          <h3 style={{ margin: '0 0 16px 0', fontSize: 18, color: '#222' }}>
-            <i className="fas fa-receipt" style={{ color: '#388e3c', marginRight: 8 }}></i>
+        <div className="ge-detail-section">
+          <h3 className="ge-detail-section-title">
+            <i className="fas fa-receipt"></i>
             {t('paymentSummary') || 'Payment Summary'}
           </h3>
-          <div style={{
-            background: '#f9f9f9',
-            padding: '16px',
-            borderRadius: 8,
-            border: '1px solid #e0e0e0'
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
-              <span style={{ color: '#666' }}>{t('subtotal') || 'Subtotal'}:</span>
-              <span style={{ fontWeight: 600 }}>₹{order.subtotal}</span>
+          <div className="ge-detail-infobox">
+            <div className="ge-detail-summary-row">
+              <span>{t('subtotal') || 'Subtotal'}</span>
+              <span>₹{order.subtotal}</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
-              <span style={{ color: '#666' }}>{t('tax') || 'Tax (GST 18%)'}:</span>
-              <span style={{ fontWeight: 600 }}>₹{order.tax}</span>
+            <div className="ge-detail-summary-row">
+              <span>{t('tax') || 'Tax (GST 18%)'}</span>
+              <span>₹{order.tax}</span>
             </div>
-            <div style={{ 
-              borderTop: '2px solid #388e3c', 
-              marginTop: 12, 
-              paddingTop: 12,
-              display: 'flex',
-              justifyContent: 'space-between'
-            }}>
-              <span style={{ fontSize: 18, fontWeight: 700, color: '#222' }}>
-                {t('total') || 'Total Amount'}:
+            <div className="ge-detail-summary-total">
+              <span className="ge-detail-summary-total-label">
+                {t('total') || 'Total Amount'}
               </span>
-              <span style={{ fontSize: 22, fontWeight: 700, color: '#388e3c' }}>
+              <span className="ge-detail-summary-total-value">
                 ₹{order.totalAmount}
               </span>
             </div>
-            <div style={{ 
-              marginTop: 12,
-              paddingTop: 12,
-              borderTop: '1px solid #e0e0e0',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center'
-            }}>
-              <span style={{ color: '#666' }}>
-                <i className="fas fa-credit-card" style={{ marginRight: 8 }}></i>
-                {t('paymentMethod') || 'Payment Method'}:
+            <div className="ge-detail-summary-row" style={{ marginTop: 'var(--ge-space-3)', paddingTop: 'var(--ge-space-3)', borderTop: '1px solid var(--ge-cloud)' }}>
+              <span>
+                <i className="fas fa-credit-card" style={{ marginRight: '8px' }}></i>
+                {t('paymentMethod') || 'Payment Method'}
               </span>
-              <span style={{ fontWeight: 600 }}>
-                {order.paymentMethod}
-              </span>
+              <span style={{ fontWeight: 600 }}>{order.paymentMethod}</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Action Buttons */}
-      <div style={{ 
-        marginTop: 24, 
-        display: 'flex', 
-        gap: 12,
-        justifyContent: 'center'
-      }}>
-        <Link
-          href="/mygift"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 8,
-            padding: '12px 24px',
-            background: '#fff',
-            color: '#388e3c',
-            border: '2px solid #388e3c',
-            textDecoration: 'none',
-            borderRadius: 8,
-            fontWeight: 600,
-            transition: 'all 0.2s'
-          }}
-        >
+      <div className="ge-detail-actions">
+        <Link href="/mygift" className="ge-btn ge-btn-secondary">
           <i className="fas fa-arrow-left"></i>
           {t('backToGifts') || 'Back to My Gifts'}
         </Link>
-        
-        <Link
-          href="/gift-a-tree"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 8,
-            padding: '12px 24px',
-            background: '#388e3c',
-            color: '#fff',
-            textDecoration: 'none',
-            borderRadius: 8,
-            fontWeight: 600,
-            transition: 'all 0.2s'
-          }}
-        >
+        <Link href="/gift-a-tree" className="ge-btn ge-btn-primary">
           <i className="fas fa-gift"></i>
           {t('sendAnother') || 'Send Another Gift'}
         </Link>

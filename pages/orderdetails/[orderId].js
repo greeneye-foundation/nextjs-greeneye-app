@@ -44,9 +44,10 @@ const OrderDetails = () => {
 
   if (loading) {
     return (
-      <div className="container" style={{ maxWidth: 600, marginTop: 40 }}>
-        <div style={{ textAlign: "center", padding: "2rem 0" }}>
-          <i className="fas fa-spinner fa-spin"></i> {t("loading")}
+      <div className="ge-detail">
+        <div className="ge-detail-loading">
+          <i className="fas fa-spinner fa-spin"></i>
+          <p>{t("loading")}</p>
         </div>
       </div>
     );
@@ -54,97 +55,93 @@ const OrderDetails = () => {
 
   if (!order) {
     return (
-      <div className="container" style={{ maxWidth: 600, marginTop: 40 }}>
-        <div style={{ color: "#b62222" }}>{t("notFound")}</div>
+      <div className="ge-detail">
+        <div className="ge-detail-empty">
+          <i className="fas fa-exclamation-triangle"></i>
+          <p>{t("notFound")}</p>
+        </div>
       </div>
     );
   }
 
-  // ✅ Calculate subtotal
   const subtotal = order.orderItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
-
-  // ✅ Coupon & Discount
-  const discount = order.discount || 0; // backend me save hona chahiye
+  const discount = order.discount || 0;
   const finalTotal = order.finalPrice || subtotal - discount;
 
   return (
-    <div className="container" style={{ maxWidth: 600, marginTop: 40 }}>
-      <Link href="/myorders" passHref legacyBehavior>
-        <a
-          style={{
-            color: "#388e3c",
-            textDecoration: "none",
-            marginTop: 20,
-            marginBottom: 18,
-            display: "inline-block",
-          }}
-        >
-          <i className="fas fa-arrow-left"></i> {t("backToOrders")}
-        </a>
+    <div className="ge-detail">
+      <Link href="/myorders" className="ge-detail-back">
+        <i className="fas fa-arrow-left"></i> {t("backToOrders")}
       </Link>
 
-      <div className="auth-card" style={{ padding: 32 }}>
-        <h2 style={{ marginBottom: 10 }}>
-          {t("order")} #{order._id.slice(-6).toUpperCase()}
-        </h2>
-
-        <div style={{ color: "#888", fontSize: 14, marginBottom: 16 }}>
-          {t("placed")}: {new Date(order.createdAt).toLocaleString()}
+      <div className="ge-detail-card ge-detail-card--standalone">
+        {/* Header */}
+        <div className="ge-detail-section">
+          <h2 className="ge-detail-section-title">
+            {t("order")} #{order._id.slice(-6).toUpperCase()}
+          </h2>
+          <p className="ge-detail-meta-label">
+            {t("placed")}: {new Date(order.createdAt).toLocaleString()}
+          </p>
         </div>
 
-        <div>
-          <b>{t("status")}: </b>
-          <span
-            style={{
-              color: order.isDelivered ? "#388e3c" : "#b62222",
-              fontWeight: 600,
-            }}
-          >
+        {/* Status badges */}
+        <div className="ge-detail-badges">
+          <span className={`ge-badge ${order.isDelivered ? 'ge-badge-green' : 'ge-badge-gold'}`}>
+            <i className={`fas ${order.isDelivered ? 'fa-check' : 'fa-clock'}`}></i>
             {order.isDelivered ? t("delivered") : t("pending")}
           </span>
-        </div>
-
-        {/* ✅ Payment Status */}
-        <div style={{ marginTop: 8 }}>
-          <b>{t("paymentStatus")}: </b>
-          <span
-            style={{
-              color: order.isPaid ? "#388e3c" : "#b62222",
-              fontWeight: 600,
-            }}
-          >
+          <span className={`ge-badge ${order.isPaid ? 'ge-badge-green' : 'ge-badge-red'}`}>
+            <i className={`fas ${order.isPaid ? 'fa-check' : 'fa-times'}`}></i>
             {order.isPaid ? t("paid") : t("notPaid")}
+          </span>
+          <span className="ge-badge ge-badge-blue">
+            {order.paymentMethod}
           </span>
         </div>
 
-        {/* ✅ Payment Method */}
-        <div style={{ marginTop: 8 }}>
-          <b>{t("paymentMethod")}: </b> {order.paymentMethod}
+        {/* Shipping Address */}
+        <div className="ge-detail-section">
+          <h3 className="ge-detail-section-title">
+            <i className="fas fa-truck"></i>
+            {t("shippingAddress")}
+          </h3>
+          <div className="ge-detail-infobox">
+            <div className="ge-detail-infobox-row">
+              <i className="fas fa-user"></i>
+              <strong>{order.shippingAddress?.name}</strong>
+            </div>
+            <div className="ge-detail-infobox-row">
+              <i className="fas fa-map-marker-alt"></i>
+              {order.shippingAddress?.address}
+            </div>
+            <div className="ge-detail-infobox-row">
+              <i className="fas fa-city"></i>
+              {order.shippingAddress?.city}, {order.shippingAddress?.state} {order.shippingAddress?.pincode}
+            </div>
+            <div className="ge-detail-infobox-row">
+              <i className="fas fa-phone"></i>
+              {t("phone")}: {order.shippingAddress?.phone}
+            </div>
+          </div>
         </div>
 
-        <div style={{ margin: "18px 0" }}>
-          <b>{t("shippingAddress")}:</b>
-          <div>{order.shippingAddress?.name}</div>
-          <div>{order.shippingAddress?.address}</div>
-          <div>
-            {order.shippingAddress?.city}, {order.shippingAddress?.state}{" "}
-            {order.shippingAddress?.pincode}
-          </div>
-          <div>
-            {t("phone")}: {order.shippingAddress?.phone}
-          </div>
-        </div>
-
-        <div>
-          <b>{t("items")}:</b>
-          <ul style={{ marginTop: 8 }}>
+        {/* Order Items */}
+        <div className="ge-detail-section">
+          <h3 className="ge-detail-section-title">
+            <i className="fas fa-shopping-bag"></i>
+            {t("items")}
+          </h3>
+          <ul className="ge-detail-items" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
             {order.orderItems.map((item) => (
-              <li key={item._id} style={{ marginBottom: 5 }}>
-                {item.name || t("product")} x {item.quantity}{" "}
-                <span style={{ color: "#388e3c" }}>
+              <li key={item._id}>
+                <span className="ge-detail-items-name">
+                  {item.name || t("product")} x {item.quantity}
+                </span>
+                <span className="ge-detail-items-price">
                   ₹{item.price * item.quantity}
                 </span>
               </li>
@@ -152,24 +149,36 @@ const OrderDetails = () => {
           </ul>
         </div>
 
-        {/* ✅ Price Summary */}
-        <div style={{ marginTop: 18, fontWeight: 500 }}>
-          <div>Subtotal: ₹{subtotal}</div>
-
-          {order.coupon && (
-            <div style={{ color: "#1976d2", marginTop: 4 }}>
-              Coupon Applied: <b>{order.coupon.code}</b>
+        {/* Price Summary */}
+        <div className="ge-detail-section">
+          <h3 className="ge-detail-section-title">
+            <i className="fas fa-receipt"></i>
+            Payment Summary
+          </h3>
+          <div className="ge-detail-infobox">
+            <div className="ge-detail-summary-row">
+              <span>Subtotal</span>
+              <span>₹{subtotal}</span>
             </div>
-          )}
 
-          {discount > 0 && (
-            <div style={{ color: "#b62222", marginTop: 4 }}>
-              Discount: -₹{discount}
+            {order.coupon && (
+              <div className="ge-detail-summary-row">
+                <span>Coupon: <strong>{order.coupon.code}</strong></span>
+                <span className="ge-text-forest">Applied</span>
+              </div>
+            )}
+
+            {discount > 0 && (
+              <div className="ge-detail-summary-row">
+                <span>Discount</span>
+                <span style={{ color: 'var(--ge-error)' }}>-₹{discount}</span>
+              </div>
+            )}
+
+            <div className="ge-detail-summary-total">
+              <span className="ge-detail-summary-total-label">Total</span>
+              <span className="ge-detail-summary-total-value">₹{finalTotal}</span>
             </div>
-          )}
-
-          <div style={{ marginTop: 8, fontWeight: 700 }}>
-            Final Total: ₹{finalTotal}
           </div>
         </div>
       </div>

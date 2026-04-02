@@ -58,12 +58,10 @@ const AccountDeletion = () => {
         {},
         { headers: getAuthHeaders() }
       );
-      
-      // Update state immediately
+
       setHasPendingRequest(true);
       setMessage(data.message);
-      
-      // Refresh after a short delay
+
       setTimeout(async () => {
         await checkLoginStatus();
       }, 1000);
@@ -87,12 +85,10 @@ const AccountDeletion = () => {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/cancel-deletion`,
         { headers: getAuthHeaders() }
       );
-      
-      // Update state immediately
+
       setHasPendingRequest(false);
       setMessage(data.message);
-      
-      // Refresh after a short delay
+
       setTimeout(async () => {
         await checkLoginStatus();
       }, 1000);
@@ -132,8 +128,8 @@ const AccountDeletion = () => {
             <i className="fas fa-exclamation-triangle"></i>
             {t("importantTitle")}
           </h2>
-          <div style={{ background: "#fff3cd", border: "1px solid #ffc107", borderRadius: "8px", padding: "16px", marginBottom: "24px" }}>
-            <ul style={{ marginLeft: "20px", lineHeight: "1.8" }}>
+          <div className="warning-box">
+            <ul>
               <li>{t("permanent")}</li>
               <li>{t("dataLoss")}</li>
               <li>{t("ordersHistory")}</li>
@@ -145,7 +141,7 @@ const AccountDeletion = () => {
             <i className="fas fa-database"></i>
             {t("dataDeletedTitle")}
           </h2>
-          <ul style={{ marginLeft: "20px", lineHeight: "1.8" }}>
+          <ul>
             <li>{t("personalInfo")}</li>
             <li>{t("orderHistory")}</li>
             <li>{t("donationRecords")}</li>
@@ -158,7 +154,7 @@ const AccountDeletion = () => {
             <i className="fas fa-clock"></i>
             {t("processTitle")}
           </h2>
-          <ol style={{ marginLeft: "20px", lineHeight: "1.8" }}>
+          <ol>
             <li>{t("step1")}</li>
             <li>{t("step2")}</li>
             <li>{t("step3")}</li>
@@ -177,114 +173,58 @@ const AccountDeletion = () => {
           </h2>
           <p>
             {t("supportText")}{" "}
-            <a href="mailto:contact@greeneye.foundation" style={{ color: "#388e3c", fontWeight: 600 }}>
+            <a href="mailto:contact@greeneye.foundation">
               contact@greeneye.foundation
             </a>
           </p>
 
           {/* Action Section */}
-          <div style={{
-            marginTop: "40px",
-            padding: "24px",
-            background: "#f8f9fa",
-            borderRadius: "12px",
-            border: "2px solid #dee2e6"
-          }}>
-            {/* Debug Info (Remove in production) */}
-            {/* <div style={{
-              padding: "12px",
-              marginBottom: "16px",
-              background: "#e7f3ff",
-              border: "1px solid #2196F3",
-              borderRadius: "8px",
-              fontSize: "12px",
-              fontFamily: "monospace"
-            }}>
-              <strong>🐛 Debug Info:</strong>
-              <div>hasPendingRequest: {hasPendingRequest ? "true" : "false"}</div>
-              <div>userData.deletionRequest: {userData?.deletionRequest ? "EXISTS" : "null/undefined"}</div>
-              {userData?.deletionRequest && (
-                <div>Status: {userData.deletionRequest.status}</div>
-              )}
-            </div> */}
-
+          <div className="legal-action-box">
             {message && (
-              <div style={{
-                padding: "12px",
-                marginBottom: "16px",
-                background: "#d4edda",
-                border: "1px solid #c3e6cb",
-                borderRadius: "8px",
-                color: "#155724"
-              }}>
-                <i className="fas fa-check-circle" style={{ marginRight: "8px" }}></i>
+              <div className="legal-alert legal-alert--success">
+                <i className="fas fa-check-circle"></i>
                 {message}
               </div>
             )}
 
             {error && (
-              <div style={{
-                padding: "12px",
-                marginBottom: "16px",
-                background: "#f8d7da",
-                border: "1px solid #f5c6cb",
-                borderRadius: "8px",
-                color: "#721c24"
-              }}>
-                <i className="fas fa-exclamation-circle" style={{ marginRight: "8px" }}></i>
+              <div className="legal-alert legal-alert--error">
+                <i className="fas fa-exclamation-circle"></i>
                 {error}
               </div>
             )}
 
             {isLoggedIn ? (
               <div>
-                <p style={{ marginBottom: "16px", fontWeight: 500 }}>
+                <p className="legal-action-user">
                   {t("loggedInAs")}: {userData?.name} ({userData?.email})
                 </p>
-                
+
                 {hasPendingRequest ? (
                   <div>
-                    <div style={{
-                      padding: "16px",
-                      marginBottom: "16px",
-                      background: "#fff3cd",
-                      border: "1px solid #ffc107",
-                      borderRadius: "8px",
-                      color: "#856404"
-                    }}>
-                      <i className="fas fa-clock" style={{ marginRight: "8px" }}></i>
-                      <strong>You have a pending deletion request.</strong>
-                      <p style={{ marginTop: "8px", marginBottom: 0 }}>
-                        Your request is under review. You will receive an email once the admin processes your request.
-                      </p>
+                    <div className="legal-alert legal-alert--warning">
+                      <i className="fas fa-clock"></i>
+                      <div>
+                        <strong>You have a pending deletion request.</strong>
+                        <p>
+                          Your request is under review. You will receive an email once the admin processes your request.
+                        </p>
+                      </div>
                     </div>
-                    
+
                     <button
                       onClick={handleCancelRequest}
                       disabled={loading}
-                      style={{
-                        padding: "14px 32px",
-                        background: "#6c757d",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "8px",
-                        fontSize: "16px",
-                        fontWeight: 600,
-                        cursor: loading ? "not-allowed" : "pointer",
-                        opacity: loading ? 0.6 : 1,
-                        transition: "all 0.3s ease"
-                      }}
-                      onMouseEnter={(e) => !loading && (e.target.style.background = "#5a6268")}
-                      onMouseLeave={(e) => !loading && (e.target.style.background = "#6c757d")}
+                      className="ge-btn ge-btn-ghost legal-btn-cancel"
                     >
                       {loading ? (
                         <>
-                          <i className="fas fa-spinner fa-spin" style={{ marginRight: "8px" }}></i>
+                          <i className="fas fa-spinner fa-spin"></i>
                           Processing...
                         </>
                       ) : (
                         <>
-                          <i className="fas fa-times" style={{ marginRight: "8px" }}></i>
+                          <i className="fas fa-times"></i>
                           Cancel Deletion Request
                         </>
                       )}
@@ -294,29 +234,16 @@ const AccountDeletion = () => {
                   <button
                     onClick={handleDeleteRequest}
                     disabled={loading}
-                    style={{
-                      padding: "14px 32px",
-                      background: "#dc3545",
-                      color: "white",
-                      border: "none",
-                      borderRadius: "8px",
-                      fontSize: "16px",
-                      fontWeight: 600,
-                      cursor: loading ? "not-allowed" : "pointer",
-                      opacity: loading ? 0.6 : 1,
-                      transition: "all 0.3s ease"
-                    }}
-                    onMouseEnter={(e) => !loading && (e.target.style.background = "#c82333")}
-                    onMouseLeave={(e) => !loading && (e.target.style.background = "#dc3545")}
+                    className="ge-btn legal-btn-delete"
                   >
                     {loading ? (
                       <>
-                        <i className="fas fa-spinner fa-spin" style={{ marginRight: "8px" }}></i>
+                        <i className="fas fa-spinner fa-spin"></i>
                         {t("processing")}
                       </>
                     ) : (
                       <>
-                        <i className="fas fa-trash-alt" style={{ marginRight: "8px" }}></i>
+                        <i className="fas fa-trash-alt"></i>
                         {t("requestButton")}
                       </>
                     )}
@@ -324,34 +251,22 @@ const AccountDeletion = () => {
                 )}
               </div>
             ) : (
-              <div style={{ textAlign: "center" }}>
-                <p style={{ marginBottom: "16px", fontSize: "16px", color: "#666" }}>
+              <div className="ge-text-center">
+                <p className="legal-action-login-text">
                   {t("loginRequired")}
                 </p>
                 <button
                   onClick={handleLogin}
-                  style={{
-                    padding: "14px 32px",
-                    background: "#388e3c",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "8px",
-                    fontSize: "16px",
-                    fontWeight: 600,
-                    cursor: "pointer",
-                    transition: "all 0.3s ease"
-                  }}
-                  onMouseEnter={(e) => e.target.style.background = "#2e7d32"}
-                  onMouseLeave={(e) => e.target.style.background = "#388e3c"}
+                  className="ge-btn ge-btn-primary"
                 >
-                  <i className="fas fa-sign-in-alt" style={{ marginRight: "8px" }}></i>
+                  <i className="fas fa-sign-in-alt"></i>
                   {t("loginButton")}
                 </button>
               </div>
             )}
           </div>
 
-          <div className="contact-link-wrapper" style={{ marginTop: "32px" }}>
+          <div className="contact-link-wrapper">
             <a href="/contact" className="contact-link">
               <i className="fas fa-envelope"></i>
               {t("contactUs")}

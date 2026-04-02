@@ -1,5 +1,5 @@
 // pages/otp-login.jsx
-// This page now redirects to the unified login page with OTP tab
+// Redirects to unified login page
 
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
@@ -8,15 +8,16 @@ const OtpLogin = () => {
   const router = useRouter();
 
   useEffect(() => {
-    // Redirect to unified login page
     router.replace("/login");
   }, [router]);
 
   return (
-    <div className="auth-container">
-      <div style={{ textAlign: "center", padding: "2rem" }}>
-        <i className="fas fa-spinner fa-spin" style={{ fontSize: "2rem", color: "#2d5a27" }}></i>
-        <p style={{ marginTop: "1rem", color: "#6c757d" }}>Redirecting to login page...</p>
+    <div className="ge-status">
+      <div className="ge-status-card" style={{ maxWidth: 400, textAlign: 'center' }}>
+        <div className="ge-status-icon ge-status-icon--loading">
+          <i className="fas fa-spinner fa-spin"></i>
+        </div>
+        <p className="ge-status-subtitle">Redirecting to login page...</p>
       </div>
     </div>
   );
