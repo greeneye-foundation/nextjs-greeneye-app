@@ -1,8 +1,6 @@
-//'use client';
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import { showNotification } from "@/components/Notification";
 import { useTranslations } from "next-intl";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
@@ -14,15 +12,9 @@ const Register = ({ onSwitch }) => {
   const t = useTranslations("register");
   const { login } = useAuth();
   const [form, setForm] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    agreeTerms: false,
-    newsletter: false,
+    firstName: "", lastName: "", email: "", password: "", confirmPassword: "",
+    agreeTerms: false, newsletter: false,
   });
-
   const [showPwd, setShowPwd] = useState(false);
   const [showConfirmPwd, setShowConfirmPwd] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -31,302 +23,144 @@ const Register = ({ onSwitch }) => {
   const router = useRouter();
   const { executeRecaptcha } = useGoogleReCaptcha();
 
-  const isEmailValid = (email) =>
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const isPasswordStrong = (pwd) =>
-    pwd.length >= 8 && /[A-Z]/.test(pwd) && /[a-z]/.test(pwd) && /\d/.test(pwd);
+  const isEmailValid = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const isPasswordStrong = (pwd) => pwd.length >= 8 && /[A-Z]/.test(pwd) && /[a-z]/.test(pwd) && /\d/.test(pwd);
   const isPasswordMatch = form.password === form.confirmPassword;
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  };
-
-  const togglePassword = (type) => {
-    if (type === "password") setShowPwd((v) => !v);
-    if (type === "confirm") setShowConfirmPwd((v) => !v);
+    setForm((prev) => ({ ...prev, [name]: type === "checkbox" ? checked : value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!isPasswordMatch) return showNotification(t("pwdNoMatch"), "error");
     if (!isPasswordStrong(form.password)) return showNotification(t("pwdWeak"), "error");
     if (!form.agreeTerms) return showNotification(t("agreeTermsMsg"), "error");
     if (!isEmailValid(form.email)) return showNotification(t("invalidEmail"), "error");
-    if (!executeRecaptcha) {
-      showNotification("Recaptcha not ready, please try again.", "error");
-      return;
-    }
+    if (!executeRecaptcha) { showNotification("Recaptcha not ready, please try again.", "error"); return; }
     setLoading(true);
     try {
-      // 🔹 recaptcha token generate
       const recaptchaToken = await executeRecaptcha("register_action");
-
-      const payload = {
+      const { data } = await axios.post('/api/auth/register', {
         name: `${form.firstName} ${form.lastName}`.trim(),
-        email: form.email,
-        password: form.password,
-        recaptchaToken
-      };
-
-      const { data } = await axios.post('/api/auth/register', payload);
-
+        email: form.email, password: form.password, recaptchaToken
+      });
       login(data, data.token);
       showNotification(t("registerSuccess"), "success");
       router.push("/profile");
-
-      setForm({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        agreeTerms: false,
-        newsletter: false,
-      });
-
-      if (onSwitch) setTimeout(() => onSwitch(), 1000);
     } catch (err) {
-      const msg = err.response?.data?.message;
-      const field = err.response?.data?.field;
-
-      if (field === "email") {
+      if (err.response?.data?.field === "email") {
         showNotification("This email is already registered. Please login instead.", "error");
         router.push("/login");
         return;
       }
-
-      showNotification(msg || t("registerFail"), "error");
-    } finally {
-      setLoading(false);
-    }
+      showNotification(err.response?.data?.message || t("registerFail"), "error");
+    } finally { setLoading(false); }
   };
 
   return (
-    <div className="register-container">
-      {/* WhatsApp QR Section */}
-      <div className="whatsapp-section">
-        <div className="qr-container">
-          <div className="qr-code">
-            <img
-              src="/assets/whatsappQR.png"
-              alt={t("whatsappQRAlt")}
-              className="qr-image"
-              onError={(e) => {
-                e.target.style.display = "none";
-                if (e.target.nextSibling)
-                  e.target.nextSibling.style.display = "block";
-              }}
-            />
-            <div className="qr-fallback" style={{ display: "none" }}>
-              <i className="fab fa-whatsapp"></i>
-              <p>QR Code</p>
+    <div className="ge-register">
+      <div className="ge-register__split">
+        {/* Left — WhatsApp */}
+        <div className="ge-register__wa">
+          <div className="ge-register__wa-header">
+            <i className="fab fa-whatsapp"></i>
+            <h3>{t("registerWithWhatsapp")}</h3>
+          </div>
+          <div className="ge-register__qr">
+            <img src="/assets/whatsappQR.png" alt={t("whatsappQRAlt")} onError={(e) => { e.target.style.display = "none"; }} />
+          </div>
+          <ol className="ge-register__wa-steps">
+            <li>{t("waStep1")}</li>
+            <li>{t("waStep2")}</li>
+            <li>{t("waStep3")}</li>
+          </ol>
+          <div className="ge-register__wa-perks">
+            <span><i className="fas fa-bolt"></i> {t("waInstant")}</span>
+            <span><i className="fas fa-bell"></i> {t("waNotif")}</span>
+            <span><i className="fas fa-users"></i> {t("waCommunity")}</span>
+          </div>
+        </div>
+
+        {/* Vertical divider */}
+        <div className="ge-register__divider-v">
+          <span>OR</span>
+        </div>
+
+        {/* Right — Email/Google */}
+        <div className="ge-register__email">
+          {/* Google */}
+          <div className="ge-register__google">
+            <GoogleLoginButton />
+          </div>
+
+          <div className="auth-divider"><span>{t("or")}</span></div>
+
+          {/* Email form */}
+          <form className="auth-form" onSubmit={handleSubmit}>
+            <div className="form-row">
+              <div className="form-group">
+                <input type="text" name="firstName" placeholder={t("firstName")} value={form.firstName} onChange={handleChange} required />
+                <i className="fas fa-user"></i>
+              </div>
+              <div className="form-group">
+                <input type="text" name="lastName" placeholder={t("lastName")} value={form.lastName} onChange={handleChange} required />
+                <i className="fas fa-user"></i>
+              </div>
             </div>
-          </div>
-          <div className="qr-instructions">
-            <h3><i className="fab fa-whatsapp"></i> {t("registerWithWhatsapp")}</h3>
-            <ol>
-              <li>{t("waStep1")}</li>
-              <li>{t("waStep2")}</li>
-              <li>{t("waStep3")}</li>
-            </ol>
-            <div className="whatsapp-benefits">
-              <div className="benefit"><i className="fas fa-bolt"></i> <span>{t("waInstant")}</span></div>
-              <div className="benefit"><i className="fas fa-bell"></i> <span>{t("waNotif")}</span></div>
-              <div className="benefit"><i className="fas fa-users"></i> <span>{t("waCommunity")}</span></div>
+
+            <div className="form-group">
+              <input type="email" name="email" placeholder={t("email")} value={form.email} onChange={handleChange} required className={form.email && !isEmailValid(form.email) ? "invalid" : ""} />
+              <i className="fas fa-envelope"></i>
             </div>
-          </div>
+
+            <div className="form-group">
+              <input type={showPwd ? "text" : "password"} name="password" placeholder={t("createPwd")} value={form.password} onChange={handleChange} required className={form.password && !isPasswordStrong(form.password) ? "invalid" : ""} />
+              <i className="fas fa-lock"></i>
+              <button type="button" className="password-toggle" onClick={() => setShowPwd(v => !v)}>
+                <i className={`fas ${showPwd ? "fa-eye-slash" : "fa-eye"}`}></i>
+              </button>
+            </div>
+
+            <div className="form-group">
+              <input type={showConfirmPwd ? "text" : "password"} name="confirmPassword" placeholder={t("confirmPwd")} value={form.confirmPassword} onChange={handleChange} required className={form.confirmPassword && !isPasswordMatch ? "invalid" : ""} />
+              <i className="fas fa-lock"></i>
+              <button type="button" className="password-toggle" onClick={() => setShowConfirmPwd(v => !v)}>
+                <i className={`fas ${showConfirmPwd ? "fa-eye-slash" : "fa-eye"}`}></i>
+              </button>
+            </div>
+
+            <div className="checkbox-group">
+              <label className="checkbox-label">
+                <input type="checkbox" name="agreeTerms" checked={form.agreeTerms} onChange={handleChange} required />
+                {t("agreeMsg1")}{" "}
+                <a href="#" onClick={(e) => { e.preventDefault(); setTermsModalOpen(true); }}>{t("termsLink")}</a>{" "}
+                {t("agreeMsg2")}{" "}
+                <a href="#" onClick={(e) => { e.preventDefault(); setPrivacyModalOpen(true); }}>{t("privacyLink")}</a>
+              </label>
+            </div>
+
+            <button type="submit" className="btn btn-primary btn-full" disabled={loading}>
+              {loading ? (
+                <><i className="fas fa-spinner fa-spin"></i> <span>{t("creatingAccount") || "Creating Account..."}</span></>
+              ) : (
+                <><i className="fas fa-user-plus"></i> <span>{t("createAccount")}</span></>
+              )}
+            </button>
+          </form>
         </div>
-      </div>
-
-      {/* Divider */}
-      <div className="divider"><span>{t("or")}</span></div>
-
-      {/* Email/Phone Registration Form */}
-      <div className="email-form-section">
-        {/* Google Sign-In Section - Priority */}
-        <div className="quick-register-section">
-          <h3 className="section-title">
-            <i className="fas fa-bolt"></i> {t("quickRegister") || "Quick Registration"}
-          </h3>
-          <p className="section-subtitle">{t("quickRegisterDesc") || "Sign up instantly with your Google account"}</p>
-          <GoogleLoginButton />
-        </div>
-
-        {/* Divider */}
-        <div className="auth-divider" style={{ margin: '24px 0' }}>
-          <span>{t("or")}</span>
-        </div>
-
-        <form className="auth-form" onSubmit={handleSubmit}>
-        <h3 className="section-title">{t("registerWithEmail")}</h3>
-
-        {/* Name */}
-        <div className="form-row">
-          <div className="form-group">
-            <input
-              type="text"
-              name="firstName"
-              placeholder={t("firstName")}
-              value={form.firstName}
-              onChange={handleChange}
-              required
-            />
-            <i className="fas fa-user"></i>
-          </div>
-          <div className="form-group">
-            <input
-              type="text"
-              name="lastName"
-              placeholder={t("lastName")}
-              value={form.lastName}
-              onChange={handleChange}
-              required
-            />
-            <i className="fas fa-user"></i>
-          </div>
-        </div>
-
-        {/* Email */}
-        <div className="form-group">
-          <input
-            type="email"
-            name="email"
-            placeholder={t("email")}
-            value={form.email}
-            onChange={handleChange}
-            required
-            className={form.email && !isEmailValid(form.email) ? "invalid" : ""}
-          />
-          <i className="fas fa-envelope"></i>
-        </div>
-
-        {/* Password */}
-        <div className="form-group">
-          <input
-            type={showPwd ? "text" : "password"}
-            name="password"
-            placeholder={t("createPwd")}
-            value={form.password}
-            onChange={handleChange}
-            required
-            className={form.password && !isPasswordStrong(form.password) ? "invalid" : ""}
-          />
-          <i className="fas fa-lock"></i>
-          <button type="button" className="password-toggle" onClick={() => togglePassword("password")}>
-            <i className={`fas ${showPwd ? "fa-eye-slash" : "fa-eye"}`}></i>
-          </button>
-        </div>
-
-        {/* Confirm Password */}
-        <div className="form-group">
-          <input
-            type={showConfirmPwd ? "text" : "password"}
-            name="confirmPassword"
-            placeholder={t("confirmPwd")}
-            value={form.confirmPassword}
-            onChange={handleChange}
-            required
-            className={!isPasswordMatch ? "invalid" : ""}
-          />
-          <i className="fas fa-lock"></i>
-          <button type="button" className="password-toggle" onClick={() => togglePassword("confirm")}>
-            <i className={`fas ${showConfirmPwd ? "fa-eye-slash" : "fa-eye"}`}></i>
-          </button>
-        </div>
-
-        {/* Terms & Newsletter */}
-        <div className="checkbox-group">
-          <label className="checkbox-label">
-            <input
-              type="checkbox"
-              name="agreeTerms"
-              checked={form.agreeTerms}
-              onChange={handleChange}
-              required
-            />
-            <span className="checkmark"></span>
-            {t("agreeMsg1")}{" "}
-            <a
-              href="#"
-              className="link"
-              onClick={(e) => {
-                e.preventDefault();
-                setTermsModalOpen(true);
-              }}
-            >
-              {t("termsLink")}
-            </a>{" "}
-            {t("agreeMsg2")}{" "}
-            <a
-              href="#"
-              className="link"
-              onClick={(e) => {
-                e.preventDefault();
-                setPrivacyModalOpen(true);
-              }}
-            >
-              {t("privacyLink")}
-            </a>
-          </label>
-        </div>
-
-        <div className="checkbox-group">
-          <label className="checkbox-label">
-            <input
-              type="checkbox"
-              name="newsletter"
-              checked={form.newsletter}
-              onChange={handleChange}
-            />
-            <span className="checkmark"></span>
-            {t("newsletter")}
-          </label>
-        </div>
-
-        {/* Submit Button */}
-        <button type="submit" className="btn btn-primary btn-full" disabled={loading}>
-          {loading ? (
-            <>
-              <i className="fas fa-spinner fa-spin"></i> <span>{t("creatingAccount") || "Creating Account..."}</span>
-            </>
-          ) : (
-            <>
-              <i className="fas fa-user-plus"></i> <span>{t("createAccount")}</span>
-            </>
-          )}
-        </button>
-        </form>
       </div>
 
       <div className="auth-switch">
         <p>
           {t("alreadyHaveAccount")}{" "}
-          <button className="link-btn" type="button" onClick={() => router.push("/login")}>
-            {t("signIn")}
-          </button>
+          <button className="link-btn" type="button" onClick={() => router.push("/login")}>{t("signIn")}</button>
         </p>
       </div>
 
-      {/* Terms and Conditions Modal */}
-      <Modal
-        isOpen={termsModalOpen}
-        onClose={() => setTermsModalOpen(false)}
-        title="Terms and Conditions"
-        contentUrl="/content/terms-and-conditions.md"
-      />
-
-      {/* Privacy Policy Modal */}
-      <Modal
-        isOpen={privacyModalOpen}
-        onClose={() => setPrivacyModalOpen(false)}
-        title="Privacy Policy"
-        contentUrl="/content/privacy-policy.md"
-      />
+      <Modal isOpen={termsModalOpen} onClose={() => setTermsModalOpen(false)} title="Terms and Conditions" contentUrl="/content/terms-and-conditions.md" />
+      <Modal isOpen={privacyModalOpen} onClose={() => setPrivacyModalOpen(false)} title="Privacy Policy" contentUrl="/content/privacy-policy.md" />
     </div>
   );
 };

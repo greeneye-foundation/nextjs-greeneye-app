@@ -42,7 +42,7 @@ export default function RegisterPage({ messages, locale }) {
     >
       <IntlProvider locale={locale} messages={messages}>
         <div className="auth-container">
-          <div className="auth-wrapper">
+          <div className="auth-wrapper" style={{ maxWidth: showLogin ? 480 : 720 }}>
             <div
               className="auth-section"
               id="registerSection"

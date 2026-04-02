@@ -370,165 +370,139 @@
 }
 
 /* ═══════════════════════════════════════════════════════
-   Register-specific components
+   Register — Side-by-side layout
    ═══════════════════════════════════════════════════════ */
 
-.register-container {
-  padding: var(--ge-space-8);
+.ge-register {
+  padding: var(--ge-space-6);
 }
 
-/* ── WhatsApp QR Section ───────────────────────────── */
-.whatsapp-section {
-  margin-bottom: var(--ge-space-5);
+/* ── Split layout ──────────────────────────────────── */
+.ge-register__split {
+  display: grid;
+  grid-template-columns: 1fr auto 1.3fr;
+  gap: 0;
+  align-items: stretch;
 }
 
-.qr-container {
+/* ── Left: WhatsApp ────────────────────────────────── */
+.ge-register__wa {
   display: flex;
-  gap: var(--ge-space-5);
+  flex-direction: column;
   align-items: center;
-  background: var(--ge-snow);
-  border-radius: var(--ge-radius-lg);
-  padding: var(--ge-space-5);
-}
-
-.qr-code {
-  flex-shrink: 0;
-  width: 100px;
-  height: 100px;
-  border-radius: var(--ge-radius-md);
-  overflow: hidden;
-  background: var(--ge-white);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.qr-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.qr-fallback {
   text-align: center;
-  color: var(--ge-mist);
+  padding: var(--ge-space-4) var(--ge-space-5) var(--ge-space-4) var(--ge-space-2);
 }
 
-.qr-fallback i {
-  font-size: 32px;
-  color: #25D366;
-}
-
-.qr-fallback p {
-  font-size: var(--ge-text-xs);
-  margin: var(--ge-space-1) 0 0;
-}
-
-.qr-instructions h3 {
-  font-family: var(--ge-font-body);
-  font-size: var(--ge-text-sm);
-  font-weight: 700;
-  color: var(--ge-ink);
-  margin: 0 0 var(--ge-space-2) 0;
+.ge-register__wa-header {
   display: flex;
   align-items: center;
   gap: var(--ge-space-2);
-}
-
-.qr-instructions h3 i {
-  color: #25D366;
-}
-
-.qr-instructions ol {
-  padding-left: var(--ge-space-5);
-  margin: 0 0 var(--ge-space-3) 0;
-  font-size: var(--ge-text-xs);
-  color: var(--ge-slate);
-  line-height: 1.8;
-}
-
-.whatsapp-benefits {
-  display: flex;
-  gap: var(--ge-space-4);
-  flex-wrap: wrap;
-}
-
-.whatsapp-benefits .benefit {
-  display: flex;
-  align-items: center;
-  gap: var(--ge-space-1);
-  font-size: 11px;
-  color: var(--ge-slate);
-  font-weight: 500;
-}
-
-.whatsapp-benefits .benefit i {
-  color: #25D366;
-  font-size: 11px;
-}
-
-/* ── Divider (register variant) ────────────────────── */
-.register-container > .divider,
-.divider {
-  display: flex;
-  align-items: center;
-  gap: var(--ge-space-4);
-  margin: var(--ge-space-5) 0;
-  color: var(--ge-mist);
-  font-size: var(--ge-text-xs);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.divider::before,
-.divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--ge-cloud);
-}
-
-/* ── Quick Register Section ────────────────────────── */
-.quick-register-section {
-  text-align: center;
-  margin-bottom: var(--ge-space-2);
-}
-
-.section-title {
-  font-family: var(--ge-font-body);
-  font-size: var(--ge-text-sm);
-  font-weight: 700;
-  color: var(--ge-ink);
-  margin: 0 0 var(--ge-space-1) 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--ge-space-2);
-}
-
-.section-title i {
-  color: var(--ge-gold);
-}
-
-.section-subtitle {
-  font-size: var(--ge-text-xs);
-  color: var(--ge-slate);
-  margin: 0 0 var(--ge-space-4) 0;
-}
-
-/* ── Email Form Section ────────────────────────────── */
-.email-form-section {
-  margin-bottom: var(--ge-space-2);
-}
-
-.email-form-section .section-title {
-  justify-content: flex-start;
   margin-bottom: var(--ge-space-4);
 }
 
-.email-form-section .section-title i {
-  display: none;
+.ge-register__wa-header i {
+  font-size: 22px;
+  color: #25D366;
+}
+
+.ge-register__wa-header h3 {
+  font-family: var(--ge-font-body);
+  font-size: var(--ge-text-sm);
+  font-weight: 700;
+  color: var(--ge-ink);
+  margin: 0;
+}
+
+.ge-register__qr {
+  width: 140px;
+  height: 140px;
+  background: var(--ge-snow);
+  border-radius: var(--ge-radius-lg);
+  overflow: hidden;
+  margin-bottom: var(--ge-space-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ge-register__qr img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: var(--ge-space-2);
+}
+
+.ge-register__wa-steps {
+  text-align: left;
+  padding-left: var(--ge-space-5);
+  margin: 0 0 var(--ge-space-4) 0;
+  font-size: var(--ge-text-xs);
+  color: var(--ge-slate);
+  line-height: 2;
+}
+
+.ge-register__wa-perks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ge-space-2);
+}
+
+.ge-register__wa-perks span {
+  font-size: 11px;
+  color: var(--ge-slate);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: var(--ge-space-2);
+}
+
+.ge-register__wa-perks i {
+  color: #25D366;
+  font-size: 11px;
+  width: 14px;
+  text-align: center;
+}
+
+/* ── Vertical Divider ──────────────────────────────── */
+.ge-register__divider-v {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--ge-space-2);
+  position: relative;
+}
+
+.ge-register__divider-v::before {
+  content: '';
+  width: 1px;
+  flex: 1;
+  background: var(--ge-cloud);
+}
+
+.ge-register__divider-v::after {
+  content: '';
+  width: 1px;
+  flex: 1;
+  background: var(--ge-cloud);
+}
+
+.ge-register__divider-v span {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ge-mist);
+  letter-spacing: 0.08em;
+  padding: var(--ge-space-2) 0;
+}
+
+/* ── Right: Email/Google ───────────────────────────── */
+.ge-register__email {
+  padding: var(--ge-space-4) var(--ge-space-2) var(--ge-space-4) var(--ge-space-5);
+}
+
+.ge-register__google {
+  margin-bottom: var(--ge-space-2);
 }
 
 /* ── Checkbox Group ────────────────────────────────── */
@@ -542,14 +516,12 @@
   line-height: 1.5;
 }
 
-.checkbox-group .link,
 .checkbox-group a {
   color: var(--ge-forest);
   font-weight: 600;
   text-decoration: none;
 }
 
-.checkbox-group .link:hover,
 .checkbox-group a:hover {
   text-decoration: underline;
 }
@@ -571,21 +543,55 @@
     gap: var(--ge-space-1);
   }
 
-  .qr-container {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .qr-instructions ol {
-    text-align: left;
-  }
-
-  .whatsapp-benefits {
-    justify-content: center;
-  }
-
   .auth-wrapper {
     max-width: 100%;
   }
+
+  /* Stack register on mobile */
+  .ge-register__split {
+    grid-template-columns: 1fr;
+  }
+
+  .ge-register__divider-v {
+    flex-direction: row;
+    padding: var(--ge-space-3) 0;
+  }
+
+  .ge-register__divider-v::before,
+  .ge-register__divider-v::after {
+    width: auto;
+    height: 1px;
+    flex: 1;
+  }
+
+  .ge-register__divider-v span {
+    padding: 0 var(--ge-space-3);
+  }
+
+  .ge-register__wa {
+    padding: var(--ge-space-4) var(--ge-space-2);
+  }
+
+  .ge-register__email {
+    padding: var(--ge-space-4) var(--ge-space-2);
+  }
+
+  .ge-register__qr {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+/* Wider wrapper when register is shown */
+@media (min-width: 481px) {
+  .auth-wrapper:has(.ge-register),
+  #registerSection .auth-wrapper {
+    max-width: 720px;
+  }
+}
+
+/* Fallback: register page always uses wider wrapper via page-level class */
+.auth-section:only-child {
+  width: 100%;
 }
 
