@@ -1,0 +1,210 @@
+/* ═══════════════════════════════════════════════════════
+   Volunteer — Design System v2
+   ═══════════════════════════════════════════════════════ */
+
+.ge-vol__grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: var(--ge-space-10);
+  align-items: start;
+}
+
+/* ── Visual Side ───────────────────────────────────── */
+.ge-vol__visual {
+  position: sticky;
+  top: calc(var(--ge-nav-height) + var(--ge-space-6));
+}
+
+.ge-vol__visual img {
+  width: 100%;
+  border-radius: var(--ge-radius-xl);
+  box-shadow: var(--ge-shadow-lg);
+  margin-bottom: var(--ge-space-6);
+}
+
+.ge-vol__stats {
+  display: flex;
+  gap: var(--ge-space-4);
+}
+
+.ge-vol__stat {
+  flex: 1;
+  text-align: center;
+  padding: var(--ge-space-4);
+  background: var(--ge-white);
+  border-radius: var(--ge-radius-lg);
+  border: 1px solid var(--ge-cloud);
+}
+
+.ge-vol__stat strong {
+  display: block;
+  font-size: var(--ge-text-xl);
+  font-weight: 700;
+  color: var(--ge-forest);
+  margin-bottom: 2px;
+}
+
+.ge-vol__stat span {
+  font-size: var(--ge-text-xs);
+  color: var(--ge-slate);
+  font-weight: 500;
+}
+
+/* ── Form Side ─────────────────────────────────────── */
+.ge-vol__form-wrap {
+  background: var(--ge-white);
+  border-radius: var(--ge-radius-xl);
+  border: 1px solid var(--ge-cloud);
+  box-shadow: var(--ge-shadow-sm);
+}
+
+.ge-vol__form {
+  padding: var(--ge-space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ge-space-4);
+}
+
+.ge-vol__form h3 {
+  font-family: var(--ge-font-body);
+  font-size: var(--ge-text-lg);
+  font-weight: 700;
+  color: var(--ge-ink);
+  margin: 0 0 var(--ge-space-2) 0;
+}
+
+.ge-vol__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--ge-space-4);
+}
+
+.ge-vol__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ge-space-1);
+}
+
+.ge-vol__field label {
+  font-size: var(--ge-text-xs);
+  font-weight: 600;
+  color: var(--ge-charcoal);
+}
+
+.ge-vol__field input,
+.ge-vol__field select,
+.ge-vol__field textarea {
+  width: 100%;
+  padding: var(--ge-space-3) var(--ge-space-4);
+  font-family: var(--ge-font-body);
+  font-size: var(--ge-text-sm);
+  color: var(--ge-charcoal);
+  background: var(--ge-snow);
+  border: 1.5px solid transparent;
+  border-radius: var(--ge-radius-md);
+  transition: all var(--ge-duration-fast) var(--ge-ease);
+  min-height: 44px;
+  -webkit-appearance: none;
+}
+
+.ge-vol__field input:focus,
+.ge-vol__field select:focus,
+.ge-vol__field textarea:focus {
+  outline: none;
+  background: var(--ge-white);
+  border-color: var(--ge-forest);
+  box-shadow: 0 0 0 3px rgba(27, 94, 58, 0.08);
+}
+
+.ge-vol__field input::placeholder,
+.ge-vol__field textarea::placeholder {
+  color: var(--ge-mist);
+}
+
+.ge-vol__field input:disabled {
+  color: var(--ge-charcoal);
+  cursor: default;
+}
+
+.ge-vol__field textarea {
+  resize: vertical;
+  min-height: 72px;
+}
+
+/* ── Success State ─────────────────────────────────── */
+.ge-vol__success {
+  padding: var(--ge-space-12) var(--ge-space-8);
+  text-align: center;
+}
+
+.ge-vol__success-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--ge-space-5);
+  background: var(--ge-mint);
+  border-radius: var(--ge-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: var(--ge-forest);
+}
+
+.ge-vol__success h3 {
+  font-family: var(--ge-font-body);
+  font-size: var(--ge-text-lg);
+  font-weight: 700;
+  color: var(--ge-ink);
+  margin: 0 0 var(--ge-space-3) 0;
+}
+
+.ge-vol__success p {
+  font-size: var(--ge-text-sm);
+  color: var(--ge-slate);
+  margin: 0 0 var(--ge-space-1) 0;
+}
+
+/* ── Responsive ────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .ge-vol__grid {
+    grid-template-columns: 1fr;
+    gap: var(--ge-space-8);
+  }
+
+  .ge-vol__visual {
+    position: static;
+  }
+
+  .ge-vol__visual img {
+    max-height: 300px;
+    object-fit: cover;
+  }
+}
+
+@media (max-width: 640px) {
+  .ge-vol__row {
+    grid-template-columns: 1fr;
+  }
+
+  .ge-vol__form {
+    padding: var(--ge-space-5);
+  }
+
+  .ge-vol__stats {
+    flex-direction: column;
+    gap: var(--ge-space-2);
+  }
+
+  .ge-vol__stat {
+    padding: var(--ge-space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--ge-space-3);
+    text-align: left;
+  }
+
+  .ge-vol__stat strong {
+    font-size: var(--ge-text-lg);
+    margin: 0;
+  }
+}
