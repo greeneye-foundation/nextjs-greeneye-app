@@ -184,6 +184,7 @@
 .ge-how__header h2 {
   max-width: 480px;
   margin: var(--ge-space-4) auto 0;
+  color: var(--ge-ink);
 }
 
 .ge-how__grid {
@@ -203,7 +204,7 @@
   font-family: var(--ge-font-body);
   font-size: var(--ge-text-5xl);
   font-weight: 700;
-  color: var(--ge-cloud);
+  color: var(--ge-mist);
   letter-spacing: -0.04em;
   line-height: 1;
   margin-bottom: var(--ge-space-4);
@@ -389,6 +390,8 @@
   border-radius: var(--ge-radius-xl);
   overflow: hidden;
   box-shadow: var(--ge-shadow-xl);
+  max-width: 400px;
+  margin-left: auto;
 }
 
 .ge-about__img-wrap::after {

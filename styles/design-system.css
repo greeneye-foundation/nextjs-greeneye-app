@@ -465,6 +465,6 @@
 
 /* ── Selection ─────────────────────────────────────── */
 ::selection {
-  background: var(--ge-mint);
-  color: var(--ge-forest);
+  background: var(--ge-forest);
+  color: var(--ge-white);
 }
