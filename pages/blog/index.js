@@ -1,15 +1,9 @@
 import { useTranslations } from 'next-intl';
 import Seo from '@/components/common/Seo';
 import BlogGrid from '@/components/BlogGrid';
-import EncyclopediaArticlesSection from '@/components/EncyclopediaArticlesSection';
 
 export function getStaticProps({ locale }) {
-  return {
-    props: {
-      messages: require(`../../locales/${locale}.json`),
-      locale,
-    }
-  }
+  return { props: { messages: require(`../../locales/${locale}.json`), locale } };
 }
 
 export default function BlogPage() {
@@ -19,20 +13,19 @@ export default function BlogPage() {
       <Seo
         title={t('seoTitle', { defaultMessage: 'Blog | GreenEye' })}
         description={t('seoDescription', { defaultMessage: 'Read the latest news and stories from GreenEye.' })}
-        ogTitle={t('seoTitle', { defaultMessage: 'Blog | GreenEye' })}
-        ogDescription={t('seoDescription', { defaultMessage: 'Read the latest news and stories from GreenEye.' })}
         canonical="https://greeneye.foundation/blog"
         siteName="GREENEYE"
-        twitterSite="@greeneye_org"
       />
-      <section className="page-header">
-        <div className="container">
-          <h1>{t('pageTitle', { defaultMessage: 'Blog' })}</h1>
-          <p>{t('pageSubtitle', { defaultMessage: 'Read the latest news and stories from GreenEye.' })}</p>
+      <section className="ge-section" style={{ paddingBottom: 0 }}>
+        <div className="ge-container" style={{ textAlign: 'center' }}>
+          <span className="ge-overline">Our Blog</span>
+          <h1>{t('pageTitle', { defaultMessage: 'Stories & Updates' })}</h1>
+          <p style={{ color: 'var(--ge-slate)', maxWidth: 520, margin: '0 auto' }}>
+            {t('pageSubtitle', { defaultMessage: 'Read the latest news and stories from GreenEye.' })}
+          </p>
         </div>
       </section>
       <BlogGrid />
-      <EncyclopediaArticlesSection />
     </>
   );
 }
