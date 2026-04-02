@@ -191,26 +191,43 @@ export default function GiftATreePage() {
           </motion.div>
 
           <form onSubmit={handleSubmit} className="ge-gift__form">
-            {/* Row 1: Occasion + Number */}
-            <div className="ge-gift__row ge-gift__row--2col">
-              <div className="ge-gift__field">
-                <label>Occasion *</label>
-                <OccasionSelector value={form.occasion} onChange={handleChange} required />
+            {/* Occasion */}
+            <div className="ge-gift__field">
+              <label>Occasion *</label>
+              <OccasionSelector value={form.occasion} onChange={handleChange} required />
+            </div>
+
+            {/* Number of Trees — slider */}
+            <div className="ge-gift__field ge-gift__slider-field">
+              <div className="ge-gift__slider-header">
+                <label>Number of Trees</label>
+                <span className="ge-gift__slider-value">
+                  {form.numberOfTrees} {parseInt(form.numberOfTrees) === 1 ? 'Tree' : 'Trees'}
+                </span>
               </div>
-              <div className="ge-gift__field">
-                <label htmlFor="numberOfTrees">Number of Trees *</label>
-                <select
-                  id="numberOfTrees" name="numberOfTrees"
+              <div className="ge-gift__slider-wrap">
+                <input
+                  type="range"
+                  id="numberOfTrees"
+                  name="numberOfTrees"
+                  min="1"
+                  max="100"
+                  step="1"
                   value={form.numberOfTrees}
-                  onChange={(e) => { handleChange(e); setSelectedProducts([]); }}
-                  required
-                >
-                  <option value="1">1 Tree</option>
-                  <option value="2">2 Trees</option>
-                  <option value="3">3 Trees</option>
-                  <option value="5">5 Trees</option>
-                  <option value="10">10 Trees</option>
-                </select>
+                  onChange={(e) => {
+                    handleChange(e);
+                    setSelectedProducts([]);
+                  }}
+                  className="ge-gift__slider"
+                  style={{ background: `linear-gradient(to right, var(--ge-forest) 0%, var(--ge-forest) ${((parseInt(form.numberOfTrees) - 1) / 99) * 100}%, var(--ge-cloud) ${((parseInt(form.numberOfTrees) - 1) / 99) * 100}%, var(--ge-cloud) 100%)` }}
+                />
+                <div className="ge-gift__slider-ticks">
+                  <span>1</span>
+                  <span>25</span>
+                  <span>50</span>
+                  <span>75</span>
+                  <span>100</span>
+                </div>
               </div>
             </div>
 
