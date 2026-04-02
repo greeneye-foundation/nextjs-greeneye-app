@@ -77,9 +77,10 @@ export default function GiftOrderDetails() {
       PENDING: '#ff9800',
       CONFIRMED: '#2196f3',
       PROCESSING: '#9c27b0',
-      SHIPPED: '#00bcd4',
-      DELIVERED: '#388e3c',
-      CANCELLED: '#f44336'
+      CANCELLED: '#f44336',
+      COMPLETED: '#388e3c',
+      FAILED: '#f44336',
+      EXPIRED: '#9e9e9e'
     }
     return colors[status] || '#666'
   }
@@ -402,12 +403,6 @@ export default function GiftOrderDetails() {
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
               <span style={{ color: '#666' }}>{t('subtotal') || 'Subtotal'}:</span>
               <span style={{ fontWeight: 600 }}>₹{order.subtotal}</span>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
-              <span style={{ color: '#666' }}>{t('deliveryCharge') || 'Delivery Charge'}:</span>
-              <span style={{ fontWeight: 600, color: order.deliveryCharge === 0 ? '#388e3c' : '#222' }}>
-                {order.deliveryCharge === 0 ? 'FREE' : `₹${order.deliveryCharge}`}
-              </span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
               <span style={{ color: '#666' }}>{t('tax') || 'Tax (GST 18%)'}:</span>

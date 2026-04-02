@@ -6,8 +6,6 @@ const ORDER_STATUS_OPTIONS = [
   "PENDING",
   "CONFIRMED",
   "PROCESSING",
-  "SHIPPED",
-  "DELIVERED",
   "CANCELLED"
 ];
 
@@ -123,18 +121,39 @@ function AdminGiftOrders() {
     }
   };
 
+  const [creatingTrees, setCreatingTrees] = useState(false);
+  const [createTreesMsg, setCreateTreesMsg] = useState("");
+
   const getStatusColor = (status) => {
     const colors = {
       PENDING: '#ff9800',
       CONFIRMED: '#2196f3',
       PROCESSING: '#9c27b0',
-      SHIPPED: '#00bcd4',
-      DELIVERED: '#388e3c',
       CANCELLED: '#f44336',
       COMPLETED: '#388e3c',
-      FAILED: '#f44336'
+      FAILED: '#f44336',
+      EXPIRED: '#9e9e9e'
     };
     return colors[status] || '#666';
+  };
+
+  const handleCreateTrees = async () => {
+    if (!selectedOrder) return;
+    setCreatingTrees(true);
+    setCreateTreesMsg("");
+    try {
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/gift-tree/${selectedOrder.orderId}/create-trees`,
+        {},
+        { headers: getAuthHeaders() }
+      );
+      setCreateTreesMsg(`✅ ${data.count} tree(s) created! View in Trees panel.`);
+    } catch (e) {
+      const msg = e.response?.data?.message || "Failed to create trees";
+      setCreateTreesMsg(`❌ ${msg}`);
+    } finally {
+      setCreatingTrees(false);
+    }
   };
 
   const getOccasionIcon = (occasion) => {
@@ -433,12 +452,6 @@ function AdminGiftOrders() {
                 <span>Subtotal:</span>
                 <span>₹{selectedOrder.subtotal}</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-                <span>Delivery Charge:</span>
-                <span style={{ color: selectedOrder.deliveryCharge === 0 ? '#388e3c' : '#333' }}>
-                  {selectedOrder.deliveryCharge === 0 ? 'FREE' : `₹${selectedOrder.deliveryCharge}`}
-                </span>
-              </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
                 <span>Tax (GST 18%):</span>
                 <span>₹{selectedOrder.tax}</span>
@@ -456,10 +469,61 @@ function AdminGiftOrders() {
               </div>
             </div>
 
+            {/* Create Trees (for paid orders without tree records) */}
+            {selectedOrder.paymentStatus === 'COMPLETED' && (
+              <div style={{
+                background: '#fff3e0',
+                padding: 16,
+                borderRadius: 8,
+                marginBottom: 16,
+                border: '1px solid #ffb74d'
+              }}>
+                <div style={{ fontWeight: 600, marginBottom: 8 }}>
+                  <i className="fas fa-seedling" style={{ color: '#388e3c' }}></i> Tree Records
+                </div>
+                <p style={{ fontSize: 14, color: '#666', marginBottom: 12 }}>
+                  Create tree tracking records for this paid order. Each tree gets a unique tracking ID and certificate.
+                </p>
+                <button
+                  onClick={handleCreateTrees}
+                  disabled={creatingTrees}
+                  style={{
+                    padding: '10px 20px',
+                    background: '#388e3c',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: 6,
+                    cursor: creatingTrees ? 'not-allowed' : 'pointer',
+                    fontWeight: 600,
+                    fontSize: '0.95rem',
+                    opacity: creatingTrees ? 0.7 : 1
+                  }}
+                >
+                  {creatingTrees ? (
+                    <><i className="fas fa-spinner fa-spin"></i> Creating...</>
+                  ) : (
+                    <><i className="fas fa-tree"></i> Create Tree Records</>
+                  )}
+                </button>
+                {createTreesMsg && (
+                  <div style={{
+                    marginTop: 10,
+                    padding: 8,
+                    borderRadius: 6,
+                    fontSize: 14,
+                    color: createTreesMsg.includes('❌') ? '#b62222' : '#388e3c',
+                    background: createTreesMsg.includes('❌') ? '#ffebee' : '#e8f5e9'
+                  }}>
+                    {createTreesMsg}
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* Status Updates */}
-            <div style={{ 
-              background: '#e8f5e9', 
-              padding: 16, 
+            <div style={{
+              background: '#e8f5e9',
+              padding: 16,
               borderRadius: 8,
               marginBottom: 16,
               border: '1px solid #388e3c40'
