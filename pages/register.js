@@ -1,16 +1,20 @@
 // pages/register.js
 //'use client';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Login from '@/components/Auth/Login';
 import Register from '@/components/Auth/Register';
 import { useTranslations } from 'next-intl';
 import { IntlProvider } from 'next-intl';
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import Seo from '@/components/common/Seo';
+import { useAuth } from '@/context/AuthContext';
 
 // ✅ This receives messages and locale
 export default function RegisterPage({ messages, locale }) {
   const [showLogin, setShowLogin] = useState(false);
+  const { isLoggedIn, isLoading } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -19,7 +23,15 @@ export default function RegisterPage({ messages, locale }) {
     }
   }, []);
 
-  const t = useTranslations('auth'); // Optional: For switching text
+  useEffect(() => {
+    if (!isLoading && isLoggedIn) {
+      router.replace('/profile');
+    }
+  }, [isLoggedIn, isLoading, router]);
+
+  const t = useTranslations('auth');
+
+  if (isLoading || isLoggedIn) return null;
 
   return (
     <>
