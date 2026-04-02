@@ -360,6 +360,56 @@ export default function GiftOrderDetails() {
           </div>
         </div>
 
+        {/* Track Your Trees */}
+        {order.trees && order.trees.length > 0 && (
+          <div style={{ padding: '20px 30px', borderBottom: '1px solid #e0e0e0' }}>
+            <h3 style={{ margin: '0 0 16px 0', fontSize: 18, color: '#222' }}>
+              <i className="fas fa-map-marked-alt" style={{ color: '#388e3c', marginRight: 8 }}></i>
+              Track Your Trees
+            </h3>
+            <div style={{ display: 'grid', gap: 12 }}>
+              {order.trees.map((tree) => (
+                <Link
+                  key={tree.trackingId}
+                  href={`/track/${tree.trackingId}`}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: 16,
+                    background: '#e8f5e9',
+                    borderRadius: 8,
+                    border: '1px solid #388e3c40',
+                    textDecoration: 'none',
+                    color: '#222',
+                    transition: 'background 0.2s'
+                  }}
+                >
+                  <div>
+                    <div style={{ fontWeight: 600, marginBottom: 4 }}>
+                      <i className="fas fa-seedling" style={{ color: '#388e3c', marginRight: 8 }}></i>
+                      {tree.treeName || tree.plantName}
+                    </div>
+                    <div style={{ fontSize: 13, color: '#666' }}>
+                      Status: <span style={{ fontWeight: 600, color: '#388e3c' }}>{tree.status}</span>
+                    </div>
+                  </div>
+                  <div style={{
+                    padding: '8px 16px',
+                    background: '#388e3c',
+                    color: '#fff',
+                    borderRadius: 6,
+                    fontWeight: 600,
+                    fontSize: 14
+                  }}>
+                    Track <i className="fas fa-arrow-right"></i>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Delivery Address (only for legacy orders that have it) */}
         {order.deliveryAddress && (
         <div style={{ padding: '20px 30px', borderBottom: '1px solid #e0e0e0' }}>

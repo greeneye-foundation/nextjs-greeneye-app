@@ -77,9 +77,10 @@ export default function MyGift() {
       PENDING: '#ff9800',
       CONFIRMED: '#2196f3',
       PROCESSING: '#9c27b0',
-      SHIPPED: '#00bcd4',
-      DELIVERED: '#388e3c',
-      CANCELLED: '#f44336'
+      CANCELLED: '#f44336',
+      COMPLETED: '#388e3c',
+      FAILED: '#f44336',
+      EXPIRED: '#9e9e9e'
     }
     return colors[status] || '#666'
   }
@@ -278,9 +279,46 @@ export default function MyGift() {
               </div>
             </div>
 
+            {/* Track Trees */}
+            {order.trees && order.trees.length > 0 && (
+              <div style={{
+                marginTop: 12,
+                display: 'flex',
+                gap: 8,
+                flexWrap: 'wrap'
+              }}>
+                {order.trees.map((tree) => (
+                  <span
+                    key={tree.trackingId}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      window.location.href = `/track/${tree.trackingId}`;
+                    }}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 6,
+                      padding: '6px 14px',
+                      background: '#e8f5e9',
+                      color: '#388e3c',
+                      borderRadius: 6,
+                      fontSize: 13,
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      border: '1px solid #388e3c40'
+                    }}
+                  >
+                    <i className="fas fa-seedling"></i>
+                    {tree.treeName || tree.plantName} — {tree.status}
+                  </span>
+                ))}
+              </div>
+            )}
+
             {/* View Details Arrow */}
-            <div style={{ 
-              textAlign: 'right', 
+            <div style={{
+              textAlign: 'right',
               marginTop: 12,
               color: '#388e3c',
               fontSize: 13,
