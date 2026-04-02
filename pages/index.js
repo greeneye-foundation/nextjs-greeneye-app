@@ -1,15 +1,14 @@
 // pages/index.js
 import { useTranslations } from 'next-intl';
-import HeroCarousel from "@/components/HeroCarousel";
-import About from "@/components/About";
-import Donate from "@/components/Donate";
-import Impact from "@/components/Impact";
-import Volunteer from "@/components/Volunteer";
-import Programs from "@/components/Programs";
-import BlogIndex from "@/components/BlogIndex";
-import Seo from "@/components/common/Seo";
-import InstagramFeed from "@/components/InstagramFeed";
-import { useEffect } from "react";
+import Hero from '@/components/home/Hero';
+import HowItWorks from '@/components/home/HowItWorks';
+import About from '@/components/About';
+import Donate from '@/components/Donate';
+import Impact from '@/components/Impact';
+import BlogIndex from '@/components/BlogIndex';
+import Seo from '@/components/common/Seo';
+import InstagramFeed from '@/components/InstagramFeed';
+import { useEffect } from 'react';
 
 export function getStaticProps({ locale }) {
   return {
@@ -17,8 +16,8 @@ export function getStaticProps({ locale }) {
       messages: require(`../locales/${locale}.json`),
       locale,
     }
-  }
-};
+  };
+}
 
 const organizationSchema = {
   "@context": "https://schema.org",
@@ -61,15 +60,14 @@ const organizationSchema = {
 };
 
 export default function HomePage() {
-
-    useEffect(() => {
-    if (typeof window !== "undefined" && window.fbq) {
-      window.fbq("track", "ViewContent", {
-        page: "HomePage",
-      });
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.fbq) {
+      window.fbq('track', 'ViewContent', { page: 'HomePage' });
     }
   }, []);
+
   const t = useTranslations('home');
+
   return (
     <>
       <Seo
@@ -84,9 +82,10 @@ export default function HomePage() {
         siteName="GREENEYE"
         structuredData={organizationSchema}
       />
-      <HeroCarousel />
-      <InstagramFeed />
+      <Hero />
+      <HowItWorks />
       <About />
+      <InstagramFeed />
       <BlogIndex />
       <Donate />
       <Impact />

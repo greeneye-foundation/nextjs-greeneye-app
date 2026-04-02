@@ -21,6 +21,7 @@ import '@/styles/checkout.css';
 import '@/styles/tree-tracking.css';
 import '@/styles/forest.css';
 import '@/styles/certificate-verify.css';
+import '@/styles/home.css';
 import '@/styles/not-found.css';
 
 import { useEffect, useMemo, useState } from 'react';
