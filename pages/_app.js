@@ -23,6 +23,7 @@ import '@/styles/forest.css';
 import '@/styles/certificate-verify.css';
 import '@/styles/home.css';
 import '@/styles/plantshop.css';
+import '@/styles/cart.css';
 import '@/styles/not-found.css';
 
 import { useEffect, useMemo, useState } from 'react';

@@ -1,5 +1,4 @@
-// components/cart/CartDrawer.jsx
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 
 export default function CartDrawer({
@@ -9,152 +8,120 @@ export default function CartDrawer({
   changeQty,
   removeFromCart,
   total,
-  t = (k) => k, // optional i18n
+  t = (k) => k,
 }) {
   const router = useRouter();
-  if (!open) return null;
-
   const formatPrice = (p) => `₹${Number(p).toLocaleString()}`;
 
+  // Lock body scroll when open
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
+  // Close on Escape
+  useEffect(() => {
+    const handleKey = (e) => { if (e.key === "Escape" && open) onClose(); };
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [open, onClose]);
+
+  if (!open) return null;
+
+  const items = cart.items || [];
+
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: 40,
-        right: 0,
-        width: 340,
-        height: "100vh",
-        background: "#fff",
-        borderLeft: "2px solid #b6ccb9",
-        boxShadow: "-3px 0 15px rgba(56,142,60,0.09)",
-        zIndex: 30,
-        overflowY: "auto",
-        padding: "28px 22px 12px 22px",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <button
-        onClick={onClose}
-        style={{
-          position: "absolute",
-          top: 50,
-          right: 12,
-          background: "none",
-          border: "none",
-          fontSize: 21,
-          color: "#388e3c",
-          cursor: "pointer",
-        }}
-        title={t("close")}
-      >
-        ×
-      </button>
-      <h3 style={{ marginTop: 20, marginBottom: 18 }}>
-        <i className="fas fa-shopping-cart"></i> {t("yourCart") || "Your Cart"}
-      </h3>
+    <>
+      {/* Overlay */}
+      <div className="ge-cart-overlay" onClick={onClose} />
 
-      {!cart.items || cart.items.length === 0 ? (
-        <div style={{ textAlign: "center", marginTop: 40 }}>
-          <i className="fas fa-seedling" style={{ fontSize: 38, color: "#b6ccb9" }}></i>
-          <p style={{ color: "#888" }}>{t("cartEmpty") || "Cart is empty"}</p>
-        </div>
-      ) : (
-        <div>
-          {cart.items.map((item) => (
-            <div
-              key={item._id}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: 12,
-                borderBottom: "1px solid #eee",
-                paddingBottom: 8,
-              }}
-            >
-              <div style={{ flex: 1 }}>
-                <b>{item.plant?.name}</b>
-                <div style={{ fontSize: 13, color: "#388e3c" }}>
-                  {formatPrice(item.plant?.price)} x {item.quantity}
-                  <span style={{ fontWeight: 600, marginLeft: 8 }}>
-                    = {formatPrice((item.plant?.price || 0) * item.quantity)}
-                  </span>
-                </div>
-              </div>
-              <div>
-                <button
-                  onClick={() => changeQty(item._id, item.quantity - 1)}
-                  style={{
-                    background: "#eee",
-                    border: "none",
-                    borderRadius: 3,
-                    width: 25,
-                    height: 25,
-                    fontSize: 18,
-                    marginRight: 3,
-                    cursor: "pointer",
-                  }}
-                >
-                  -
-                </button>
-                <button
-                  onClick={() => changeQty(item._id, item.quantity + 1)}
-                  style={{
-                    background: "#eee",
-                    border: "none",
-                    borderRadius: 3,
-                    width: 25,
-                    height: 25,
-                    fontSize: 18,
-                    marginRight: 8,
-                    cursor: "pointer",
-                  }}
-                >
-                  +
-                </button>
-                <button
-                  onClick={() => removeFromCart(item._id)}
-                  style={{
-                    background: "none",
-                    border: "none",
-                    color: "#b62222",
-                    fontSize: 17,
-                    cursor: "pointer",
-                  }}
-                  title={t("removeFromCart")}
-                >
-                  <i className="fas fa-trash"></i>
-                </button>
-              </div>
-            </div>
-          ))}
-
-          <div style={{ borderTop: "1px solid #b6ccb9", margin: "18px 0" }}></div>
-          <div style={{ textAlign: "right", fontWeight: 600, fontSize: 17, color: "#388e3c" }}>
-            {t("total") || "Total"}: {formatPrice(total)}
-          </div>
-          <button
-            onClick={() => {
-              onClose();
-              router.push("/checkout");
-            }}
-            style={{
-              background: "#388e3c",
-              color: "#fff",
-              border: "none",
-              borderRadius: 6,
-              padding: "10px 28px",
-              fontWeight: 600,
-              fontSize: 16,
-              marginTop: 22,
-              cursor: "pointer",
-              width: "100%",
-            }}
-          >
-            <i className="fas fa-credit-card"></i> {t("checkout") || "Checkout"}
+      {/* Drawer */}
+      <div className="ge-cart">
+        {/* Header */}
+        <div className="ge-cart__header">
+          <h3>
+            <i className="fas fa-shopping-bag"></i>
+            {t("yourCart") || "Your Cart"}
+            {items.length > 0 && (
+              <span className="ge-cart__badge">{items.length}</span>
+            )}
+          </h3>
+          <button className="ge-cart__close" onClick={onClose} aria-label="Close cart">
+            <i className="fas fa-times"></i>
           </button>
         </div>
-      )}
-    </div>
+
+        {/* Body */}
+        <div className="ge-cart__body">
+          {items.length === 0 ? (
+            <div className="ge-cart__empty">
+              <i className="fas fa-shopping-bag"></i>
+              <p>{t("cartEmpty") || "Your cart is empty"}</p>
+              <button className="ge-cart__browse" onClick={onClose}>
+                Browse Plants
+              </button>
+            </div>
+          ) : (
+            <div className="ge-cart__items">
+              {items.map((item) => (
+                <div key={item._id} className="ge-cart__item">
+                  {item.plant?.image && (
+                    <img
+                      src={item.plant.image}
+                      alt={item.plant.name}
+                      className="ge-cart__item-img"
+                    />
+                  )}
+                  <div className="ge-cart__item-info">
+                    <strong>{item.plant?.name}</strong>
+                    <span className="ge-cart__item-price">
+                      {formatPrice(item.plant?.price)}
+                    </span>
+                  </div>
+                  <div className="ge-cart__item-qty">
+                    <button
+                      onClick={() => changeQty(item._id, item.quantity - 1)}
+                      disabled={item.quantity <= 1}
+                    >
+                      <i className="fas fa-minus"></i>
+                    </button>
+                    <span>{item.quantity}</span>
+                    <button onClick={() => changeQty(item._id, item.quantity + 1)}>
+                      <i className="fas fa-plus"></i>
+                    </button>
+                  </div>
+                  <div className="ge-cart__item-subtotal">
+                    {formatPrice((item.plant?.price || 0) * item.quantity)}
+                  </div>
+                  <button
+                    className="ge-cart__item-remove"
+                    onClick={() => removeFromCart(item._id)}
+                    aria-label="Remove item"
+                  >
+                    <i className="fas fa-trash-alt"></i>
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        {items.length > 0 && (
+          <div className="ge-cart__footer">
+            <div className="ge-cart__total">
+              <span>{t("total") || "Total"}</span>
+              <strong>{formatPrice(total)}</strong>
+            </div>
+            <button
+              className="ge-cart__checkout"
+              onClick={() => { onClose(); router.push("/checkout"); }}
+            >
+              Checkout <i className="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
