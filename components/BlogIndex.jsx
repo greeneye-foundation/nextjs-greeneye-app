@@ -6,118 +6,78 @@ import Link from "next/link";
 import Image from "next/image";
 import { useLocale } from "next-intl";
 
-const PREVIEW_LINES = 4;
-
 const BlogIndex = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const locale = useLocale();
-  const scrollContainerRef = useRef(null);
+  const scrollRef = useRef(null);
 
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/blogs`)
-      .then((res) => {
-        setBlogs(res.data.blogs || []);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setLoading(false);
-      });
+      .then((res) => { setBlogs(res.data.blogs || []); setLoading(false); })
+      .catch(() => setLoading(false));
   }, []);
 
-  const scroll = (direction) => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = 400; // Scroll by one card width approximately
-      const currentScroll = scrollContainerRef.current.scrollLeft;
-      const newScroll = direction === 'left'
-        ? currentScroll - scrollAmount
-        : currentScroll + scrollAmount;
-
-      scrollContainerRef.current.scrollTo({
-        left: newScroll,
-        behavior: 'smooth'
-      });
-    }
+  const scroll = (dir) => {
+    if (!scrollRef.current) return;
+    const amt = 360;
+    scrollRef.current.scrollTo({
+      left: scrollRef.current.scrollLeft + (dir === 'left' ? -amt : amt),
+      behavior: 'smooth'
+    });
   };
-
-  if (loading) return <div style={{ padding: 40 }}>Loading blogs...</div>;
 
   const publishedBlogs = blogs.filter((b) => b.published);
 
+  if (loading || publishedBlogs.length === 0) return null;
+
   return (
-    <section className="blog-section">
-      <div className="container" style={{ maxWidth: 1100, margin: "40px auto 0 auto" }}>
-        <h2 style={{ marginTop: 50, marginBottom: 30, letterSpacing: 1.5 }}>
-          {locale === "fr" ? "Notre Blog" : "Our Blog"}
-        </h2>
+    <section className="ge-blog ge-section ge-section-alt">
+      <div className="ge-container">
+        <div className="ge-blog__header">
+          <div>
+            <span className="ge-overline">From Our Blog</span>
+            <h2>Stories & Updates</h2>
+          </div>
+          <Link href="/blog" className="ge-blog__view-all">
+            View All <i className="fas fa-arrow-right"></i>
+          </Link>
+        </div>
 
-        <div className="blog-scroll-wrapper">
-          {publishedBlogs.length > 0 && (
-            <>
-              <button
-                className="blog-scroll-btn blog-scroll-left"
-                onClick={() => scroll('left')}
-                aria-label="Scroll left"
-              >
-                <i className="fas fa-chevron-left"></i>
-              </button>
+        <div className="ge-blog__carousel-wrap">
+          <button className="ge-blog__arrow ge-blog__arrow--left" onClick={() => scroll('left')} aria-label="Scroll left">
+            <i className="fas fa-chevron-left"></i>
+          </button>
 
-              <div className="blog-scroll-container" ref={scrollContainerRef}>
-                {publishedBlogs.map((b) => {
-                  const translation = b.translations?.[locale] || b.translations?.en || {};
+          <div className="ge-blog__carousel" ref={scrollRef}>
+            {publishedBlogs.map((b) => {
+              const tr = b.translations?.[locale] || b.translations?.en || {};
+              return (
+                <Link key={b.slug} href={`/blog/${b.slug}`} className="ge-blog__card">
+                  {b.image && (
+                    <div className="ge-blog__card-img">
+                      <Image src={b.image} alt={tr.title || "Blog"} fill style={{ objectFit: 'cover' }} />
+                    </div>
+                  )}
+                  <div className="ge-blog__card-body">
+                    <h3>{tr.title || "Untitled"}</h3>
+                    <p className="ge-blog__card-excerpt">
+                      {(tr.content || "").substring(0, 120)}...
+                    </p>
+                    <div className="ge-blog__card-meta">
+                      <span>{new Date(b.createdAt).toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+                      <span>{b.author || "GreenEye"}</span>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
 
-                  return (
-                    <Link
-                      key={b.slug}
-                      href={`/blog/${b.slug}`}
-                      title="Read more"
-                      className="blog-card"
-                    >
-                      {b.image && (
-                        <div className="blog-card-image">
-                          <Image
-                            src={b.image}
-                            alt={translation.title || "Blog Image"}
-                            fill
-                            style={{
-                              objectFit: "contain",
-                              background: "transparent",
-                            }}
-                          />
-                        </div>
-                      )}
-                      <div className="blog-card-content">
-                        <h3 className="blog-card-title">
-                          {translation.title || "No title"}
-                        </h3>
-
-                        <div className="blog-card-preview">
-                          {translation.content || "No content available"}
-                          <div className="blog-card-gradient" />
-                        </div>
-
-                        <div className="blog-card-meta">
-                          <span className="blog-card-date">
-                            {new Date(b.createdAt).toLocaleDateString(locale)}
-                          </span>
-                          <span className="blog-card-author">{b.author || "GreenEye"}</span>
-                        </div>
-                      </div>
-                    </Link>
-                  );
-                })}
-              </div>
-
-              <button
-                className="blog-scroll-btn blog-scroll-right"
-                onClick={() => scroll('right')}
-                aria-label="Scroll right"
-              >
-                <i className="fas fa-chevron-right"></i>
-              </button>
-            </>
-          )}
+          <button className="ge-blog__arrow ge-blog__arrow--right" onClick={() => scroll('right')} aria-label="Scroll right">
+            <i className="fas fa-chevron-right"></i>
+          </button>
         </div>
       </div>
     </section>

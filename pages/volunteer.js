@@ -24,10 +24,11 @@ export default function VolunteerPage() {
         siteName="GREENEYE"
         twitterSite="@greeneye_org"
       />
-      <section className="page-header">
-        <div className="container">
+      <section className="ge-section" style={{ paddingBottom: 0 }}>
+        <div className="ge-container" style={{ textAlign: 'center' }}>
+          <span className="ge-overline">Join the Movement</span>
           <h1>{t('pageTitle', { defaultMessage: 'Volunteer with Us' })}</h1>
-          <p>{t('pageSubtitle', { defaultMessage: 'Become part of a movement for a greener planet. Sign up today!' })}</p>
+          <p style={{ color: 'var(--ge-slate)', maxWidth: 520, margin: '0 auto' }}>{t('pageSubtitle', { defaultMessage: 'Become part of a movement for a greener planet. Sign up today!' })}</p>
         </div>
       </section>
       <Volunteer />

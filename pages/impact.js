@@ -24,10 +24,11 @@ export default function ImpactPage() {
         siteName="GREENEYE"
         twitterSite="@greeneye_org"
       />
-      <section className="page-header">
-        <div className="container">
+      <section className="ge-section" style={{ paddingBottom: 0 }}>
+        <div className="ge-container" style={{ textAlign: 'center' }}>
+          <span className="ge-overline">Making a Difference</span>
           <h1>{t('pageTitle', { defaultMessage: 'Our Impact' })}</h1>
-          <p>{t('pageSubtitle', { defaultMessage: "Measurable results and stories from our global reforestation journey." })}</p>
+          <p style={{ color: 'var(--ge-slate)', maxWidth: 520, margin: '0 auto' }}>{t('pageSubtitle', { defaultMessage: "Measurable results and stories from our global reforestation journey." })}</p>
         </div>
       </section>
       <Impact />

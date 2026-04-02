@@ -59,12 +59,6 @@ export default function ContactPage() {
         twitterSite="@greeneye_org"
         structuredData={localBusinessSchema}
       />
-      <section className="page-header">
-        <div className="container">
-          <h1>{t('pageTitle', { defaultMessage: 'Contact Us' })}</h1>
-          <p>{t('pageSubtitle', { defaultMessage: "We're here to answer your questions and welcome your feedback." })}</p>
-        </div>
-      </section>
       <Contact />
     </>
   );

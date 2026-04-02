@@ -26,6 +26,7 @@ import '@/styles/plantshop.css';
 import '@/styles/cart.css';
 import '@/styles/profile.css';
 import '@/styles/contact.css';
+import '@/styles/blog.css';
 import '@/styles/not-found.css';
 
 import { useEffect, useMemo, useState } from 'react';
