@@ -197,53 +197,61 @@ export default function GiftATreePage() {
               <OccasionSelector value={form.occasion} onChange={handleChange} required />
             </div>
 
-            {/* Number of Trees — slider */}
-            <div className="ge-gift__field ge-gift__slider-field">
-              <div className="ge-gift__slider-header">
-                <label>Number of Trees</label>
-                <div className="ge-gift__slider-input-wrap">
-                  <input
-                    type="number"
-                    min="1"
-                    max="100"
-                    value={form.numberOfTrees}
-                    onChange={(e) => {
-                      let val = parseInt(e.target.value) || 1;
-                      if (val < 1) val = 1;
-                      if (val > 100) val = 100;
-                      handleChange({ target: { name: 'numberOfTrees', value: String(val) } });
-                      setSelectedProducts([]);
-                    }}
-                    className="ge-gift__slider-num"
-                  />
-                  <span className="ge-gift__slider-suffix">
-                    {parseInt(form.numberOfTrees) === 1 ? 'Tree' : 'Trees'}
-                  </span>
-                </div>
-              </div>
-              <div className="ge-gift__slider-wrap">
-                <input
-                  type="range"
-                  id="numberOfTrees"
-                  name="numberOfTrees"
-                  min="1"
-                  max="100"
-                  step="1"
-                  value={form.numberOfTrees}
-                  onChange={(e) => {
-                    handleChange(e);
+            {/* Number of Trees */}
+            <div className="ge-trees">
+              <label className="ge-trees__label">Number of Trees</label>
+              <div className="ge-trees__control">
+                <button
+                  type="button"
+                  className="ge-trees__btn"
+                  onClick={() => {
+                    const val = Math.max(1, parseInt(form.numberOfTrees) - 1);
+                    handleChange({ target: { name: 'numberOfTrees', value: String(val) } });
                     setSelectedProducts([]);
                   }}
-                  className="ge-gift__slider"
-                  style={{ background: `linear-gradient(to right, var(--ge-forest) 0%, var(--ge-forest) ${((parseInt(form.numberOfTrees) - 1) / 99) * 100}%, var(--ge-cloud) ${((parseInt(form.numberOfTrees) - 1) / 99) * 100}%, var(--ge-cloud) 100%)` }}
-                />
-                <div className="ge-gift__slider-ticks">
-                  <span>1</span>
-                  <span>25</span>
-                  <span>50</span>
-                  <span>75</span>
-                  <span>100</span>
+                  disabled={parseInt(form.numberOfTrees) <= 1}
+                >
+                  <i className="fas fa-minus"></i>
+                </button>
+
+                <div className="ge-trees__slider-area">
+                  <input
+                    type="range"
+                    min="1" max="100" step="1"
+                    value={form.numberOfTrees}
+                    onChange={(e) => { handleChange({ target: { name: 'numberOfTrees', value: e.target.value } }); setSelectedProducts([]); }}
+                    className="ge-trees__range"
+                    style={{ background: `linear-gradient(to right, var(--ge-forest) ${((parseInt(form.numberOfTrees) - 1) / 99) * 100}%, var(--ge-cloud) ${((parseInt(form.numberOfTrees) - 1) / 99) * 100}%)` }}
+                  />
+                  <div className="ge-trees__display">
+                    <input
+                      type="number"
+                      min="1" max="100"
+                      value={form.numberOfTrees}
+                      onChange={(e) => {
+                        let val = parseInt(e.target.value) || 1;
+                        val = Math.min(100, Math.max(1, val));
+                        handleChange({ target: { name: 'numberOfTrees', value: String(val) } });
+                        setSelectedProducts([]);
+                      }}
+                      className="ge-trees__num"
+                    />
+                    <span className="ge-trees__unit">{parseInt(form.numberOfTrees) === 1 ? 'tree' : 'trees'}</span>
+                  </div>
                 </div>
+
+                <button
+                  type="button"
+                  className="ge-trees__btn"
+                  onClick={() => {
+                    const val = Math.min(100, parseInt(form.numberOfTrees) + 1);
+                    handleChange({ target: { name: 'numberOfTrees', value: String(val) } });
+                    setSelectedProducts([]);
+                  }}
+                  disabled={parseInt(form.numberOfTrees) >= 100}
+                >
+                  <i className="fas fa-plus"></i>
+                </button>
               </div>
             </div>
 
