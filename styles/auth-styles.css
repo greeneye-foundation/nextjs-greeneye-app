@@ -15,7 +15,7 @@
 
 .auth-wrapper {
   width: 100%;
-  max-width: 440px;
+  max-width: 480px;
 }
 
 .auth-section {
@@ -369,10 +369,196 @@
   font-family: var(--ge-font-body) !important;
 }
 
+/* ═══════════════════════════════════════════════════════
+   Register-specific components
+   ═══════════════════════════════════════════════════════ */
+
+.register-container {
+  padding: var(--ge-space-8);
+}
+
+/* ── WhatsApp QR Section ───────────────────────────── */
+.whatsapp-section {
+  margin-bottom: var(--ge-space-5);
+}
+
+.qr-container {
+  display: flex;
+  gap: var(--ge-space-5);
+  align-items: center;
+  background: var(--ge-snow);
+  border-radius: var(--ge-radius-lg);
+  padding: var(--ge-space-5);
+}
+
+.qr-code {
+  flex-shrink: 0;
+  width: 100px;
+  height: 100px;
+  border-radius: var(--ge-radius-md);
+  overflow: hidden;
+  background: var(--ge-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.qr-fallback {
+  text-align: center;
+  color: var(--ge-mist);
+}
+
+.qr-fallback i {
+  font-size: 32px;
+  color: #25D366;
+}
+
+.qr-fallback p {
+  font-size: var(--ge-text-xs);
+  margin: var(--ge-space-1) 0 0;
+}
+
+.qr-instructions h3 {
+  font-family: var(--ge-font-body);
+  font-size: var(--ge-text-sm);
+  font-weight: 700;
+  color: var(--ge-ink);
+  margin: 0 0 var(--ge-space-2) 0;
+  display: flex;
+  align-items: center;
+  gap: var(--ge-space-2);
+}
+
+.qr-instructions h3 i {
+  color: #25D366;
+}
+
+.qr-instructions ol {
+  padding-left: var(--ge-space-5);
+  margin: 0 0 var(--ge-space-3) 0;
+  font-size: var(--ge-text-xs);
+  color: var(--ge-slate);
+  line-height: 1.8;
+}
+
+.whatsapp-benefits {
+  display: flex;
+  gap: var(--ge-space-4);
+  flex-wrap: wrap;
+}
+
+.whatsapp-benefits .benefit {
+  display: flex;
+  align-items: center;
+  gap: var(--ge-space-1);
+  font-size: 11px;
+  color: var(--ge-slate);
+  font-weight: 500;
+}
+
+.whatsapp-benefits .benefit i {
+  color: #25D366;
+  font-size: 11px;
+}
+
+/* ── Divider (register variant) ────────────────────── */
+.register-container > .divider,
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--ge-space-4);
+  margin: var(--ge-space-5) 0;
+  color: var(--ge-mist);
+  font-size: var(--ge-text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--ge-cloud);
+}
+
+/* ── Quick Register Section ────────────────────────── */
+.quick-register-section {
+  text-align: center;
+  margin-bottom: var(--ge-space-2);
+}
+
+.section-title {
+  font-family: var(--ge-font-body);
+  font-size: var(--ge-text-sm);
+  font-weight: 700;
+  color: var(--ge-ink);
+  margin: 0 0 var(--ge-space-1) 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ge-space-2);
+}
+
+.section-title i {
+  color: var(--ge-gold);
+}
+
+.section-subtitle {
+  font-size: var(--ge-text-xs);
+  color: var(--ge-slate);
+  margin: 0 0 var(--ge-space-4) 0;
+}
+
+/* ── Email Form Section ────────────────────────────── */
+.email-form-section {
+  margin-bottom: var(--ge-space-2);
+}
+
+.email-form-section .section-title {
+  justify-content: flex-start;
+  margin-bottom: var(--ge-space-4);
+}
+
+.email-form-section .section-title i {
+  display: none;
+}
+
+/* ── Checkbox Group ────────────────────────────────── */
+.checkbox-group {
+  margin-bottom: var(--ge-space-3);
+}
+
+.checkbox-group .checkbox-label {
+  font-size: var(--ge-text-xs);
+  color: var(--ge-slate);
+  line-height: 1.5;
+}
+
+.checkbox-group .link,
+.checkbox-group a {
+  color: var(--ge-forest);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.checkbox-group .link:hover,
+.checkbox-group a:hover {
+  text-decoration: underline;
+}
+
 /* ── Responsive ────────────────────────────────────── */
 @media (max-width: 480px) {
-  .auth-form-container {
-    padding: var(--ge-space-6);
+  .auth-form-container,
+  .register-container {
+    padding: var(--ge-space-5);
   }
 
   .auth-form .form-row,
@@ -384,4 +570,22 @@
     flex-direction: column;
     gap: var(--ge-space-1);
   }
+
+  .qr-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .qr-instructions ol {
+    text-align: left;
+  }
+
+  .whatsapp-benefits {
+    justify-content: center;
+  }
+
+  .auth-wrapper {
+    max-width: 100%;
+  }
 }
+
