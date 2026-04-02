@@ -36,7 +36,7 @@ body {
 
 /* Headings Typography */
 h1, h2, h3, h4, h5, h6 {
-    font-family: var(--ge-font-display, 'DM Serif Display', Georgia, serif);
+    font-family: var(--ge-font-display, 'Instrument Serif', Georgia, serif);
     font-weight: 400;
     line-height: 1.2;
     margin-bottom: 1rem;

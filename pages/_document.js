@@ -14,9 +14,9 @@ export default function Document({ __NEXT_DATA__ }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
-        {/* Google Fonts — DM Serif Display (headings) + DM Sans (body) + Montserrat + Open Sans (legacy) */}
+        {/* Google Fonts — Instrument Serif (headings) + DM Sans (body) + legacy fallbacks */}
         <link
-          href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
         />
 
