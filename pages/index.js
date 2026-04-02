@@ -8,6 +8,7 @@ import Impact from '@/components/Impact';
 import BlogIndex from '@/components/BlogIndex';
 import Seo from '@/components/common/Seo';
 import InstagramFeed from '@/components/InstagramFeed';
+import AQIWidget from '@/components/AQIWidget';
 import { useEffect } from 'react';
 
 export function getStaticProps({ locale }) {
@@ -89,6 +90,7 @@ export default function HomePage() {
       <BlogIndex />
       <Donate />
       <Impact />
+      <AQIWidget />
     </>
   );
 }
