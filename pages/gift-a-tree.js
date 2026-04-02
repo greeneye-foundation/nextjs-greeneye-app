@@ -201,9 +201,25 @@ export default function GiftATreePage() {
             <div className="ge-gift__field ge-gift__slider-field">
               <div className="ge-gift__slider-header">
                 <label>Number of Trees</label>
-                <span className="ge-gift__slider-value">
-                  {form.numberOfTrees} {parseInt(form.numberOfTrees) === 1 ? 'Tree' : 'Trees'}
-                </span>
+                <div className="ge-gift__slider-input-wrap">
+                  <input
+                    type="number"
+                    min="1"
+                    max="100"
+                    value={form.numberOfTrees}
+                    onChange={(e) => {
+                      let val = parseInt(e.target.value) || 1;
+                      if (val < 1) val = 1;
+                      if (val > 100) val = 100;
+                      handleChange({ target: { name: 'numberOfTrees', value: String(val) } });
+                      setSelectedProducts([]);
+                    }}
+                    className="ge-gift__slider-num"
+                  />
+                  <span className="ge-gift__slider-suffix">
+                    {parseInt(form.numberOfTrees) === 1 ? 'Tree' : 'Trees'}
+                  </span>
+                </div>
               </div>
               <div className="ge-gift__slider-wrap">
                 <input
