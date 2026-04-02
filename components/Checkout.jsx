@@ -7,7 +7,7 @@ import { useAuth } from "@/context/AuthContext";
 import { showNotification } from "@/components/Notification";
 
 const Checkout = () => {
-  const { getAuthHeaders } = useAuth();
+  const { getAuthHeaders, isLoading: authLoading, isLoggedIn, token } = useAuth();
   const t = useTranslations("checkout");
   const [cart, setCart] = useState(null);
   const [userInfo, setUserInfo] = useState({
@@ -35,15 +35,16 @@ const Checkout = () => {
   const router = useRouter();
 
   useEffect(() => {
+    if (authLoading) return;
+    if (!isLoggedIn) { setError(t("loginRequired")); return; }
+
+    const headers = { Authorization: `Bearer ${token}` };
+
     const fetchCart = async () => {
       setError("");
       try {
-        if (!getAuthHeaders().Authorization) {
-          setError(t("loginRequired"));
-          return;
-        }
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/cart`, {
-          headers: getAuthHeaders(),
+          headers,
         });
         setCart(res.data);
       } catch (err) {
@@ -57,10 +58,8 @@ const Checkout = () => {
 
     const fetchUserInfo = async () => {
       try {
-        if (!getAuthHeaders().Authorization) return;
-
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/profile`, {
-          headers: getAuthHeaders(),
+          headers,
         });
 
         const { name, email, phone, address } = res.data;
@@ -86,9 +85,8 @@ const Checkout = () => {
     // ✅ Fetch available coupons
     const fetchCoupons = async () => {
       try {
-        if (!getAuthHeaders().Authorization) return;
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/coupons/available`, {
-          headers: getAuthHeaders(),
+          headers,
         });
         setAvailableCoupons(res.data);
       } catch (err) {
@@ -103,7 +101,7 @@ const Checkout = () => {
     fetchCart();
     fetchUserInfo();
     fetchCoupons();
-  }, [t]);
+  }, [authLoading, isLoggedIn, token]);
 
   const total =
     cart?.items.reduce((sum, item) => sum + item.plant.price * item.quantity, 0) || 0;
