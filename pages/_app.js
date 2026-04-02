@@ -1,4 +1,7 @@
 // pages/_app.js
+import '@/styles/design-system.css';
+import '@/styles/navbar.css';
+import '@/styles/footer.css';
 import '@/styles/globals.css';
 import '@/styles/auth-styles.css';
 import '@/styles/admin.css';

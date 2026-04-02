@@ -24,52 +24,54 @@ html {
 }
 
 body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: var(--ge-font-body, 'DM Sans', sans-serif);
     font-weight: 400;
-    line-height: 1.7;
-    color: var(--charcoal-bark);
+    line-height: 1.6;
+    color: var(--ge-charcoal, #3A4442);
     overflow-x: hidden;
-    font-size: 18px; /* Increased from 16px for better readability */
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Headings Typography */
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700; /* Increased from 600 */
-    line-height: 1.3;
+    font-family: var(--ge-font-display, 'DM Serif Display', Georgia, serif);
+    font-weight: 400;
+    line-height: 1.2;
     margin-bottom: 1rem;
+    color: var(--ge-ink, #1A2B23);
+    letter-spacing: -0.01em;
 }
 
 h1 {
-    font-size: 2.5rem;
-    font-weight: 800; /* Increased from 700 */
-    line-height: 1.2;
+    font-size: var(--ge-text-5xl, 2.5rem);
+    line-height: 1.1;
 }
 
 h2 {
-    font-size: 2rem;
-    font-weight: 800; /* Increased from 700 */
-    line-height: 1.25;
+    font-size: var(--ge-text-4xl, 2rem);
+    line-height: 1.15;
 }
 
 h3 {
-    font-size: 1.5rem;
-    font-weight: 700; /* Increased from 600 */
+    font-size: var(--ge-text-3xl, 1.5rem);
 }
 
 h4 {
-    font-size: 1.25rem;
-    font-weight: 700; /* Increased from 600 */
+    font-size: var(--ge-text-2xl, 1.25rem);
 }
 
 h5 {
-    font-size: 1.1rem;
-    font-weight: 700; /* Increased from 600 */
+    font-size: var(--ge-text-xl, 1.1rem);
+    font-family: var(--ge-font-body, 'DM Sans', sans-serif);
+    font-weight: 600;
 }
 
 h6 {
-    font-size: 1rem;
-    font-weight: 700; /* Increased from 600 */
+    font-size: var(--ge-text-lg, 1rem);
+    font-family: var(--ge-font-body, 'DM Sans', sans-serif);
+    font-weight: 600;
 }
 
 p {
@@ -80,7 +82,7 @@ p {
 
 /* Add padding to account for fixed navbar */
 main {
-    padding-top: 70px;
+    padding-top: var(--ge-nav-height, 72px);
     min-height: 100vh;
 }
 
