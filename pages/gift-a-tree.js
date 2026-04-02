@@ -19,7 +19,7 @@ export function getStaticProps({ locale }) {
 }
 
 export default function GiftATreePage() {
-  const { getAuthHeaders } = useAuth();
+  const { getAuthHeaders, isLoggedIn: authLoggedIn, isLoading: authLoading, token } = useAuth();
   const t = useTranslations('giftTree');
   const router = useRouter();
   const carouselRef = useRef(null);
@@ -44,13 +44,17 @@ export default function GiftATreePage() {
   });
 
   useEffect(() => {
+    if (authLoading) return; // Wait for auth hydration
+
+    if (!authLoggedIn) { setUserLoading(false); return; }
+
+    setIsLoggedIn(true);
+
     const fetchProfile = async () => {
       try {
-        if (!getAuthHeaders().Authorization) { setUserLoading(false); return; }
-        setIsLoggedIn(true);
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/profile`,
-          { headers: getAuthHeaders() }
+          { headers: { Authorization: `Bearer ${token}` } }
         );
         const userData = response.data;
         setForm((prev) => ({
@@ -59,11 +63,11 @@ export default function GiftATreePage() {
           senderEmail: userData.email || userData.user?.email || "",
           senderPhone: userData.phone || userData.user?.phone || "",
         }));
-        setUserLoading(false);
-      } catch (error) { setIsLoggedIn(false); setUserLoading(false); }
+      } catch (error) { setIsLoggedIn(false); }
+      setUserLoading(false);
     };
     fetchProfile();
-  }, []);
+  }, [authLoading, authLoggedIn, token]);
 
   useEffect(() => {
     axios
