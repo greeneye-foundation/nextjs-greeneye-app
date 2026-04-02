@@ -105,6 +105,10 @@
   margin-left: 2px;
 }
 
+.checkout-form input[type="text"],
+.checkout-form input[type="email"],
+.checkout-form input[type="tel"],
+.checkout-form textarea,
 .form-input,
 .form-textarea {
   width: 100%;
@@ -117,8 +121,14 @@
   border-radius: var(--ge-radius-md);
   transition: all var(--ge-duration-fast) var(--ge-ease);
   min-height: 44px;
+  box-shadow: none;
+  -webkit-appearance: none;
 }
 
+.checkout-form input[type="text"]:focus,
+.checkout-form input[type="email"]:focus,
+.checkout-form input[type="tel"]:focus,
+.checkout-form textarea:focus,
 .form-input:focus,
 .form-textarea:focus {
   outline: none;
@@ -127,11 +137,14 @@
   box-shadow: 0 0 0 3px rgba(27, 94, 58, 0.08);
 }
 
+.checkout-form input::placeholder,
+.checkout-form textarea::placeholder,
 .form-input::placeholder,
 .form-textarea::placeholder {
   color: var(--ge-mist);
 }
 
+.checkout-form textarea,
 .form-textarea {
   resize: vertical;
   min-height: 80px;
