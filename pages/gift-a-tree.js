@@ -145,6 +145,10 @@ export default function GiftATreePage() {
       showNotification(`Please select exactly ${form.numberOfTrees} tree(s)`, "error");
       return;
     }
+    if (!form.recipientWhatsapp || !/^\+\d{1,3}\d{6,14}$/.test(form.recipientWhatsapp)) {
+      showNotification('Please enter a valid WhatsApp number (e.g., +919876543210)', 'error');
+      return;
+    }
     setLoading(true);
     try {
       const response = await axios.post(
@@ -315,9 +319,9 @@ export default function GiftATreePage() {
                   <input type="tel" name="recipientPhone" value={form.recipientPhone} onChange={handleChange} placeholder="+91 XXXXX XXXXX" required />
                 </div>
                 <div className="ge-gift__field">
-                  <label>{t('recipientWhatsapp') || 'WhatsApp'}</label>
-                  <input type="tel" name="recipientWhatsapp" value={form.recipientWhatsapp} onChange={handleChange} placeholder="+919876543210" />
-                  <small>For tree planting notifications</small>
+                  <label>{t('recipientWhatsapp') || 'WhatsApp'} *</label>
+                  <input type="tel" name="recipientWhatsapp" value={form.recipientWhatsapp} onChange={handleChange} placeholder="+919876543210" required />
+                  <small>Required for tree planting updates via WhatsApp</small>
                 </div>
               </div>
             </div>
