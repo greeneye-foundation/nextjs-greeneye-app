@@ -1,0 +1,217 @@
+/* Admin Notifications Panel Styles */
+
+.admin-notifications {
+  width: 100%;
+}
+
+/* Tab switcher */
+.admin-notifications__tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid #e0e0e0;
+  margin-bottom: 20px;
+}
+
+.admin-notifications__tabs button {
+  padding: 10px 24px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-notifications__tabs button:hover {
+  color: #388e3c;
+}
+
+.admin-notifications__tabs button.active {
+  color: #388e3c;
+  border-bottom-color: #388e3c;
+}
+
+/* Filter bar */
+.admin-notifications__filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.admin-notifications__search {
+  flex: 1;
+  min-width: 200px;
+  padding: 8px 12px;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.admin-notifications__search:focus {
+  border-color: #388e3c;
+}
+
+.admin-notifications__select {
+  padding: 8px 12px;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  background: #fff;
+  cursor: pointer;
+  min-width: 140px;
+  transition: border-color 0.2s ease;
+}
+
+.admin-notifications__select:focus {
+  border-color: #388e3c;
+}
+
+.admin-notifications__date {
+  padding: 8px 12px;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.admin-notifications__date:focus {
+  border-color: #388e3c;
+}
+
+/* Notification log table */
+.admin-notifications__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.admin-notifications__table thead th {
+  background: #f5f5f5;
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #e0e0e0;
+  white-space: nowrap;
+}
+
+.admin-notifications__table tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: middle;
+}
+
+.admin-notifications__table tbody tr:hover {
+  background: #f9fdf9;
+}
+
+/* Badge styles */
+.admin-notifications__badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+/* Retry button */
+.admin-notifications__retry-btn {
+  padding: 5px 14px;
+  border: 1px solid #f57c00;
+  background: #fff3e0;
+  color: #e65100;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.admin-notifications__retry-btn:hover:not(:disabled) {
+  background: #ffe0b2;
+  border-color: #e65100;
+}
+
+.admin-notifications__retry-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Pagination */
+.admin-notifications__pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+  padding: 12px 0;
+}
+
+.admin-notifications__pagination button {
+  padding: 8px 16px;
+  border: 1px solid #d0d0d0;
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.admin-notifications__pagination button:hover:not(:disabled) {
+  border-color: #388e3c;
+  color: #388e3c;
+}
+
+.admin-notifications__pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.admin-notifications__pagination span {
+  font-size: 13px;
+  color: #666;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-notifications__filters {
+    flex-direction: column;
+  }
+
+  .admin-notifications__search,
+  .admin-notifications__select,
+  .admin-notifications__date {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .admin-notifications__tabs button {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+}

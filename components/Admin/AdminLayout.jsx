@@ -110,6 +110,13 @@ const AdminLayout = ({ children }) => {
           </Link>
 
           <Link
+            href="/admin/notifications"
+            className={pathname.startsWith("/admin/notifications") ? "active" : ""}
+          >
+            <i className="fas fa-bell"></i> Notifications
+          </Link>
+
+          <Link
             href="/admin/coupons"
             className={pathname.startsWith("/admin/coupons") ? "active" : ""}
           >
