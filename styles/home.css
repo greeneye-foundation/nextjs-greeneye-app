@@ -128,6 +128,22 @@
   border-color: rgba(255, 255, 255, 0.4);
 }
 
+.ge-hero__cta-adopt {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--ge-white);
+  border: 1.5px solid var(--ge-gold-light);
+  font-size: var(--ge-text-base);
+  padding: var(--ge-space-4) var(--ge-space-8);
+  border-radius: var(--ge-radius-lg);
+  backdrop-filter: blur(8px);
+}
+
+.ge-hero__cta-adopt:hover {
+  background: rgba(200, 150, 62, 0.15);
+  border-color: var(--ge-gold);
+  transform: translateY(-2px);
+}
+
 /* Social proof */
 .ge-hero__proof {
   display: flex;
@@ -173,6 +189,205 @@
   z-index: 1;
   color: rgba(255, 255, 255, 0.35);
   font-size: 14px;
+}
+
+/* ── Stats Bar ────────────────────────────────────── */
+.ge-statsbar {
+  background: var(--ge-snow);
+  padding: var(--ge-space-8) 0;
+  border-bottom: 1px solid var(--ge-cloud);
+}
+
+.ge-statsbar__inner {
+  text-align: center;
+}
+
+.ge-statsbar__items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--ge-space-12);
+  flex-wrap: wrap;
+}
+
+.ge-statsbar__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ge-space-1);
+  position: relative;
+}
+
+.ge-statsbar__item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: calc(-1 * var(--ge-space-6));
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 32px;
+  background: var(--ge-cloud);
+}
+
+.ge-statsbar__number {
+  font-size: var(--ge-text-3xl);
+  font-weight: 700;
+  color: var(--ge-forest);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.ge-statsbar__label {
+  font-size: var(--ge-text-sm);
+  font-weight: 500;
+  color: var(--ge-slate);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ge-statsbar__footnote {
+  font-size: var(--ge-text-xs);
+  color: var(--ge-mist);
+  margin-top: var(--ge-space-4);
+}
+
+/* Skeleton loading */
+.ge-statsbar__skeleton {
+  width: 80px;
+  height: 28px;
+  background: linear-gradient(90deg, var(--ge-cloud) 25%, var(--ge-snow) 50%, var(--ge-cloud) 75%);
+  background-size: 200% 100%;
+  animation: ge-skeleton-shimmer 1.5s infinite;
+  border-radius: var(--ge-radius-sm);
+}
+
+.ge-statsbar__skeleton--label {
+  width: 100px;
+  height: 16px;
+  margin-top: var(--ge-space-2);
+}
+
+@keyframes ge-skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@media (max-width: 768px) {
+  .ge-statsbar__items {
+    gap: var(--ge-space-6);
+  }
+
+  .ge-statsbar__item:not(:last-child)::after {
+    display: none;
+  }
+
+  .ge-statsbar__number {
+    font-size: var(--ge-text-2xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .ge-statsbar {
+    padding: var(--ge-space-6) 0;
+  }
+
+  .ge-statsbar__items {
+    flex-direction: column;
+    gap: var(--ge-space-4);
+  }
+}
+
+/* ── Photo Proof Strip ────────────────────────────── */
+.ge-proof-strip {
+  padding: var(--ge-space-10) 0;
+  background: var(--ge-white);
+}
+
+.ge-proof-strip__header {
+  margin-bottom: var(--ge-space-6);
+}
+
+.ge-proof-strip__header h3 {
+  font-size: var(--ge-text-xl);
+  font-weight: 700;
+  color: var(--ge-ink);
+}
+
+.ge-proof-strip__scroll {
+  display: flex;
+  gap: var(--ge-space-4);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: var(--ge-space-2);
+  scrollbar-width: none;
+}
+
+.ge-proof-strip__scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.ge-proof-strip__card {
+  flex: 0 0 200px;
+  scroll-snap-align: start;
+  border-radius: var(--ge-radius-lg);
+  overflow: hidden;
+  background: var(--ge-snow);
+  border: 1px solid var(--ge-cloud);
+  transition: transform var(--ge-duration-base) var(--ge-ease),
+              box-shadow var(--ge-duration-base) var(--ge-ease);
+}
+
+.ge-proof-strip__card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--ge-shadow-md);
+}
+
+.ge-proof-strip__photo {
+  width: 100%;
+  height: 140px;
+  overflow: hidden;
+}
+
+.ge-proof-strip__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ge-proof-strip__info {
+  padding: var(--ge-space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ge-space-1);
+}
+
+.ge-proof-strip__name {
+  font-size: var(--ge-text-sm);
+  font-weight: 600;
+  color: var(--ge-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ge-proof-strip__time {
+  font-size: var(--ge-text-xs);
+  color: var(--ge-mist);
+}
+
+@media (max-width: 480px) {
+  .ge-proof-strip {
+    padding: var(--ge-space-8) 0;
+  }
+
+  .ge-proof-strip__card {
+    flex: 0 0 170px;
+  }
+
+  .ge-proof-strip__photo {
+    height: 120px;
+  }
 }
 
 /* ── How It Works ──────────────────────────────────── */
@@ -291,13 +506,10 @@
   }
 
   .ge-hero__cta-primary,
-  .ge-hero__cta-secondary {
+  .ge-hero__cta-secondary,
+  .ge-hero__cta-adopt {
     width: 100%;
     justify-content: center;
-  }
-
-  .ge-hero__proof {
-    gap: var(--ge-space-4);
   }
 
   .ge-how__grid {

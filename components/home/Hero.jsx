@@ -60,37 +60,16 @@ const Hero = () => {
               className="ge-btn ge-btn-lg ge-hero__cta-primary"
               onClick={() => router.push('/gift-a-tree')}
             >
-              <i className="fas fa-seedling"></i>
+              <i className="fas fa-gift"></i>
               Gift a Tree
             </button>
             <button
-              className="ge-btn ge-btn-lg ge-hero__cta-secondary"
-              onClick={() => router.push('/donate')}
+              className="ge-btn ge-btn-lg ge-hero__cta-adopt"
+              onClick={() => router.push('/gift-a-tree?mode=adopt')}
             >
-              Donate Now
+              <i className="fas fa-seedling"></i>
+              Adopt a Tree
             </button>
-          </motion.div>
-
-          <motion.div
-            className="ge-hero__proof"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-          >
-            <div className="ge-hero__proof-item">
-              <strong>50,000+</strong>
-              <span>Trees Planted</span>
-            </div>
-            <div className="ge-hero__proof-dot" />
-            <div className="ge-hero__proof-item">
-              <strong>25+</strong>
-              <span>Cities</span>
-            </div>
-            <div className="ge-hero__proof-dot" />
-            <div className="ge-hero__proof-item">
-              <strong>1,200+</strong>
-              <span>Volunteers</span>
-            </div>
           </motion.div>
         </div>
       </div>
