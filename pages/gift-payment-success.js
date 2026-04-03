@@ -1,14 +1,26 @@
 "use client";
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useTranslations } from 'next-intl';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import Seo from '@/components/common/Seo';
 import { showNotification } from '@/components/Notification';
-import { CheckCircle, AlertCircle, Loader2, Home, RefreshCw, Gift } from 'lucide-react';
+import TreeTimeline from '@/components/TreeTracking/TreeTimeline';
+import { CheckCircle, AlertCircle, Loader2, Home, RefreshCw, Gift, Trees, Download } from 'lucide-react';
+
+export function getStaticProps({ locale }) {
+  return {
+    props: {
+      messages: require(`../locales/${locale}.json`),
+      locale,
+    }
+  };
+}
 
 export default function GiftPaymentSuccess() {
     const router = useRouter();
+    const t = useTranslations('orderConfirmation');
     const [loading, setLoading] = useState(true);
     const [orderDetails, setOrderDetails] = useState(null);
     const [error, setError] = useState(null);
@@ -182,6 +194,47 @@ export default function GiftPaymentSuccess() {
                         </>
                     )}
 
+                    {/* What Happens Next Timeline */}
+                    {orderDetails && (
+                        <div className="ge-status-section">
+                            <h3 className="ge-status-section-title">
+                                <Trees size={18} />
+                                {t('whatsNext')}
+                            </h3>
+                            <TreeTimeline
+                                milestones={[{
+                                    status: 'PAID',
+                                    notes: orderDetails.paymentStatus === 'COMPLETED' ? 'Payment confirmed' : 'Payment processing',
+                                    createdAt: orderDetails.orderDate || orderDetails.createdAt
+                                }]}
+                                currentStatus="PAID"
+                            />
+                        </div>
+                    )}
+
+                    {/* Certificate Notice */}
+                    <div className="ge-status-section ge-text-center">
+                        <p className="ge-status-cert-notice">
+                            <Download size={16} />
+                            {t('certificateMsg')}
+                        </p>
+                    </div>
+
+                    {/* Tracking info */}
+                    {orderDetails && orderDetails.trees && orderDetails.trees.length > 0 ? (
+                        <div className="ge-status-section ge-text-center">
+                            <p className="ge-status-item-detail">
+                                {t('trackTree')}
+                            </p>
+                        </div>
+                    ) : (
+                        <div className="ge-status-section ge-text-center">
+                            <p className="ge-status-item-detail">
+                                Your tree tracking link will be sent via WhatsApp shortly.
+                            </p>
+                        </div>
+                    )}
+
                     {/* Action Buttons */}
                     <div className="ge-status-actions">
                         <button
@@ -196,7 +249,7 @@ export default function GiftPaymentSuccess() {
                             onClick={() => router.push('/gift-a-tree')}
                         >
                             <Gift size={18} />
-                            Send Another Gift
+                            {t('giftAnother')}
                         </button>
                     </div>
                 </motion.div>
