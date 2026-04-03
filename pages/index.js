@@ -1,6 +1,8 @@
 // pages/index.js
 import { useTranslations } from 'next-intl';
 import Hero from '@/components/home/Hero';
+import StatsBar from '@/components/home/StatsBar';
+import PhotoProofStrip from '@/components/home/PhotoProofStrip';
 import HowItWorks from '@/components/home/HowItWorks';
 import About from '@/components/About';
 import Donate from '@/components/Donate';
@@ -84,12 +86,14 @@ export default function HomePage() {
         structuredData={organizationSchema}
       />
       <Hero />
+      <StatsBar />
+      <PhotoProofStrip />
       <HowItWorks />
       <About />
-      <InstagramFeed />
-      <BlogIndex />
       <Donate />
       <Impact />
+      <BlogIndex />
+      <InstagramFeed />
       <AQIWidget />
     </>
   );
