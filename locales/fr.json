@@ -15,7 +15,11 @@
     "admin": "Admin",
     "register": "S'inscrire",
     "login": "Connexion",
-    "logout": "Déconnexion"
+    "logout": "Déconnexion",
+    "myTrees": "Mes Arbres",
+    "myOrders": "Mes Commandes",
+    "myDonations": "Mes Dons",
+    "myGifts": "Mes Cadeaux"
   },
   "footer": {
     "mission": "Dédié à créer un avenir plus vert et plus durable grâce à la plantation d'arbres et à la conservation de l'environnement.",
@@ -631,7 +635,11 @@
     "seoTitle": "Offrir un Arbre | GEYE INNOVATION FOUNDATION",
     "seoDescription": "Envoyez un cadeau significatif en plantant des arbres au nom de quelqu'un. Parfait pour les anniversaires, les anniversaires de mariage et les occasions spéciales.",
     "pageTitle": "Finalisez Votre Cadeau d'Arbre",
-    "pageSubtitle": "Remplissez les détails ci-dessous pour envoyer un magnifique cadeau d'arbre"
+    "pageSubtitle": "Remplissez les détails ci-dessous pour envoyer un magnifique cadeau d'arbre",
+    "modeGift": "En Cadeau",
+    "modeAdopt": "Pour Moi",
+    "adoptHeading": "Adopter un Arbre",
+    "adoptDescription": "Plantez un arbre pour vous-même et suivez sa croissance"
   },
   "accountDeletion": {
     "title": "Politique de Suppression de Compte",
@@ -717,5 +725,44 @@
       "heading": "Notre forêt commence à peine",
       "body": "Des arbres sont en préparation pour la plantation. Revenez bientôt pour les voir sur la carte."
     }
+  },
+  "myTrees": {
+    "pageTitle": "Mes Arbres",
+    "empty": "Vous n'avez pas encore adopté ou offert d'arbres",
+    "emptyCta": "Offrir un Arbre",
+    "mapTitle": "Emplacements de Vos Arbres",
+    "treeCount": "{count} arbre(s)",
+    "track": "Suivre",
+    "plantedOn": "Planté le {date}",
+    "status": {
+      "PAID": "Paiement confirmé",
+      "PLANT_SELECTED": "Plante sélectionnée",
+      "PLANTING_SCHEDULED": "Plantation prévue",
+      "PLANTED": "Planté",
+      "GROWING": "En croissance"
+    }
+  },
+  "statsBar": {
+    "treesPlanted": "Arbres Plantés",
+    "co2Absorbed": "kg CO2 Absorbé",
+    "forestArea": "m² de Forêt",
+    "estimated": "* Valeurs estimées"
+  },
+  "photoStrip": {
+    "title": "Récemment Plantés",
+    "daysAgo": "il y a {days} jours",
+    "today": "Aujourd'hui",
+    "yesterday": "Hier"
+  },
+  "orderConfirmation": {
+    "title": "Paiement Réussi !",
+    "subtitle": "Votre cadeau arbre a été traité",
+    "whatsNext": "Et Après",
+    "certificateMsg": "Le certificat sera disponible une fois votre arbre planté",
+    "trackTree": "Suivre Votre Arbre",
+    "giftAnother": "Offrir un Autre Arbre"
+  },
+  "occasions": {
+    "earthDay": "Jour de la Terre"
   }
 }
