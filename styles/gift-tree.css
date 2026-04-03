@@ -59,6 +59,46 @@
   margin: 0;
 }
 
+/* ── Mode Toggle ──────────────────────────────────── */
+.ge-gift__mode-toggle {
+  display: flex;
+  gap: var(--ge-space-2);
+  margin-bottom: var(--ge-space-6);
+  padding: var(--ge-space-1);
+  background: var(--ge-snow);
+  border-radius: var(--ge-radius-full);
+  border: 1px solid var(--ge-cloud);
+}
+
+.ge-gift__mode-btn {
+  flex: 1;
+  padding: var(--ge-space-3) var(--ge-space-4);
+  border: none;
+  background: transparent;
+  border-radius: var(--ge-radius-full);
+  font-family: var(--ge-font-body);
+  font-weight: 600;
+  font-size: var(--ge-text-sm);
+  color: var(--ge-slate);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ge-space-2);
+  transition: all var(--ge-duration-base) var(--ge-ease);
+}
+
+.ge-gift__mode-btn--active {
+  background: var(--ge-forest);
+  color: var(--ge-white);
+  box-shadow: var(--ge-shadow-sm);
+}
+
+.ge-gift__mode-btn:hover:not(.ge-gift__mode-btn--active) {
+  color: var(--ge-charcoal);
+  background: var(--ge-white);
+}
+
 /* ── Form ──────────────────────────────────────────── */
 .ge-gift__form {
   display: flex;
@@ -636,4 +676,16 @@
 .ge-gift__field .occasion-selector-group,
 .ge-gift__row .occasion-selector-group {
   margin-bottom: 0;
+}
+
+/* ── Certificate Notice (payment success page) ────── */
+.ge-status-cert-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ge-space-2);
+  color: var(--ge-slate);
+  font-size: var(--ge-text-sm);
+  font-style: italic;
+  margin: 0;
 }

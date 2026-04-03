@@ -23,6 +23,7 @@ export default function GiftATreePage() {
   const t = useTranslations('giftTree');
   const router = useRouter();
   const carouselRef = useRef(null);
+  const [mode, setMode] = useState('gift'); // 'gift' or 'adopt'
   const [loading, setLoading] = useState(false);
   const [plants, setPlants] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
@@ -78,12 +79,41 @@ export default function GiftATreePage() {
 
   useEffect(() => {
     if (router.isReady) {
-      const { occasion, numberOfTrees } = router.query;
+      const { occasion, numberOfTrees, mode: urlMode } = router.query;
+      if (urlMode === 'adopt') {
+        setMode('adopt');
+      }
       if (occasion || numberOfTrees) {
         setForm(prev => ({ ...prev, occasion: occasion || prev.occasion, numberOfTrees: numberOfTrees || prev.numberOfTrees }));
       }
     }
   }, [router.isReady, router.query]);
+
+  // Auto-fill recipient from sender in adopt mode
+  useEffect(() => {
+    if (mode === 'adopt' && isLoggedIn && form.senderName) {
+      setForm(prev => ({
+        ...prev,
+        recipientName: prev.senderName,
+        recipientEmail: prev.senderEmail,
+        recipientPhone: prev.senderPhone,
+        recipientWhatsapp: prev.senderPhone,
+      }));
+    }
+  }, [mode, isLoggedIn, form.senderName, form.senderEmail, form.senderPhone]);
+
+  // Clear recipient fields when switching back to gift mode
+  useEffect(() => {
+    if (mode === 'gift') {
+      setForm(prev => ({
+        ...prev,
+        recipientName: '',
+        recipientEmail: '',
+        recipientPhone: '',
+        recipientWhatsapp: '',
+      }));
+    }
+  }, [mode]);
 
   const handleChange = (e) => { const { name, value } = e.target; setForm((prev) => ({ ...prev, [name]: value })); };
 
@@ -145,7 +175,7 @@ export default function GiftATreePage() {
       showNotification(`Please select exactly ${form.numberOfTrees} tree(s)`, "error");
       return;
     }
-    if (!form.recipientWhatsapp || !/^\+\d{1,3}\d{6,14}$/.test(form.recipientWhatsapp)) {
+    if (mode === 'gift' && (!form.recipientWhatsapp || !/^\+\d{1,3}\d{6,14}$/.test(form.recipientWhatsapp))) {
       showNotification('Please enter a valid WhatsApp number (e.g., +919876543210)', 'error');
       return;
     }
@@ -189,16 +219,36 @@ export default function GiftATreePage() {
               <i className="fas fa-arrow-left"></i>
             </button>
             <div>
-              <h1>Gift a Tree</h1>
-              <p>A meaningful gift that grows with every occasion</p>
+              <h1>{mode === 'adopt' ? t('adoptHeading') : 'Gift a Tree'}</h1>
+              <p>{mode === 'adopt' ? t('adoptDescription') : 'A meaningful gift that grows with every occasion'}</p>
             </div>
           </motion.div>
 
           <form onSubmit={handleSubmit} className="ge-gift__form">
+            {/* Mode Toggle */}
+            <div className="ge-gift__mode-toggle">
+              <button
+                type="button"
+                className={`ge-gift__mode-btn${mode === 'gift' ? ' ge-gift__mode-btn--active' : ''}`}
+                onClick={() => setMode('gift')}
+              >
+                <i className="fas fa-gift"></i>
+                {t('modeGift')}
+              </button>
+              <button
+                type="button"
+                className={`ge-gift__mode-btn${mode === 'adopt' ? ' ge-gift__mode-btn--active' : ''}`}
+                onClick={() => setMode('adopt')}
+              >
+                <i className="fas fa-seedling"></i>
+                {t('modeAdopt')}
+              </button>
+            </div>
+
             {/* Occasion */}
             <div className="ge-gift__field">
               <label>Occasion *</label>
-              <OccasionSelector value={form.occasion} onChange={handleChange} required />
+              <OccasionSelector value={form.occasion} onChange={handleChange} required adoptMode={mode === 'adopt'} />
             </div>
 
             {/* Number of Trees */}
@@ -300,31 +350,33 @@ export default function GiftATreePage() {
               </div>
             </div>
 
-            {/* Recipient */}
-            <div className="ge-gift__section">
-              <h3><i className="fas fa-user-friends"></i> Recipient</h3>
-              <div className="ge-gift__row ge-gift__row--2col">
-                <div className="ge-gift__field">
-                  <label>Name *</label>
-                  <input type="text" name="recipientName" value={form.recipientName} onChange={handleChange} placeholder="Recipient's name" required />
+            {/* Recipient — hidden in adopt mode */}
+            {mode === 'gift' && (
+              <div className="ge-gift__section">
+                <h3><i className="fas fa-user-friends"></i> Recipient</h3>
+                <div className="ge-gift__row ge-gift__row--2col">
+                  <div className="ge-gift__field">
+                    <label>Name *</label>
+                    <input type="text" name="recipientName" value={form.recipientName} onChange={handleChange} placeholder="Recipient's name" required />
+                  </div>
+                  <div className="ge-gift__field">
+                    <label>Email *</label>
+                    <input type="email" name="recipientEmail" value={form.recipientEmail} onChange={handleChange} placeholder="recipient@email.com" required />
+                  </div>
                 </div>
-                <div className="ge-gift__field">
-                  <label>Email *</label>
-                  <input type="email" name="recipientEmail" value={form.recipientEmail} onChange={handleChange} placeholder="recipient@email.com" required />
+                <div className="ge-gift__row ge-gift__row--2col">
+                  <div className="ge-gift__field">
+                    <label>Phone *</label>
+                    <input type="tel" name="recipientPhone" value={form.recipientPhone} onChange={handleChange} placeholder="+91 XXXXX XXXXX" required />
+                  </div>
+                  <div className="ge-gift__field">
+                    <label>{t('recipientWhatsapp') || 'WhatsApp'} *</label>
+                    <input type="tel" name="recipientWhatsapp" value={form.recipientWhatsapp} onChange={handleChange} placeholder="+919876543210" required />
+                    <small>Required for tree planting updates via WhatsApp</small>
+                  </div>
                 </div>
               </div>
-              <div className="ge-gift__row ge-gift__row--2col">
-                <div className="ge-gift__field">
-                  <label>Phone *</label>
-                  <input type="tel" name="recipientPhone" value={form.recipientPhone} onChange={handleChange} placeholder="+91 XXXXX XXXXX" required />
-                </div>
-                <div className="ge-gift__field">
-                  <label>{t('recipientWhatsapp') || 'WhatsApp'} *</label>
-                  <input type="tel" name="recipientWhatsapp" value={form.recipientWhatsapp} onChange={handleChange} placeholder="+919876543210" required />
-                  <small>Required for tree planting updates via WhatsApp</small>
-                </div>
-              </div>
-            </div>
+            )}
 
             {/* Sender */}
             <div className="ge-gift__section">

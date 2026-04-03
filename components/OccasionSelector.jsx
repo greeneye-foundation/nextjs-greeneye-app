@@ -8,9 +8,16 @@ const occasions = [
   { value: "corporate", label: "Corporate", emoji: "🏢" },
   { value: "holiday", label: "Holiday", emoji: "🎄" },
   { value: "just-because", label: "Just Because", emoji: "💚" },
+  { value: "earth-day", label: "Earth Day", emoji: "🌍" },
 ];
 
-const OccasionSelector = ({ value, onChange, required = false }) => {
+const ADOPT_OCCASIONS = ['birthday', 'just-because', 'earth-day'];
+
+const OccasionSelector = ({ value, onChange, required = false, adoptMode = false }) => {
+  const filteredOccasions = adoptMode
+    ? occasions.filter(o => ADOPT_OCCASIONS.includes(o.value))
+    : occasions;
+
   const handleSelect = (occasionValue) => {
     onChange({ target: { name: 'occasion', value: occasionValue } });
   };
@@ -18,7 +25,7 @@ const OccasionSelector = ({ value, onChange, required = false }) => {
   return (
     <div className="ge-occasion">
       <div className="ge-occasion__grid">
-        {occasions.map((o) => (
+        {filteredOccasions.map((o) => (
           <button
             key={o.value}
             type="button"
