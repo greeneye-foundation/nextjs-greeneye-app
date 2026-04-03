@@ -17,20 +17,36 @@ const NAV_LINKS = [
 const Navbar = () => {
   const router = useRouter();
   const navMenuRef = useRef();
+  const dropdownRef = useRef(null);
   const [menuActive, setMenuActive] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const { isLoggedIn, user, logout, isLoading } = useAuth();
 
   const t = useTranslations("navbar");
 
-  // Close menu on route change
-  useEffect(() => setMenuActive(false), [router.pathname]);
+  // Close menu and dropdown on route change
+  useEffect(() => {
+    setMenuActive(false);
+    setDropdownOpen(false);
+  }, [router.pathname]);
 
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Close dropdown on click outside
+  useEffect(() => {
+    const handler = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
   }, []);
 
   // Lock body scroll when mobile menu open
@@ -86,38 +102,72 @@ const Navbar = () => {
             <li className="ge-nav__divider" aria-hidden="true" />
 
             {isLoggedIn && (
-              <li className="ge-nav__item">
-                <Link
-                  href="/profile"
-                  className={`ge-nav__link${isActive("/profile") ? " ge-nav__link--active" : ""}`}
-                  onClick={() => setMenuActive(false)}
-                >
-                  <i className="fas fa-user-circle" style={{ fontSize: 14 }}></i>
-                  {(userName || t("profile")).split("(")[0].trim()}
-                </Link>
-              </li>
+              <>
+                {/* My Trees — visible as top-level link on both mobile and desktop */}
+                <li className="ge-nav__item">
+                  <Link href="/my-trees" className={`ge-nav__link${isActive("/my-trees") ? " ge-nav__link--active" : ""}`} onClick={() => setMenuActive(false)}>
+                    <i className="fas fa-tree" style={{ fontSize: 14 }}></i>
+                    {t("myTrees")}
+                  </Link>
+                </li>
+
+                {/* Account links — visible in mobile slide-out only */}
+                <li className="ge-nav__item ge-nav__item--mobile-only">
+                  <Link href="/profile" className={`ge-nav__link${isActive("/profile") ? " ge-nav__link--active" : ""}`} onClick={() => setMenuActive(false)}>
+                    {t("profile")}
+                  </Link>
+                </li>
+                <li className="ge-nav__item ge-nav__item--mobile-only">
+                  <Link href="/myorders" className="ge-nav__link" onClick={() => setMenuActive(false)}>
+                    {t("myOrders")}
+                  </Link>
+                </li>
+                <li className="ge-nav__item ge-nav__item--mobile-only">
+                  <Link href="/mydonation" className="ge-nav__link" onClick={() => setMenuActive(false)}>
+                    {t("myDonations")}
+                  </Link>
+                </li>
+                <li className="ge-nav__item ge-nav__item--mobile-only">
+                  <Link href="/mygift" className="ge-nav__link" onClick={() => setMenuActive(false)}>
+                    {t("myGifts")}
+                  </Link>
+                </li>
+                {user?.isAdmin && (
+                  <li className="ge-nav__item ge-nav__item--mobile-only">
+                    <Link href="/admin" className="ge-nav__link ge-nav__link--admin" onClick={() => setMenuActive(false)}>
+                      Admin
+                    </Link>
+                  </li>
+                )}
+                <li className="ge-nav__item ge-nav__item--mobile-only">
+                  <button className="ge-nav__link ge-nav__link--btn" onClick={handleLogout}>
+                    {t("logout")}
+                  </button>
+                </li>
+
+                {/* Avatar dropdown — desktop only (hidden on mobile via CSS) */}
+                <li className="ge-nav__item ge-nav__item--dropdown">
+                  <div className="ge-nav__dropdown" ref={dropdownRef}>
+                    <button className="ge-nav__avatar" onClick={() => setDropdownOpen(v => !v)} aria-expanded={dropdownOpen} aria-haspopup="true">
+                      {userName ? userName.charAt(0).toUpperCase() : 'U'}
+                    </button>
+                    {dropdownOpen && (
+                      <div className="ge-nav__dropdown-menu" role="menu">
+                        <Link href="/profile" className="ge-nav__dropdown-link" role="menuitem" onClick={() => setDropdownOpen(false)}>{t("profile")}</Link>
+                        <Link href="/myorders" className="ge-nav__dropdown-link" role="menuitem" onClick={() => setDropdownOpen(false)}>{t("myOrders")}</Link>
+                        <Link href="/mydonation" className="ge-nav__dropdown-link" role="menuitem" onClick={() => setDropdownOpen(false)}>{t("myDonations")}</Link>
+                        <Link href="/mygift" className="ge-nav__dropdown-link" role="menuitem" onClick={() => setDropdownOpen(false)}>{t("myGifts")}</Link>
+                        {user?.isAdmin && <Link href="/admin" className="ge-nav__dropdown-link ge-nav__dropdown-link--admin" role="menuitem" onClick={() => setDropdownOpen(false)}>Admin</Link>}
+                        <div className="ge-nav__dropdown-divider" />
+                        <button className="ge-nav__dropdown-link ge-nav__dropdown-link--logout" role="menuitem" onClick={() => { setDropdownOpen(false); handleLogout(); }}>{t("logout")}</button>
+                      </div>
+                    )}
+                  </div>
+                </li>
+              </>
             )}
 
-            {isLoggedIn && user?.isAdmin && (
-              <li className="ge-nav__item">
-                <Link
-                  href="/admin"
-                  className="ge-nav__link ge-nav__link--admin"
-                  onClick={() => setMenuActive(false)}
-                >
-                  <i className="fas fa-user-shield" style={{ fontSize: 12 }}></i>
-                  Admin
-                </Link>
-              </li>
-            )}
-
-            {isLoggedIn ? (
-              <li className="ge-nav__item">
-                <button className="ge-nav__link ge-nav__link--btn" onClick={handleLogout}>
-                  {t("logout")}
-                </button>
-              </li>
-            ) : (
+            {!isLoggedIn && (
               <>
                 <li className="ge-nav__item">
                   <Link

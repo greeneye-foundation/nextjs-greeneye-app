@@ -221,8 +221,112 @@
   animation: ge-fade-in var(--ge-duration-fast) var(--ge-ease-out);
 }
 
+/* ── Avatar Dropdown (desktop only) ────────────────── */
+.ge-nav__item--dropdown {
+  position: relative;
+  list-style: none;
+}
+
+.ge-nav__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--ge-radius-full);
+  background: var(--ge-forest);
+  color: var(--ge-white);
+  font-weight: 700;
+  font-size: var(--ge-text-sm);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--ge-duration-base) var(--ge-ease);
+}
+
+.ge-nav__avatar:hover {
+  background: var(--ge-forest-light);
+}
+
+.ge-nav__dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  background: var(--ge-white);
+  border: 1px solid var(--ge-cloud);
+  border-radius: var(--ge-radius-md);
+  box-shadow: var(--ge-shadow-lg);
+  z-index: var(--ge-z-dropdown);
+  padding: var(--ge-space-2) 0;
+  animation: ge-dropdown-in var(--ge-duration-fast) var(--ge-ease-out);
+}
+
+@keyframes ge-dropdown-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ge-nav__dropdown-link {
+  display: block;
+  width: 100%;
+  padding: var(--ge-space-3) var(--ge-space-5);
+  font-size: var(--ge-text-sm);
+  color: var(--ge-charcoal);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--ge-font-body);
+  transition: background var(--ge-duration-fast) var(--ge-ease);
+}
+
+.ge-nav__dropdown-link:hover {
+  background: var(--ge-snow);
+  color: var(--ge-forest);
+}
+
+.ge-nav__dropdown-link--admin {
+  color: var(--ge-gold);
+  font-weight: 600;
+}
+
+.ge-nav__dropdown-link--logout {
+  color: var(--ge-error);
+}
+
+.ge-nav__dropdown-divider {
+  height: 1px;
+  background: var(--ge-cloud);
+  margin: var(--ge-space-2) 0;
+}
+
+/* Mobile-only items: visible only in slide-out menu */
+.ge-nav__item--mobile-only {
+  display: none;
+}
+
+/* Desktop-only dropdown: hidden by default, shown on desktop */
+.ge-nav__item--dropdown {
+  display: none;
+}
+
 /* ── Responsive ────────────────────────────────────── */
+@media (min-width: 1025px) {
+  .ge-nav__item--dropdown {
+    display: list-item;
+  }
+  /* mobile-only items stay hidden on desktop */
+}
+
 @media (max-width: 1024px) {
+  .ge-nav__item--mobile-only {
+    display: list-item;
+  }
+  .ge-nav__item--dropdown {
+    display: none;
+  }
+
   .ge-nav__burger {
     display: flex;
   }
