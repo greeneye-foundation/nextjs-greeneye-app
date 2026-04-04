@@ -1,12 +1,37 @@
 import { useState, useRef, useEffect } from 'react';
 
+// Inline SVG flags — lightweight, consistent across all platforms
+const FLAGS = {
+  IN: (
+    <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ borderRadius: 2, display: 'block' }}>
+      <rect width="20" height="4.67" fill="#FF9933"/>
+      <rect y="4.67" width="20" height="4.67" fill="#FFFFFF"/>
+      <rect y="9.33" width="20" height="4.67" fill="#138808"/>
+      <circle cx="10" cy="7" r="1.8" fill="none" stroke="#000080" strokeWidth="0.4"/>
+      <circle cx="10" cy="7" r="0.4" fill="#000080"/>
+    </svg>
+  ),
+  // Add more flags here as you expand:
+  // US: (
+  //   <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ borderRadius: 2, display: 'block' }}>
+  //     <rect width="20" height="14" fill="#B22234"/>
+  //     <rect y="1.08" width="20" height="1.08" fill="#FFF"/>
+  //     <rect y="3.23" width="20" height="1.08" fill="#FFF"/>
+  //     <rect y="5.38" width="20" height="1.08" fill="#FFF"/>
+  //     <rect y="7.54" width="20" height="1.08" fill="#FFF"/>
+  //     <rect y="9.69" width="20" height="1.08" fill="#FFF"/>
+  //     <rect y="11.85" width="20" height="1.08" fill="#FFF"/>
+  //     <rect width="8" height="7.54" fill="#3C3B6E"/>
+  //   </svg>
+  // ),
+};
+
 // Country list — India first, easy to extend
 const COUNTRIES = [
-  { code: 'IN', dial: '+91', flag: '\u{1F1EE}\u{1F1F3}', name: 'India' },
-  // Add more countries here as needed:
-  // { code: 'US', dial: '+1', flag: '\u{1F1FA}\u{1F1F8}', name: 'United States' },
-  // { code: 'GB', dial: '+44', flag: '\u{1F1EC}\u{1F1E7}', name: 'United Kingdom' },
-  // { code: 'AE', dial: '+971', flag: '\u{1F1E6}\u{1F1EA}', name: 'UAE' },
+  { code: 'IN', dial: '+91', name: 'India' },
+  // { code: 'US', dial: '+1', name: 'United States' },
+  // { code: 'GB', dial: '+44', name: 'United Kingdom' },
+  // { code: 'AE', dial: '+971', name: 'UAE' },
 ];
 
 /**
@@ -94,7 +119,7 @@ export default function PhoneInput({
         disabled={disabled}
         aria-label="Select country code"
       >
-        <span className="ge-phone-input__flag">{country.flag}</span>
+        <span className="ge-phone-input__flag">{FLAGS[country.code]}</span>
         <span className="ge-phone-input__dial">{country.dial}</span>
         {COUNTRIES.length > 1 && (
           <span className="ge-phone-input__chevron">{dropdownOpen ? '\u25B2' : '\u25BC'}</span>
@@ -109,7 +134,7 @@ export default function PhoneInput({
               className={`ge-phone-input__option ${c.code === country.code ? 'ge-phone-input__option--active' : ''}`}
               onClick={() => handleCountrySelect(c)}
             >
-              <span className="ge-phone-input__flag">{c.flag}</span>
+              <span className="ge-phone-input__flag">{FLAGS[c.code]}</span>
               <span>{c.name}</span>
               <span className="ge-phone-input__dial">{c.dial}</span>
             </li>
