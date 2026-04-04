@@ -109,7 +109,7 @@ export default function MyGift() {
         <div className="ge-profile__empty">
           <i className="fas fa-gift"></i>
           <p>{t('notFound') || 'No gift tree orders found'}</p>
-          <Link href="/gift-a-tree" className="ge-btn ge-btn-primary">
+          <Link href="/gift-a-tree" className="ge-profile__empty-cta">
             <i className="fas fa-seedling"></i> {t('sendGift') || 'Send a Gift Tree'}
           </Link>
         </div>
