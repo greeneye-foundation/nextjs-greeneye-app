@@ -54,9 +54,21 @@ export default function TreeCard({ tree }) {
       <div className="ge-mytrees__card-body">
         <div className="ge-mytrees__card-top">
           <h3>{displayName}</h3>
-          <span className={getBadgeClass(tree.status)}>
-            {statusLabel}
-          </span>
+          <div className="ge-mytrees__card-badges">
+            <span className={getBadgeClass(tree.status)}>
+              {statusLabel}
+            </span>
+            {tree.ownership === 'received' && (
+              <span className="ge-badge ge-badge-gold" style={{ marginLeft: 'var(--ge-space-2)' }}>
+                <i className="fas fa-gift"></i> Received
+              </span>
+            )}
+            {tree.ownership === 'gifted' && (
+              <span className="ge-badge ge-badge-green" style={{ marginLeft: 'var(--ge-space-2)' }}>
+                <i className="fas fa-hand-holding-heart"></i> Gifted
+              </span>
+            )}
+          </div>
         </div>
 
         {tree.species && (
