@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { showNotification } from '@/components/Notification';
 import Seo from '@/components/common/Seo';
+import PhoneInput from '@/components/common/PhoneInput';
 
 const RelocateTreePage = () => {
   const router = useRouter();
@@ -318,16 +319,7 @@ const RelocateTreePage = () => {
                     <label htmlFor="phone">
                       Phone Number *
                     </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={form.phone}
-                      onChange={handleChange}
-                      placeholder="+1 234 567 8900"
-                      required
-                    />
-                    <i className="fas fa-phone"></i>
+                    <PhoneInput name="phone" value={form.phone} onChange={handleChange} required placeholder="XXXXX XXXXX" />
                   </div>
 
                   {/* Terms Agreement */}

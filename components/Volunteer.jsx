@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { showNotification } from "@/components/Notification";
 import { useTranslations } from "next-intl";
 import { useAuth } from "@/context/AuthContext";
+import PhoneInput from "@/components/common/PhoneInput";
 
 const cities = ["Jaipur", "Mumbai", "Delhi", "Bangalore", "Pune", "Hyderabad", "Chennai", "Kolkata", "Other"];
 const availabilities = [
@@ -97,7 +98,7 @@ const Volunteer = () => {
                 <div className="ge-vol__row">
                   <div className="ge-vol__field">
                     <label>{t("phone")} *</label>
-                    <input type="tel" name="phone" value={form.phone} onChange={handleChange} required disabled={isLoggedIn} placeholder="+91 XXXXX XXXXX" />
+                    <PhoneInput name="phone" value={form.phone} onChange={handleChange} required disabled={isLoggedIn} placeholder="XXXXX XXXXX" />
                   </div>
                   {!isLoggedIn && (
                     <div className="ge-vol__field">

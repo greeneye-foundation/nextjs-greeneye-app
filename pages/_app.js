@@ -33,6 +33,7 @@ import '@/styles/status-page.css';
 import '@/styles/detail-page.css';
 import '@/styles/admin-notifications.css';
 import '@/styles/my-trees.css';
+import '@/styles/phone-input.css';
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';

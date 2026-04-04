@@ -4,6 +4,7 @@ import { showNotification } from "@/components/Notification";
 import { useRouter } from "next/router";
 import { useTranslations } from "next-intl";
 import { useAuth } from "@/context/AuthContext";
+import PhoneInput from "@/components/common/PhoneInput";
 
 const presetAmounts = [100, 500, 1000, 5000];
 
@@ -151,8 +152,7 @@ const Donate = () => {
                   <input type="email" className="ge-input" name="donorEmail" placeholder={t("placeholderEmail")} value={form.donorEmail} onChange={handleChange} required />
                 </div>
                 <div className="ge-donate__field">
-                  <i className="fas fa-phone"></i>
-                  <input type="tel" className="ge-input" name="donorPhone" placeholder={t("placeholderPhone")} value={form.donorPhone} onChange={handleChange} required />
+                  <PhoneInput name="donorPhone" value={form.donorPhone} onChange={handleChange} required placeholder="XXXXX XXXXX" />
                 </div>
 
                 <button type="submit" className="ge-btn ge-btn-gold ge-btn-lg" style={{ width: '100%' }} disabled={loading}>

@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { useAuth } from '@/context/AuthContext';
 import { showNotification } from '@/components/Notification';
 import Seo from '@/components/common/Seo';
+import PhoneInput from '@/components/common/PhoneInput';
 
 const cities = ["Jaipur", "Mumbai", "Delhi", "Bangalore", "Pune", "Hyderabad", "Chennai", "Kolkata", "Other"];
 const availabilities = [
@@ -162,7 +163,7 @@ const Profile = () => {
               </div>
               <div className="ge-profile__field">
                 <label>{t("phone")}</label>
-                <input type="text" name="phone" value={editMode ? editData.phone : user.phone || ""} disabled={!editMode} onChange={handleChange} placeholder={editMode ? "+91XXXXXXXXXX" : ""} />
+                <PhoneInput name="phone" value={editMode ? editData.phone : user.phone || ""} disabled={!editMode} onChange={handleChange} placeholder="XXXXXXXXXX" />
               </div>
             </div>
           </div>

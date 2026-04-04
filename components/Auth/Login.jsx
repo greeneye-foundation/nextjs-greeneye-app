@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import GoogleLoginButton from "./GoogleLoginButton";
 import { useAuth } from "@/context/AuthContext";
+import PhoneInput from "@/components/common/PhoneInput";
 
 const Login = ({ onSwitch, onLogin }) => {
   const t = useTranslations("login");
@@ -45,8 +46,8 @@ const Login = ({ onSwitch, onLogin }) => {
 
   // OTP handlers
   const handleSendOtp = async () => {
-    if (!mobile.match(/^\d{10}$/)) {
-      showNotification(t("validMobile") || "Please enter a valid 10-digit mobile number", "error");
+    if (!mobile.match(/^\+\d{1,3}\d{6,14}$/)) {
+      showNotification(t("validMobile") || "Please enter a valid mobile number", "error");
       return;
     }
     setLoading(true);
@@ -244,15 +245,7 @@ const Login = ({ onSwitch, onLogin }) => {
           autoComplete="off"
         >
           <div className="form-group">
-            <input
-              type="tel"
-              name="mobile"
-              placeholder={t("mobilePlaceholder") || "Enter Mobile Number"}
-              value={mobile}
-              onChange={(e) => setMobile(e.target.value)}
-              required
-            />
-            <i className="fas fa-phone"></i>
+            <PhoneInput name="mobile" value={mobile} onChange={(e) => setMobile(e.target.value)} required placeholder="XXXXX XXXXX" />
           </div>
 
           {otpSent && (

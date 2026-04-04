@@ -8,6 +8,7 @@ import Seo from '@/components/common/Seo';
 import { showNotification } from '@/components/Notification';
 import OccasionSelector from '@/components/OccasionSelector';
 import { useAuth } from '@/context/AuthContext';
+import PhoneInput from '@/components/common/PhoneInput';
 
 export function getStaticProps({ locale }) {
   return {
@@ -355,7 +356,7 @@ export default function GiftATreePage() {
                   </div>
                   <div className="ge-gift__field">
                     <label>{t('recipientWhatsapp') || 'WhatsApp'} *</label>
-                    <input type="tel" name="recipientWhatsapp" value={form.recipientWhatsapp} onChange={handleChange} placeholder="+919876543210" required />
+                    <PhoneInput name="recipientWhatsapp" value={form.recipientWhatsapp} onChange={handleChange} required placeholder="XXXXX XXXXX" />
                     <small>Required for tree planting updates via WhatsApp</small>
                   </div>
                 </div>
@@ -376,7 +377,7 @@ export default function GiftATreePage() {
                 </div>
                 <div className="ge-gift__field">
                   <label>Phone</label>
-                  <input type="tel" name="senderPhone" value={form.senderPhone} onChange={handleChange} placeholder="+91 XXXXX XXXXX" disabled={isLoggedIn} />
+                  <PhoneInput name="senderPhone" value={form.senderPhone} onChange={handleChange} disabled={isLoggedIn} placeholder="XXXXX XXXXX" />
                 </div>
               </div>
             </div>

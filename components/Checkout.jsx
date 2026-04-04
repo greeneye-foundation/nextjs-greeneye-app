@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { showNotification } from "@/components/Notification";
+import PhoneInput from "@/components/common/PhoneInput";
 
 const Checkout = () => {
   const { getAuthHeaders, isLoading: authLoading, isLoggedIn, token } = useAuth();
@@ -118,7 +119,7 @@ const Checkout = () => {
     const { name, email, phone, street, city, state, pincode } = userInfo;
     if (!name || !email || !phone || !street || !city || !state || !pincode)
       return t("fillAllFields");
-    if (!/^\d{10}$/.test(phone)) return t("invalidPhone");
+    if (!/^\+\d{1,3}\d{6,14}$/.test(phone)) return t("invalidPhone");
     if (!/\S+@\S+\.\S+/.test(email)) return t("invalidEmail");
     if (!/^\d{6}$/.test(pincode)) return t("invalidPincode");
     if (!cart || !cart.items || cart.items.length === 0) return t("cartEmpty");
@@ -319,7 +320,7 @@ const Checkout = () => {
             <div className="co__row">
               <div className="co__field">
                 <label>{t("phone")} *</label>
-                <input name="phone" type="tel" value={userInfo.phone} onChange={handleChange} required pattern="\d{10}" maxLength={10} placeholder="10-digit number" />
+                <PhoneInput name="phone" value={userInfo.phone} onChange={handleChange} required placeholder="XXXXXXXXXX" />
               </div>
               <div className="co__field">
                 <label>{t("pincode")} *</label>

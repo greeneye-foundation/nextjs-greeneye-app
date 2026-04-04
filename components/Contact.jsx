@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { showNotification } from "./Notification";
 import { useTranslations } from "next-intl";
+import PhoneInput from "@/components/common/PhoneInput";
 
 const contactInfo = [
   { icon: "fab fa-whatsapp", titleKey: "whatsappTitle", content: "+91 92264 92263", href: "https://wa.me/919226492263", color: "#25D366" },
@@ -102,7 +103,7 @@ const Contact = () => {
               <div className="ge-contact__row">
                 <div className="ge-contact__field">
                   <label>{t("phoneNumber")}</label>
-                  <input type="tel" name="phone" value={form.phone} onChange={handleChange} placeholder="+91 XXXXX XXXXX" />
+                  <PhoneInput name="phone" value={form.phone} onChange={handleChange} placeholder="XXXXX XXXXX" />
                 </div>
                 <div className="ge-contact__field">
                   <label>{t("selectSubject")}</label>
