@@ -307,7 +307,7 @@
   border: 1px solid var(--ge-cloud);
 }
 
-.ge-profile__empty i {
+.ge-profile__empty > i {
   font-size: 40px;
   color: var(--ge-cloud);
   display: block;
