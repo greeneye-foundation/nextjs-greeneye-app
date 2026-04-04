@@ -34,8 +34,6 @@ export default function GiftATreePage() {
     occasion: "",
     numberOfTrees: "1",
     recipientName: "",
-    recipientEmail: "",
-    recipientPhone: "",
     recipientWhatsapp: "",
     senderName: "",
     senderEmail: "",
@@ -95,12 +93,10 @@ export default function GiftATreePage() {
       setForm(prev => ({
         ...prev,
         recipientName: prev.senderName,
-        recipientEmail: prev.senderEmail,
-        recipientPhone: prev.senderPhone,
         recipientWhatsapp: prev.senderPhone,
       }));
     }
-  }, [mode, isLoggedIn, form.senderName, form.senderEmail, form.senderPhone]);
+  }, [mode, isLoggedIn, form.senderName, form.senderPhone]);
 
   // Clear recipient fields when switching back to gift mode
   useEffect(() => {
@@ -108,8 +104,6 @@ export default function GiftATreePage() {
       setForm(prev => ({
         ...prev,
         recipientName: '',
-        recipientEmail: '',
-        recipientPhone: '',
         recipientWhatsapp: '',
       }));
     }
@@ -358,16 +352,6 @@ export default function GiftATreePage() {
                   <div className="ge-gift__field">
                     <label>Name *</label>
                     <input type="text" name="recipientName" value={form.recipientName} onChange={handleChange} placeholder="Recipient's name" required />
-                  </div>
-                  <div className="ge-gift__field">
-                    <label>Email *</label>
-                    <input type="email" name="recipientEmail" value={form.recipientEmail} onChange={handleChange} placeholder="recipient@email.com" required />
-                  </div>
-                </div>
-                <div className="ge-gift__row ge-gift__row--2col">
-                  <div className="ge-gift__field">
-                    <label>Phone *</label>
-                    <input type="tel" name="recipientPhone" value={form.recipientPhone} onChange={handleChange} placeholder="+91 XXXXX XXXXX" required />
                   </div>
                   <div className="ge-gift__field">
                     <label>{t('recipientWhatsapp') || 'WhatsApp'} *</label>
