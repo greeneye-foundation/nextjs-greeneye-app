@@ -106,29 +106,10 @@ export default function MyGift() {
       </h2>
       
       {!giftOrders.length ? (
-        <div style={{ 
-          textAlign: 'center', 
-          padding: '40px 20px',
-          color: '#888',
-          background: '#f9f9f9',
-          borderRadius: 8,
-          border: '1px solid #e0e0e0'
-        }}>
-          <i className="fas fa-gift" style={{ fontSize: 48, color: '#ccc', marginBottom: 16 }}></i>
+        <div className="ge-profile__empty">
+          <i className="fas fa-gift"></i>
           <p>{t('notFound') || 'No gift tree orders found'}</p>
-          <Link 
-            href="/gift-a-tree"
-            style={{
-              display: 'inline-block',
-              marginTop: 16,
-              padding: '10px 24px',
-              background: '#388e3c',
-              color: '#fff',
-              textDecoration: 'none',
-              borderRadius: 6,
-              fontWeight: 600
-            }}
-          >
+          <Link href="/gift-a-tree" className="ge-btn ge-btn-primary">
             <i className="fas fa-seedling"></i> {t('sendGift') || 'Send a Gift Tree'}
           </Link>
         </div>
