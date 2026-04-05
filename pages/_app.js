@@ -31,7 +31,6 @@ import '@/styles/volunteer.css';
 import '@/styles/not-found.css';
 import '@/styles/status-page.css';
 import '@/styles/detail-page.css';
-import '@/styles/admin-notifications.css';
 import '@/styles/my-trees.css';
 import '@/styles/phone-input.css';
 
