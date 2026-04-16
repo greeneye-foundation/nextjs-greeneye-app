@@ -221,10 +221,17 @@ export default function GiftATreePage() {
     setLoading(true);
 
     try {
+      // Sanitize WhatsApp number: strip spaces/dashes, add +91 if bare 10-digit number
+      let whatsapp = (form.recipientWhatsapp || '').replace(/[\s\-()]/g, '');
+      if (whatsapp && !/^\+/.test(whatsapp)) {
+        whatsapp = whatsapp.length === 10 ? `+91${whatsapp}` : `+${whatsapp}`;
+      }
+
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/gift-tree`,
         {
           ...form,
+          recipientWhatsapp: whatsapp || '',
           products: selectedProducts.map(p => ({ plantId: p._id }))
         }
       );
