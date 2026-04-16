@@ -1,130 +1,83 @@
-//'use client'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
-import ProfileTabs from '@/components/ProfileTabs'
-import { useTranslations } from 'next-intl'
-import { useAuth } from '@/context/AuthContext'
-import Seo from '@/components/common/Seo'
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import ProfileTabs from '@/components/ProfileTabs';
+import { useTranslations } from 'next-intl';
+import { useAuth } from '@/context/AuthContext';
+import Seo from '@/components/common/Seo';
 
 export function getStaticProps({ locale }) {
-  return {
-    props: {
-      messages: require(`../locales/${locale}.json`),
-      locale,
-    }
-  };
+  return { props: { messages: require(`../locales/${locale}.json`), locale } };
 }
 
 export default function MyOrders() {
-  const { getAuthHeaders } = useAuth();
+  const { getAuthHeaders, isLoading: authLoading, isLoggedIn } = useAuth();
   const t = useTranslations('myOrders');
-  const [orders, setOrders] = useState([])
-  const [loading, setLoading] = useState(true)
-  const router = useRouter()
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
-    if (!getAuthHeaders().Authorization) {
-      router.push('/login')
-      return
-    }
+    if (authLoading) return;
+    if (!isLoggedIn) { router.push('/login?from=/myorders'); return; }
     axios
-      .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/orders/myorders`, {
-        headers: getAuthHeaders(),
-      })
-      .then((res) => {
-        setOrders(res.data || [])
-        setLoading(false)
-      })
-      .catch(() => setLoading(false))
-  }, [router])
+      .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/orders/myorders`, { headers: getAuthHeaders() })
+      .then((res) => { setOrders(res.data || []); setLoading(false); })
+      .catch(() => setLoading(false));
+  }, [authLoading, isLoggedIn]);
 
-  if (loading) {
+  if (loading || authLoading) {
     return (
-      <div className="container" style={{ maxWidth: 600, marginTop: 40 }}>
-        <div style={{ textAlign: 'center', padding: '2rem 0' }}>
-          <i className="fas fa-spinner fa-spin"></i> {t('loading')}
+      <section className="ge-profile">
+        <div className="ge-profile__container">
+          <div className="ge-profile__loading"><i className="fas fa-spinner fa-spin"></i><p>{t('loading')}</p></div>
         </div>
-      </div>
-    )
+      </section>
+    );
   }
 
   return (
     <>
-    <Seo noindex title="My Orders | GREENEYE" />
-    <div className="container" style={{ maxWidth: 600, marginTop: 70 }}>
-      <ProfileTabs />
-      <h2 style={{ marginTop: 30, marginBottom: 20 }}>
-        <i className="fas fa-box"></i> {t('heading')}
-      </h2>
-      {!orders.length ? (
-        <div style={{ color: '#888' }}>{t('notFound')}</div>
-      ) : (
-        orders.map((order) => (
-          <Link
-            key={order._id}
-            href={`orderdetails/${order._id}`}
-            style={{
-              display: 'block',
-              border: '1px solid #e0e0e0',
-              borderRadius: 8,
-              padding: '18px 18px 12px 18px',
-              marginBottom: 18,
-              textDecoration: 'none',
-              color: '#222',
-              background: '#fff',
-              transition: 'box-shadow 0.2s',
-              boxShadow: '0 2px 10px #f3f3f3',
-            }}
-          >
-            <div style={{ fontWeight: 600, fontSize: 16 }}>
-              {t('order')} #{order._id.slice(-6).toUpperCase()}
-            </div>
+      <Seo noindex title="My Orders | GreenEye" />
+      <section className="ge-profile">
+        <div className="ge-profile__container">
+          <ProfileTabs />
+          <h2 className="ge-profile__page-title"><i className="fas fa-box"></i> {t('heading')}</h2>
 
-            <div style={{ fontSize: 13, color: '#666' }}>
-              {t('placed')}: {new Date(order.createdAt).toLocaleString()}
+          {!orders.length ? (
+            <div className="ge-profile__empty">
+              <i className="fas fa-box-open"></i>
+              <p>{t('notFound')}</p>
+              <Link href="/plantshop" className="ge-profile__empty-cta">Browse Plant Shop</Link>
             </div>
-
-            <div style={{ fontSize: 13, color: '#888', margin: '6px 0' }}>
-              {t('items')}: {order.orderItems.length}
+          ) : (
+            <div className="ge-profile__list">
+              {orders.map((order) => (
+                <Link key={order._id} href={`/orderdetails/${order._id}`} className="ge-profile__list-card">
+                  <div className="ge-profile__list-row">
+                    <strong>#{order._id.slice(-6).toUpperCase()}</strong>
+                    <span className={`ge-badge ${order.isPaid ? 'ge-badge-green' : 'ge-badge-red'}`}>
+                      {order.isPaid ? t('paid') : t('notPaid')}
+                    </span>
+                  </div>
+                  <div className="ge-profile__list-meta">
+                    <span><i className="fas fa-clock"></i> {new Date(order.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+                    <span><i className="fas fa-box"></i> {order.orderItems.length} {t('items')}</span>
+                    <span><i className="fas fa-credit-card"></i> {order.paymentMethod}</span>
+                  </div>
+                  <div className="ge-profile__list-status">
+                    <span>{t('status')}: </span>
+                    <strong style={{ color: order.isDelivered ? 'var(--ge-forest)' : 'var(--ge-gold)' }}>
+                      {order.isDelivered ? t('delivered') : t('pending')}
+                    </strong>
+                  </div>
+                </Link>
+              ))}
             </div>
-
-            {/* ✅ Payment Method */}
-            <div style={{ fontSize: 13, color: '#444', margin: '6px 0' }}>
-              <span style={{ fontWeight: 500 }}>{t('paymentMethod')}:</span>{' '}
-              {order.paymentMethod}
-            </div>
-
-            {/* ✅ Payment Status */}
-            <div>
-              <span style={{ fontWeight: 500 }}>{t('payment')}:</span>{' '}
-              <span
-                style={{
-                  color: order.isPaid ? '#388e3c' : '#b62222',
-                  fontWeight: 600,
-                }}
-              >
-                {order.isPaid ? t('paid') : t('notPaid')}
-              </span>
-            </div>  
-
-            {/* ✅ Delivery Status */}
-            <div>
-              <span style={{ fontWeight: 500 }}>{t('status')}:</span>{' '}
-              <span
-                style={{
-                  color: order.isDelivered ? '#388e3c' : '#b62222',
-                  fontWeight: 600,
-                }}
-              >
-                {order.isDelivered ? t('delivered') : t('pending')}
-              </span>
-            </div>
-          </Link>
-        ))
-      )}
-    </div>
+          )}
+        </div>
+      </section>
     </>
-  )
+  );
 }

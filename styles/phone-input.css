@@ -1,0 +1,142 @@
+/* PhoneInput — Country code selector */
+.ge-phone-input {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--ge-cloud);
+  border-radius: var(--ge-radius-md);
+  background: var(--ge-white);
+  transition: border-color var(--ge-duration-fast) var(--ge-ease);
+  position: relative;
+  min-height: 44px;
+}
+
+.ge-phone-input:hover {
+  border-color: var(--ge-mist);
+}
+
+.ge-phone-input:focus-within {
+  border-color: var(--ge-forest);
+  box-shadow: var(--ge-shadow-glow);
+}
+
+.ge-phone-input--disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  background: var(--ge-snow);
+}
+
+.ge-phone-input__country {
+  display: flex;
+  align-items: center;
+  gap: var(--ge-space-1);
+  padding: var(--ge-space-2) var(--ge-space-3);
+  background: var(--ge-snow);
+  border: none;
+  border-right: 1.5px solid var(--ge-cloud);
+  border-radius: var(--ge-radius-md) 0 0 var(--ge-radius-md);
+  cursor: pointer;
+  font-family: var(--ge-font-body);
+  font-size: var(--ge-text-sm);
+  color: var(--ge-ink);
+  white-space: nowrap;
+  min-height: 44px;
+}
+
+.ge-phone-input__country:hover {
+  background: var(--ge-cloud);
+}
+
+.ge-phone-input__flag {
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.ge-phone-input__flag svg {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  border-radius: 2px;
+}
+
+.ge-phone-input__dial {
+  font-weight: 600;
+  font-size: var(--ge-text-sm);
+  color: var(--ge-charcoal);
+}
+
+.ge-phone-input__chevron {
+  font-size: 0.6rem;
+  color: var(--ge-mist);
+  margin-left: var(--ge-space-1);
+}
+
+.ge-phone-input__number {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: var(--ge-space-3) var(--ge-space-4);
+  font-family: var(--ge-font-body);
+  font-size: var(--ge-text-base);
+  color: var(--ge-charcoal);
+  background: transparent;
+  min-width: 0;
+}
+
+.ge-phone-input__number::placeholder {
+  color: var(--ge-mist);
+}
+
+/* Dropdown */
+.ge-phone-input__dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: var(--ge-z-dropdown);
+  background: var(--ge-white);
+  border: 1.5px solid var(--ge-cloud);
+  border-radius: var(--ge-radius-md);
+  box-shadow: var(--ge-shadow-lg);
+  margin-top: var(--ge-space-1);
+  padding: var(--ge-space-1) 0;
+  list-style: none;
+  min-width: 220px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.ge-phone-input__option {
+  display: flex;
+  align-items: center;
+  gap: var(--ge-space-2);
+  padding: var(--ge-space-2) var(--ge-space-3);
+  cursor: pointer;
+  font-size: var(--ge-text-sm);
+  color: var(--ge-charcoal);
+  transition: background var(--ge-duration-fast) var(--ge-ease);
+}
+
+.ge-phone-input__option:hover {
+  background: var(--ge-snow);
+}
+
+.ge-phone-input__option--active {
+  background: var(--ge-mint);
+  color: var(--ge-forest);
+  font-weight: 600;
+}
+
+.ge-phone-input__option .ge-phone-input__dial {
+  margin-left: auto;
+  color: var(--ge-slate);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .ge-phone-input__country {
+    padding: var(--ge-space-2);
+  }
+
+  .ge-phone-input__dial {
+    font-size: var(--ge-text-xs);
+  }
+}

@@ -24,10 +24,11 @@ export default function DonatePage() {
         siteName="GREENEYE"
         twitterSite="@greeneye_org"
       />
-      <section className="page-header">
-        <div className="container">
+      <section className="ge-section" style={{ paddingBottom: 0 }}>
+        <div className="ge-container" style={{ textAlign: 'center' }}>
+          <span className="ge-overline">Support Our Mission</span>
           <h1>{t('pageTitle', { defaultMessage: 'Support GreenEye' })}</h1>
-          <p>{t('pageSubtitle', { defaultMessage: "Your donation helps us plant more trees and expand our environmental impact." })}</p>
+          <p style={{ color: 'var(--ge-slate)', maxWidth: 520, margin: '0 auto' }}>{t('pageSubtitle', { defaultMessage: "Your donation helps us plant more trees and expand our environmental impact." })}</p>
         </div>
       </section>
       <Donate />

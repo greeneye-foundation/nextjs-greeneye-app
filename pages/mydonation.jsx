@@ -1,4 +1,3 @@
-//'use client'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -9,107 +8,69 @@ import { useAuth } from '@/context/AuthContext';
 import Seo from '@/components/common/Seo';
 
 export function getStaticProps({ locale }) {
-  return {
-    props: {
-      messages: require(`../locales/${locale}.json`),
-      locale,
-    }
-  };
+  return { props: { messages: require(`../locales/${locale}.json`), locale } };
 }
 
 export default function MyDonations() {
-    const { getAuthHeaders } = useAuth();
-    const t = useTranslations('myDonations');
-    const [donations, setDonations] = useState([])
-    const [loading, setLoading] = useState(true)
-    const router = useRouter()
+  const { getAuthHeaders, isLoading: authLoading, isLoggedIn } = useAuth();
+  const t = useTranslations('myDonations');
+  const [donations, setDonations] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
-    useEffect(() => {
-        if (!getAuthHeaders().Authorization) {
-            router.push('/login')
-            return
-        }
+  useEffect(() => {
+    if (authLoading) return;
+    if (!isLoggedIn) { router.push('/login?from=/mydonation'); return; }
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/donations/mydonations`, { headers: getAuthHeaders() })
+      .then((res) => { setDonations(res.data || []); setLoading(false); })
+      .catch(() => setLoading(false));
+  }, [authLoading, isLoggedIn]);
 
-        axios
-            .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/donations/mydonations`, {
-                headers: getAuthHeaders(),
-            })
-            .then((res) => {
-                setDonations(res.data || [])
-                setLoading(false)
-            })
-            .catch((err) => {
-                // Error fetching donations - show empty state
-                setLoading(false)
-            })
-    }, [router])
-
-    if (loading) {
-        return (
-            <div className="container" style={{ maxWidth: 600, marginTop: 40 }}>
-                <div style={{ textAlign: 'center', padding: '2rem 0' }}>
-                    <i className="fas fa-spinner fa-spin"></i> {t('loading')}
-                </div>
-            </div>
-        )
-    }
-
-    if (!donations.length) {
-        return (
-            <div className="container" style={{ maxWidth: 600, marginTop: 60 }}>
-                <div style={{ color: '#888' }}>{t('notFound')}</div>
-            </div>
-        )
-    }
-
+  if (loading || authLoading) {
     return (
-        <>
-        <Seo noindex title="My Donations | GREENEYE" />
-        <div className="container" style={{ maxWidth: 600, marginTop: 70 }}>
-            <ProfileTabs />
-            <h2 style={{ marginTop: 5, marginBottom: 20 }}>
-                <i className="fas fa-hand-holding-heart"></i> {t('heading')}
-            </h2>
-            {donations.map((donation) => (
-                <Link
-                    key={donation._id}
-                    href={`/donationdetails/${donation._id}`}
-                    style={{
-                        display: 'block',
-                        border: '1px solid #e0e0e0',
-                        borderRadius: 8,
-                        padding: '18px 18px 12px 18px',
-                        marginBottom: 18,
-                        textDecoration: 'none',
-                        color: '#222',
-                        background: '#fff',
-                        transition: 'box-shadow 0.2s',
-                        boxShadow: '0 2px 10px #f3f3f3',
-                    }}
-                >
-                    <div style={{ fontWeight: 600, fontSize: 16 }}>
-                        {t('donation')} #{donation._id.slice(-6).toUpperCase()}
-                    </div>
-                    <div style={{ fontSize: 13, color: '#666' }}>
-                        {t('date')}: {new Date(donation.createdAt).toLocaleString()}
-                    </div>
-                    <div style={{ fontSize: 13, color: '#888', marginTop: 6 }}>
-                        {t('amount')}: ₹{donation.amount}
-                    </div>
-                    <div>
-                        <span style={{ fontWeight: 500 }}>{t('status')}:</span>{' '}
-                        <span
-                            style={{
-                                color: donation.isPaid ? '#388e3c' : '#b62222',
-                                fontWeight: 600,
-                            }}
-                        >
-                            {donation.isPaid ? t('paid') : t('pending')}
-                        </span>
-                    </div>
-                </Link>
-            ))}
+      <section className="ge-profile">
+        <div className="ge-profile__container">
+          <div className="ge-profile__loading"><i className="fas fa-spinner fa-spin"></i><p>{t('loading')}</p></div>
         </div>
-        </>
-    )
+      </section>
+    );
+  }
+
+  return (
+    <>
+      <Seo noindex title="My Donations | GreenEye" />
+      <section className="ge-profile">
+        <div className="ge-profile__container">
+          <ProfileTabs />
+          <h2 className="ge-profile__page-title"><i className="fas fa-heart"></i> {t('heading')}</h2>
+
+          {!donations.length ? (
+            <div className="ge-profile__empty">
+              <i className="fas fa-heart"></i>
+              <p>{t('notFound')}</p>
+              <Link href="/donate" className="ge-profile__empty-cta">Make a Donation</Link>
+            </div>
+          ) : (
+            <div className="ge-profile__list">
+              {donations.map((donation) => (
+                <Link key={donation._id} href={`/donationdetails/${donation._id}`} className="ge-profile__list-card">
+                  <div className="ge-profile__list-row">
+                    <strong>#{donation._id.slice(-6).toUpperCase()}</strong>
+                    <span className={`ge-badge ${donation.isPaid ? 'ge-badge-green' : 'ge-badge-red'}`}>
+                      {donation.isPaid ? t('paid') : t('pending')}
+                    </span>
+                  </div>
+                  <div className="ge-profile__list-meta">
+                    <span><i className="fas fa-clock"></i> {new Date(donation.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+                    <span><i className="fas fa-rupee-sign"></i> ₹{donation.amount}</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+    </>
+  );
 }

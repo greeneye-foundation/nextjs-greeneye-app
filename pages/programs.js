@@ -25,10 +25,11 @@ export default function ProgramsPage() {
         siteName="GREENEYE"
         twitterSite="@greeneye_org"
       />
-      <section className="page-header">
-        <div className="container">
+      <section className="ge-section" style={{ paddingBottom: 0 }}>
+        <div className="ge-container" style={{ textAlign: 'center' }}>
+          <span className="ge-overline">What We Do</span>
           <h1>{t('pageTitle', { defaultMessage: 'Our Programs' })}</h1>
-          <p>{t('pageSubtitle', { defaultMessage: 'Explore our reforestation, education, and community initiatives.' })}</p>
+          <p style={{ color: 'var(--ge-slate)', maxWidth: 520, margin: '0 auto' }}>{t('pageSubtitle', { defaultMessage: 'Explore our reforestation, education, and community initiatives.' })}</p>
         </div>
       </section>
       <Impact />

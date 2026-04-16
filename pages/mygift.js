@@ -77,56 +77,39 @@ export default function MyGift() {
       PENDING: '#ff9800',
       CONFIRMED: '#2196f3',
       PROCESSING: '#9c27b0',
-      SHIPPED: '#00bcd4',
-      DELIVERED: '#388e3c',
-      CANCELLED: '#f44336'
+      CANCELLED: '#f44336',
+      COMPLETED: '#388e3c',
+      FAILED: '#f44336',
+      EXPIRED: '#9e9e9e'
     }
     return colors[status] || '#666'
   }
 
   if (loading) {
     return (
-      <div className="container" style={{ maxWidth: 600, marginTop: 40 }}>
-        <div style={{ textAlign: 'center', padding: '2rem 0' }}>
-          <i className="fas fa-spinner fa-spin"></i> {t('loading') || 'Loading...'}
+      <section className="ge-profile">
+        <div className="ge-profile__container">
+          <div className="ge-profile__loading"><i className="fas fa-spinner fa-spin"></i><p>{t('loading') || 'Loading...'}</p></div>
         </div>
-      </div>
+      </section>
     )
   }
 
   return (
     <>
-    <Seo noindex title="My Gift Trees | GREENEYE" />
-    <div className="container" style={{ maxWidth: 600, marginTop: 70 }}>
+    <Seo noindex title="My Gift Trees | GreenEye" />
+    <section className="ge-profile">
+    <div className="ge-profile__container">
       <ProfileTabs />
-      <h2 style={{ marginTop: 30, marginBottom: 20 }}>
+      <h2 className="ge-profile__page-title">
         <i className="fas fa-gift"></i> {t('heading') || 'My Gift Trees'}
       </h2>
       
       {!giftOrders.length ? (
-        <div style={{ 
-          textAlign: 'center', 
-          padding: '40px 20px',
-          color: '#888',
-          background: '#f9f9f9',
-          borderRadius: 8,
-          border: '1px solid #e0e0e0'
-        }}>
-          <i className="fas fa-gift" style={{ fontSize: 48, color: '#ccc', marginBottom: 16 }}></i>
+        <div className="ge-profile__empty">
+          <i className="fas fa-gift"></i>
           <p>{t('notFound') || 'No gift tree orders found'}</p>
-          <Link 
-            href="/gift-a-tree"
-            style={{
-              display: 'inline-block',
-              marginTop: 16,
-              padding: '10px 24px',
-              background: '#388e3c',
-              color: '#fff',
-              textDecoration: 'none',
-              borderRadius: 6,
-              fontWeight: 600
-            }}
-          >
+          <Link href="/gift-a-tree" className="ge-profile__empty-cta">
             <i className="fas fa-seedling"></i> {t('sendGift') || 'Send a Gift Tree'}
           </Link>
         </div>
@@ -278,9 +261,46 @@ export default function MyGift() {
               </div>
             </div>
 
+            {/* Track Trees */}
+            {order.trees && order.trees.length > 0 && (
+              <div style={{
+                marginTop: 12,
+                display: 'flex',
+                gap: 8,
+                flexWrap: 'wrap'
+              }}>
+                {order.trees.map((tree) => (
+                  <span
+                    key={tree.trackingId}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      window.location.href = `/track/${tree.trackingId}`;
+                    }}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 6,
+                      padding: '6px 14px',
+                      background: '#e8f5e9',
+                      color: '#388e3c',
+                      borderRadius: 6,
+                      fontSize: 13,
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      border: '1px solid #388e3c40'
+                    }}
+                  >
+                    <i className="fas fa-seedling"></i>
+                    {tree.treeName || tree.plantName} — {tree.status}
+                  </span>
+                ))}
+              </div>
+            )}
+
             {/* View Details Arrow */}
-            <div style={{ 
-              textAlign: 'right', 
+            <div style={{
+              textAlign: 'right',
               marginTop: 12,
               color: '#388e3c',
               fontSize: 13,
@@ -292,6 +312,7 @@ export default function MyGift() {
         ))
       )}
     </div>
+    </section>
     </>
   )
 }

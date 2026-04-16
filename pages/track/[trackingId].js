@@ -10,6 +10,7 @@ import TreeMap from '@/components/TreeTracking/TreeMap';
 import ShareButton from '@/components/TreeTracking/ShareButton';
 import TreeNameForm from '@/components/TreeTracking/TreeNameForm';
 import { showNotification } from '@/components/Notification';
+import { useAuth } from '@/context/AuthContext';
 import { Download, Loader, X } from 'lucide-react';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || '';
@@ -34,6 +35,7 @@ export default function TrackTreePage() {
   const [error, setError] = useState(false);
   const [lightboxPhoto, setLightboxPhoto] = useState(null);
   const [downloading, setDownloading] = useState(false);
+  const { isLoggedIn } = useAuth();
 
   // Fetch tree data
   useEffect(() => {
@@ -151,32 +153,36 @@ export default function TrackTreePage() {
         <TreeHeader tree={tree} />
 
         <div className="tracking-container">
-          {/* Action bar: Share + Download Certificate */}
+          {/* Action bar: Share + Download Certificate (auth-gated) */}
           <div
             className="tracking-action-bar"
             style={{ display: 'flex', gap: '12px', marginBottom: '24px', flexWrap: 'wrap' }}
           >
             <ShareButton trackingUrl={shareUrl} />
-            <button
-              className="download-cert-btn"
-              onClick={handleDownloadCert}
-              disabled={downloading}
-            >
-              {downloading ? (
-                <Loader size={18} className="spin" />
-              ) : (
-                <Download size={18} />
-              )}
-              {t('downloadCertificate')}
-            </button>
+            {isLoggedIn && (
+              <button
+                className="download-cert-btn"
+                onClick={handleDownloadCert}
+                disabled={downloading}
+              >
+                {downloading ? (
+                  <Loader size={18} className="spin" />
+                ) : (
+                  <Download size={18} />
+                )}
+                {t('downloadCertificate')}
+              </button>
+            )}
           </div>
 
-          {/* Tree naming */}
-          <TreeNameForm
-            treeId={tree.trackingId}
-            currentName={tree.treeName}
-            onSave={(name) => setTree({ ...tree, treeName: name })}
-          />
+          {/* Tree naming (auth-gated) */}
+          {isLoggedIn && (
+            <TreeNameForm
+              treeId={tree.trackingId}
+              currentName={tree.treeName}
+              onSave={(name) => setTree({ ...tree, treeName: name })}
+            />
+          )}
 
           {/* Pre-planting message for early statuses */}
           {['PAID', 'PLANT_SELECTED', 'PLANTING_SCHEDULED'].includes(tree.status) && (

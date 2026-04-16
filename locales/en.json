@@ -15,7 +15,11 @@
     "admin": "Admin",
     "register": "Register",
     "login": "Login",
-    "logout": "Logout"
+    "logout": "Logout",
+    "myTrees": "My Trees",
+    "myOrders": "My Orders",
+    "myDonations": "My Donations",
+    "myGifts": "My Gifts"
   },
   "footer": {
     "mission": "Dedicated to creating a greener, more sustainable future through tree plantation and environmental conservation.",
@@ -633,7 +637,11 @@
     "seoTitle": "Gift a Tree | GEYE INNOVATION FOUNDATION",
     "seoDescription": "Send a meaningful gift by planting trees in someone's name. Perfect for birthdays, anniversaries, and special occasions.",
     "pageTitle": "Complete Your Tree Gift",
-    "pageSubtitle": "Fill in the details below to send a beautiful tree gift"
+    "pageSubtitle": "Fill in the details below to send a beautiful tree gift",
+    "modeGift": "As a Gift",
+    "modeAdopt": "For Myself",
+    "adoptHeading": "Adopt a Tree",
+    "adoptDescription": "Plant a tree for yourself and track its growth journey"
   },
   "accountDeletion": {
     "title": "Account Deletion Policy",
@@ -719,5 +727,44 @@
       "heading": "Our forest is just beginning",
       "body": "Trees are being prepared for planting. Check back soon to see them on the map."
     }
+  },
+  "myTrees": {
+    "pageTitle": "My Trees",
+    "empty": "You haven't adopted or gifted any trees yet",
+    "emptyCta": "Gift a Tree",
+    "mapTitle": "Your Tree Locations",
+    "treeCount": "{count} tree(s)",
+    "track": "Track",
+    "plantedOn": "Planted {date}",
+    "status": {
+      "PAID": "Payment Confirmed",
+      "PLANT_SELECTED": "Plant Selected",
+      "PLANTING_SCHEDULED": "Planting Scheduled",
+      "PLANTED": "Planted",
+      "GROWING": "Growing"
+    }
+  },
+  "statsBar": {
+    "treesPlanted": "Trees Planted",
+    "co2Absorbed": "kg CO2 Absorbed",
+    "forestArea": "sqm Forest",
+    "estimated": "* Estimated values"
+  },
+  "photoStrip": {
+    "title": "Recently Planted",
+    "daysAgo": "{days} days ago",
+    "today": "Today",
+    "yesterday": "Yesterday"
+  },
+  "orderConfirmation": {
+    "title": "Payment Successful!",
+    "subtitle": "Your tree gift has been processed",
+    "whatsNext": "What Happens Next",
+    "certificateMsg": "Certificate will be available once your tree is planted",
+    "trackTree": "Track Your Tree",
+    "giftAnother": "Gift Another Tree"
+  },
+  "occasions": {
+    "earthDay": "Earth Day"
   }
 }

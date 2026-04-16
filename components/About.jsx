@@ -1,45 +1,55 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 
-/**
- * About section for GreenEye homepage and about page.
- */
+const features = [
+  { icon: "fas fa-tree", titleKey: "featurePlantationTitle", textKey: "featurePlantationText" },
+  { icon: "fas fa-graduation-cap", titleKey: "featureEducationTitle", textKey: "featureEducationText" },
+  { icon: "fas fa-recycle", titleKey: "featureSustainabilityTitle", textKey: "featureSustainabilityText" },
+];
+
 const About = () => {
   const t = useTranslations("about");
+
   return (
-    <section id="about" className="about">
-      <div className="container">
-        <div className="about-content">
-          <div className="about-text">
-            <h3>{t("visionTitle")}</h3>
-            <p>{t("visionText")}</p>
-            <h3>{t("impactTitle")}</h3>
+    <section id="about" className="ge-about ge-section">
+      <div className="ge-container">
+        <div className="ge-about__grid">
+          {/* Text side */}
+          <div className="ge-about__text">
+            <span className="ge-overline">About GreenEye</span>
+            <h2>{t("visionTitle")}</h2>
+            <hr className="ge-divider" />
+            <p className="ge-about__lead">{t("visionText")}</p>
+
+            <h3 className="ge-about__sub-heading">{t("impactTitle")}</h3>
             <p>{t("impactText")}</p>
-            <div className="about-features">
-              <div className="feature">
-                <i className="fas fa-tree"></i>
-                <h4>{t("featurePlantationTitle")}</h4>
-                <p>{t("featurePlantationText")}</p>
-              </div>
-              <div className="feature">
-                <i className="fas fa-graduation-cap"></i>
-                <h4>{t("featureEducationTitle")}</h4>
-                <p>{t("featureEducationText")}</p>
-              </div>
-              <div className="feature">
-                <i className="fas fa-recycle"></i>
-                <h4>{t("featureSustainabilityTitle")}</h4>
-                <p>{t("featureSustainabilityText")}</p>
-              </div>
+          </div>
+
+          {/* Image side */}
+          <div className="ge-about__visual">
+            <div className="ge-about__img-wrap">
+              <img
+                src="/assets/Environmental Conservation.png"
+                alt={t("imgAlt")}
+                loading="lazy"
+              />
             </div>
           </div>
-          <div className="about-image">
-            <img
-              src="/assets/Environmental Conservation.png"
-              alt={t("imgAlt")}
-              className="about-img"
-            />
-          </div>
+        </div>
+
+        {/* Features row */}
+        <div className="ge-about__features">
+          {features.map((f) => (
+            <div key={f.titleKey} className="ge-about__feature">
+              <div className="ge-about__feature-icon">
+                <i className={f.icon}></i>
+              </div>
+              <div>
+                <h4 className="ge-about__feature-title">{t(f.titleKey)}</h4>
+                <p className="ge-about__feature-text">{t(f.textKey)}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

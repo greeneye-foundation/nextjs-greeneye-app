@@ -23,10 +23,13 @@ export default function EncyclopediaPage() {
         siteName="GREENEYE"
         twitterSite="@greeneye_org"
       />
-      <section className="page-header">
-        <div className="container">
+      <section className="ge-section" style={{ paddingBottom: 0 }}>
+        <div className="ge-container" style={{ textAlign: 'center' }}>
+          <span className="ge-overline">Knowledge Base</span>
           <h1>Green Encyclopedia</h1>
-          <p>Explore our comprehensive knowledge base on plants, environment, and sustainability.</p>
+          <p style={{ color: 'var(--ge-slate)', maxWidth: 520, margin: '0 auto' }}>
+            Explore our comprehensive knowledge base on plants, environment, and sustainability.
+          </p>
         </div>
       </section>
       <EncyclopediaArticlesSection />

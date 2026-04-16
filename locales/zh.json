@@ -15,7 +15,11 @@
     "admin": "管理员",
     "register": "注册",
     "login": "登录",
-    "logout": "退出"
+    "logout": "退出",
+    "myTrees": "我的树木",
+    "myOrders": "我的订单",
+    "myDonations": "我的捐赠",
+    "myGifts": "我的礼物"
   },
   "footer": {
     "mission": "致力于通过植树造林和环境保护创造更绿色、更可持续的未来。",
@@ -631,7 +635,11 @@
     "seoTitle": "赠送树木 | GreenEye 基金会",
     "seoDescription": "以某人的名义种植树木，送出有意义的礼物。适合生日、周年纪念和特殊场合。",
     "pageTitle": "完成您的树木礼物",
-    "pageSubtitle": "填写以下信息以发送精美的树木礼物"
+    "pageSubtitle": "填写以下信息以发送精美的树木礼物",
+    "modeGift": "作为礼物",
+    "modeAdopt": "为自己",
+    "adoptHeading": "领养一棵树",
+    "adoptDescription": "为自己种一棵树并追踪它的成长之旅"
   },
   "accountDeletion": {
     "title": "账户删除政策",
@@ -717,5 +725,44 @@
       "heading": "我们的森林刚刚开始",
       "body": "树木正在准备种植。请稍后回来在地图上查看。"
     }
+  },
+  "myTrees": {
+    "pageTitle": "我的树木",
+    "empty": "您还没有领养或赠送任何树木",
+    "emptyCta": "赠送树木",
+    "mapTitle": "您的树木位置",
+    "treeCount": "{count} 棵树",
+    "track": "追踪",
+    "plantedOn": "种植于 {date}",
+    "status": {
+      "PAID": "已确认付款",
+      "PLANT_SELECTED": "已选择植物",
+      "PLANTING_SCHEDULED": "已安排种植",
+      "PLANTED": "已种植",
+      "GROWING": "正在生长"
+    }
+  },
+  "statsBar": {
+    "treesPlanted": "已种植树木",
+    "co2Absorbed": "千克 CO2 吸收",
+    "forestArea": "平方米森林",
+    "estimated": "* 估计值"
+  },
+  "photoStrip": {
+    "title": "最近种植",
+    "daysAgo": "{days} 天前",
+    "today": "今天",
+    "yesterday": "昨天"
+  },
+  "orderConfirmation": {
+    "title": "支付成功！",
+    "subtitle": "您的树木礼物已处理",
+    "whatsNext": "接下来会发生什么",
+    "certificateMsg": "证书将在您的树木种植后提供",
+    "trackTree": "追踪您的树",
+    "giftAnother": "再赠送一棵树"
+  },
+  "occasions": {
+    "earthDay": "地球日"
   }
 }

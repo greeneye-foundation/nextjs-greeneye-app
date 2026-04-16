@@ -41,52 +41,86 @@ export default function DonationDetails() {
         setLoading(false)
       })
       .catch((err) => {
-        // Error loading donation - show not found state
         setLoading(false)
       })
   }, [id, router])
 
   if (loading) {
-    return <div style={{ padding: 40, textAlign: "center" }}>{t("loading")}</div>
+    return (
+      <div className="ge-detail">
+        <div className="ge-detail-loading">
+          <i className="fas fa-spinner fa-spin"></i>
+          <p>{t("loading")}</p>
+        </div>
+      </div>
+    )
   }
 
   if (!donation) {
-    return <div style={{ padding: 40, color: "red" }}>{t("notFound")}</div>
+    return (
+      <div className="ge-detail">
+        <div className="ge-detail-empty">
+          <i className="fas fa-exclamation-triangle"></i>
+          <p>{t("notFound")}</p>
+        </div>
+      </div>
+    )
   }
 
   return (
-    <div className="container" style={{ maxWidth: 600, marginTop: 40 }}>
-      <Link
-        href="/mydonation"
-        style={{ color: "#388e3c", textDecoration: "none", marginTop: 10, marginBottom: 18, display: "inline-block" }}
-      >
+    <div className="ge-detail">
+      <Link href="/mydonation" className="ge-detail-back">
         <i className="fas fa-arrow-left"></i> {t("backToDonations")}
       </Link>
 
-      <div className="auth-card" style={{ padding: 32 }}>
-        <h2 style={{ marginBottom: 10 }}>
-          {t("donation")} #{donation._id.slice(-6).toUpperCase()}
-        </h2>
-        <div style={{ color: "#888", fontSize: 14, marginBottom: 16 }}>
-          {t("date")}: {new Date(donation.createdAt).toLocaleString()}
+      <div className="ge-detail-card ge-detail-card--standalone">
+        {/* Header */}
+        <div className="ge-detail-section">
+          <h2 className="ge-detail-section-title">
+            <i className="fas fa-heart"></i>
+            {t("donation")} #{donation._id.slice(-6).toUpperCase()}
+          </h2>
+          <p className="ge-detail-meta-label">
+            {t("date")}: {new Date(donation.createdAt).toLocaleString()}
+          </p>
         </div>
-        <div style={{ marginBottom: 10 }}>
-          <b>{t("amount")}:</b> ₹{donation.amount }
+
+        {/* Amount & Status */}
+        <div className="ge-detail-section">
+          <div className="ge-detail-infobox">
+            <div className="ge-detail-summary-row">
+              <span>{t("amount")}</span>
+              <span className="ge-detail-summary-total-value">₹{donation.amount}</span>
+            </div>
+            <div className="ge-detail-summary-row">
+              <span>{t("status")}</span>
+              <span className={`ge-badge ${donation.isPaid ? 'ge-badge-green' : 'ge-badge-red'}`}>
+                {donation.isPaid ? t("paid") : t("pending")}
+              </span>
+            </div>
+          </div>
         </div>
-        <div style={{ marginBottom: 10 }}>
-          <b>{t("status")}:</b>{" "}
-          <span style={{ color: donation.isPaid ? "#388e3c" : "#b62222", fontWeight: 600 }}>
-            {donation.isPaid ? t("paid") : t("pending")}
-          </span>
-        </div>
-        <div style={{ marginBottom: 10 }}>
-          <b>{t("name")}:</b> {donation.donorName}
-        </div>
-        <div style={{ marginBottom: 10 }}>
-          <b>{t("email")}:</b> {donation.donorEmail}
-        </div>
-        <div>
-          <b>{t("phone")}:</b> {donation.donorPhone}
+
+        {/* Donor Information */}
+        <div className="ge-detail-section">
+          <h3 className="ge-detail-section-title">
+            <i className="fas fa-user"></i>
+            Donor Information
+          </h3>
+          <div className="ge-detail-infobox">
+            <div className="ge-detail-infobox-row">
+              <i className="fas fa-user"></i>
+              <strong>{donation.donorName}</strong>
+            </div>
+            <div className="ge-detail-infobox-row">
+              <i className="fas fa-envelope"></i>
+              {donation.donorEmail}
+            </div>
+            <div className="ge-detail-infobox-row">
+              <i className="fas fa-phone"></i>
+              {donation.donorPhone}
+            </div>
+          </div>
         </div>
       </div>
     </div>

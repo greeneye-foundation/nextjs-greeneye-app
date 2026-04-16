@@ -1,10 +1,13 @@
 //'use client';
 
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Login from '@/components/Auth/Login';
 import { useTranslations } from 'next-intl';
 import { IntlProvider } from 'next-intl';
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import Seo from '@/components/common/Seo';
+import { useAuth } from '@/context/AuthContext';
 
 // Export getStaticProps to fetch translation messages
 export async function getStaticProps({ locale }) {
@@ -18,6 +21,16 @@ export async function getStaticProps({ locale }) {
 // Accept messages as props and pass them to IntlProvider
 export default function LoginPage({ messages, locale }) {
   const t = useTranslations('auth');
+  const { isLoggedIn, isLoading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoading && isLoggedIn) {
+      router.replace('/profile');
+    }
+  }, [isLoggedIn, isLoading, router]);
+
+  if (isLoading || isLoggedIn) return null;
 
   return (
     <>

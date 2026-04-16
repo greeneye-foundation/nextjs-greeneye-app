@@ -14,71 +14,58 @@ const BlogGrid = () => {
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/blogs`)
-      .then((res) => {
-        setBlogs(res.data.blogs || []);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setLoading(false);
-      });
+      .then((res) => { setBlogs(res.data.blogs || []); setLoading(false); })
+      .catch(() => setLoading(false));
   }, []);
-
-  if (loading) return <div style={{ padding: 40 }}>Loading blogs...</div>;
 
   const publishedBlogs = blogs.filter((b) => b.published);
 
+  if (loading) {
+    return (
+      <section className="ge-section">
+        <div className="ge-container">
+          <div className="ge-blog-grid__loading">
+            <i className="fas fa-spinner fa-spin"></i> Loading...
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   if (publishedBlogs.length === 0) {
     return (
-      <section className="blog-grid-section">
-        <div className="container">
-          <p style={{ textAlign: 'center', padding: '60px 0', color: '#666' }}>
-            No blogs available at the moment.
-          </p>
+      <section className="ge-section">
+        <div className="ge-container">
+          <div className="ge-blog-grid__empty">
+            <i className="fas fa-newspaper"></i>
+            <p>No blog posts yet. Check back soon!</p>
+          </div>
         </div>
       </section>
     );
   }
 
   return (
-    <section className="blog-grid-section">
-      <div className="container" style={{ maxWidth: 1200, margin: "0 auto", padding: "40px 20px" }}>
-        <div className="blog-grid">
+    <section className="ge-section">
+      <div className="ge-container">
+        <div className="ge-blog-grid">
           {publishedBlogs.map((b) => {
-            const translation = b.translations?.[locale] || b.translations?.en || {};
-
+            const tr = b.translations?.[locale] || b.translations?.en || {};
             return (
-              <Link
-                key={b.slug}
-                href={`/blog/${b.slug}`}
-                title="Read more"
-                className="blog-grid-card"
-              >
+              <Link key={b.slug} href={`/blog/${b.slug}`} className="ge-blog-grid__card">
                 {b.image && (
-                  <div className="blog-grid-card-image">
-                    <Image
-                      src={b.image}
-                      alt={translation.title || "Blog Image"}
-                      fill
-                      style={{
-                        objectFit: "cover",
-                      }}
-                    />
+                  <div className="ge-blog-grid__img">
+                    <Image src={b.image} alt={tr.title || "Blog"} fill style={{ objectFit: 'cover' }} />
                   </div>
                 )}
-                <div className="blog-grid-card-content">
-                  <h3 className="blog-grid-card-title">
-                    {translation.title || "No title"}
-                  </h3>
-
-                  <div className="blog-grid-card-preview">
-                    {translation.content || "No content available"}
-                  </div>
-
-                  <div className="blog-grid-card-meta">
-                    <span className="blog-grid-card-date">
-                      {new Date(b.createdAt).toLocaleDateString(locale)}
-                    </span>
-                    <span className="blog-grid-card-author">{b.author || "GreenEye"}</span>
+                <div className="ge-blog-grid__body">
+                  <h3>{tr.title || "Untitled"}</h3>
+                  <p className="ge-blog-grid__excerpt">
+                    {(tr.content || "").substring(0, 140)}...
+                  </p>
+                  <div className="ge-blog-grid__meta">
+                    <span><i className="fas fa-calendar-alt"></i> {new Date(b.createdAt).toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+                    <span><i className="fas fa-user"></i> {b.author || "GreenEye"}</span>
                   </div>
                 </div>
               </Link>

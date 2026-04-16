@@ -1,0 +1,180 @@
+/* ═══════════════════════════════════════════════════════
+   My Trees Dashboard
+   ═══════════════════════════════════════════════════════ */
+
+.ge-mytrees {
+  padding: calc(var(--ge-nav-height) + var(--ge-space-8)) var(--ge-space-6) var(--ge-space-16);
+}
+
+.ge-mytrees__inner {
+  max-width: var(--ge-max-width);
+  margin: 0 auto;
+}
+
+.ge-mytrees__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--ge-space-8);
+}
+
+.ge-mytrees__title {
+  font-size: var(--ge-text-3xl);
+  font-weight: 700;
+  color: var(--ge-ink);
+}
+
+.ge-mytrees__count {
+  font-size: var(--ge-text-sm);
+  color: var(--ge-slate);
+  background: var(--ge-mint);
+  padding: var(--ge-space-1) var(--ge-space-3);
+  border-radius: var(--ge-radius-full);
+  margin-left: var(--ge-space-3);
+}
+
+/* Map container */
+.ge-mytrees__map-container {
+  height: 300px;
+  border-radius: var(--ge-radius-lg);
+  overflow: hidden;
+  margin-bottom: var(--ge-space-8);
+  border: 1px solid var(--ge-cloud);
+}
+
+.ge-mytrees__map-loading {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ge-snow);
+  color: var(--ge-slate);
+  border-radius: var(--ge-radius-lg);
+}
+
+/* Tree card list */
+.ge-mytrees__list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--ge-space-6);
+}
+
+@media (min-width: 768px) {
+  .ge-mytrees__list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Tree card */
+.ge-mytrees__card {
+  display: flex;
+  gap: var(--ge-space-4);
+  padding: var(--ge-space-4);
+  border: 1px solid var(--ge-cloud);
+  border-radius: var(--ge-radius-md);
+  background: var(--ge-white);
+  transition: box-shadow var(--ge-duration-base) var(--ge-ease);
+}
+
+.ge-mytrees__card:hover {
+  box-shadow: var(--ge-shadow-md);
+}
+
+.ge-mytrees__card-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: var(--ge-radius-sm);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--ge-snow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ge-mytrees__card-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ge-mytrees__card-placeholder {
+  color: var(--ge-mist);
+  font-size: 2rem;
+}
+
+.ge-mytrees__card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ge-space-1);
+}
+
+.ge-mytrees__card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ge-space-2);
+}
+
+.ge-mytrees__card-top h3 {
+  font-size: var(--ge-text-lg);
+  font-weight: 600;
+  color: var(--ge-ink);
+  margin: 0;
+}
+
+.ge-mytrees__card-species {
+  font-size: var(--ge-text-sm);
+  color: var(--ge-slate);
+  margin: 0;
+}
+
+.ge-mytrees__card-date {
+  font-size: var(--ge-text-sm);
+  color: var(--ge-mist);
+  margin: 0;
+}
+
+.ge-mytrees__card-actions {
+  margin-top: auto;
+  padding-top: var(--ge-space-2);
+}
+
+/* Empty state */
+.ge-mytrees__empty {
+  text-align: center;
+  padding: var(--ge-space-16) var(--ge-space-6);
+}
+
+.ge-mytrees__empty-icon {
+  font-size: 3rem;
+  color: var(--ge-sage);
+  margin-bottom: var(--ge-space-4);
+}
+
+.ge-mytrees__empty p {
+  color: var(--ge-slate);
+  font-size: var(--ge-text-lg);
+  margin-bottom: var(--ge-space-6);
+}
+
+/* Loading state */
+.ge-mytrees__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ge-space-16);
+  color: var(--ge-slate);
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .ge-mytrees__card {
+    flex-direction: column;
+  }
+  .ge-mytrees__card-photo {
+    width: 100%;
+    height: 180px;
+  }
+}

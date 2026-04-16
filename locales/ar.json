@@ -15,7 +15,11 @@
     "admin": "الإدارة",
     "register": "تسجيل",
     "login": "تسجيل الدخول",
-    "logout": "تسجيل الخروج"
+    "logout": "تسجيل الخروج",
+    "myTrees": "أشجاري",
+    "myOrders": "طلباتي",
+    "myDonations": "تبرعاتي",
+    "myGifts": "هداياي"
   },
   "footer": {
     "mission": "ملتزمون بخلق مستقبل أكثر خضرة واستدامة من خلال زرع الأشجار وحفظ البيئة.",
@@ -631,7 +635,11 @@
     "seoTitle": "أهدِ شجرة | مؤسسة GreenEye",
     "seoDescription": "أرسل هدية ذات معنى من خلال زراعة الأشجار باسم شخص ما. مثالي لأعياد الميلاد والذكرى السنوية والمناسبات الخاصة.",
     "pageTitle": "أكمل هدية الشجرة الخاصة بك",
-    "pageSubtitle": "املأ التفاصيل أدناه لإرسال هدية شجرة جميلة"
+    "pageSubtitle": "املأ التفاصيل أدناه لإرسال هدية شجرة جميلة",
+    "modeGift": "كهدية",
+    "modeAdopt": "لنفسي",
+    "adoptHeading": "تبنَّ شجرة",
+    "adoptDescription": "ازرع شجرة لنفسك وتابع رحلة نموها"
   },
   "accountDeletion": {
     "title": "سياسة حذف الحساب",
@@ -717,5 +725,44 @@
       "heading": "غابتنا بدأت للتو",
       "body": "يتم تحضير الأشجار للزراعة. عد قريباً لرؤيتها على الخريطة."
     }
+  },
+  "myTrees": {
+    "pageTitle": "أشجاري",
+    "empty": "لم تتبنَّ أو تُهدِ أي أشجار بعد",
+    "emptyCta": "أهدِ شجرة",
+    "mapTitle": "مواقع أشجارك",
+    "treeCount": "{count} شجرة",
+    "track": "تتبع",
+    "plantedOn": "زُرعت في {date}",
+    "status": {
+      "PAID": "تم تأكيد الدفع",
+      "PLANT_SELECTED": "تم اختيار النبتة",
+      "PLANTING_SCHEDULED": "الزراعة مجدولة",
+      "PLANTED": "مزروعة",
+      "GROWING": "تنمو"
+    }
+  },
+  "statsBar": {
+    "treesPlanted": "أشجار مزروعة",
+    "co2Absorbed": "كجم CO2 ممتص",
+    "forestArea": "م² غابة",
+    "estimated": "* قيم تقديرية"
+  },
+  "photoStrip": {
+    "title": "زُرعت مؤخراً",
+    "daysAgo": "منذ {days} أيام",
+    "today": "اليوم",
+    "yesterday": "أمس"
+  },
+  "orderConfirmation": {
+    "title": "تم الدفع بنجاح!",
+    "subtitle": "تم معالجة هدية الشجرة الخاصة بك",
+    "whatsNext": "ماذا بعد",
+    "certificateMsg": "ستتوفر الشهادة بمجرد زراعة شجرتك",
+    "trackTree": "تتبع شجرتك",
+    "giftAnother": "أهدِ شجرة أخرى"
+  },
+  "occasions": {
+    "earthDay": "يوم الأرض"
   }
 }

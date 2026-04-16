@@ -15,7 +15,11 @@
     "admin": "Administración",
     "register": "Registrarse",
     "login": "Iniciar sesión",
-    "logout": "Cerrar sesión"
+    "logout": "Cerrar sesión",
+    "myTrees": "Mis Árboles",
+    "myOrders": "Mis Pedidos",
+    "myDonations": "Mis Donaciones",
+    "myGifts": "Mis Regalos"
   },
   "footer": {
     "mission": "Dedicados a crear un futuro más verde y sostenible mediante la plantación de árboles y la conservación ambiental.",
@@ -631,7 +635,11 @@
     "seoTitle": "Regala un Árbol | Fundación GreenEye",
     "seoDescription": "Envía un regalo significativo plantando árboles a nombre de alguien. Perfecto para cumpleaños, aniversarios y ocasiones especiales.",
     "pageTitle": "Completa Tu Regalo de Árbol",
-    "pageSubtitle": "Completa los detalles a continuación para enviar un hermoso regalo de árbol"
+    "pageSubtitle": "Completa los detalles a continuación para enviar un hermoso regalo de árbol",
+    "modeGift": "Como Regalo",
+    "modeAdopt": "Para Mí",
+    "adoptHeading": "Adopta un Árbol",
+    "adoptDescription": "Planta un árbol para ti y sigue su crecimiento"
   },
   "accountDeletion": {
     "title": "Política de Eliminación de Cuenta",
@@ -717,5 +725,44 @@
       "heading": "Nuestro bosque está comenzando",
       "body": "Los árboles se están preparando para la plantación. Vuelve pronto para verlos en el mapa."
     }
+  },
+  "myTrees": {
+    "pageTitle": "Mis Árboles",
+    "empty": "Aún no has adoptado ni regalado ningún árbol",
+    "emptyCta": "Regala un Árbol",
+    "mapTitle": "Ubicaciones de Tus Árboles",
+    "treeCount": "{count} árbol(es)",
+    "track": "Rastrear",
+    "plantedOn": "Plantado el {date}",
+    "status": {
+      "PAID": "Pago confirmado",
+      "PLANT_SELECTED": "Planta seleccionada",
+      "PLANTING_SCHEDULED": "Plantación programada",
+      "PLANTED": "Plantado",
+      "GROWING": "Creciendo"
+    }
+  },
+  "statsBar": {
+    "treesPlanted": "Árboles Plantados",
+    "co2Absorbed": "kg CO2 Absorbido",
+    "forestArea": "m² de Bosque",
+    "estimated": "* Valores estimados"
+  },
+  "photoStrip": {
+    "title": "Plantados Recientemente",
+    "daysAgo": "hace {days} días",
+    "today": "Hoy",
+    "yesterday": "Ayer"
+  },
+  "orderConfirmation": {
+    "title": "¡Pago Exitoso!",
+    "subtitle": "Tu regalo de árbol ha sido procesado",
+    "whatsNext": "Qué Pasa Después",
+    "certificateMsg": "El certificado estará disponible una vez plantado tu árbol",
+    "trackTree": "Rastrea Tu Árbol",
+    "giftAnother": "Regala Otro Árbol"
+  },
+  "occasions": {
+    "earthDay": "Día de la Tierra"
   }
 }

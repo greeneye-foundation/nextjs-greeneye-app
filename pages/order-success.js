@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import Seo from '@/components/common/Seo';
+import { CheckCircle, AlertCircle, Loader2, ListOrdered, ShoppingBag, Home, Info, Package, Truck } from 'lucide-react';
 
 export default function OrderSuccess() {
   const { getAuthHeaders } = useAuth();
@@ -57,31 +58,13 @@ export default function OrderSuccess() {
 
   if (loading) {
     return (
-      <div style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-      }}>
-        <div style={{
-          background: 'white',
-          borderRadius: '20px',
-          padding: '3rem',
-          textAlign: 'center',
-          boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
-          maxWidth: '500px',
-          margin: '0 auto'
-        }}>
-          <i className="fas fa-spinner fa-spin" style={{ 
-            fontSize: '4rem', 
-            color: '#4CAF50',
-            marginBottom: '1rem'
-          }}></i>
-          <h2 style={{ marginBottom: '0.5rem', color: '#333' }}>
-            Loading Order Details...
-          </h2>
-          <p style={{ color: '#666' }}>
+      <div className="ge-status">
+        <div className="ge-status-card ge-text-center">
+          <div className="ge-status-icon ge-status-icon--loading">
+            <Loader2 size={40} className="ge-spin" />
+          </div>
+          <h2 className="ge-status-title">Loading Order Details...</h2>
+          <p className="ge-status-subtitle">
             Please wait while we fetch your order information
           </p>
         </div>
@@ -91,49 +74,21 @@ export default function OrderSuccess() {
 
   if (error) {
     return (
-      <div style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-        padding: '2rem 1rem'
-      }}>
+      <div className="ge-status">
         <motion.div
+          className="ge-status-card ge-text-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          style={{
-            background: 'white',
-            borderRadius: '20px',
-            padding: '3rem',
-            textAlign: 'center',
-            boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
-            maxWidth: '500px',
-            margin: '0 auto'
-          }}
         >
-          <i className="fas fa-exclamation-circle" style={{ 
-            fontSize: '4rem', 
-            color: '#f44336',
-            marginBottom: '1rem'
-          }}></i>
-          <h2 style={{ marginBottom: '1rem', color: '#333' }}>
-            Error Loading Order
-          </h2>
-          <p style={{ color: '#666', marginBottom: '2rem' }}>{error}</p>
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+          <div className="ge-status-icon ge-status-icon--error">
+            <AlertCircle size={40} />
+          </div>
+          <h2 className="ge-status-title">Error Loading Order</h2>
+          <p className="ge-status-subtitle">{error}</p>
+          <div className="ge-status-actions">
             <Link href="/plantshop">
-              <button style={{
-                padding: '12px 30px',
-                fontSize: '1rem',
-                borderRadius: '50px',
-                border: 'none',
-                background: '#4CAF50',
-                color: 'white',
-                cursor: 'pointer',
-                transition: 'all 0.3s'
-              }}>
-                <i className="fas fa-shopping-bag" style={{ marginRight: '8px' }}></i>
+              <button className="ge-btn ge-btn-primary ge-btn-lg">
+                <ShoppingBag size={18} />
                 Continue Shopping
               </button>
             </Link>
@@ -146,328 +101,143 @@ export default function OrderSuccess() {
   return (
     <>
       <Seo noindex title="Order Successful | GREENEYE" />
-      <div style={{
-        minHeight: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      padding: '2rem 1rem'
-    }}>
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-        style={{
-          background: 'white',
-          borderRadius: '20px',
-          padding: '3rem',
-          boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
-          maxWidth: '700px',
-          margin: '0 auto',
-          width: '100%'
-        }}
-      >
-        {/* Success Icon */}
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <motion.i 
-            className="fas fa-check-circle"
+      <div className="ge-status">
+        <motion.div
+          className="ge-status-card"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          {/* Success Icon */}
+          <motion.div
+            className="ge-status-icon ge-status-icon--success"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-            style={{ 
-              fontSize: '5rem', 
-              color: '#4CAF50'
-            }}
-          ></motion.i>
-        </div>
-        
-        <h1 style={{ textAlign: 'center', marginBottom: '0.5rem', color: '#333', fontSize: '2rem' }}>
-          🎉 Order Placed Successfully!
-        </h1>
-        <p style={{ 
-          textAlign: 'center', 
-          color: '#666',
-          marginBottom: '2rem',
-          fontSize: '1.1rem'
-        }}>
-          Thank you for your purchase! Your order has been confirmed.
-        </p>
+          >
+            <CheckCircle size={40} />
+          </motion.div>
 
-        {/* Order Details */}
-        {orderDetails && (
-          <>
-            <div style={{
-              background: '#f8f9fa',
-              borderRadius: '12px',
-              padding: '1.5rem',
-              marginBottom: '1.5rem'
-            }}>
-              <h3 style={{ marginBottom: '1rem', color: '#333', fontSize: '1.2rem' }}>
-                Order Information
-              </h3>
-              
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                padding: '0.75rem 0',
-                borderBottom: '1px solid #dee2e6'
-              }}>
-                <span style={{ color: '#666', fontWeight: '500' }}>Order ID:</span>
-                <span style={{ color: '#333', fontWeight: '600' }}>
-                  {orderDetails._id}
-                </span>
-              </div>
+          <h1 className="ge-status-title">Order Placed Successfully!</h1>
+          <p className="ge-status-subtitle">
+            Thank you for your purchase! Your order has been confirmed.
+          </p>
 
-              {router.query.txnid && (
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  padding: '0.75rem 0',
-                  borderBottom: '1px solid #dee2e6'
-                }}>
-                  <span style={{ color: '#666', fontWeight: '500' }}>Transaction ID:</span>
-                  <span style={{ 
-                    color: '#333', 
-                    fontWeight: '600',
-                    fontSize: '0.9rem',
-                    wordBreak: 'break-all'
-                  }}>
-                    {router.query.txnid}
+          {/* Order Details */}
+          {orderDetails && (
+            <>
+              {/* Order Information */}
+              <div className="ge-status-info">
+                <div className="ge-status-row">
+                  <span className="ge-status-label">Order ID</span>
+                  <span className="ge-status-value">{orderDetails._id}</span>
+                </div>
+
+                {router.query.txnid && (
+                  <div className="ge-status-row">
+                    <span className="ge-status-label">Transaction ID</span>
+                    <span className="ge-status-value">{router.query.txnid}</span>
+                  </div>
+                )}
+
+                <div className="ge-status-row">
+                  <span className="ge-status-label">Order Date</span>
+                  <span className="ge-status-value">
+                    {new Date(orderDetails.createdAt).toLocaleDateString('en-IN', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
                   </span>
                 </div>
-              )}
 
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                padding: '0.75rem 0',
-                borderBottom: '1px solid #dee2e6'
-              }}>
-                <span style={{ color: '#666', fontWeight: '500' }}>Order Date:</span>
-                <span style={{ color: '#333', fontWeight: '600' }}>
-                  {new Date(orderDetails.createdAt).toLocaleDateString('en-IN', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
-                </span>
+                <div className="ge-status-row">
+                  <span className="ge-status-label">Payment Status</span>
+                  <span className={`ge-badge ${orderDetails.isPaid ? 'ge-badge-green' : 'ge-badge-gold'}`}>
+                    {orderDetails.isPaid ? 'PAID' : 'PENDING'}
+                  </span>
+                </div>
+
+                <div className="ge-status-row">
+                  <span className="ge-status-label">Order Status</span>
+                  <span className="ge-badge ge-badge-blue">
+                    {orderDetails.orderStatus}
+                  </span>
+                </div>
+
+                <div className="ge-status-row">
+                  <span className="ge-status-label">Total Amount</span>
+                  <span className="ge-status-value ge-status-value--highlight">
+                    &#8377;{orderDetails.finalPrice || orderDetails.totalPrice}
+                  </span>
+                </div>
               </div>
 
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                padding: '0.75rem 0',
-                borderBottom: '1px solid #dee2e6'
-              }}>
-                <span style={{ color: '#666', fontWeight: '500' }}>Payment Status:</span>
-                <span style={{ 
-                  color: '#4CAF50',
-                  fontWeight: '600',
-                  background: '#e8f5e9',
-                  padding: '4px 12px',
-                  borderRadius: '20px',
-                  fontSize: '0.9rem'
-                }}>
-                  ✓ {orderDetails.isPaid ? 'PAID' : 'PENDING'}
-                </span>
-              </div>
+              {/* Order Items */}
+              <div className="ge-status-section">
+                <h3 className="ge-status-section-title">
+                  <Package size={18} />
+                  Order Items ({orderDetails.orderItems?.length || 0})
+                </h3>
 
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                padding: '0.75rem 0',
-                borderBottom: '1px solid #dee2e6'
-              }}>
-                <span style={{ color: '#666', fontWeight: '500' }}>Order Status:</span>
-                <span style={{ 
-                  color: '#1976d2',
-                  fontWeight: '600',
-                  background: '#e3f2fd',
-                  padding: '4px 12px',
-                  borderRadius: '20px',
-                  fontSize: '0.9rem'
-                }}>
-                  {orderDetails.orderStatus}
-                </span>
-              </div>
-
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                padding: '0.75rem 0 0 0'
-              }}>
-                <span style={{ color: '#666', fontWeight: '500', fontSize: '1.1rem' }}>
-                  Total Amount:
-                </span>
-                <span style={{ 
-                  color: '#4CAF50', 
-                  fontWeight: '700',
-                  fontSize: '1.5rem'
-                }}>
-                  ₹{orderDetails.finalPrice || orderDetails.totalPrice}
-                </span>
-              </div>
-            </div>
-
-            {/* Order Items */}
-            <div style={{
-              background: '#e3f2fd',
-              borderRadius: '12px',
-              padding: '1.5rem',
-              marginBottom: '2rem'
-            }}>
-              <h3 style={{ 
-                fontSize: '1.2rem', 
-                marginBottom: '1rem',
-                color: '#1976d2'
-              }}>
-                <i className="fas fa-shopping-bag" style={{ marginRight: '8px' }}></i>
-                Order Items ({orderDetails.orderItems?.length || 0})
-              </h3>
-              
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {orderDetails.orderItems?.map((item, index) => (
-                  <div key={index} style={{
-                    background: 'white',
-                    padding: '1rem',
-                    borderRadius: '8px',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center'
-                  }}>
+                  <div key={index} className="ge-status-item">
                     <div>
-                      <strong style={{ color: '#333', fontSize: '1rem' }}>
-                        {item.name}
-                      </strong>
-                      <p style={{ margin: '0.25rem 0 0 0', color: '#666', fontSize: '0.9rem' }}>
-                        Quantity: {item.quantity}
-                      </p>
+                      <div className="ge-status-item-name">{item.name}</div>
+                      <div className="ge-status-item-detail">Quantity: {item.quantity}</div>
                     </div>
-                    <span style={{ 
-                      color: '#4CAF50', 
-                      fontWeight: '700',
-                      fontSize: '1.1rem'
-                    }}>
-                      ₹{item.price * item.quantity}
+                    <span className="ge-status-item-price">
+                      &#8377;{item.price * item.quantity}
                     </span>
                   </div>
                 ))}
               </div>
-            </div>
 
-            {/* Shipping Address */}
-            <div style={{
-              background: '#fff3e0',
-              borderRadius: '12px',
-              padding: '1.5rem',
-              marginBottom: '2rem'
-            }}>
-              <h3 style={{ 
-                fontSize: '1.2rem', 
-                marginBottom: '1rem',
-                color: '#f57c00'
-              }}>
-                <i className="fas fa-truck" style={{ marginRight: '8px' }}></i>
-                Shipping Address
-              </h3>
-              <p style={{ margin: '0.25rem 0', color: '#333' }}>
-                <strong>{orderDetails.shippingAddress?.name}</strong>
-              </p>
-              <p style={{ margin: '0.25rem 0', color: '#666' }}>
-                {orderDetails.shippingAddress?.street}
-              </p>
-              <p style={{ margin: '0.25rem 0', color: '#666' }}>
-                {orderDetails.shippingAddress?.city}, {orderDetails.shippingAddress?.state} - {orderDetails.shippingAddress?.pincode}
-              </p>
-              <p style={{ margin: '0.25rem 0', color: '#666' }}>
-                Phone: {orderDetails.shippingAddress?.phone}
-              </p>
-            </div>
-          </>
-        )}
+              {/* Shipping Address */}
+              <div className="ge-status-section">
+                <h3 className="ge-status-section-title">
+                  <Truck size={18} />
+                  Shipping Address
+                </h3>
+                <p className="ge-status-item-name">{orderDetails.shippingAddress?.name}</p>
+                <p className="ge-status-item-detail">{orderDetails.shippingAddress?.street}</p>
+                <p className="ge-status-item-detail">
+                  {orderDetails.shippingAddress?.city}, {orderDetails.shippingAddress?.state} - {orderDetails.shippingAddress?.pincode}
+                </p>
+                <p className="ge-status-item-detail">Phone: {orderDetails.shippingAddress?.phone}</p>
+              </div>
+            </>
+          )}
 
-        {/* Action Buttons */}
-        <div style={{
-          display: 'flex',
-          gap: '1rem',
-          justifyContent: 'center',
-          flexWrap: 'wrap',
-          marginTop: '2rem'
-        }}>
-          <Link href="/myorders">
-            <button style={{
-              padding: '12px 30px',
-              fontSize: '1rem',
-              borderRadius: '50px',
-              border: 'none',
-              background: '#4CAF50',
-              color: 'white',
-              cursor: 'pointer',
-              transition: 'all 0.3s',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px'
-            }}>
-              <i className="fas fa-list"></i>
-              View My Orders
-            </button>
-          </Link>
-          
-          <Link href="/plantshop">
-            <button style={{
-              padding: '12px 30px',
-              fontSize: '1rem',
-              borderRadius: '50px',
-              border: '2px solid #667eea',
-              background: 'white',
-              color: '#667eea',
-              cursor: 'pointer',
-              transition: 'all 0.3s',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px'
-            }}>
-              <i className="fas fa-shopping-bag"></i>
-              Continue Shopping
-            </button>
-          </Link>
+          {/* Action Buttons */}
+          <div className="ge-status-actions">
+            <Link href="/myorders">
+              <button className="ge-btn ge-btn-primary ge-btn-lg">
+                <ListOrdered size={18} />
+                View My Orders
+              </button>
+            </Link>
+            <Link href="/plantshop">
+              <button className="ge-btn ge-btn-secondary ge-btn-lg">
+                <ShoppingBag size={18} />
+                Continue Shopping
+              </button>
+            </Link>
+            <Link href="/">
+              <button className="ge-btn ge-btn-ghost ge-btn-lg">
+                <Home size={18} />
+                Back to Home
+              </button>
+            </Link>
+          </div>
 
-          <Link href="/">
-            <button style={{
-              padding: '12px 30px',
-              fontSize: '1rem',
-              borderRadius: '50px',
-              border: '2px solid #4CAF50',
-              background: 'white',
-              color: '#4CAF50',
-              cursor: 'pointer',
-              transition: 'all 0.3s',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px'
-            }}>
-              <i className="fas fa-home"></i>
-              Back to Home
-            </button>
-          </Link>
-        </div>
-
-        {/* Additional Info */}
-        <div style={{
-          marginTop: '2rem',
-          padding: '1rem',
-          background: '#f5f5f5',
-          borderRadius: '8px',
-          textAlign: 'center'
-        }}>
-          <p style={{ color: '#666', fontSize: '0.9rem', margin: 0 }}>
-            <i className="fas fa-info-circle" style={{ marginRight: '8px', color: '#1976d2' }}></i>
+          {/* Additional Info */}
+          <div className="ge-status-footer">
+            <Info size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '6px' }} />
             You will receive order updates via email and SMS
-          </p>
-        </div>
-      </motion.div>
-    </div>
+          </div>
+        </motion.div>
+      </div>
     </>
   );
 }

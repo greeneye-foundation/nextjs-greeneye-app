@@ -6,10 +6,10 @@ import Link from "next/link";
 import Seo from "@/components/common/Seo";
 import useCart from "@/components/cart/useCart";
 import CartDrawer from "@/components/cart/CartDrawer";
-import { useTranslations } from "next-intl"; // ✅ ADD
+import { useTranslations } from "next-intl";
 
 export default function PlantDetails() {
-  const t = useTranslations("plant"); // ✅ namespace: locales/en/plant.json
+  const t = useTranslations("plant");
   const router = useRouter();
   const { id } = router.query;
 
@@ -18,13 +18,8 @@ export default function PlantDetails() {
   const [error, setError] = useState(false);
 
   const {
-    cart,
-    total,
-    open,
-    setOpen,
-    addToCart,
-    removeFromCart,
-    changeQty,
+    cart, total, open, setOpen,
+    addToCart, removeFromCart, changeQty,
   } = useCart();
 
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.greeneye.foundation";
@@ -46,8 +41,27 @@ export default function PlantDetails() {
     fetchPlant();
   }, [id, baseUrl]);
 
-  if (loading) return <p style={{ textAlign: "center" }}>{t("loading")}</p>;
-  if (error || !plant?._id) return <p style={{ textAlign: "center" }}>{t("notFound")}</p>;
+  if (loading) {
+    return (
+      <div className="ge-detail ge-detail-wide">
+        <div className="ge-detail-loading">
+          <i className="fas fa-spinner fa-spin"></i>
+          <p>{t("loading")}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !plant?._id) {
+    return (
+      <div className="ge-detail ge-detail-wide">
+        <div className="ge-detail-empty">
+          <i className="fas fa-seedling"></i>
+          <p>{t("notFound")}</p>
+        </div>
+      </div>
+    );
+  }
 
   const pageUrl = `${baseUrl}/plants/${plant._id}`;
   const title = `${plant.name} | GreenEye Plant Shop`;
@@ -80,7 +94,7 @@ export default function PlantDetails() {
   };
 
   return (
-    <div style={{ maxWidth: 1100, margin: "40px auto", padding: "0 16px" }}>
+    <div className="ge-detail ge-detail-wide">
       <Seo
         title={title}
         description={description}
@@ -98,25 +112,13 @@ export default function PlantDetails() {
         structuredData={productJsonLd}
       />
 
-      <Link href="/plantshop" style={{ color: "#388e3c", textDecoration: "none", fontWeight: 600 }}>
-        ← {t("backToShop")}
+      <Link href="/plantshop" className="ge-detail-back">
+        <i className="fas fa-arrow-left"></i> {t("backToShop")}
       </Link>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1.1fr 1fr", gap: 30, marginTop: 20 }}>
-        {/* LEFT IMAGE */}
-        <div
-          style={{
-            background: "#f4f7f3",
-            borderRadius: 16,
-            minHeight: 420,
-            position: "relative",
-            overflow: "hidden",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 20,
-          }}
-        >
+      <div className="ge-plant-grid">
+        {/* Left: Image */}
+        <div className="ge-plant-image">
           {plant.image ? (
             <Image
               src={plant.image}
@@ -126,46 +128,39 @@ export default function PlantDetails() {
               priority
             />
           ) : (
-            <i className="fas fa-seedling" style={{ fontSize: 120, color: "#b6ccb9" }}></i>
+            <i className="fas fa-seedling ge-plant-image-placeholder"></i>
           )}
         </div>
 
-        {/* RIGHT DETAILS */}
-        <div style={{
-          background: "#fff",
-          border: "1px solid #b6ccb9",
-          borderRadius: 16,
-          padding: "22px 22px 18px",
-          boxShadow: "0 2px 10px rgba(0,0,0,0.04)"
-        }}>
-          <h1 style={{ margin: 0, fontSize: "2rem" }}>{plant.name}</h1>
+        {/* Right: Details */}
+        <div className="ge-plant-info">
+          <h1 className="ge-plant-name">{plant.name}</h1>
 
-          <div style={{ marginTop: 10, color: "#388e3c", fontWeight: 700, fontSize: 22 }}>
-            ₹{Number(plant.price || 0).toLocaleString()}
+          <div className="ge-plant-price-row">
+            <span className="ge-plant-price">
+              ₹{Number(plant.price || 0).toLocaleString()}
+            </span>
             {plant.countInStock ? (
-              <span style={{ marginLeft: 10, color: "#2e7d32", fontSize: 14, fontWeight: 600 }}>
-                • {t("inStock")}
-              </span>
+              <span className="ge-badge ge-badge-green">{t("inStock")}</span>
             ) : (
-              <span style={{ marginLeft: 10, color: "#b62222", fontSize: 14, fontWeight: 600 }}>
-                • {t("outOfStock")}
-              </span>
+              <span className="ge-badge ge-badge-red">{t("outOfStock")}</span>
             )}
           </div>
 
-          <div style={{ marginTop: 12, color: "#555", lineHeight: 1.6 }}>
+          <p className="ge-plant-description">
             {plant.description || t("noDescription")}
-          </div>
+          </p>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginTop: 18 }}>
+          <div className="ge-plant-meta">
             <div><b>{t("sku")}:</b> {plant.sku || "-"}</div>
             <div><b>{t("category")}:</b> {plant.category || t("defaultCategory")}</div>
             <div><b>{t("brand")}:</b> {plant.brand || "-"}</div>
             <div><b>{t("availableCountries")}:</b> {Array.isArray(plant.country) && plant.country.length ? plant.country.join(", ") : "-"}</div>
           </div>
 
-          <div style={{ display: "flex", gap: 12, marginTop: 22 }}>
+          <div className="ge-plant-buttons">
             <button
+              className="ge-btn ge-btn-primary ge-btn-lg"
               onClick={async () => {
                 try {
                   await addToCart(plant);
@@ -175,30 +170,13 @@ export default function PlantDetails() {
                   else alert(t("addFailed"));
                 }
               }}
-              style={{
-                background: "#4caf50",
-                color: "#fff",
-                border: "none",
-                borderRadius: 8,
-                padding: "12px 20px",
-                fontWeight: 600,
-                cursor: "pointer",
-              }}
             >
               <i className="fas fa-cart-plus"></i> {t("addToCart")}
             </button>
 
             <button
+              className="ge-btn ge-btn-secondary ge-btn-lg"
               onClick={() => setOpen(true)}
-              style={{
-                background: "#fff",
-                color: "#388e3c",
-                border: "2px solid #388e3c",
-                borderRadius: 8,
-                padding: "12px 18px",
-                fontWeight: 600,
-                cursor: "pointer",
-              }}
             >
               <i className="fas fa-shopping-cart"></i> {t("viewCart")}
             </button>
@@ -213,7 +191,7 @@ export default function PlantDetails() {
         changeQty={changeQty}
         removeFromCart={removeFromCart}
         total={total}
-        t={t} // ✅ pass translations to Drawer
+        t={t}
       />
     </div>
   );

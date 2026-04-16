@@ -15,7 +15,11 @@
     "admin": "管理者",
     "register": "登録",
     "login": "ログイン",
-    "logout": "ログアウト"
+    "logout": "ログアウト",
+    "myTrees": "マイツリー",
+    "myOrders": "注文履歴",
+    "myDonations": "寄付履歴",
+    "myGifts": "ギフト履歴"
   },
   "footer": {
     "mission": "植樹と環境保全を通じて、より緑豊かで持続可能な未来を目指しています。",
@@ -631,7 +635,11 @@
     "seoTitle": "木を贈る | GEYE INNOVATION FOUNDATION",
     "seoDescription": "誰かの名前で木を植えて、意味のあるギフトを送りましょう。誕生日、記念日、特別な機会に最適です。",
     "pageTitle": "ツリーギフトを完成する",
-    "pageSubtitle": "以下の詳細を入力して、美しいツリーギフトを送信してください"
+    "pageSubtitle": "以下の詳細を入力して、美しいツリーギフトを送信してください",
+    "modeGift": "ギフトとして",
+    "modeAdopt": "自分用",
+    "adoptHeading": "木を養子にする",
+    "adoptDescription": "自分のために木を植えて成長の旅を追跡しましょう"
   },
   "accountDeletion": {
     "title": "アカウント削除ポリシー",
@@ -717,5 +725,44 @@
       "heading": "私たちの森は始まったばかり",
       "body": "木々は植樹の準備中です。またすぐ地図で確認してください。"
     }
+  },
+  "myTrees": {
+    "pageTitle": "マイツリー",
+    "empty": "まだ木を養子にしたり贈ったりしていません",
+    "emptyCta": "木を贈る",
+    "mapTitle": "あなたの木の場所",
+    "treeCount": "{count} 本の木",
+    "track": "追跡",
+    "plantedOn": "{date} に植樹",
+    "status": {
+      "PAID": "支払い確認済み",
+      "PLANT_SELECTED": "植物選択済み",
+      "PLANTING_SCHEDULED": "植樹予定",
+      "PLANTED": "植樹済み",
+      "GROWING": "成長中"
+    }
+  },
+  "statsBar": {
+    "treesPlanted": "植樹本数",
+    "co2Absorbed": "kg CO2 吸収",
+    "forestArea": "平方メートルの森林",
+    "estimated": "* 推定値"
+  },
+  "photoStrip": {
+    "title": "最近の植樹",
+    "daysAgo": "{days} 日前",
+    "today": "今日",
+    "yesterday": "昨日"
+  },
+  "orderConfirmation": {
+    "title": "支払い成功！",
+    "subtitle": "ツリーギフトが処理されました",
+    "whatsNext": "次のステップ",
+    "certificateMsg": "木が植えられた後に証明書が利用可能になります",
+    "trackTree": "ツリーを追跡",
+    "giftAnother": "もう一本贈る"
+  },
+  "occasions": {
+    "earthDay": "アースデイ"
   }
 }

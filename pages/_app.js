@@ -1,4 +1,7 @@
 // pages/_app.js
+import '@/styles/design-system.css';
+import '@/styles/navbar.css';
+import '@/styles/footer.css';
 import '@/styles/globals.css';
 import '@/styles/auth-styles.css';
 import '@/styles/admin.css';
@@ -18,6 +21,18 @@ import '@/styles/checkout.css';
 import '@/styles/tree-tracking.css';
 import '@/styles/forest.css';
 import '@/styles/certificate-verify.css';
+import '@/styles/home.css';
+import '@/styles/plantshop.css';
+import '@/styles/cart.css';
+import '@/styles/profile.css';
+import '@/styles/contact.css';
+import '@/styles/blog.css';
+import '@/styles/volunteer.css';
+import '@/styles/not-found.css';
+import '@/styles/status-page.css';
+import '@/styles/detail-page.css';
+import '@/styles/my-trees.css';
+import '@/styles/phone-input.css';
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';

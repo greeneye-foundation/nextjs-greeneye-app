@@ -1,0 +1,375 @@
+/* ═══════════════════════════════════════════════════════
+   Status Pages — Success / Failure / Loading
+   Shared styles for order, donation, gift payment results
+   ═══════════════════════════════════════════════════════ */
+
+.ge-status {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ge-space-8) var(--ge-space-4);
+  background: var(--ge-snow);
+}
+
+.ge-status-card {
+  background: var(--ge-white);
+  border-radius: var(--ge-radius-xl);
+  padding: var(--ge-space-10);
+  box-shadow: var(--ge-shadow-xl);
+  max-width: 640px;
+  width: 100%;
+  animation: ge-fade-in var(--ge-duration-slow) var(--ge-ease-out) both;
+}
+
+/* Icon circle */
+.ge-status-icon {
+  width: 88px;
+  height: 88px;
+  border-radius: var(--ge-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--ge-space-6);
+  font-size: 2.5rem;
+}
+
+.ge-status-icon--success {
+  background: var(--ge-mint);
+  color: var(--ge-forest);
+}
+
+.ge-status-icon--error {
+  background: #FDEAEA;
+  color: var(--ge-error);
+}
+
+.ge-status-icon--loading {
+  background: var(--ge-cloud);
+  color: var(--ge-slate);
+}
+
+/* Title + subtitle */
+.ge-status-title {
+  font-family: var(--ge-font-display);
+  font-size: var(--ge-text-3xl);
+  font-weight: 700;
+  color: var(--ge-ink);
+  text-align: center;
+  margin-bottom: var(--ge-space-2);
+  letter-spacing: -0.02em;
+}
+
+.ge-status-subtitle {
+  font-size: var(--ge-text-lg);
+  color: var(--ge-slate);
+  text-align: center;
+  margin-bottom: var(--ge-space-8);
+  line-height: 1.5;
+}
+
+/* Info rows — key-value pairs */
+.ge-status-info {
+  background: var(--ge-snow);
+  border-radius: var(--ge-radius-lg);
+  padding: var(--ge-space-5);
+  margin-bottom: var(--ge-space-5);
+}
+
+.ge-status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--ge-space-3) 0;
+  gap: var(--ge-space-4);
+}
+
+.ge-status-row + .ge-status-row {
+  border-top: 1px solid var(--ge-cloud);
+}
+
+.ge-status-label {
+  color: var(--ge-slate);
+  font-weight: 500;
+  font-size: var(--ge-text-sm);
+  flex-shrink: 0;
+}
+
+.ge-status-value {
+  color: var(--ge-ink);
+  font-weight: 600;
+  font-size: var(--ge-text-sm);
+  text-align: right;
+  word-break: break-all;
+}
+
+.ge-status-value--highlight {
+  color: var(--ge-forest);
+  font-size: var(--ge-text-xl);
+  font-weight: 700;
+}
+
+/* Section cards (items, shipping, recipient, etc.) */
+.ge-status-section {
+  border: 1px solid var(--ge-cloud);
+  border-radius: var(--ge-radius-lg);
+  padding: var(--ge-space-5);
+  margin-bottom: var(--ge-space-5);
+}
+
+.ge-status-section-title {
+  font-size: var(--ge-text-base);
+  font-weight: 700;
+  color: var(--ge-ink);
+  margin-bottom: var(--ge-space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--ge-space-2);
+}
+
+.ge-status-section-title i {
+  color: var(--ge-forest);
+}
+
+/* Item rows inside sections */
+.ge-status-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--ge-space-3) var(--ge-space-4);
+  background: var(--ge-white);
+  border-radius: var(--ge-radius-md);
+  border: 1px solid var(--ge-cloud);
+}
+
+.ge-status-item + .ge-status-item {
+  margin-top: var(--ge-space-2);
+}
+
+.ge-status-item-name {
+  font-weight: 600;
+  color: var(--ge-ink);
+}
+
+.ge-status-item-detail {
+  font-size: var(--ge-text-sm);
+  color: var(--ge-slate);
+  margin-top: var(--ge-space-1);
+}
+
+.ge-status-item-price {
+  font-weight: 700;
+  color: var(--ge-forest);
+  font-size: var(--ge-text-lg);
+}
+
+/* Alert/warning boxes */
+.ge-status-alert {
+  border-radius: var(--ge-radius-lg);
+  padding: var(--ge-space-4) var(--ge-space-5);
+  margin-bottom: var(--ge-space-5);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ge-space-3);
+}
+
+.ge-status-alert--warning {
+  background: var(--ge-amber);
+  border: 1px solid var(--ge-gold-light);
+}
+
+.ge-status-alert--warning i {
+  color: var(--ge-gold);
+  font-size: 1.25rem;
+  margin-top: 2px;
+}
+
+.ge-status-alert--error {
+  background: #FDEAEA;
+  border: 1px solid #E8AAAA;
+}
+
+.ge-status-alert--error i {
+  color: var(--ge-error);
+  font-size: 1.25rem;
+  margin-top: 2px;
+}
+
+.ge-status-alert--info {
+  background: #E6F2F6;
+  border: 1px solid #B3D4DE;
+}
+
+.ge-status-alert--info i {
+  color: var(--ge-info);
+  font-size: 1.25rem;
+  margin-top: 2px;
+}
+
+.ge-status-alert-title {
+  font-weight: 700;
+  color: var(--ge-ink);
+  margin-bottom: var(--ge-space-1);
+  font-size: var(--ge-text-sm);
+}
+
+.ge-status-alert-text {
+  color: var(--ge-charcoal);
+  font-size: var(--ge-text-sm);
+  line-height: 1.6;
+}
+
+/* Reasons list */
+.ge-status-reasons {
+  margin: 0;
+  padding-left: var(--ge-space-5);
+  color: var(--ge-charcoal);
+  line-height: 1.8;
+  font-size: var(--ge-text-sm);
+}
+
+.ge-status-reasons li {
+  margin-bottom: var(--ge-space-1);
+}
+
+.ge-status-reasons li::marker {
+  color: var(--ge-sage);
+}
+
+/* Actions */
+.ge-status-actions {
+  display: flex;
+  gap: var(--ge-space-3);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: var(--ge-space-8);
+}
+
+/* Help footer */
+.ge-status-help {
+  margin-top: var(--ge-space-6);
+  padding: var(--ge-space-5);
+  background: var(--ge-snow);
+  border-radius: var(--ge-radius-lg);
+  text-align: center;
+}
+
+.ge-status-help-title {
+  font-weight: 700;
+  color: var(--ge-ink);
+  margin-bottom: var(--ge-space-2);
+  font-size: var(--ge-text-sm);
+}
+
+.ge-status-help-text {
+  color: var(--ge-slate);
+  font-size: var(--ge-text-sm);
+  margin-bottom: var(--ge-space-3);
+}
+
+.ge-status-help-links {
+  display: flex;
+  gap: var(--ge-space-6);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ge-status-help-links a {
+  color: var(--ge-forest);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ge-space-2);
+  font-weight: 600;
+  font-size: var(--ge-text-sm);
+  transition: color var(--ge-duration-fast) var(--ge-ease);
+}
+
+.ge-status-help-links a:hover {
+  color: var(--ge-forest-light);
+}
+
+/* Note bar */
+.ge-status-note {
+  margin-top: var(--ge-space-5);
+  padding: var(--ge-space-4);
+  background: var(--ge-amber);
+  border-radius: var(--ge-radius-md);
+  border-left: 3px solid var(--ge-gold);
+  text-align: center;
+  font-size: var(--ge-text-sm);
+  color: var(--ge-charcoal);
+  line-height: 1.6;
+}
+
+.ge-status-note i {
+  color: var(--ge-gold);
+  margin-right: var(--ge-space-2);
+}
+
+/* Info footer */
+.ge-status-footer {
+  margin-top: var(--ge-space-5);
+  padding: var(--ge-space-3) var(--ge-space-4);
+  background: var(--ge-snow);
+  border-radius: var(--ge-radius-md);
+  text-align: center;
+  font-size: var(--ge-text-sm);
+  color: var(--ge-slate);
+}
+
+.ge-status-footer i {
+  color: var(--ge-info);
+  margin-right: var(--ge-space-2);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .ge-status {
+    padding: var(--ge-space-4) var(--ge-space-3);
+    align-items: flex-start;
+    padding-top: var(--ge-space-12);
+  }
+
+  .ge-status-card {
+    padding: var(--ge-space-6);
+    border-radius: var(--ge-radius-lg);
+  }
+
+  .ge-status-icon {
+    width: 72px;
+    height: 72px;
+    font-size: 2rem;
+  }
+
+  .ge-status-title {
+    font-size: var(--ge-text-2xl);
+  }
+
+  .ge-status-subtitle {
+    font-size: var(--ge-text-base);
+  }
+
+  .ge-status-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--ge-space-1);
+  }
+
+  .ge-status-value {
+    text-align: left;
+  }
+
+  .ge-status-actions {
+    flex-direction: column;
+  }
+
+  .ge-status-actions .ge-btn {
+    width: 100%;
+  }
+
+  .ge-status-help-links {
+    flex-direction: column;
+    align-items: center;
+  }
+}

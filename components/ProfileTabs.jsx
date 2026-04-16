@@ -1,36 +1,33 @@
-//'use client'
-import Link from 'next/link'
+import Link from 'next/link';
 import { useRouter } from "next/router";
-import { useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl';
+
+const tabs = [
+  { href: "/profile", labelKey: "profile", icon: "fas fa-user" },
+  { href: "/myorders", labelKey: "myOrders", icon: "fas fa-box" },
+  { href: "/mydonation", labelKey: "myDonation", icon: "fas fa-heart" },
+  { href: "/mygift", labelKey: "myGift", icon: "fas fa-gift" },
+];
 
 export default function ProfileTabs() {
   const router = useRouter();
-  const t = useTranslations('profileTabs')
-
-  const tabStyle = (active) => ({
-    padding: "12px 28px 10px 0",
-    fontWeight: 600,
-    textDecoration: "none",
-    color: active ? "#388e3c" : "#222",
-    borderBottom: active ? "3px solid #388e3c" : "3px solid transparent",
-    position: "sticky",
-    top: "64px",
-  })
+  const t = useTranslations('profileTabs');
 
   return (
-    <div style={{ display: "flex", borderBottom: "1px solid #eee", marginTop: 5, marginBottom: 10 }}>
-      <Link href="/profile" className="profile-tab" style={tabStyle(router.pathname === "/profile")}>
-        {t('profile')}
-      </Link>
-      <Link href="/myorders" className="profile-tab" style={tabStyle(router.pathname.startsWith("/myorders"))}>
-        {t('myOrders')}
-      </Link>
-      <Link href="/mydonation" className="profile-tab" style={tabStyle(router.pathname.startsWith("/mydonation"))}>
-        {t('myDonation')}
-      </Link>
-      <Link href="/mygift" className="profile-tab" style={tabStyle(router.pathname.startsWith("/mygift"))}>
-        {t('myGift')}
-      </Link>
-    </div>
-  )
+    <nav className="ge-profile-tabs" aria-label="Account navigation">
+      {tabs.map((tab) => {
+        const isActive = router.pathname === tab.href || router.pathname.startsWith(tab.href + "/");
+        return (
+          <Link
+            key={tab.href}
+            href={tab.href}
+            className={`ge-profile-tabs__tab${isActive ? ' ge-profile-tabs__tab--active' : ''}`}
+          >
+            <i className={tab.icon}></i>
+            <span>{t(tab.labelKey)}</span>
+          </Link>
+        );
+      })}
+    </nav>
+  );
 }

@@ -29,8 +29,7 @@ export default async function handler(req, res) {
 
     res.setHeader('Set-Cookie', serialize(COOKIE_NAME, data.token, cookieOptions));
 
-    const { token: _token, ...userData } = data;
-    return res.status(200).json(userData);
+    return res.status(200).json(data);
   } catch (err) {
     return res.status(500).json({ message: 'Internal server error' });
   }

@@ -35,11 +35,13 @@ function TreeUpdateForm({ tree, onClose }) {
       ? new Date(tree.expectedPlantingDate).toISOString().split('T')[0]
       : ''
   );
-  const [gpsCoords, setGpsCoords] = useState(
-    tree.location && tree.location.latitude && tree.location.longitude
-      ? { latitude: tree.location.latitude, longitude: tree.location.longitude }
-      : null
-  );
+  const [gpsCoords, setGpsCoords] = useState(() => {
+    const coords = tree.location?.coordinates;
+    if (Array.isArray(coords) && coords.length === 2) {
+      return { latitude: coords[1], longitude: coords[0] };
+    }
+    return null;
+  });
   const [photoFiles, setPhotoFiles] = useState([]);
   const [saving, setSaving] = useState(false);
   const [uploadingPhotos, setUploadingPhotos] = useState(false);
