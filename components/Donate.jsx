@@ -69,8 +69,8 @@ const Donate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!amount || parseInt(amount, 10) < 10) {
-      showNotification(t("minAmountError") || "Please enter a minimum donation amount of ₹50.", "error");
+    if (!amount || parseInt(amount, 10) < 1) {
+      showNotification(t("minAmountError") || "Please enter a minimum donation amount of ₹1.", "error");
       return;
     }
     setLoading(true);

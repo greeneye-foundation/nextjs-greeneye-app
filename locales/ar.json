@@ -222,7 +222,7 @@
     "placeholderName": "الاسم الكامل",
     "placeholderEmail": "البريد الإلكتروني",
     "placeholderPhone": "رقم الهاتف",
-    "minAmountError": "الرجاء إدخال مبلغ تبرع لا يقل عن ₹10.",
+    "minAmountError": "الرجاء إدخال مبلغ تبرع لا يقل عن ₹1.",
     "razorpayTitle": "تبرع GreenEye",
     "razorpayDesc": "شكراً لدعمك!",
     "successMessage": "شكراً لتبرعك ₹{amount}! 🌿",
