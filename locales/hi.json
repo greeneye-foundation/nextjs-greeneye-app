@@ -219,7 +219,7 @@
     "placeholderName": "पूरा नाम",
     "placeholderEmail": "ईमेल पता",
     "placeholderPhone": "फोन नंबर",
-    "minAmountError": "कृपया न्यूनतम ₹1 की दान राशि दर्ज करें।",
+    "minAmountError": "कृपया न्यूनतम ₹10 की दान राशि दर्ज करें।",
     "razorpayTitle": "GreenEye दान",
     "razorpayDesc": "आपके समर्थन के लिए धन्यवाद!",
     "successMessage": "₹{amount} दान करने के लिए धन्यवाद! 🌿",

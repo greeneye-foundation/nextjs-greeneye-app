@@ -222,7 +222,7 @@
     "placeholderName": "Full Name",
     "placeholderEmail": "Email Address",
     "placeholderPhone": "Phone Number",
-    "minAmountError": "Please enter a minimum donation amount of ₹1.",
+    "minAmountError": "Please enter a minimum donation amount of ₹10.",
     "razorpayTitle": "GreenEye Donation",
     "razorpayDesc": "Thank you for your support!",
     "successMessage": "Thank you for donating ₹{amount}! 🌿",

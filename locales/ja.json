@@ -222,7 +222,7 @@
     "placeholderName": "氏名",
     "placeholderEmail": "メールアドレス",
     "placeholderPhone": "電話番号",
-    "minAmountError": "最低寄付額₹1以上を入力してください。",
+    "minAmountError": "最低寄付額₹10以上を入力してください。",
     "razorpayTitle": "GreenEye寄付",
     "razorpayDesc": "ご支援ありがとうございます！",
     "successMessage": "₹{amount}のご寄付ありがとうございます！🌿",
