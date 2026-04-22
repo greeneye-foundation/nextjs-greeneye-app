@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import { showNotification } from "@/components/Notification";
 import { useTranslations } from "next-intl";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
@@ -207,8 +208,8 @@ const Login = ({ onSwitch, onLogin }) => {
             </button>
           </div>
 
-          {/* Remember me */}
-          <div className="form-options">
+          {/* Remember me + Forgot password */}
+          <div className="form-options" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <label className="checkbox-label">
               <input
                 type="checkbox"
@@ -219,6 +220,9 @@ const Login = ({ onSwitch, onLogin }) => {
               <span className="checkmark"></span>
               {t("rememberMe")}
             </label>
+            <Link href="/forgot-password" style={{ color: '#2e7d32', fontSize: '13px', textDecoration: 'none' }}>
+              {t("forgotPassword") || "Forgot password?"}
+            </Link>
           </div>
 
           {/* Submit */}
