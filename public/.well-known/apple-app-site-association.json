@@ -11,7 +11,15 @@
         "components": [
           {
             "/": "/payment/return*",
-            "comment": "Razorpay + PayU payment return — deep links to app/payment-return.jsx"
+            "comment": "Razorpay + PayU payment return — deep links to app/payment-return.jsx (Phase 3 03-02)"
+          },
+          {
+            "/": "/trees/*",
+            "comment": "Tree milestone push universal-link landing — deep links to app/(app)/trees/[treeId].jsx (Phase 4 04-03 D-15)"
+          },
+          {
+            "/": "/orders/*",
+            "comment": "Order status push universal-link landing — deep links to app/(app)/orders/[orderId].jsx (Phase 4 04-03 D-15)"
           }
         ]
       }

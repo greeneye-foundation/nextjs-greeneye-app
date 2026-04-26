@@ -82,3 +82,72 @@ public web hostname), not `api.greeneye.foundation`. AASA + assetlinks
 must be served from the EXACT domain referenced in the app's
 `associatedDomains` config — that's the Next.js web app, not the
 Express BE.
+
+## Phase 4 paths (added 2026-04-25)
+
+Beyond Phase 3's `/payment/return*` pattern, the AASA now also handles:
+
+- `/trees/*` — tree milestone push notification landing (per Phase 4 D-15)
+- `/orders/*` — order status push notification landing (per Phase 4 D-15)
+
+These let iOS open the Greeneye app directly when a user taps a tree-
+milestone or order-status push notification whose deep-link points at
+`https://greeneye.foundation/trees/<treeId>` or
+`https://greeneye.foundation/orders/<orderId>`. Without these AASA
+entries Apple would fall through to Safari.
+
+Android path-pattern dispatch is handled separately via `intentFilters`
+in `rn-greeneye/app.config.js` (per Plan 04-06) — `assetlinks.json` is
+package-scoped, not path-scoped, so it does NOT need amendment for the
+new paths.
+
+### Post-deploy validators
+
+After deploying to production:
+
+1. **Apple Universal Links validator** (Apple's CDN):
+
+   ```bash
+   curl https://app-site-association.cdn-apple.com/a/v1/greeneye.foundation
+   ```
+
+   Confirms Apple's CDN has fetched + cached the amended AASA. CDN
+   cache TTL is up to ~7 days; expect a delay before the new paths
+   propagate to all devices.
+
+2. **iOS Simulator deep-link probes**:
+
+   ```bash
+   xcrun simctl openurl booted "https://greeneye.foundation/trees/test123"
+   # Expected: opens Greeneye app on tree detail; falls through to
+   # Safari if app not installed.
+
+   xcrun simctl openurl booted "https://greeneye.foundation/orders/order456"
+   # Expected: opens Greeneye app on order detail.
+   ```
+
+3. **Android App Links** (post Plan 04-06 intentFilters update):
+
+   ```bash
+   adb shell am start -a android.intent.action.VIEW \
+     -d "https://greeneye.foundation/trees/test123"
+   # Expected: opens Greeneye app on tree detail.
+   ```
+
+   `assetlinks.json` was NOT amended in Phase 4 because Android path-
+   pattern dispatch happens via `intentFilters` in
+   `rn-greeneye/app.config.js`, not via assetlinks. The Phase 3
+   `assetlinks.json` is sufficient.
+
+### Cache caveats (Pitfall 9 from Phase 4 RESEARCH.md)
+
+Apple's CDN cache for AASA is aggressive (~7d). After this amendment
+deploys, devices that have **already** visited the domain may serve a
+stale AASA for up to a week. To force-refresh on dev devices:
+**Settings → Developer → Universal Link Diagnostic** → toggle the
+greeneye.foundation entry off/on.
+
+For TestFlight: Apple's cache is shorter (~1d). For production: trust
+the cache + plan amendment ahead of release. **This amendment lands
+during Phase 4 (well ahead of Phase 5 release) so the cache has time
+to refresh** before Universal Link push routing goes live to end users.
