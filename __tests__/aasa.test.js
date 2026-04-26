@@ -63,6 +63,49 @@ test('AASA — components[0]["/"] === "/payment/return*"', () => {
   assert.equal(components[0]['/'], '/payment/return*');
 });
 
+// --- AASA Phase 4 04-03 path-pattern amendments (D-15) ----------------------
+// Phase 4 appends two universal-link path patterns alongside the Phase 3
+// /payment/return* entry. Tree milestone + order status push notifications
+// deep-link via these patterns. Phase 3 baseline assertions above remain
+// intact; the probes below assert the post-amendment structure.
+
+test('AASA — components has exactly 3 entries (Phase 3 + Phase 4 D-15)', () => {
+  const aasa = JSON.parse(fs.readFileSync(aasaPath, 'utf8'));
+  const components = aasa.applinks.details[0].components;
+  assert.equal(
+    components.length,
+    3,
+    'expected 3 components: /payment/return* (Phase 3) + /trees/* + /orders/* (Phase 4 D-15)',
+  );
+});
+
+test('AASA — components contains "/trees/*" (Phase 4 04-03 D-15)', () => {
+  const aasa = JSON.parse(fs.readFileSync(aasaPath, 'utf8'));
+  const components = aasa.applinks.details[0].components;
+  assert.ok(
+    components.some((c) => c['/'] === '/trees/*'),
+    '/trees/* path missing — required for tree milestone push universal links',
+  );
+});
+
+test('AASA — components contains "/orders/*" (Phase 4 04-03 D-15)', () => {
+  const aasa = JSON.parse(fs.readFileSync(aasaPath, 'utf8'));
+  const components = aasa.applinks.details[0].components;
+  assert.ok(
+    components.some((c) => c['/'] === '/orders/*'),
+    '/orders/* path missing — required for order status push universal links',
+  );
+});
+
+test('AASA — every component carries a non-empty comment (developer-doc convention)', () => {
+  const aasa = JSON.parse(fs.readFileSync(aasaPath, 'utf8'));
+  const components = aasa.applinks.details[0].components;
+  components.forEach((c, i) => {
+    assert.equal(typeof c.comment, 'string', `component ${i} missing string comment`);
+    assert.ok(c.comment.length > 0, `component ${i} has empty comment`);
+  });
+});
+
 // --- assetlinks.json --------------------------------------------------------
 
 test('assetlinks — top-level is an array of length 3', () => {
