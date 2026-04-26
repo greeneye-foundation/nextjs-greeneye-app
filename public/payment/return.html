@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Greeneye — Payment Return</title>
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+          sans-serif;
+        max-width: 480px;
+        margin: 48px auto;
+        padding: 0 16px;
+        color: #1a2b23;
+        background: #fafaf6;
+      }
+      .hero { text-align: center; padding: 32px 0; }
+      .hero h1 {
+        color: #1B5E3A;
+        margin: 16px 0 8px;
+        font-size: 28px;
+        letter-spacing: 0.5px;
+      }
+      .hero p { color: #6B7370; line-height: 1.5; margin: 8px 0; }
+      .order-info { font-size: 14px; opacity: 0.7; }
+      .helper { font-size: 14px; margin-top: 24px; }
+      .stores {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        margin-top: 16px;
+        flex-wrap: wrap;
+      }
+      .stores a {
+        display: inline-block;
+        padding: 12px 20px;
+        border-radius: 8px;
+        background: #1B5E3A;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .stores a:hover { background: #154a2d; }
+      .web-link {
+        display: inline-block;
+        margin-top: 24px;
+        color: #1B5E3A;
+        text-decoration: underline;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hero">
+      <h1>Greeneye</h1>
+      <p id="msg">Confirming your payment&hellip;</p>
+      <p class="order-info" id="orderInfo"></p>
+      <p class="helper">
+        If the Greeneye app didn't open automatically, install it to view your
+        order:
+      </p>
+      <div class="stores">
+        <a id="appStoreLink" href="https://apps.apple.com/app/greeneye/idTBD">App Store</a>
+        <a id="playStoreLink" href="https://play.google.com/store/apps/details?id=foundation.greeneye">Play Store</a>
+      </div>
+      <a class="web-link" href="https://greeneye.foundation">Continue on greeneye.foundation</a>
+    </div>
+    <script>
+      (function () {
+        var p = new URLSearchParams(location.search);
+        var orderId = p.get('orderId');
+        var status = p.get('status');
+
+        var msgEl = document.getElementById('msg');
+        var infoEl = document.getElementById('orderInfo');
+
+        if (orderId) {
+          infoEl.textContent =
+            'Order #' + orderId + (status ? ' — ' + status : '');
+        }
+
+        if (status === 'success') {
+          msgEl.textContent =
+            'Payment received. Open the app to view details.';
+        } else if (status === 'failure') {
+          msgEl.textContent =
+            'Payment did not go through. Open the app to retry.';
+        }
+        // status === null or any other value: keep the default "Confirming
+        // your payment..." copy — the universal-link handoff to the app
+        // should have happened first; this static fallback is rendered only
+        // when the device cannot resolve the universal link to an installed
+        // Greeneye app.
+      })();
+    </script>
+  </body>
+</html>
