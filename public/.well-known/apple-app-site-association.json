@@ -1,0 +1,20 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": [
+          "__APPLE_TEAM_ID__.foundation.greeneye",
+          "__APPLE_TEAM_ID__.foundation.greeneye.preview",
+          "__APPLE_TEAM_ID__.foundation.greeneye.dev"
+        ],
+        "components": [
+          {
+            "/": "/payment/return*",
+            "comment": "Razorpay + PayU payment return — deep links to app/payment-return.jsx"
+          }
+        ]
+      }
+    ]
+  }
+}

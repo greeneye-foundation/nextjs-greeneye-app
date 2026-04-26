@@ -60,6 +60,38 @@ const nextConfig = {
           },
         ],
       },
+      // BE-07 — Universal Links / App Links (Phase 3 commerce-payments-deep-links).
+      // Apple's AASA file is served at /.well-known/apple-app-site-association
+      // (NO .json extension visible to clients) but stored on disk as a .json
+      // file. Apple requires Content-Type: application/json. Google's
+      // assetlinks.json keeps the .json extension but also requires the same
+      // Content-Type. Pair this with the rewrites() rule that forwards the
+      // extensionless AASA URL to the on-disk .json file.
+      {
+        source: '/.well-known/apple-app-site-association',
+        headers: [
+          { key: 'Content-Type', value: 'application/json' },
+        ],
+      },
+      {
+        source: '/.well-known/:path*',
+        headers: [
+          { key: 'Content-Type', value: 'application/json' },
+        ],
+      },
+    ];
+  },
+
+  // BE-07 — rewrite the extensionless AASA URL to the on-disk JSON file. iOS
+  // fetches https://greeneye.foundation/.well-known/apple-app-site-association
+  // (no extension) but Next.js's static-file resolver wants the extension on
+  // disk. The rewrite serves the JSON content from the extensionless URL.
+  async rewrites() {
+    return [
+      {
+        source: '/.well-known/apple-app-site-association',
+        destination: '/.well-known/apple-app-site-association.json',
+      },
     ];
   },
 };

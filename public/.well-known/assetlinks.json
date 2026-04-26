@@ -3,10 +3,24 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "com.anonymous.greeneyenative",
-      "sha256_cert_fingerprints": [
-        "DB:05:D5:09:90:96:BA:74:C2:56:1B:2E:D9:5C:D4:D2:0E:F8:19:C0:9B:6B:17:2C:81:3B:2C:C2:8E:29:0D:61"
-      ]
+      "package_name": "foundation.greeneye",
+      "sha256_cert_fingerprints": ["__PROD_SHA256_FINGERPRINT__"]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "foundation.greeneye.preview",
+      "sha256_cert_fingerprints": ["__PREVIEW_SHA256_FINGERPRINT__"]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "foundation.greeneye.dev",
+      "sha256_cert_fingerprints": ["__DEV_SHA256_FINGERPRINT__"]
     }
   }
 ]
