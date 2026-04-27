@@ -101,6 +101,94 @@ in `rn-greeneye/app.config.js` (per Plan 04-06) — `assetlinks.json` is
 package-scoped, not path-scoped, so it does NOT need amendment for the
 new paths.
 
+## Phase 5 paths (added 2026-04-27)
+
+Phase 5 Plan 05-03 D-04 extends the AASA `components` array with a 4th
+universal-link path pattern:
+
+- `/encyclopedia/*` — encyclopedia article share landing (per Phase 5 D-04)
+
+Encyclopedia article share buttons in the mobile app (Plan 05-04
+`Sharing.shareAsync`) emit `https://greeneye.foundation/encyclopedia/<slug>`
+URLs. With this AASA entry iOS opens the Greeneye app directly on
+`app/(app)/encyclopedia/[slug].jsx`; without it Safari intercepts and the
+web fallback at `pages/encyclopedia/[slug].js` renders for non-installers.
+
+### Path-coverage table
+
+| Path pattern | Source | Routing target |
+|--------------|--------|----------------|
+| `/payment/return*` | Phase 3 Plan 03-02 (BE-07) | `app/payment-return.jsx` (Razorpay + PayU return) |
+| `/trees/*` | Phase 4 Plan 04-03 D-15 | `app/(app)/trees/[treeId].jsx` (tree milestone push) |
+| `/orders/*` | Phase 4 Plan 04-03 D-15 | `app/(app)/orders/[orderId].jsx` (order status push) |
+| `/encyclopedia/*` | Phase 5 Plan 05-03 D-04 | `app/(app)/encyclopedia/[slug].jsx` (article share) |
+
+Android path-pattern dispatch continues via `intentFilters` in
+`rn-greeneye/app.config.js` — `assetlinks.json` remains untouched in
+Phase 5 (still package-scoped, not path-scoped).
+
+## ≥7d Apple CDN cache caveat — BEFORE Phase 5 production submission
+
+Apple's AASA CDN at `https://app-site-association.cdn-apple.com/a/v1/greeneye.foundation`
+caches aggressively (~7 days on production, ~1 day on TestFlight). After
+the Phase 5 amendment deploys to production, devices that have ALREADY
+visited `greeneye.foundation` will continue serving a stale AASA for up
+to a week — encyclopedia share universal-links will NOT route to the app
+for those users until cache refreshes.
+
+**Operator action (Plan 05-06 closure HUMAN-UAT step 5):** publish the
+Phase 5 AASA amendment AT LEAST 7 days BEFORE Phase 5 App Store
+submission so Apple's CDN has time to refresh. Validators:
+
+```bash
+# 1. Apple's CDN-cached form should report 4 components
+curl -s 'https://app-site-association.cdn-apple.com/a/v1/greeneye.foundation' \
+  | jq '.applinks.details[0].components | length'
+# Expected: 4
+
+# 2. Apple's CDN-cached form should include the /encyclopedia/* entry
+curl -s 'https://app-site-association.cdn-apple.com/a/v1/greeneye.foundation' \
+  | jq '.applinks.details[0].components[] | select(.["/"]=="/encyclopedia/*")'
+# Expected: prints the {"/": "/encyclopedia/*", "comment": "..."} entry
+```
+
+Force-refresh on dev devices: `Settings → Developer → Universal Link
+Diagnostic → toggle the greeneye.foundation entry off/on`.
+
+(RESEARCH §"Cache caveat" line 1090 + Pitfall 3 line 1770 + Plan 05-06
+HUMAN-UAT step 5 enforces the ≥7d buffer at submission time.)
+
+## Build-time `__APPLE_TEAM_ID__` substitution (Phase 5 IR-07 closure)
+
+Phase 5 Plan 05-03 ships the build-time substitution mechanic in
+`next.config.mjs` (Phase 4 04-REVIEW.iter1.md IR-07 deferral closed).
+
+**Mechanic:** at `next build` module-load, the substitution helper reads
+`process.env.APPLE_TEAM_ID` and `replaceAll('__APPLE_TEAM_ID__', …)` on
+the public AASA file. Idempotent — re-running on an already-substituted
+file is a no-op.
+
+**Production guard:** when `NODE_ENV === 'production'` AND
+`APPLE_TEAM_ID` is unset, the helper throws — CI fails fast and the
+deploy is blocked until the env var is configured.
+
+**Dev / preview safety:** when neither `NODE_ENV === 'production'` nor
+`APPLE_TEAM_ID` is set, the helper is a no-op. Vercel preview deploys
+without the env var keep the placeholder source-committed file
+unchanged and continue to build successfully.
+
+**Operator setup:** add `APPLE_TEAM_ID` to the production deploy
+environment (Vercel project settings, Cloudflare Pages env, etc.). The
+value is the 10-character string from
+`https://developer.apple.com/account/#/membership`. Do NOT commit the
+substituted file — the SOURCE file MUST remain at the
+`__APPLE_TEAM_ID__` placeholder so dev/preview builds stay placeholder-
+safe.
+
+Verified by `__tests__/aasa-substitution.test.js` (4 node:test probes
+covering placeholder presence, prod substitution, prod guard throw, dev
+no-op).
+
 ### Post-deploy validators
 
 After deploying to production:

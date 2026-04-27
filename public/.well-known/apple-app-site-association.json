@@ -20,6 +20,10 @@
           {
             "/": "/orders/*",
             "comment": "Order status push universal-link landing — deep links to app/(app)/orders/[orderId].jsx (Phase 4 04-03 D-15)"
+          },
+          {
+            "/": "/encyclopedia/*",
+            "comment": "Phase 5 Plan 05-03 D-04 — encyclopedia article share landing (deep links to app/(app)/encyclopedia/[slug].jsx; web fallback at pages/encyclopedia/[slug].js for non-installers)"
           }
         ]
       }
