@@ -68,14 +68,17 @@ test('AASA — components[0]["/"] === "/payment/return*"', () => {
 // /payment/return* entry. Tree milestone + order status push notifications
 // deep-link via these patterns. Phase 3 baseline assertions above remain
 // intact; the probes below assert the post-amendment structure.
+//
+// Phase 5 05-03 D-04 extends with /encyclopedia/* — encyclopedia article share
+// universal-link routing. Components array grows from 3 → 4 entries.
 
-test('AASA — components has exactly 3 entries (Phase 3 + Phase 4 D-15)', () => {
+test('AASA — components has exactly 4 entries (Phase 3 + Phase 4 D-15 + Phase 5 D-04)', () => {
   const aasa = JSON.parse(fs.readFileSync(aasaPath, 'utf8'));
   const components = aasa.applinks.details[0].components;
   assert.equal(
     components.length,
-    3,
-    'expected 3 components: /payment/return* (Phase 3) + /trees/* + /orders/* (Phase 4 D-15)',
+    4,
+    'expected 4 components: /payment/return* (Phase 3) + /trees/* + /orders/* (Phase 4 D-15) + /encyclopedia/* (Phase 5 D-04)',
   );
 });
 
@@ -95,6 +98,34 @@ test('AASA — components contains "/orders/*" (Phase 4 04-03 D-15)', () => {
     components.some((c) => c['/'] === '/orders/*'),
     '/orders/* path missing — required for order status push universal links',
   );
+});
+
+test('AASA — components contains "/encyclopedia/*" (Phase 5 Plan 05-03 D-04)', () => {
+  const aasa = JSON.parse(fs.readFileSync(aasaPath, 'utf8'));
+  const components = aasa.applinks.details[0].components;
+  assert.ok(
+    components.some((c) => c['/'] === '/encyclopedia/*'),
+    '/encyclopedia/* path missing — required for encyclopedia article universal-link share',
+  );
+});
+
+test('AASA — /encyclopedia/* entry has a Phase 5 comment string', () => {
+  const aasa = JSON.parse(fs.readFileSync(aasaPath, 'utf8'));
+  const components = aasa.applinks.details[0].components;
+  const ency = components.find((c) => c['/'] === '/encyclopedia/*');
+  assert.ok(ency, 'expected /encyclopedia/* component');
+  assert.equal(typeof ency.comment, 'string', 'comment should be a string');
+  assert.ok(ency.comment.length > 0, 'comment should be non-empty');
+  assert.match(ency.comment, /Phase 5/, 'comment should mention Phase 5');
+});
+
+test('AASA — all 4 expected path patterns coexist (Phase 3 + Phase 4 + Phase 5)', () => {
+  const aasa = JSON.parse(fs.readFileSync(aasaPath, 'utf8'));
+  const paths = aasa.applinks.details[0].components.map((c) => c['/']);
+  const expected = ['/payment/return*', '/trees/*', '/orders/*', '/encyclopedia/*'];
+  expected.forEach((p) => {
+    assert.ok(paths.includes(p), `expected path ${p} present in components`);
+  });
 });
 
 test('AASA — every component carries a non-empty comment (developer-doc convention)', () => {
