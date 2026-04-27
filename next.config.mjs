@@ -86,8 +86,11 @@ substituteAppleTeamIdIfProduction();
 //
 // Documented in app.config.js comments + 03-RESEARCH.md (LINK-02 / LINK-03).
 if (process.env.NODE_ENV === 'production') {
-  // eslint-disable-next-line no-await-in-loop
-  const { readFileSync } = await import('node:fs');
+  // Phase 5 REVIEW iter2 IR-02: dropped redundant `await import('node:fs')`.
+  // `fs` is already statically imported at the top of this file; the dynamic
+  // import was dead weight (and the eslint-disable for `no-await-in-loop`
+  // was a misnomer — there is no loop here).
+  const { readFileSync } = fs;
   const placeholders = [
     '__APPLE_TEAM_ID__',
     '__PROD_SHA256_FINGERPRINT__',
