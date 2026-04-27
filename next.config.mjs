@@ -1,3 +1,74 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+// Phase 5 Plan 05-03 Task 2 — build-time __APPLE_TEAM_ID__ substitution.
+// Closes the Phase 4 04-REVIEW.iter1.md IR-07 deferral (RESEARCH §"Option 1:
+// Build-time env-var substitution" lines 991-1009).
+//
+// Mechanic: at next.config.mjs module-load (which `next build` triggers
+// once per build), read process.env.APPLE_TEAM_ID. If the env var is set,
+// read public/.well-known/apple-app-site-association.json from disk and
+// replaceAll('__APPLE_TEAM_ID__', APPLE_TEAM_ID), writing back. The call
+// is idempotent — re-running on an already-substituted file is a no-op
+// because replaceAll on a literal that's no longer present matches nothing.
+//
+// Production guard: when NODE_ENV === 'production' AND APPLE_TEAM_ID is
+// unset, the helper throws — CI fails fast and the deploy is blocked
+// until the env var is configured (RESEARCH §"Recommended approach"
+// line 1037; Test 3 in __tests__/aasa-substitution.test.js verifies).
+//
+// Dev/preview safety: when neither env var is set, the helper returns
+// {substituted: false, reason: 'no-env-var'} — Vercel preview deploys
+// without APPLE_TEAM_ID continue to build successfully and the source-
+// committed placeholder file stays untouched.
+//
+// Sequencing within this config: this helper runs BEFORE the WR-04
+// placeholder guard below. WR-04 catches OTHER placeholders (Android
+// SHA256 fingerprints) that have separate ops paths; APPLE_TEAM_ID is
+// substituted in this step so WR-04 sees a clean AASA when it runs in
+// production.
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export function substituteAppleTeamIdIfProduction({
+  nodeEnv = process.env.NODE_ENV,
+  appleTeamId = process.env.APPLE_TEAM_ID,
+  aasaFilePath,
+} = {}) {
+  const aasaPath = aasaFilePath ?? path.join(
+    __dirname,
+    'public',
+    '.well-known',
+    'apple-app-site-association.json',
+  );
+
+  if (nodeEnv === 'production' && !appleTeamId) {
+    throw new Error(
+      'APPLE_TEAM_ID env var must be set for production builds (Phase 5 REL-* IR-07). ' +
+      'Source: Apple Developer Portal → Membership (10-character string). ' +
+      'Configure in Vercel project env vars (or equivalent deploy environment).',
+    );
+  }
+
+  if (!appleTeamId) {
+    return { substituted: false, reason: 'no-env-var' };
+  }
+
+  const original = fs.readFileSync(aasaPath, 'utf8');
+  const occurrences = (original.match(/__APPLE_TEAM_ID__/g) || []).length;
+  const substituted = original.replaceAll('__APPLE_TEAM_ID__', appleTeamId);
+  if (substituted !== original) {
+    fs.writeFileSync(aasaPath, substituted);
+  }
+  return { substituted: substituted !== original, occurrences };
+}
+
+// Run the substitution at module-load. `next build` loads this config
+// exactly once per build. In test/dev contexts where APPLE_TEAM_ID is
+// unset and NODE_ENV !== 'production', this is a documented no-op.
+substituteAppleTeamIdIfProduction();
+
 // WR-04 (Phase 3 review fix): fail the production build if AASA / assetlinks
 // still contain placeholder strings. iOS Safari + Android System WebView
 // parse these JSON files for universal-link / app-link verification; any
@@ -6,6 +77,12 @@
 // payment-return path falls back to the static HTML interstitial. The
 // guard runs only on production builds — preview/dev builds may legitimately
 // ship placeholders while developer-action-items are still in flight.
+//
+// Phase 5: by the time this guard runs in production, the
+// substituteAppleTeamIdIfProduction() call above has already replaced
+// __APPLE_TEAM_ID__ with the real Team ID (or thrown if APPLE_TEAM_ID was
+// unset). Other placeholders (Android SHA256 fingerprints) remain as a
+// separate ops concern handled per Plan 05-06 closure HUMAN-UAT.
 //
 // Documented in app.config.js comments + 03-RESEARCH.md (LINK-02 / LINK-03).
 if (process.env.NODE_ENV === 'production') {
